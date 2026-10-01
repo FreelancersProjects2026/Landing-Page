@@ -8,7 +8,18 @@ Somos un equipo de tres profesionales. Nuestro punto de partida es comprender el
 
 ## Stack
 
-- React
+- React 19
+- Vite
+- TypeScript
+- pnpm
+- Vitest y React Testing Library
+
+## Desarrollo
+
+- `pnpm install`: instala las dependencias.
+- `pnpm dev`: inicia el entorno local.
+- `pnpm test`: ejecuta las pruebas.
+- `pnpm validate`: ejecuta todos los controles y el build.
 
 ## Principios de desarrollo
 
@@ -21,4 +32,6 @@ Somos un equipo de tres profesionales. Nuestro punto de partida es comprender el
 ## Documentación
 
 - [Constitución del proyecto](docs/constitution.md)
-- [Instrucciones para agentes](agent.md)
+- [Arquitectura frontend](docs/architecture.md)
+- [Decisión arquitectónica](docs/adr/001-arquitectura-modular-por-dominio.md)
+- [Instrucciones para agentes](AGENTS.md)
