@@ -89,7 +89,10 @@ export function TestimonialsSection() {
       className="relative py-32 lg:py-40 bg-foreground text-background overflow-hidden"
     >
       {/* ASCII background pattern */}
-      <div className="absolute inset-0 font-mono text-[10px] text-background/[0.02] leading-tight overflow-hidden whitespace-pre select-none">
+      <div
+        suppressHydrationWarning
+        className="absolute inset-0 font-mono text-[10px] text-background/[0.02] leading-tight overflow-hidden whitespace-pre select-none"
+      >
         {Array.from({ length: 60 }, () =>
           Array.from({ length: 100 }, () =>
             Math.random() > 0.7 ? '"' : ' ',

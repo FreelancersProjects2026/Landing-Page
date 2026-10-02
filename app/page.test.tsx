@@ -1,5 +1,7 @@
-import { render } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { act, render } from '@testing-library/react'
+import { hydrateRoot } from 'react-dom/client'
+import { renderToString } from 'react-dom/server'
+import { describe, expect, it, vi } from 'vitest'
 
 import Home from './page'
 
@@ -31,5 +33,20 @@ describe('Home', () => {
       expect.stringContaining('Ready to delegate'),
       'footer',
     ])
+  })
+
+  it('se hidrata sin errores a partir del HTML del servidor', async () => {
+    const container = document.createElement('div')
+    container.innerHTML = renderToString(<Home />)
+    document.body.appendChild(container)
+    const onRecoverableError = vi.fn()
+
+    const root = await act(async () =>
+      hydrateRoot(container, <Home />, { onRecoverableError }),
+    )
+
+    expect(onRecoverableError).not.toHaveBeenCalled()
+    act(() => root.unmount())
+    container.remove()
   })
 })

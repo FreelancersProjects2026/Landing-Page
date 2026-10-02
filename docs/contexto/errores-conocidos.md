@@ -27,8 +27,9 @@
 - Algunas reglas de `react-hooks` (`set-state-in-effect`, `purity`) se desactivan por línea en la plantilla con su motivo.
 - En pruebas, jsdom no implementa `IntersectionObserver` ni `canvas.getContext`; `src/test/setup.ts` los simula.
 - `pnpm install` omite el script de build de `sharp`; no se necesita porque `images.unoptimized` está activo.
-- `components/landing/testimonials-section.tsx` (≈ líneas 92-95) genera el patrón ASCII de fondo con
-  `Math.random()` durante el render, lo que produce en `pnpm dev` el error "Hydration failed because the
-  server rendered text didn't match the client". Viene de la plantilla original (`85d7d28`); React lo
-  regenera en el cliente y el efecto visual es mínimo (opacidad del 2 %). Se corregirá en la spec de
-  personalización generando el patrón tras el montaje o con una semilla fija.
+- **Resuelto:** `components/landing/testimonials-section.tsx` genera el patrón ASCII de fondo con
+  `Math.random()` durante el render, lo que producía en `pnpm dev` el error "Hydration failed because the
+  server rendered text didn't match the client" (heredado de la plantilla original, `85d7d28`). Como el
+  patrón es decorativo y aleatorio a propósito, su `<div>` lleva `suppressHydrationWarning`: React conserva
+  el texto del servidor y no hay cambio visual. `app/page.test.tsx` hidrata la página en jsdom y falla
+  ante cualquier error de hidratación.

@@ -66,3 +66,10 @@
 - [x] T38 Actualizar `docs/constitution.md`.
 - [x] T39 Actualizar los archivos de `docs/contexto/`.
 - [x] T40 Sincronizar spec, plan y tareas con el resultado final.
+
+## 9. Corrección del error de hidratación
+- [x] T41 Escribir una prueba que hidrate la página y falle ante errores de hidratación (rojo).
+- [x] T42 Marcar el patrón ASCII de `TestimonialsSection` con `suppressHydrationWarning` (verde).
+- [ ] T43 Confirmar en `pnpm dev` que la consola no muestra errores de hidratación.
+  Pendiente: el usuario recarga http://localhost:3000 y confirma que la consola no muestra 'Hydration failed'.
+- [x] T44 Actualizar `docs/contexto/errores-conocidos.md` como resuelto.

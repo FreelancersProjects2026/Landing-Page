@@ -24,6 +24,8 @@ existentes (`company-profile`), conservando sus pruebas.
 - Renombrar el paquete de `my-v0-project` a `pjm-solutions`.
 - Conservar `src/modules/company-profile` (domain, application, infrastructure, ui) y sus pruebas.
 - Usar la plantilla tal como está: todas sus secciones, textos, identidad visual y escena 3D.
+- Excepción aprobada: corregir el error de hidratación del patrón ASCII de
+  `TestimonialsSection`, sin cambio visual.
 - Adaptar `.dependency-cruiser.cjs`, `tsconfig` y `eslint.config.js` a la nueva estructura.
 - Actualizar los archivos `.md` (`README.md`, `AGENTS.md`, `docs/architecture.md`,
   `docs/constitution.md` y `docs/contexto/`) para reflejar el nuevo stack y estructura.
@@ -56,6 +58,7 @@ existentes (`company-profile`), conservando sus pruebas.
 - [x] No quedan archivos ni dependencias directas del proyecto Vite (`vite`, `@vitejs/plugin-react`,
       `index.html`, `vite.config.ts`). `vite` puede seguir como dependencia transitiva de Vitest.
 - [x] `pnpm dev` levanta la página y `pnpm build` genera la compilación de Next.js sin errores.
+- [ ] La página carga sin errores de hidratación en la consola.
 - [x] `pnpm validate` (formato, lint, tipos, pruebas, arquitectura y build) pasa en verde.
 - [x] Las pruebas existentes de `company-profile` se conservan y pasan.
 - [ ] La página principal se ve igual que la plantilla original, con todas sus secciones.
