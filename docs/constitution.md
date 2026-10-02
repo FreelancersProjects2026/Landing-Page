@@ -5,7 +5,7 @@ Los clientes necesitan software que responda a su realidad operativa y aporte va
 ## 2. Solución
 Somos tres profesionales que diseñamos soluciones a medida, adaptándonos a cada cliente y comprendiendo primero su dominio mediante DDD.
 ## 3. Stack tecnológico
-El proyecto será exclusivamente frontend y utilizará React como tecnología principal.
+El proyecto será exclusivamente frontend y utilizará React como tecnología principal, sobre Next.js (App Router) como framework (ADR-002).
 ## 4. Relación entre especificación y código
 Toda implementación deberá corresponder con una especificación clara, trazable y actualizada.
 ## 5. Separación de capas

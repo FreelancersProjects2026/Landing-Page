@@ -34,8 +34,13 @@ Se retiran: `index.html`, `vite.config.ts`, `src/main.tsx`, `src/app/`, `src/sty
   Se mantienen `test`, `lint`, `format`, `typecheck`, `architecture`, `check` y `validate`.
 - **TypeScript:** un solo `tsconfig.json` basado en el de la plantilla, conservando los alias
   `@/*`, `@modules/*` y `@shared/*`.
-- **Pruebas:** Vitest con entorno jsdom y alias equivalentes; se evaluará si hace falta un plugin
-  de React para JSX o si basta con la configuración de TypeScript.
+- **Pruebas:** Vitest con entorno jsdom y alias equivalentes (`@`, `@modules`, `@shared`); basta la
+  configuración de TypeScript para JSX, sin plugin de React. `src/test/setup.ts` simula
+  `IntersectionObserver` y `canvas.getContext`, que jsdom no implementa. No hizo falta aislar WebGL:
+  `AsciiScene` no se renderiza en la página.
+- **Rigor de TypeScript:** el `tsconfig.json` de la plantilla no incluye `noUncheckedIndexedAccess`,
+  `exactOptionalPropertyTypes` ni los controles de símbolos no usados de la Spec 001 (provocaban 56
+  errores en la plantilla). Se añade `allowImportingTsExtensions` para conservar `company-profile` sin cambios.
 - **Lint:** ESLint plano actual ampliado con las reglas de Next.js; Prettier ignora `.next/`.
   Se usa `@next/eslint-plugin-next` (`recommended` + `core-web-vitals`) en lugar de
   `eslint-config-next`, cuyos plugins (react, import, jsx-a11y) no admiten ESLint 10 (ADR-002).

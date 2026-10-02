@@ -16,7 +16,8 @@
 
 ## Comandos
 - `pnpm install`: instalar dependencias.
-- `pnpm dev`: desarrollo local.
+- `pnpm dev`: desarrollo local con Next.js (`http://localhost:3000`).
+- `pnpm build` / `pnpm start`: compilación y servidor de producción.
 - `pnpm test:watch`: TDD interactivo.
 - `pnpm validate`: formato, lint, tipos, pruebas, arquitectura y build.
 
@@ -30,7 +31,7 @@
 - [ ] El equipo revisa y aprueba el cambio cuando corresponda.
 
 ## Git y deploy
-- La rama actual es `main`, un commit por delante de `origin/main`.
+- Las migraciones se trabajan en ramas dedicadas (p. ej. `migration/design`) con un commit por fase.
 - [PENDIENTE: definir ramas, revisión, formato de commits y política de push.]
-- El build genera `dist/`, que está ignorado por Git.
+- El build genera `.next/`, que está ignorado por Git.
 - [PENDIENTE: definir hosting, variables de entorno, CI/CD, pasos de despliegue y rollback.]

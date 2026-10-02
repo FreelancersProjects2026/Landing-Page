@@ -60,9 +60,9 @@
 - [x] T34 Confirmar que no quedan archivos ni dependencias de Vite.
 
 ## 8. Documentación
-- [ ] T35 Actualizar `README.md` con el nuevo stack y los comandos.
-- [ ] T36 Actualizar `AGENTS.md` con la nueva estructura.
-- [ ] T37 Actualizar `docs/architecture.md`.
-- [ ] T38 Actualizar `docs/constitution.md`.
-- [ ] T39 Actualizar los archivos de `docs/contexto/`.
-- [ ] T40 Sincronizar spec, plan y tareas con el resultado final.
+- [x] T35 Actualizar `README.md` con el nuevo stack y los comandos.
+- [x] T36 Actualizar `AGENTS.md` con la nueva estructura.
+- [x] T37 Actualizar `docs/architecture.md`.
+- [x] T38 Actualizar `docs/constitution.md`.
+- [x] T39 Actualizar los archivos de `docs/contexto/`.
+- [x] T40 Sincronizar spec, plan y tareas con el resultado final.
