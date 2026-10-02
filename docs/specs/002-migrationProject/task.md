@@ -48,8 +48,8 @@
 - [x] T27 Refactorizar manteniendo las pruebas en verde.
 
 ## 6. Módulo company-profile
-- [ ] T28 Ejecutar las pruebas de `company-profile` sin cambiar su lógica.
-- [ ] T29 Confirmar que respeta las reglas de capas de dependency-cruiser.
+- [x] T28 Ejecutar las pruebas de `company-profile` sin cambiar su lógica.
+- [x] T29 Confirmar que respeta las reglas de capas de dependency-cruiser.
 
 ## 7. Verificación
 - [ ] T30 Confirmar que `pnpm dev` levanta la página.
