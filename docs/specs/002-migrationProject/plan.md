@@ -73,10 +73,14 @@ Se retiran: `index.html`, `vite.config.ts`, `src/main.tsx`, `src/app/`, `src/sty
 7. **Verificación:** `pnpm validate` en verde y revisión visual con `pnpm dev` frente a la plantilla.
 8. **Documentación:** actualizar `README.md`, `AGENTS.md`, `docs/architecture.md`,
    `docs/constitution.md` y `docs/contexto/`; sincronizar spec, plan y tareas.
+9. **Corrección de hidratación:** corregir el error de hidratación del patrón ASCII de
+   `TestimonialsSection` con `suppressHydrationWarning`, sin cambio visual (excepción de alcance
+   aprobada por el usuario).
 
 ## Estrategia de pruebas
 - Las pruebas de `company-profile` actúan como red de seguridad: no deben cambiar su lógica.
 - Una prueba de la página principal confirma que se muestran todas las secciones de la plantilla.
+- Una prueba de hidratación (`renderToString` + `hydrateRoot`) falla ante errores de hidratación.
 - La escena 3D (`three`, `@react-three/fiber`) se aísla en las pruebas si jsdom no soporta WebGL.
 - La comparación visual con la plantilla original se hace de forma manual en el navegador.
 
