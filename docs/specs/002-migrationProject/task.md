@@ -20,10 +20,10 @@
 - [x] T07 Eliminar el directorio `compute-the-platform-to-build-and-ship-ai-agents/`.
 
 ## 3. Retiro de Vite
-- [ ] T08 Eliminar `index.html`, `vite.config.ts` y `src/main.tsx`.
-- [ ] T09 Eliminar `src/app/` y `src/styles.css`.
-- [ ] T10 Eliminar `tsconfig.app.json`, `tsconfig.node.json` y `dist/`.
-- [ ] T11 Retirar `vite` y `@vitejs/plugin-react` de las dependencias.
+- [x] T08 Eliminar `index.html`, `vite.config.ts` y `src/main.tsx`.
+- [x] T09 Eliminar `src/app/` y `src/styles.css`.
+- [x] T10 Eliminar `tsconfig.app.json`, `tsconfig.node.json` y `dist/`.
+- [x] T11 Retirar `vite` y `@vitejs/plugin-react` de las dependencias.
 
 ## 4. Configuración
 - [ ] T12 Unificar `package.json` con el nombre `pjm-solutions`.
