@@ -39,11 +39,13 @@
 - [x] T22 Regenerar un único `pnpm-lock.yaml` e instalar dependencias.
 
 ## 5. Pruebas de la página (TDD)
-- [ ] T23 Escribir una prueba que verifique que la página principal renderiza todas las secciones.
-- [ ] T24 Confirmar que la prueba falla (rojo).
-- [ ] T25 Aislar la escena 3D en las pruebas si jsdom no soporta WebGL.
-- [ ] T26 Ajustar la configuración hasta que la prueba pase (verde).
-- [ ] T27 Refactorizar manteniendo las pruebas en verde.
+- [x] T23 Escribir una prueba que verifique que la página principal renderiza todas las secciones.
+- [x] T24 Confirmar que la prueba falla (rojo).
+- [x] T25 Aislar la escena 3D en las pruebas si jsdom no soporta WebGL.
+  No requirió mock de WebGL: `AsciiScene` no se usa en la página. Se simulan `IntersectionObserver` y
+  `canvas.getContext` (2D) en `src/test/setup.ts`.
+- [x] T26 Ajustar la configuración hasta que la prueba pase (verde).
+- [x] T27 Refactorizar manteniendo las pruebas en verde.
 
 ## 6. Módulo company-profile
 - [ ] T28 Ejecutar las pruebas de `company-profile` sin cambiar su lógica.
