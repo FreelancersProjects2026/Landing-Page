@@ -19,11 +19,11 @@
 - No hay umbral ni reporte de cobertura configurado.
 - Prettier ignora todos los Markdown; la documentación no participa en `format:check`.
 - No existen CI/CD, deploy, variables de entorno ni monitorización.
+- No aparecen comentarios `TODO`, `FIXME`, `HACK` o `XXX` en código o documentación.
+- [PENDIENTE: registrar errores observados en ejecución real y su procedimiento de recuperación.]
 
 ## Plantilla Next.js
 - ESLint advierte `@next/next/no-img-element` en 10 `<img>` de la landing; no se cambian a `<Image />` para no alterar lo visual.
 - Algunas reglas de `react-hooks` (`set-state-in-effect`, `purity`) se desactivan por línea en la plantilla con su motivo.
 - En pruebas, jsdom no implementa `IntersectionObserver` ni `canvas.getContext`; `src/test/setup.ts` los simula.
 - `pnpm install` omite el script de build de `sharp`; no se necesita porque `images.unoptimized` está activo.
-- No aparecen comentarios `TODO`, `FIXME`, `HACK` o `XXX` en código o documentación.
-- [PENDIENTE: registrar errores observados en ejecución real y su procedimiento de recuperación.]

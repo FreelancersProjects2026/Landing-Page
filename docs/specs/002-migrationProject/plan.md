@@ -38,9 +38,11 @@ Se retiran: `index.html`, `vite.config.ts`, `src/main.tsx`, `src/app/`, `src/sty
   configuración de TypeScript para JSX, sin plugin de React. `src/test/setup.ts` simula
   `IntersectionObserver` y `canvas.getContext`, que jsdom no implementa. No hizo falta aislar WebGL:
   `AsciiScene` no se renderiza en la página.
-- **Rigor de TypeScript:** el `tsconfig.json` de la plantilla no incluye `noUncheckedIndexedAccess`,
-  `exactOptionalPropertyTypes` ni los controles de símbolos no usados de la Spec 001 (provocaban 56
-  errores en la plantilla). Se añade `allowImportingTsExtensions` para conservar `company-profile` sin cambios.
+- **Rigor de TypeScript:** respecto al `tsconfig.app.json` anterior se pierden
+  `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noUnusedLocals`, `noUnusedParameters`, `verbatimModuleSyntax`, `erasableSyntaxOnly` y `noFallthroughCasesInSwitch`
+  (activar los cuatro primeros y el último provocaba 56 errores en la plantilla). Recuperarlos, por
+  ejemplo solo para `src/`, queda para una spec posterior; no se crea un tsconfig adicional. Se conserva
+  `allowImportingTsExtensions`, que ya existía en `tsconfig.app.json`, para no cambiar `company-profile`.
 - **Lint:** ESLint plano actual ampliado con las reglas de Next.js; Prettier ignora `.next/`.
   Se usa `@next/eslint-plugin-next` (`recommended` + `core-web-vitals`) en lugar de
   `eslint-config-next`, cuyos plugins (react, import, jsx-a11y) no admiten ESLint 10 (ADR-002).

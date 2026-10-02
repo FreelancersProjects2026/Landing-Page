@@ -1,7 +1,8 @@
 # Convenciones observadas
 
 ## Código y nombres
-- TypeScript `strict`, sin emisión, con el `tsconfig.json` de la plantilla Next.js; desde la Spec 002 ya no se activan `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes` ni los controles de símbolos no usados (generaban 56 errores en la plantilla).
+- TypeScript `strict`, sin emisión, con el `tsconfig.json` de la plantilla Next.js. Respecto al anterior `tsconfig.app.json`, desde la Spec 002 se perdieron `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noUnusedLocals`, `noUnusedParameters`, `verbatimModuleSyntax`, `erasableSyntaxOnly` y `noFallthroughCasesInSwitch`; los cuatro primeros junto con el último generaban 56 errores en la plantilla. Recuperarlos (por ejemplo, solo para `src/`) queda para una spec posterior.
+- Se conserva `allowImportingTsExtensions`, que ya existía en `tsconfig.app.json`; los módulos importan con extensión `.ts`/`.tsx`.
 - Prettier: sin punto y coma, comillas simples y coma final.
 - Componentes y clases en `PascalCase`; funciones, hooks y casos de uso en `camelCase`; módulos en `kebab-case`.
 - Interfaces y propiedades del dominio son `readonly`; los perfiles creados se congelan.

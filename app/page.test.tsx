@@ -7,23 +7,28 @@ describe('Home', () => {
   it('renderiza todas las secciones de la plantilla en orden', () => {
     const { container } = render(<Home />)
 
+    // Cada sección se identifica por su título; navegación y pie, por su etiqueta.
     const sections = Array.from(
       container.querySelector('main')?.children ?? [],
-    ).map((element) => element.id || element.tagName.toLowerCase())
+    ).map(
+      (element) =>
+        element.querySelector('h1, h2')?.textContent ??
+        element.tagName.toLowerCase(),
+    )
 
     expect(sections).toEqual([
       'header',
-      'section',
-      'features',
-      'how-it-works',
-      'infra',
-      'section',
-      'integrations',
-      'security',
-      'developers',
-      'section',
-      'pricing',
-      'section',
+      expect.stringContaining('Distributed compute'),
+      expect.stringContaining('Intelligent'),
+      expect.stringContaining('Define.'),
+      expect.stringContaining('Global by'),
+      expect.stringContaining('Real-time'),
+      expect.stringContaining('Connect'),
+      expect.stringContaining('Autonomous,'),
+      expect.stringContaining('Code your agents.'),
+      expect.stringContaining('Trusted by teams worldwide.'),
+      expect.stringContaining('Pay for'),
+      expect.stringContaining('Ready to delegate'),
       'footer',
     ])
   })

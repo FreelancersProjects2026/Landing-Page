@@ -51,16 +51,16 @@ existentes (`company-profile`), conservando sus pruebas.
 5. Gestor de paquetes: pnpm 10, con un único `pnpm-lock.yaml` regenerado en la raíz.
 
 ## Criterios de aceptación
-- [ ] El repositorio contiene un único proyecto en la raíz basado en la plantilla; el directorio
+- [x] El repositorio contiene un único proyecto en la raíz basado en la plantilla; el directorio
       `compute-the-platform-to-build-and-ship-ai-agents/` ya no existe.
-- [ ] No quedan archivos ni dependencias directas del proyecto Vite (`vite`, `@vitejs/plugin-react`,
+- [x] No quedan archivos ni dependencias directas del proyecto Vite (`vite`, `@vitejs/plugin-react`,
       `index.html`, `vite.config.ts`). `vite` puede seguir como dependencia transitiva de Vitest.
-- [ ] `pnpm dev` levanta la página y `pnpm build` genera la compilación de Next.js sin errores.
-- [ ] `pnpm validate` (formato, lint, tipos, pruebas, arquitectura y build) pasa en verde.
-- [ ] Las pruebas existentes de `company-profile` se conservan y pasan.
+- [x] `pnpm dev` levanta la página y `pnpm build` genera la compilación de Next.js sin errores.
+- [x] `pnpm validate` (formato, lint, tipos, pruebas, arquitectura y build) pasa en verde.
+- [x] Las pruebas existentes de `company-profile` se conservan y pasan.
 - [ ] La página principal se ve igual que la plantilla original, con todas sus secciones.
-- [ ] Una prueba verifica que la página principal renderiza todas las secciones de la plantilla.
-- [ ] dependency-cruiser sigue validando las reglas de capas de `src/modules`.
-- [ ] Los archivos `.md` (README, AGENTS, arquitectura, constitución, contexto y ADR) reflejan
+- [x] Una prueba verifica que la página principal renderiza todas las secciones de la plantilla.
+- [x] dependency-cruiser sigue validando las reglas de capas de `src/modules`.
+- [x] Los archivos `.md` (README, AGENTS, arquitectura, constitución, contexto y ADR) reflejan
       el nuevo stack.
-- [ ] La spec, el plan y las tareas de la migración están sincronizados con el código final.
+- [x] La spec, el plan y las tareas de la migración están sincronizados con el código final.
