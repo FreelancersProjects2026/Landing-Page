@@ -1,5 +1,8 @@
 dist
 coverage
 node_modules
+.next
+next-env.d.ts
+components/ui
 pnpm-lock.yaml
 **/*.md

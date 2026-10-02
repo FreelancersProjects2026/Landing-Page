@@ -12,14 +12,16 @@ module.exports = {
       severity: 'error',
       from: { path: '^src/modules/[^/]+/domain' },
       to: {
-        path: '(^src/app|/application/|/infrastructure/|/ui/|node_modules/react)',
+        path: '(^(app|components)/|/application/|/infrastructure/|/ui/|node_modules/react)',
       },
     },
     {
       name: 'application-does-not-depend-on-outer-layers',
       severity: 'error',
       from: { path: '^src/modules/[^/]+/application' },
-      to: { path: '(^src/app|/infrastructure/|/ui/|node_modules/react)' },
+      to: {
+        path: '(^(app|components)/|/infrastructure/|/ui/|node_modules/react)',
+      },
     },
     {
       name: 'ui-does-not-depend-on-infrastructure',
@@ -30,7 +32,7 @@ module.exports = {
     {
       name: 'app-uses-module-public-api',
       severity: 'error',
-      from: { path: '^src/app' },
+      from: { path: '^(app|components)/' },
       to: {
         path: '^src/modules/[^/]+/(application|domain|infrastructure|ui)/',
       },
@@ -38,8 +40,8 @@ module.exports = {
   ],
   options: {
     doNotFollow: { path: 'node_modules' },
-    includeOnly: '^src',
-    tsConfig: { fileName: 'tsconfig.app.json' },
+    includeOnly: '^(src|app|components)/',
+    tsConfig: { fileName: 'tsconfig.json' },
     enhancedResolveOptions: {
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
     },

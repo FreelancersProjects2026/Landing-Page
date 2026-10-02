@@ -26,17 +26,17 @@
 - [x] T11 Retirar `vite` y `@vitejs/plugin-react` de las dependencias.
 
 ## 4. Configuración
-- [ ] T12 Unificar `package.json` con el nombre `pjm-solutions`.
-- [ ] T13 Combinar dependencias de la plantilla con las herramientas de calidad actuales.
-- [ ] T14 Definir los scripts `dev`, `build` y `start` de Next.js.
-- [ ] T15 Conservar los scripts `test`, `lint`, `format`, `typecheck`, `architecture`, `check` y `validate`.
-- [ ] T16 Unificar `tsconfig.json` conservando los alias `@/*`, `@modules/*` y `@shared/*`.
-- [ ] T17 Adaptar Vitest a Next.js con jsdom y los alias equivalentes.
-- [ ] T18 Añadir las reglas de Next.js a ESLint.
-- [ ] T19 Hacer que Prettier ignore `.next/`.
-- [ ] T20 Adaptar dependency-cruiser al nuevo `tsconfig.json`.
-- [ ] T21 Añadir la regla: `app/` y `components/` solo usan la API pública de los módulos.
-- [ ] T22 Regenerar un único `pnpm-lock.yaml` e instalar dependencias.
+- [x] T12 Unificar `package.json` con el nombre `pjm-solutions`.
+- [x] T13 Combinar dependencias de la plantilla con las herramientas de calidad actuales.
+- [x] T14 Definir los scripts `dev`, `build` y `start` de Next.js.
+- [x] T15 Conservar los scripts `test`, `lint`, `format`, `typecheck`, `architecture`, `check` y `validate`.
+- [x] T16 Unificar `tsconfig.json` conservando los alias `@/*`, `@modules/*` y `@shared/*`.
+- [x] T17 Adaptar Vitest a Next.js con jsdom y los alias equivalentes.
+- [x] T18 Añadir las reglas de Next.js a ESLint.
+- [x] T19 Hacer que Prettier ignore `.next/`.
+- [x] T20 Adaptar dependency-cruiser al nuevo `tsconfig.json`.
+- [x] T21 Añadir la regla: `app/` y `components/` solo usan la API pública de los módulos.
+- [x] T22 Regenerar un único `pnpm-lock.yaml` e instalar dependencias.
 
 ## 5. Pruebas de la página (TDD)
 - [ ] T23 Escribir una prueba que verifique que la página principal renderiza todas las secciones.
