@@ -52,11 +52,12 @@
 - [x] T29 Confirmar que respeta las reglas de capas de dependency-cruiser.
 
 ## 7. Verificación
-- [ ] T30 Confirmar que `pnpm dev` levanta la página.
-- [ ] T31 Confirmar que `pnpm build` compila sin errores.
-- [ ] T32 Confirmar que `pnpm validate` pasa en verde.
+- [x] T30 Confirmar que `pnpm dev` levanta la página.
+- [x] T31 Confirmar que `pnpm build` compila sin errores.
+- [x] T32 Confirmar que `pnpm validate` pasa en verde.
 - [ ] T33 Comparar visualmente la página con la plantilla original.
-- [ ] T34 Confirmar que no quedan archivos ni dependencias de Vite.
+  Pendiente: la realiza el equipo manualmente en el navegador con `pnpm dev`.
+- [x] T34 Confirmar que no quedan archivos ni dependencias de Vite.
 
 ## 8. Documentación
 - [ ] T35 Actualizar `README.md` con el nuevo stack y los comandos.
