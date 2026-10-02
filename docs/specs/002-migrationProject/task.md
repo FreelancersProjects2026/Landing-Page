@@ -14,10 +14,10 @@
 - [x] T03 Verificar la compatibilidad de TypeScript, ESLint y Vitest con Next.js 16.
 
 ## 2. Traslado de la plantilla
-- [ ] T04 Mover `app/`, `components/`, `hooks/`, `lib/`, `public/` y `styles/` a la raíz.
-- [ ] T05 Mover `components.json`, `next.config.mjs` y `postcss.config.mjs` a la raíz.
-- [ ] T06 Fusionar los `.gitignore` incluyendo `.next/` y `next-env.d.ts`.
-- [ ] T07 Eliminar el directorio `compute-the-platform-to-build-and-ship-ai-agents/`.
+- [x] T04 Mover `app/`, `components/`, `hooks/`, `lib/`, `public/` y `styles/` a la raíz.
+- [x] T05 Mover `components.json`, `next.config.mjs` y `postcss.config.mjs` a la raíz.
+- [x] T06 Fusionar los `.gitignore` incluyendo `.next/` y `next-env.d.ts`.
+- [x] T07 Eliminar el directorio `compute-the-platform-to-build-and-ship-ai-agents/`.
 
 ## 3. Retiro de Vite
 - [ ] T08 Eliminar `index.html`, `vite.config.ts` y `src/main.tsx`.
