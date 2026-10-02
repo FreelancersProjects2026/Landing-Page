@@ -9,9 +9,9 @@
 - Método: TDD y cambios pequeños, validando tras cada fase.
 
 ## 1. Preparación
-- [ ] T01 Ejecutar `pnpm validate` en el estado actual y registrar el resultado como línea base.
-- [ ] T02 Registrar el ADR 002 con la decisión de pasar de Vite a Next.js.
-- [ ] T03 Verificar la compatibilidad de TypeScript, ESLint y Vitest con Next.js 16.
+- [x] T01 Ejecutar `pnpm validate` en el estado actual y registrar el resultado como línea base.
+- [x] T02 Registrar el ADR 002 con la decisión de pasar de Vite a Next.js.
+- [x] T03 Verificar la compatibilidad de TypeScript, ESLint y Vitest con Next.js 16.
 
 ## 2. Traslado de la plantilla
 - [ ] T04 Mover `app/`, `components/`, `hooks/`, `lib/`, `public/` y `styles/` a la raíz.

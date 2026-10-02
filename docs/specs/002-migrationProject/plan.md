@@ -37,6 +37,10 @@ Se retiran: `index.html`, `vite.config.ts`, `src/main.tsx`, `src/app/`, `src/sty
 - **Pruebas:** Vitest con entorno jsdom y alias equivalentes; se evaluará si hace falta un plugin
   de React para JSX o si basta con la configuración de TypeScript.
 - **Lint:** ESLint plano actual ampliado con las reglas de Next.js; Prettier ignora `.next/`.
+  Se usa `@next/eslint-plugin-next` (`recommended` + `core-web-vitals`) en lugar de
+  `eslint-config-next`, cuyos plugins (react, import, jsx-a11y) no admiten ESLint 10 (ADR-002).
+- **Vite:** se retiran `vite` y `@vitejs/plugin-react` de las dependencias directas; `vite` queda
+  como peer transitivo de Vitest 5 y Vitest compila JSX sin plugin de React (ADR-002).
 - **Arquitectura:** dependency-cruiser conserva las reglas de capas de `src/modules` y añade que
   `app/` y `components/` solo usan la API pública (`index.ts`) de cada módulo.
 - **`.gitignore`:** fusión de ambos, incluyendo `.next/`, `next-env.d.ts` y `dist/`.

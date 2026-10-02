@@ -53,8 +53,8 @@ existentes (`company-profile`), conservando sus pruebas.
 ## Criterios de aceptación
 - [ ] El repositorio contiene un único proyecto en la raíz basado en la plantilla; el directorio
       `compute-the-platform-to-build-and-ship-ai-agents/` ya no existe.
-- [ ] No quedan archivos ni dependencias del proyecto Vite (`vite`, `@vitejs/plugin-react`,
-      `index.html`, `vite.config.ts`).
+- [ ] No quedan archivos ni dependencias directas del proyecto Vite (`vite`, `@vitejs/plugin-react`,
+      `index.html`, `vite.config.ts`). `vite` puede seguir como dependencia transitiva de Vitest.
 - [ ] `pnpm dev` levanta la página y `pnpm build` genera la compilación de Next.js sin errores.
 - [ ] `pnpm validate` (formato, lint, tipos, pruebas, arquitectura y build) pasa en verde.
 - [ ] Las pruebas existentes de `company-profile` se conservan y pasan.
