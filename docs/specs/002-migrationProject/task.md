@@ -21,7 +21,7 @@
 
 ## 3. Retiro de Vite
 - [x] T08 Eliminar `index.html`, `vite.config.ts` y `src/main.tsx`.
-- [x] T09 Eliminar `src/app/` y `src/styles.css`.
+- [x] T09 Eliminar `src/app/` del proyecto Vite y `src/styles.css`.
 - [x] T10 Eliminar `tsconfig.app.json`, `tsconfig.node.json` y `dist/`.
 - [x] T11 Retirar `vite` y `@vitejs/plugin-react` de las dependencias.
 

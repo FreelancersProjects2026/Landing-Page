@@ -24,7 +24,7 @@ pequeños, cada uno verificable de forma independiente.
 | `src/shared/` | Proyecto actual | Recursos técnicos transversales. |
 | `src/test/setup.ts` | Proyecto actual | Configuración de pruebas. |
 
-Se retiran: `index.html`, `vite.config.ts`, `src/main.tsx`, `src/app/`, `src/styles.css`, `dist/`,
+Se retiran: `index.html`, `vite.config.ts`, `src/main.tsx`, `src/app/` del proyecto Vite, `src/styles.css`, `dist/`,
 `tsconfig.app.json`, `tsconfig.node.json` y el directorio de la plantilla una vez trasladado.
 
 ## Decisiones técnicas

@@ -17,7 +17,7 @@ existentes (`company-profile`), conservando sus pruebas.
 
 ## Alcance
 - Mover el contenido de la plantilla a la raíz del repositorio y eliminar el directorio original.
-- Retirar el proyecto Vite actual (`index.html`, `vite.config.ts`, `src/main.tsx`, `src/app/`,
+- Retirar el proyecto Vite actual (`index.html`, `vite.config.ts`, `src/main.tsx`, `src/app/` de Vite,
   `dist/`) y sus dependencias exclusivas.
 - Unificar `package.json`: dependencias de la plantilla + herramientas de calidad vigentes
   (Vitest, Testing Library, ESLint, Prettier, dependency-cruiser) y el script `validate`.
