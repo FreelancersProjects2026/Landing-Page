@@ -16,10 +16,10 @@ pequeños, cada uno verificable de forma independiente.
 ## Estructura objetivo
 | Ruta | Origen | Responsabilidad |
 |------|--------|-----------------|
-| `app/` | Plantilla | Composición de páginas y layout (App Router). |
-| `components/landing/` | Plantilla | Secciones visuales de la landing, sin cambios. |
-| `components/ui/`, `hooks/`, `lib/` | Plantilla | Componentes shadcn/ui y utilidades técnicas. |
-| `public/`, `styles/` | Plantilla | Recursos estáticos y estilos globales. |
+| `src/app/` | Plantilla | Composición de páginas, layout y estilos globales (App Router). |
+| `src/components/landing/` | Plantilla | Secciones visuales de la landing, sin cambios. |
+| `src/components/ui/`, `src/hooks/`, `src/lib/` | Plantilla | Componentes shadcn/ui y utilidades técnicas. |
+| `public/` | Plantilla | Recursos estáticos (Next.js exige que esté en la raíz). |
 | `src/modules/company-profile/` | Proyecto actual | Módulo de dominio con sus capas y pruebas. |
 | `src/shared/` | Proyecto actual | Recursos técnicos transversales. |
 | `src/test/setup.ts` | Proyecto actual | Configuración de pruebas. |
@@ -49,9 +49,9 @@ Se retiran: `index.html`, `vite.config.ts`, `src/main.tsx`, `src/app/`, `src/sty
 - **Vite:** se retiran `vite` y `@vitejs/plugin-react` de las dependencias directas; `vite` queda
   como peer transitivo de Vitest 5 y Vitest compila JSX sin plugin de React (ADR-002).
 - **Arquitectura:** dependency-cruiser conserva las reglas de capas de `src/modules` y añade que
-  `app/` y `components/` solo usan la API pública (`index.ts`) de cada módulo.
+  `src/app/` y `src/components/` solo usan la API pública (`index.ts`) de cada módulo.
 - **`.gitignore`:** fusión de ambos, incluyendo `.next/`, `next-env.d.ts` y `dist/`.
-- **Código de terceros:** `components/ui/` (shadcn) queda fuera de ESLint y Prettier. El resto de
+- **Código de terceros:** `src/components/ui/` (shadcn) queda fuera de ESLint y Prettier. El resto de
   la plantilla se formatea con Prettier y se corrige lo mínimo para pasar lint, sin cambios visuales.
 - **Build:** se elimina `typescript.ignoreBuildErrors` de `next.config.mjs`; los errores de tipos
   de la plantilla se corrigen sin cambiar lo visual.
@@ -76,6 +76,10 @@ Se retiran: `index.html`, `vite.config.ts`, `src/main.tsx`, `src/app/`, `src/sty
 9. **Corrección de hidratación:** corregir el error de hidratación del patrón ASCII de
    `TestimonialsSection` con `suppressHydrationWarning`, sin cambio visual (excepción de alcance
    aprobada por el usuario).
+10. **Código en `src/`:** mover `app/`, `components/`, `hooks/` y `lib/` a `src/` con `git mv`,
+    cambiar el alias `@/*` a `./src/*`, actualizar `components.json`, dependency-cruiser, ESLint,
+    Prettier, Vitest y la documentación, y eliminar `styles/globals.css` (sin uso). Sin cambios
+    de contenido ni visuales.
 
 ## Estrategia de pruebas
 - Las pruebas de `company-profile` actúan como red de seguridad: no deben cambiar su lógica.

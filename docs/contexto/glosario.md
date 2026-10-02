@@ -17,7 +17,7 @@
 - **Interfaz / UI:** componentes y estados visibles.
 - **Repositorio:** contrato para obtener un perfil; hoy lo implementa `StaticCompanyProfileRepository`.
 - **Caso de uso:** operación de aplicación; hoy solo existe `GetCompanyProfile`.
-- **Plantilla / landing:** base visual oficial del sitio (Next.js), en `app/` y `components/landing/`; su contenido aún no está personalizado.
+- **Plantilla / landing:** base visual oficial del sitio (Next.js), en `src/app/` y `src/components/landing/`; su contenido aún no está personalizado.
 - **Sección:** bloque visual de la landing (hero, features, pricing, etc.).
 
 ## Siglas

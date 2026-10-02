@@ -12,7 +12,7 @@ module.exports = {
       severity: 'error',
       from: { path: '^src/modules/[^/]+/domain' },
       to: {
-        path: '(^(app|components)/|/application/|/infrastructure/|/ui/|node_modules/react)',
+        path: '(^src/(app|components)/|/application/|/infrastructure/|/ui/|node_modules/react)',
       },
     },
     {
@@ -20,7 +20,7 @@ module.exports = {
       severity: 'error',
       from: { path: '^src/modules/[^/]+/application' },
       to: {
-        path: '(^(app|components)/|/infrastructure/|/ui/|node_modules/react)',
+        path: '(^src/(app|components)/|/infrastructure/|/ui/|node_modules/react)',
       },
     },
     {
@@ -32,7 +32,7 @@ module.exports = {
     {
       name: 'app-uses-module-public-api',
       severity: 'error',
-      from: { path: '^(app|components)/' },
+      from: { path: '^src/(app|components)/' },
       to: {
         path: '^src/modules/[^/]+/(application|domain|infrastructure|ui)/',
       },
@@ -40,7 +40,7 @@ module.exports = {
   ],
   options: {
     doNotFollow: { path: 'node_modules' },
-    includeOnly: '^(src|app|components)/',
+    includeOnly: '^src/',
     tsConfig: { fileName: 'tsconfig.json' },
     enhancedResolveOptions: {
       extensions: ['.js', '.jsx', '.ts', '.tsx'],

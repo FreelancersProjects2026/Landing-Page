@@ -16,7 +16,9 @@ Al verificar compatibilidades aparecieron dos conflictos de dependencias entre p
   `eslint-plugin-jsx-a11y`, que solo admiten ESLint 9 o anterior.
 
 ## Decisión
-- Adoptar Next.js (App Router) como framework y ubicar la plantilla en la raíz del repositorio.
+- Adoptar Next.js (App Router) como framework. Todo el código fuente vive en `src/` (`src/app`,
+  `src/components`, `src/hooks`, `src/lib`, junto a `src/modules`, `src/shared` y `src/test`); `public/`
+  queda en la raíz y el alias `@/*` apunta a `./src/*`.
 - Mantener los módulos de dominio en `src/modules/` con sus capas y reglas de dependencia.
 - Retirar `vite` y `@vitejs/plugin-react` de las dependencias directas. `vite` queda solo como
   dependencia transitiva de Vitest (pnpm instala los peers automáticamente). Vitest compila el JSX
@@ -35,5 +37,5 @@ Al verificar compatibilidades aparecieron dos conflictos de dependencias entre p
 - `pnpm dev`, `pnpm build` y `pnpm start` usan Next.js.
 - `vite` permanece en el lockfile como dependencia transitiva de Vitest.
 - El lint cubre las reglas de Next.js, pero no las de `eslint-plugin-react`, `import` ni `jsx-a11y`.
-- dependency-cruiser sigue validando las capas y añade que `app/` y `components/` solo usan la API
+- dependency-cruiser sigue validando las capas y añade que `src/app/` y `src/components/` solo usan la API
   pública de cada módulo.

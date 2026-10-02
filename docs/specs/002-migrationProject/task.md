@@ -73,3 +73,13 @@
 - [ ] T43 Confirmar en `pnpm dev` que la consola no muestra errores de hidratación.
   Pendiente: el usuario recarga http://localhost:3000 y confirma que la consola no muestra 'Hydration failed'.
 - [x] T44 Actualizar `docs/contexto/errores-conocidos.md` como resuelto.
+
+## 10. Código fuente en src/
+- [x] T45 Mover `app/`, `components/`, `hooks/` y `lib/` a `src/` con `git mv`.
+- [x] T46 Eliminar `styles/globals.css` (no se usa).
+- [x] T47 Cambiar el alias `@/*` a `./src/*` en `tsconfig.json` y en Vitest.
+- [x] T48 Actualizar `components.json` (`css: src/app/globals.css`).
+- [x] T49 Actualizar rutas en dependency-cruiser, ESLint y Prettier (`src/components/ui`, `src/app`).
+- [x] T50 Confirmar que la regla de API pública de módulos sigue detectando importaciones ilegales.
+- [x] T51 Confirmar que `pnpm validate` pasa en verde.
+- [x] T52 Actualizar README, AGENTS, architecture, constitution, contexto y ADR 002 con la nueva estructura.

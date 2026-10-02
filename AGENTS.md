@@ -5,11 +5,11 @@ Este proyecto pertenece a un equipo de tres profesionales que desarrolla softwar
 
 ## Estructura
 - Stack: Next.js 16 (App Router), React 19, Tailwind CSS 4, shadcn/ui, TypeScript y pnpm 10.
-- `app/`: páginas y layout; solo composición.
-- `components/landing/`: secciones visuales de la landing; `components/ui/` es código de shadcn/ui
+- `src/app/`: páginas y layout; solo composición.
+- `src/components/landing/`: secciones visuales de la landing; `src/components/ui/` es código de shadcn/ui
   (fuera de ESLint y Prettier).
 - `src/modules/<modulo>/`: capas `domain`, `application`, `infrastructure` y `ui`, con su API pública en `index.ts`.
-- `app/` y `components/` consumen los módulos solo mediante su `index.ts` (`pnpm architecture`).
+- `src/app/` y `src/components/` consumen los módulos solo mediante su `index.ts` (`pnpm architecture`).
 - Antes de terminar, ejecuta `pnpm validate`.
 
 ## Reglas de desarrollo

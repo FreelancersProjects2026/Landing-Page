@@ -6,7 +6,7 @@
 - **Descartado:** carpetas globales por tipo, componentes sin capas y microfrontends; el ADR cita dispersión, mezcla de responsabilidades y complejidad, respectivamente.
 
 ## API pública y dependencias hacia dentro
-- **Decisión:** módulos consumidos por `index.ts`; dominio aislado; contratos en aplicación; composición en `app/`.
+- **Decisión:** módulos consumidos por `index.ts`; dominio aislado; contratos en aplicación; composición en `src/app/`.
 - **Por qué documentado:** reducir acoplamiento y permitir pruebas sin React ni servicios externos.
 - **Control:** dependency-cruiser y script `pnpm architecture`.
 

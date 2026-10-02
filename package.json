@@ -13,7 +13,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check": "pnpm format:check && pnpm lint && pnpm typecheck",
-    "architecture": "depcruise src app components --config .dependency-cruiser.cjs",
+    "architecture": "depcruise src --config .dependency-cruiser.cjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "validate": "pnpm check && pnpm test && pnpm architecture && pnpm build"

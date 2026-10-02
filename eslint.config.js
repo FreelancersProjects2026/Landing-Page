@@ -13,7 +13,7 @@ export default defineConfig([
     'coverage',
     '.next',
     'next-env.d.ts',
-    'components/ui',
+    'src/components/ui',
   ]),
   {
     files: ['**/*.{js,mjs,cjs,ts,tsx}'],

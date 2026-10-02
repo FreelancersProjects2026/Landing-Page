@@ -6,8 +6,8 @@
 - Prettier: sin punto y coma, comillas simples y coma final.
 - Componentes y clases en `PascalCase`; funciones, hooks y casos de uso en `camelCase`; módulos en `kebab-case`.
 - Interfaces y propiedades del dominio son `readonly`; los perfiles creados se congelan.
-- Alias entre espacios: `@/*` (raíz), `@modules`, `@shared`; importaciones internas relativas.
-- `components/ui` (shadcn/ui) es código de terceros: fuera de ESLint y Prettier.
+- Alias entre espacios: `@/*` (`./src/*`), `@modules`, `@shared`; importaciones internas relativas.
+- `src/components/ui` (shadcn/ui) es código de terceros: fuera de ESLint y Prettier.
 - Cada módulo expone su superficie pública mediante `index.ts`.
 
 ## Patrones usados
@@ -20,10 +20,10 @@
 
 ## Prohibiciones automatizadas
 - Ciclos de dependencias.
-- Dominio hacia aplicación, infraestructura, UI, `app/`, `components/` o React.
-- Aplicación hacia infraestructura, UI, `app/`, `components/` o React.
+- Dominio hacia aplicación, infraestructura, UI, `src/app/`, `src/components/` o React.
+- Aplicación hacia infraestructura, UI, `src/app/`, `src/components/` o React.
 - UI hacia infraestructura.
-- `app/` y `components/` hacia capas internas de un módulo.
+- `src/app/` y `src/components/` hacia capas internas de un módulo.
 
 ## Pruebas
 - Archivos `*.test.ts(x)` junto al código probado; descripciones en español.

@@ -8,10 +8,10 @@
 - Analítica: `<Analytics />` de `@vercel/analytics` está en el layout, sin configurar.
 
 ## Mapa
-- `app/layout.tsx` y `app/page.tsx`: layout raíz (fuentes, metadatos) y página principal de la plantilla.
-- `components/landing`: 13 secciones de la landing (navegación, hero, features, ..., footer); `ascii-scene.tsx` existe pero no se usa.
-- `components/ui`, `hooks`, `lib`: componentes shadcn/ui y utilidades.
-- `public`, `styles`: imágenes, iconos y estilos globales.
+- `src/app/layout.tsx` y `src/app/page.tsx`: layout raíz (fuentes, metadatos) y página principal de la plantilla.
+- `src/components/landing`: 13 secciones de la landing (navegación, hero, features, ..., footer); `ascii-scene.tsx` existe pero no se usa.
+- `src/components/ui`, `src/hooks`, `src/lib`: componentes shadcn/ui y utilidades.
+- `public` (en la raíz): imágenes e iconos. Los estilos globales están en `src/app/globals.css`.
 - `src/modules/company-profile`: único módulo; contiene `domain`, `application`, `infrastructure`, `ui` e `index.ts` público.
 - `src/shared`: reservado para recursos técnicos reutilizados; hoy solo contiene un README.
 - `src/test`: configuración global de pruebas.
@@ -29,7 +29,7 @@ página desde la Spec 002; su flujo, cubierto por pruebas, es:
 ## Fronteras
 - Dominio no depende de React ni de capas externas.
 - Aplicación define contratos; infraestructura los implementa.
-- `app/` y `components/` consumen módulos solo mediante su `index.ts`.
+- `src/app/` y `src/components/` consumen módulos solo mediante su `index.ts`.
 - `pnpm architecture` bloquea ciclos y varias dependencias prohibidas.
 
 ## No existe

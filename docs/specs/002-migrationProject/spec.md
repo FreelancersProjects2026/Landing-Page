@@ -26,6 +26,8 @@ existentes (`company-profile`), conservando sus pruebas.
 - Usar la plantilla tal como está: todas sus secciones, textos, identidad visual y escena 3D.
 - Excepción aprobada: corregir el error de hidratación del patrón ASCII de
   `TestimonialsSection`, sin cambio visual.
+- Reubicar `app/`, `components/`, `hooks/` y `lib/` dentro de `src/` (todo el código en `src/`;
+  `public/` permanece en la raíz) y eliminar `styles/globals.css`, que no se usa.
 - Adaptar `.dependency-cruiser.cjs`, `tsconfig` y `eslint.config.js` a la nueva estructura.
 - Actualizar los archivos `.md` (`README.md`, `AGENTS.md`, `docs/architecture.md`,
   `docs/constitution.md` y `docs/contexto/`) para reflejar el nuevo stack y estructura.
@@ -59,6 +61,7 @@ existentes (`company-profile`), conservando sus pruebas.
       `index.html`, `vite.config.ts`). `vite` puede seguir como dependencia transitiva de Vitest.
 - [x] `pnpm dev` levanta la página y `pnpm build` genera la compilación de Next.js sin errores.
 - [ ] La página carga sin errores de hidratación en la consola.
+- [x] Todo el código fuente vive en `src/`; en la raíz solo quedan `public/`, `docs/` y configuración.
 - [x] `pnpm validate` (formato, lint, tipos, pruebas, arquitectura y build) pasa en verde.
 - [x] Las pruebas existentes de `company-profile` se conservan y pasan.
 - [ ] La página principal se ve igual que la plantilla original, con todas sus secciones.

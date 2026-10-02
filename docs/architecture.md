@@ -9,9 +9,9 @@
 - Migración a Next.js: [`spec 002`](specs/002-migrationProject/spec.md).
 
 ## Estructura
-- `app/`: composición global con Next.js App Router; páginas y layout.
-- `components/landing/`: secciones visuales de la landing.
-- `components/ui/`, `hooks/`, `lib/`: componentes shadcn/ui y utilidades técnicas.
+- `src/app/`: composición global con Next.js App Router; páginas y layout.
+- `src/components/landing/`: secciones visuales de la landing.
+- `src/components/ui/`, `src/hooks/`, `src/lib/`: componentes shadcn/ui y utilidades técnicas.
 - `src/modules`: capacidades del negocio independientes.
 - `domain`: entidades, reglas e invariantes sin React.
 - `application`: casos de uso y contratos de entrada o salida.
@@ -32,13 +32,13 @@ flowchart LR
   Application --> Domain
 ```
 
-Las dependencias apuntan hacia aplicación y dominio. `pnpm architecture` bloquea ciclos, acceso de `app/` y `components/` a capas internas y dependencias desde capas internas hacia capas externas.
+Las dependencias apuntan hacia aplicación y dominio. `pnpm architecture` bloquea ciclos, acceso de `src/app/` y `src/components/` a capas internas y dependencias desde capas internas hacia capas externas.
 
 ## Convenciones
 - Un módulo usa un nombre de capacidad de negocio en `kebab-case`.
 - Cada módulo expone únicamente su `index.ts` a consumidores externos.
 - Los archivos de componentes y clases usan `PascalCase`; funciones y casos de uso, `camelCase`.
-- Los alias `@/*` (raíz), `@modules` y `@shared` se reservan para cruces entre espacios.
+- Los alias `@/*` (`./src/*`), `@modules` y `@shared` se reservan para cruces entre espacios.
 - Las importaciones internas de un módulo son relativas.
 
 ## Responsabilidades
@@ -61,7 +61,7 @@ Las dependencias apuntan hacia aplicación y dominio. `pnpm architecture` bloque
 - Aplicación: contratos sustituidos por dobles.
 - Infraestructura: validación y transformación de entradas.
 - Interfaz: comportamiento observable con React Testing Library.
-- Página principal: `app/page.test.tsx` verifica que se renderizan todas las secciones.
+- Página principal: `src/app/page.test.tsx` verifica que se renderizan todas las secciones.
 - Arquitectura: reglas de dependencias con dependency-cruiser.
 
 ## Verificación
