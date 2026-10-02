@@ -1,0 +1,83 @@
+# Plan técnico: Migración del proyecto a la nueva plantilla
+
+## Referencias
+- Especificación: `docs/specs/002-migrationProject/spec.md`.
+- Arquitectura vigente: `docs/specs/001-definir-arquitectura/`, `docs/adr/001-arquitectura-modular-por-dominio.md`.
+- Constitución: `docs/constitution.md`.
+- Plantilla: `compute-the-platform-to-build-and-ship-ai-agents/` (Next.js 16, React 19, Tailwind 4, shadcn/ui).
+
+## Enfoque
+Se trasladará la plantilla a la raíz del repositorio sin modificar su contenido visual, se retirará el
+proyecto Vite y se reintegrará el módulo `company-profile` con su arquitectura por capas. Las
+herramientas de calidad actuales (Vitest, ESLint, Prettier, dependency-cruiser) se conservarán y se
+adaptarán a Next.js. La migración se hará en una rama dedicada (`migration/design`) y en pasos
+pequeños, cada uno verificable de forma independiente.
+
+## Estructura objetivo
+| Ruta | Origen | Responsabilidad |
+|------|--------|-----------------|
+| `app/` | Plantilla | Composición de páginas y layout (App Router). |
+| `components/landing/` | Plantilla | Secciones visuales de la landing, sin cambios. |
+| `components/ui/`, `hooks/`, `lib/` | Plantilla | Componentes shadcn/ui y utilidades técnicas. |
+| `public/`, `styles/` | Plantilla | Recursos estáticos y estilos globales. |
+| `src/modules/company-profile/` | Proyecto actual | Módulo de dominio con sus capas y pruebas. |
+| `src/shared/` | Proyecto actual | Recursos técnicos transversales. |
+| `src/test/setup.ts` | Proyecto actual | Configuración de pruebas. |
+
+Se retiran: `index.html`, `vite.config.ts`, `src/main.tsx`, `src/app/`, `src/styles.css`, `dist/`,
+`tsconfig.app.json`, `tsconfig.node.json` y el directorio de la plantilla una vez trasladado.
+
+## Decisiones técnicas
+- **Gestor de paquetes:** pnpm 10; se regenera un único `pnpm-lock.yaml` en la raíz.
+- **`package.json`:** nombre `pjm-solutions`, dependencias de la plantilla, devDependencies de
+  calidad actuales (sin `vite` ni `@vitejs/plugin-react`) y scripts `dev`, `build` y `start` de Next.js.
+  Se mantienen `test`, `lint`, `format`, `typecheck`, `architecture`, `check` y `validate`.
+- **TypeScript:** un solo `tsconfig.json` basado en el de la plantilla, conservando los alias
+  `@/*`, `@modules/*` y `@shared/*`.
+- **Pruebas:** Vitest con entorno jsdom y alias equivalentes; se evaluará si hace falta un plugin
+  de React para JSX o si basta con la configuración de TypeScript.
+- **Lint:** ESLint plano actual ampliado con las reglas de Next.js; Prettier ignora `.next/`.
+- **Arquitectura:** dependency-cruiser conserva las reglas de capas de `src/modules` y añade que
+  `app/` y `components/` solo usan la API pública (`index.ts`) de cada módulo.
+- **`.gitignore`:** fusión de ambos, incluyendo `.next/`, `next-env.d.ts` y `dist/`.
+- **Código de terceros:** `components/ui/` (shadcn) queda fuera de ESLint y Prettier. El resto de
+  la plantilla se formatea con Prettier y se corrige lo mínimo para pasar lint, sin cambios visuales.
+- **Build:** se elimina `typescript.ignoreBuildErrors` de `next.config.mjs`; los errores de tipos
+  de la plantilla se corrigen sin cambiar lo visual.
+- **Commits:** uno por fase en `migration/design`, más uno inicial con spec, plan y tareas.
+- **Verificación visual (T33):** la realiza el equipo manualmente en el navegador.
+- **`@vercel/analytics`:** el componente se conserva tal cual en el layout; no se configura.
+
+## Fases
+1. **Preparación:** registrar el ADR 002 (Vite → Next.js) y verificar que `pnpm validate` pasa en
+   el estado actual como línea base.
+2. **Traslado de la plantilla:** mover sus archivos a la raíz y resolver conflictos de nombres
+   (`package.json`, `tsconfig.json`, `.gitignore`, `pnpm-lock.yaml`).
+3. **Retiro de Vite:** eliminar los archivos y dependencias exclusivos del proyecto anterior.
+4. **Configuración:** unificar `package.json`, `tsconfig.json`, Vitest, ESLint, Prettier y
+   dependency-cruiser; instalar dependencias.
+5. **Pruebas (TDD):** escribir primero la prueba que verifica que la página principal renderiza
+   todas las secciones de la plantilla; hacerla pasar con la configuración correcta.
+6. **Módulo `company-profile`:** comprobar que sus pruebas siguen en verde sin cambios de lógica.
+7. **Verificación:** `pnpm validate` en verde y revisión visual con `pnpm dev` frente a la plantilla.
+8. **Documentación:** actualizar `README.md`, `AGENTS.md`, `docs/architecture.md`,
+   `docs/constitution.md` y `docs/contexto/`; sincronizar spec, plan y tareas.
+
+## Estrategia de pruebas
+- Las pruebas de `company-profile` actúan como red de seguridad: no deben cambiar su lógica.
+- Una prueba de la página principal confirma que se muestran todas las secciones de la plantilla.
+- La escena 3D (`three`, `@react-three/fiber`) se aísla en las pruebas si jsdom no soporta WebGL.
+- La comparación visual con la plantilla original se hace de forma manual en el navegador.
+
+## Criterios de aceptación
+Los definidos en la spec 002; la migración se considera completa cuando `pnpm validate` pasa y la
+página es visualmente idéntica a la plantilla.
+
+## Riesgos y mitigaciones
+- **Incompatibilidad de versiones (TypeScript 6, ESLint 10, Vitest 5) con Next.js 16:** fijar
+  versiones compatibles y documentarlo en el ADR.
+- **WebGL en jsdom:** sustituir la escena 3D en pruebas mediante un mock controlado.
+- **Pérdida de las reglas de capas:** ejecutar dependency-cruiser antes y después de la migración.
+- **Componentes de servidor y cliente:** respetar las directivas `"use client"` de la plantilla.
+- **Conflictos en archivos de configuración:** resolverlos uno a uno y validar tras cada fase.
+- **Historial de git:** usar movimientos de archivos para conservar la trazabilidad.
