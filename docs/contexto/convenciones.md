@@ -13,10 +13,10 @@
 
 ## Patrones usados
 - Módulos por capacidad con capas `domain`, `application`, `infrastructure` y `ui`.
-- Factory para invariantes (`createCompanyProfile`).
-- Puerto de repositorio en aplicación y adaptador concreto en infraestructura.
+- Validación del contenido al cargarse (`validateLandingContent`): longitudes SEO, palabra clave, textos
+  no vacíos y sin `[PENDIENTE]`.
+- Puerto en aplicación (`LandingContentSource`) y datos concretos en infraestructura.
 - Inyección de dependencias desde la capa de composición.
-- Unión discriminada para estados asíncronos.
 - Validación externa en infraestructura y validación de negocio en dominio.
 
 ## Prohibiciones automatizadas

@@ -113,17 +113,17 @@ de todo Costa Rica encontrarnos y contactarnos, publicado en la landing en `/es`
 ## Criterios de aceptación
 - [ ] La spec recoge identidad, propuesta de valor, servicios, proyectos, equipo, contacto,
       secciones y palabras clave, sin datos inventados.
-- [ ] `contenido.md` contiene los textos de las 7 secciones en español e inglés.
-- [ ] Cada idioma tiene un título (≤ 60 caracteres) y una meta description (≤ 160 caracteres) que
+- [x] `contenido.md` contiene los textos de las 7 secciones en español e inglés.
+- [x] Cada idioma tiene un título (≤ 60 caracteres) y una meta description (≤ 160 caracteres) que
       incluyen la palabra clave principal y «Costa Rica».
 - [ ] Cada grupo de palabras clave aparece al menos una vez en `contenido.md`, en ambos idiomas.
-- [ ] Los proyectos no incluyen enlaces, datos de clientes ni capturas.
-- [ ] No aparecen precios, testimonios ni métricas.
-- [ ] Nombre, ubicación y WhatsApp coinciden en todas las secciones e idiomas.
-- [ ] Los pendientes están marcados como `[PENDIENTE]` y no bloquean el resto del contenido.
+- [x] Los proyectos no incluyen enlaces, datos de clientes ni capturas.
+- [x] No aparecen precios, testimonios ni métricas.
+- [x] Nombre, ubicación y WhatsApp coinciden en todas las secciones e idiomas.
+- [x] Los pendientes están marcados como `[PENDIENTE]` y no bloquean el resto del contenido.
 - [x] El equipo aprueba el contenido en ambos idiomas.
-- [ ] `/es` y `/en` muestran las 7 secciones con los textos aprobados y `/` redirige a `/es`.
-- [ ] Cada idioma publica su título y meta description, un único `<h1>` con la palabra clave y el
+- [x] `/es` y `/en` muestran las 7 secciones con los textos aprobados y `/` redirige a `/es`.
+- [x] Cada idioma publica su título y meta description, un único `<h1>` con la palabra clave y el
       `lang` correcto.
-- [ ] Todos los botones de contacto abren WhatsApp con el mensaje del idioma.
-- [ ] `pnpm validate` pasa en verde.
+- [x] Todos los botones de contacto abren WhatsApp con el mensaje del idioma.
+- [x] `pnpm validate` pasa en verde.

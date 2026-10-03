@@ -30,3 +30,6 @@
       WhatsApp, hidratación) y componer `src/app/[lang]/page.tsx`.
 - [ ] T10 Cierre: `pnpm validate` en verde, revisión manual en `/es` y `/en` (móvil, escritorio,
       Lighthouse), marcar criterios de la spec y sincronizar plan, `README.md` y `docs/contexto/`.
+      Hecho: `pnpm validate` en verde, criterios verificados marcados y documentación sincronizada.
+      Pendiente (usuario): revisión manual en `/es` y `/en` (móvil, escritorio y Lighthouse) y los
+      criterios de la spec que requieren juicio (sin datos inventados; grupos de palabras clave).

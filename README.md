@@ -27,11 +27,11 @@ Somos un equipo de tres profesionales. Nuestro punto de partida es comprender el
 
 ## Estructura
 
-- `src/app/`: páginas y layout (App Router).
-- `src/components/landing/`: secciones de la landing (plantilla base).
+- `src/app/[lang]/`: layout y página por idioma (`/es`, `/en`); `/` redirige a `/es`.
+- `src/components/landing/`: secciones de la landing; reciben el contenido por props.
 - `src/components/ui/`, `src/hooks/`, `src/lib/`: componentes shadcn/ui y utilidades técnicas.
 - `public/`: recursos estáticos (en la raíz). Los estilos globales están en `src/app/globals.css`.
-- `src/modules/`: módulos de dominio con sus capas (`company-profile`).
+- `src/modules/`: módulos de dominio con sus capas (`company-profile`: contenido ES/EN de la landing).
 - `src/shared/`, `src/test/`: recursos transversales y configuración de pruebas.
 
 ## Principios de desarrollo

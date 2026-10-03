@@ -16,17 +16,23 @@
 - [PENDIENTE: documentar por qué se eligieron TypeScript y pnpm frente a alternativas.]
 
 ## Datos consistentes
-- **Decisión:** infraestructura valida forma y tipos; dominio normaliza texto, protege invariantes y devuelve datos congelados.
-- **Por qué documentado:** la constitución exige validar límites y conservar estados coherentes.
+- **Decisión:** el contenido de la landing se valida al cargarse (`validateLandingContent`): título <= 60,
+  descripción <= 160, palabra clave principal en dos partes en título, H1 y descripción, textos no vacíos y
+  sin `[PENDIENTE]`. Un contenido inválido rompe el build y nunca llega a producción.
+- **Consistencia NAP:** nombre, ubicación, dirección, teléfono, proyectos y enlaces del equipo se definen una
+  vez y se comparten entre idiomas; todos los botones de contacto usan `buildWhatsAppUrl`.
 
-## Estado y errores de interfaz
-- **Decisión:** modelar `loading`, `empty`, `success` y `error`; mostrar un mensaje genérico ante errores.
-- **Evidencia:** hook, componente y pruebas de `company-profile`.
-- [PENDIENTE: definir política de registro, reintentos y observabilidad.]
+## Contenido estático e idiomas
+- **Decisión:** el contenido es estático y conocido en compilación; se lee de forma síncrona desde Server
+  Components y se publica como páginas estáticas `/es` y `/en` (sin librería de i18n ni estados de carga).
+- **Ruta raíz:** `/` redirige a `/es` (307) con `redirects()` en `next.config.mjs`.
+- **SEO:** `generateMetadata` por idioma y JSON-LD `ProfessionalService` sin `url`.
+- [PENDIENTE: dominio; bloquea URL canónica, `hreflang`, sitemap y `metadataBase`.]
 
 ## Fuente de datos actual
-- **Decisión observable:** repositorio estático asíncrono con el perfil de PJM Solutions.
-- [PENDIENTE: documentar si es temporal y qué integración lo sustituirá.]
+- **Decisión:** textos de `docs/specs/003-generarContenido/contenido.md` (aprobado) copiados en
+  `infrastructure/landingContentSource.ts`; un cambio de contenido se aprueba primero en ese archivo.
 
 ## Historial
 - La migración a Next.js (Spec 002) se registró en la rama `migration/design`, un commit por fase.
+- El contenido de la landing (Spec 003) se registró en la rama `startingLanding`, un commit por tarea.

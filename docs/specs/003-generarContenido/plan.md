@@ -21,13 +21,14 @@ plantilla y se eliminan las secciones que la spec deja fuera.
 | Ruta | Cambio | Responsabilidad |
 |------|--------|-----------------|
 | `src/modules/company-profile/domain/` | Ampliar | Tipos del contenido (`LandingContent`, `Service`, `Project`, `TeamMember`, `Contact`, `Seo`), `Locale = 'es' \| 'en'` y validaciones. |
-| `src/modules/company-profile/application/` | Reemplazar | `getLandingContent(locale)` síncrono y `buildWhatsAppUrl(phone, message)`. |
+| `src/modules/company-profile/application/` | Reemplazar | `createGetLandingContent(source)` (fuente inyectada, síncrono; rechaza idiomas desconocidos) y `buildWhatsAppUrl(phone, message)`. |
 | `src/modules/company-profile/infrastructure/` | Reemplazar | Datos ES/EN copiados de `contenido.md`, validados al cargarse. |
 | `src/modules/company-profile/ui/` | Retirar | `CompanyProfileSection` y `useCompanyProfile` (estados de carga innecesarios para datos estáticos). |
 | `src/modules/company-profile/index.ts` | Actualizar | Exporta `getLandingContent`, `buildWhatsAppUrl`, `locales` y los tipos. |
 | `src/app/[lang]/layout.tsx` | Nuevo | `<html lang>`, fuentes, `generateStaticParams`, `generateMetadata` por idioma. |
 | `src/app/[lang]/page.tsx` | Nuevo | Compone las 7 secciones con el contenido del idioma; JSON-LD. |
-| `src/app/layout.tsx`, `src/app/page.tsx` | Ajustar | `/` redirige a `/es`; el layout raíz deja de fijar `lang="en"` y metadatos de COMPUTE. |
+| `src/app/layout.tsx`, `src/app/page.tsx` | Eliminar | Pasan a `src/app/[lang]/` (`git mv`); `/` redirige a `/es` desde `next.config.mjs`. |
+| `src/app/[lang]/structured-data.ts` | Nuevo | `buildStructuredData` (JSON-LD) y `serializeJsonLd` (escapa `<`). |
 | `src/components/landing/` | Adaptar / retirar | Ver «Secciones». |
 
 ## Secciones
@@ -43,7 +44,7 @@ plantilla y se eliminan las secciones que la spec deja fuera.
 | 7 | Footer | `footer-section.tsx` | Adaptar: texto, ubicación, WhatsApp, derechos. |
 
 Se eliminan: `infrastructure`, `metrics`, `integrations`, `security`, `developers`, `testimonials`
-y `pricing` (fuera de alcance por la spec). `ascii-scene.tsx` se conserva solo si el hero lo usa.
+y `pricing` (fuera de alcance por la spec), además de `ascii-scene.tsx` (el hero no la usa).
 
 ## Decisiones técnicas
 - **Idiomas:** segmento dinámico `src/app/[lang]` con `generateStaticParams` → `['es', 'en']` y
@@ -72,6 +73,20 @@ y `pricing` (fuera de alcance por la spec). `ascii-scene.tsx` se conserva solo s
 - **Imágenes y recursos:** sin fotos ni capturas (fuera de alcance). Se elimina todo lo que quede sin
   uso: `placeholder-*`, `public/images/*`, `ascii-scene.tsx` y, si nada más las usa, las dependencias
   `three` y `@react-three/fiber`.
+
+## Ajustes durante la implementación
+- **Finales de línea:** `.gitattributes` (`* text=auto eol=lf`) antes de T01; con `core.autocrlf=true` la copia
+  de trabajo pasaba a CRLF y `prettier --check` fallaba.
+- **Dominio:** `Contact` incluye `address` (Paraíso, Cartago, CR) y `areaServed` para el JSON-LD;
+  `Project.nameTranslation` (nombre en español con su traducción en inglés) y
+  `process.differentiatorsTitle` («Diferenciadores» / «What sets us apart»). El número de WhatsApp se deriva
+  del teléfono (`buildWhatsAppUrl` usa solo sus dígitos), sin campo aparte.
+- **Interfaz:** la etiqueta accesible del botón del menú móvil («Menú» / «Menu») no está en `contenido.md`;
+  se define en `src/app/[lang]/page.tsx`. El botón del menú usa el texto del hero («Cotiza por WhatsApp»).
+- **Adaptación visual:** los `<h2>` largos bajan de 128px a 88px; el hero pierde las palabras rotativas y
+  las estadísticas; el contacto pierde la imagen `bridge.png` (en `public/images`). El video y las imágenes
+  decorativas externas de la plantilla se conservan.
+- **Enlaces externos:** `src/components/landing/external-link.ts` centraliza `target` y `rel`.
 
 ## Pruebas (TDD)
 Cada comportamiento se escribe primero como prueba que falla:
