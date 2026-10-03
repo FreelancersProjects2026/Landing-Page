@@ -3,18 +3,41 @@
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Menu, X } from 'lucide-react'
+import {
+  locales,
+  type LandingContent,
+  type Locale,
+} from '@modules/company-profile'
 
-const navLinks = [
-  { name: 'Capabilities', href: '#features' },
-  { name: 'Process', href: '#how-it-works' },
-  { name: 'Infra', href: '#infra' },
-  { name: 'Integrations', href: '#integrations' },
-  { name: 'Security', href: '#security' },
-]
+import { externalLinkProps } from './external-link'
 
-export function Navigation() {
+type NavigationProps = {
+  brand: string
+  menu: LandingContent['menu']
+  cta: string
+  whatsappUrl: string
+  locale: Locale
+  toggleLabel: string
+}
+
+export function Navigation({
+  brand,
+  menu,
+  cta,
+  whatsappUrl,
+  locale,
+  toggleLabel,
+}: NavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+  const navLinks = [
+    { name: menu.services, href: '#servicios' },
+    { name: menu.process, href: '#como-trabajamos' },
+    { name: menu.projects, href: '#proyectos' },
+    { name: menu.team, href: '#equipo' },
+    { name: menu.contact, href: '#contacto' },
+  ]
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,6 +46,20 @@ export function Navigation() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  const languageLinks = (className: string) =>
+    locales.map((lang) => (
+      <a
+        key={lang}
+        href={`/${lang}`}
+        hrefLang={lang}
+        lang={lang}
+        aria-current={lang === locale ? 'page' : undefined}
+        className={`${className} ${lang === locale ? 'font-medium' : 'opacity-60 hover:opacity-100'}`}
+      >
+        {lang.toUpperCase()}
+      </a>
+    ))
 
   return (
     <header
@@ -43,16 +80,11 @@ export function Navigation() {
           }`}
         >
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2 group">
+          <a href="#inicio" className="flex items-center gap-2 group">
             <span
               className={`font-display tracking-tight transition-all duration-500 ${isScrolled ? 'text-xl text-foreground' : 'text-2xl text-white'}`}
             >
-              COMPUTE
-            </span>
-            <span
-              className={`font-mono transition-all duration-500 ${isScrolled ? 'text-[10px] mt-0.5 text-muted-foreground' : 'text-xs mt-1 text-white/60'}`}
-            >
-              TM
+              {brand}
             </span>
           </a>
 
@@ -60,7 +92,7 @@ export function Navigation() {
           <div className="hidden md:flex items-center gap-12">
             {navLinks.map((link) => (
               <a
-                key={link.name}
+                key={link.href}
                 href={link.href}
                 className={`text-sm transition-colors duration-300 relative group ${isScrolled ? 'text-foreground/70 hover:text-foreground' : 'text-white/70 hover:text-white'}`}
               >
@@ -74,17 +106,19 @@ export function Navigation() {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-4">
-            <a
-              href="#"
-              className={`transition-all duration-500 ${isScrolled ? 'text-xs text-foreground/70 hover:text-foreground' : 'text-sm text-white/70 hover:text-white'}`}
+            <div
+              className={`flex items-center gap-3 transition-all duration-500 ${isScrolled ? 'text-xs text-foreground' : 'text-sm text-white'}`}
             >
-              Sign in
-            </a>
+              {languageLinks('transition-opacity')}
+            </div>
             <Button
+              asChild
               size="sm"
               className={`rounded-full transition-all duration-500 ${isScrolled ? 'bg-foreground hover:bg-foreground/90 text-background px-4 h-8 text-xs' : 'bg-white hover:bg-white/90 text-black px-6'}`}
             >
-              Deploy agent
+              <a href={whatsappUrl} {...externalLinkProps}>
+                {cta}
+              </a>
             </Button>
           </div>
 
@@ -92,7 +126,8 @@ export function Navigation() {
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className={`md:hidden p-2 transition-colors duration-500 ${isScrolled || isMobileMenuOpen ? 'text-foreground' : 'text-white'}`}
-            aria-label="Toggle menu"
+            aria-label={toggleLabel}
+            aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? (
               <X className="w-6 h-6" />
@@ -117,7 +152,7 @@ export function Navigation() {
           <div className="flex-1 flex flex-col justify-center gap-8">
             {navLinks.map((link, i) => (
               <a
-                key={link.name}
+                key={link.href}
                 href={link.href}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`text-5xl font-display text-foreground hover:text-muted-foreground transition-all duration-500 ${
@@ -136,25 +171,27 @@ export function Navigation() {
 
           {/* Bottom CTAs */}
           <div
-            className={`flex gap-4 pt-8 border-t border-foreground/10 transition-all duration-500 ${
+            className={`flex items-center gap-4 pt-8 border-t border-foreground/10 transition-all duration-500 ${
               isMobileMenuOpen
                 ? 'opacity-100 translate-y-0'
                 : 'opacity-0 translate-y-4'
             }`}
             style={{ transitionDelay: isMobileMenuOpen ? '300ms' : '0ms' }}
           >
+            <div className="flex items-center gap-4 text-base text-foreground">
+              {languageLinks('transition-opacity')}
+            </div>
             <Button
-              variant="outline"
-              className="flex-1 rounded-full h-14 text-base"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Sign in
-            </Button>
-            <Button
+              asChild
               className="flex-1 bg-foreground text-background rounded-full h-14 text-base"
-              onClick={() => setIsMobileMenuOpen(false)}
             >
-              Deploy agent
+              <a
+                href={whatsappUrl}
+                {...externalLinkProps}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {cta}
+              </a>
             </Button>
           </div>
         </div>

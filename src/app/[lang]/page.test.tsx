@@ -36,9 +36,9 @@ describe('Home', () => {
 
     expect(sections).toEqual([
       'header',
-      expect.stringContaining('Distributed compute'),
-      expect.stringContaining('Intelligent'),
-      expect.stringContaining('Define.'),
+      'Desarrollo de software a medida en Costa Rica',
+      'Aplicaciones web a medida para tu operación',
+      'Primero entendemos tu negocio, después programamos',
       expect.stringContaining('Global by'),
       expect.stringContaining('Real-time'),
       expect.stringContaining('Connect'),
@@ -46,7 +46,7 @@ describe('Home', () => {
       expect.stringContaining('Code your agents.'),
       expect.stringContaining('Trusted by teams worldwide.'),
       expect.stringContaining('Pay for'),
-      expect.stringContaining('Ready to delegate'),
+      '¿Listo para crear software a la medida?',
       'footer',
     ])
   })

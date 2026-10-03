@@ -1,53 +1,26 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import type { Step } from '@modules/company-profile'
 
-const steps = [
-  {
-    number: '01',
-    title: 'Define',
-    subtitle: 'your agent',
-    description:
-      'Describe what your agent should do. Set its capabilities, constraints, and goals in natural language or code.',
-    code: `const researcher = new Agent({
-  role: 'Research Analyst',
-  capabilities: ['web', 'docs', 'api'],
-  memory: true,
-  autonomy: 'full'
-})`,
-  },
-  {
-    number: '02',
-    title: 'Assign',
-    subtitle: 'the task',
-    description:
-      'Give your agent a mission. It breaks down complex tasks into steps and executes them autonomously.',
-    code: `await researcher.execute({
-  task: 'Analyze competitor pricing',
-  sources: ['public-data', 'news'],
-  output: 'structured-report',
-  deadline: '2h'
-})`,
-  },
-  {
-    number: '03',
-    title: 'Monitor',
-    subtitle: '& scale',
-    description:
-      'Track progress in real-time. Spin up more agents as needed. Pay only for compute used.',
-    code: `optimus.dashboard({
-  agents: [researcher],
-  metrics: ['tasks', 'latency', 'cost'],
-  alerts: true
-})
-// 847 tasks completed today`,
-  },
-]
+type HowItWorksSectionProps = {
+  label: string
+  title: string
+  steps: readonly Step[]
+  differentiatorsTitle: string
+  differentiators: readonly string[]
+}
 
-export function HowItWorksSection() {
+export function HowItWorksSection({
+  label,
+  title,
+  steps,
+  differentiatorsTitle,
+  differentiators,
+}: HowItWorksSectionProps) {
   const [activeStep, setActiveStep] = useState(0)
   const [isVisible, setIsVisible] = useState(false)
-  const sectionRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -66,40 +39,39 @@ export function HowItWorksSection() {
       setActiveStep((prev) => (prev + 1) % steps.length)
     }, 6000)
     return () => clearInterval(interval)
-  }, [])
+  }, [steps.length])
 
   return (
     <section
-      id="how-it-works"
+      id="como-trabajamos"
+      aria-labelledby="como-trabajamos-titulo"
       ref={sectionRef}
       className="relative py-24 lg:py-32 bg-[oklch(0.09_0.01_260)] text-white overflow-hidden"
     >
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-white/[0.02] blur-[100px] pointer-events-none" />
 
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12">
-        {/* Header — titre + image cerisier */}
+        {/* Header — título + imagen */}
         <div className="relative mb-0 lg:mb-0 grid lg:grid-cols-2 gap-4 lg:gap-12 items-end">
-          {/* Titre colonne gauche */}
           <div className="overflow-hidden pb-0 lg:pb-32">
             <div
               className={`transition-all duration-1000 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-12 opacity-0'}`}
             >
               <span className="inline-flex items-center gap-3 text-sm font-mono text-white/40 mb-8">
                 <span className="w-12 h-px bg-white/20" />
-                Process
+                {label}
               </span>
             </div>
 
             <h2
-              className={`text-6xl md:text-7xl lg:text-[128px] font-display tracking-tight leading-[0.85] transition-all duration-1000 delay-100 ${
+              id="como-trabajamos-titulo"
+              className={`text-5xl md:text-6xl lg:text-[88px] font-display tracking-tight leading-[0.9] transition-all duration-1000 delay-100 ${
                 isVisible
                   ? 'translate-y-0 opacity-100'
                   : 'translate-y-16 opacity-0'
               }`}
             >
-              <span className="block">Define.</span>
-              <span className="block text-white/30">Deploy.</span>
-              <span className="block text-white/10">Scale.</span>
+              {title}
             </h2>
           </div>
 
@@ -121,13 +93,13 @@ export function HowItWorksSection() {
         </div>
 
         {/* Horizontal Steps Layout */}
-        <div className="grid lg:grid-cols-3 gap-4">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           {steps.map((step, index) => (
             <button
-              key={step.number}
+              key={step.title}
               type="button"
               onClick={() => setActiveStep(index)}
-              className={`relative text-left p-8 lg:p-12 border transition-all duration-500 ${
+              className={`relative text-left p-8 lg:p-10 border transition-all duration-500 ${
                 activeStep === index
                   ? 'bg-[#000000] border-white/60'
                   : 'bg-[#000000] border-white/25 hover:border-white/50'
@@ -140,7 +112,7 @@ export function HowItWorksSection() {
                     activeStep === index ? 'text-[#eca8d6]' : 'text-white/20'
                   }`}
                 >
-                  {step.number}
+                  {String(index + 1).padStart(2, '0')}
                 </span>
                 <div className="flex-1 h-px bg-white/10 overflow-hidden">
                   {activeStep === index && (
@@ -150,12 +122,9 @@ export function HowItWorksSection() {
               </div>
 
               {/* Title */}
-              <h3 className="text-3xl lg:text-4xl font-display mb-2">
+              <h3 className="text-3xl lg:text-4xl font-display mb-6">
                 {step.title}
               </h3>
-              <span className="text-xl text-white/40 font-display block mb-6">
-                {step.subtitle}
-              </span>
 
               {/* Description */}
               <p
@@ -176,7 +145,25 @@ export function HowItWorksSection() {
           ))}
         </div>
 
-        {/* Code Preview - Large terminal */}
+        {/* Diferenciadores */}
+        <div className="mt-16 lg:mt-24 grid lg:grid-cols-12 gap-8">
+          <div className="lg:col-span-4">
+            <span className="inline-flex items-center gap-3 text-sm font-mono text-white/40">
+              <span className="w-12 h-px bg-white/20" />
+              {differentiatorsTitle}
+            </span>
+          </div>
+          <ul className="lg:col-span-8 grid md:grid-cols-2 gap-8">
+            {differentiators.map((differentiator) => (
+              <li
+                key={differentiator}
+                className="text-xl lg:text-2xl font-display leading-snug border-t border-white/20 pt-6"
+              >
+                {differentiator}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
       <style jsx>{`

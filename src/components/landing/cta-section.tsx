@@ -4,9 +4,18 @@ import { useEffect, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { ArrowRight } from 'lucide-react'
 
-export function CtaSection() {
+import { externalLinkProps } from './external-link'
+
+type CtaSectionProps = {
+  title: string
+  text: string
+  cta: string
+  whatsappUrl: string
+}
+
+export function CtaSection({ title, text, cta, whatsappUrl }: CtaSectionProps) {
   const [isVisible, setIsVisible] = useState(false)
-  const sectionRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
@@ -31,6 +40,8 @@ export function CtaSection() {
 
   return (
     <section
+      id="contacto"
+      aria-labelledby="contacto-titulo"
       ref={sectionRef}
       className="relative py-24 lg:py-32 overflow-hidden"
     >
@@ -53,46 +64,29 @@ export function CtaSection() {
             <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
               {/* Left content */}
               <div className="flex-1">
-                <h2 className="text-6xl md:text-7xl lg:text-[72px] font-display tracking-tight mb-8 leading-[0.95]">
-                  Ready to delegate
-                  <br />
-                  to AI agents?
+                <h2
+                  id="contacto-titulo"
+                  className="text-6xl md:text-7xl lg:text-[72px] font-display tracking-tight mb-8 leading-[0.95]"
+                >
+                  {title}
                 </h2>
 
                 <p className="text-xl text-muted-foreground mb-12 leading-relaxed max-w-xl">
-                  Join teams automating complex workflows with COMPUTE agents.
-                  Deploy your first agent in minutes.
+                  {text}
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-start gap-4">
                   <Button
+                    asChild
                     size="lg"
                     className="bg-foreground hover:bg-foreground/90 text-background px-8 h-14 text-base rounded-full group"
                   >
-                    Deploy your first agent
-                    <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-                  </Button>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="h-14 px-8 text-base rounded-full border-foreground/20 hover:bg-foreground/5"
-                  >
-                    Book a demo
+                    <a href={whatsappUrl} {...externalLinkProps}>
+                      {cta}
+                      <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                    </a>
                   </Button>
                 </div>
-
-                <p className="text-sm text-muted-foreground mt-8 font-mono">
-                  1,000 free tasks with COMPUTE
-                </p>
-              </div>
-
-              {/* Right image */}
-              <div className="hidden lg:flex items-end justify-center w-[600px] h-[650px] -mr-16">
-                <img
-                  src="/images/bridge.png"
-                  alt="Two trees connected by glowing arcs"
-                  className="w-full h-full object-contain object-bottom"
-                />
               </div>
             </div>
           </div>

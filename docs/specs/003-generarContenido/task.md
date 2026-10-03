@@ -21,7 +21,7 @@
       documento, y redirección de `/` a `/es` en `next.config.mjs`.
 - [x] T06 SEO: `generateMetadata` por idioma (título, descripción, `openGraph`), quitar los metadatos
       de COMPUTE y añadir el JSON-LD `ProfessionalService`.
-- [ ] T07 Secciones existentes: adaptar menú (anclas, WhatsApp, selector ES/EN), hero (único `<h1>`),
+- [x] T07 Secciones existentes: adaptar menú (anclas, WhatsApp, selector ES/EN), hero (único `<h1>`),
       servicios, cómo trabajamos, contacto y footer para recibir el contenido por props.
 - [ ] T08 Secciones nuevas: crear proyectos y equipo; eliminar las secciones de la plantilla fuera de
       alcance y todo recurso sin uso (`placeholder-*`, `public/images/*`, `ascii-scene.tsx`,

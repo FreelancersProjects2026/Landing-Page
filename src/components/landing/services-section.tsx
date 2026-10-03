@@ -1,37 +1,16 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import type { Service } from '@modules/company-profile'
 
-const features = [
-  {
-    number: '01',
-    title: 'Autonomous Execution',
-    description:
-      'Deploy AI agents that work independently. They analyze, decide, and execute complex multi-step tasks without human intervention.',
-    stats: { value: '99.7%', label: 'task completion' },
-  },
-  {
-    number: '02',
-    title: 'Distributed Computing',
-    description:
-      'Offload compute-heavy tasks to our global network. Your agents run on optimized infrastructure across 50+ regions worldwide.',
-    stats: { value: '50+', label: 'global regions' },
-  },
-  {
-    number: '03',
-    title: 'Multi-Agent Orchestration',
-    description:
-      'Coordinate teams of specialized agents. They communicate, delegate, and collaborate to solve complex problems together.',
-    stats: { value: '1000x', label: 'parallel execution' },
-  },
-  {
-    number: '04',
-    title: 'Secure Sandboxing',
-    description:
-      'Each agent runs in isolated environments. Full audit trails, encrypted execution, and zero data leakage between tasks.',
-    stats: { value: '0', label: 'data breaches' },
-  },
-]
+type ServicesSectionProps = {
+  label: string
+  title: string
+  intro: string
+  items: readonly Service[]
+}
+
+const number = (index: number) => String(index + 1).padStart(2, '0')
 
 // Floating dot particles visualization
 function ParticleVisualization() {
@@ -132,10 +111,15 @@ function ParticleVisualization() {
   )
 }
 
-export function FeaturesSection() {
+export function ServicesSection({
+  label,
+  title,
+  intro,
+  items,
+}: ServicesSectionProps) {
   const [isVisible, setIsVisible] = useState(false)
-  const [, setActiveFeature] = useState(0)
-  const sectionRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
+  const [featured, ...rest] = items
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -151,7 +135,8 @@ export function FeaturesSection() {
 
   return (
     <section
-      id="features"
+      id="servicios"
+      aria-labelledby="servicios-titulo"
       ref={sectionRef}
       className="relative py-24 lg:py-32 overflow-hidden"
     >
@@ -162,18 +147,17 @@ export function FeaturesSection() {
             <div className="lg:col-span-7">
               <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-6">
                 <span className="w-12 h-px bg-foreground/30" />
-                Capabilities
+                {label}
               </span>
               <h2
-                className={`text-6xl md:text-7xl lg:text-[128px] font-display tracking-tight leading-[0.9] transition-all duration-1000 ${
+                id="servicios-titulo"
+                className={`text-5xl md:text-6xl lg:text-[88px] font-display tracking-tight leading-[0.9] transition-all duration-1000 ${
                   isVisible
                     ? 'opacity-100 translate-y-0'
                     : 'opacity-0 translate-y-8'
                 }`}
               >
-                Intelligent
-                <br />
-                <span className="text-muted-foreground">workers.</span>
+                {title}
               </h2>
             </div>
             <div className="lg:col-span-5 lg:pb-4">
@@ -184,8 +168,7 @@ export function FeaturesSection() {
                     : 'opacity-0 translate-y-4'
                 }`}
               >
-                Deploy autonomous AI agents that execute complex tasks across
-                distributed infrastructure. No supervision required.
+                {intro}
               </p>
             </div>
           </div>
@@ -194,51 +177,66 @@ export function FeaturesSection() {
         {/* Bento Grid Layout */}
         <div className="grid lg:grid-cols-12 gap-4 lg:gap-6">
           {/* Large feature card */}
-          <div
-            className={`lg:col-span-12 relative bg-black border border-foreground/10 min-h-[500px] overflow-hidden group transition-all duration-700 flex ${
-              isVisible
-                ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-12'
-            }`}
-            onMouseEnter={() => setActiveFeature(0)}
-          >
-            {/* Left: text content */}
-            <div className="relative flex-1 p-8 lg:p-12 bg-black">
-              <ParticleVisualization />
-              <div className="relative z-10">
-                <span className="font-mono text-sm text-muted-foreground">
-                  {features[0].number}
-                </span>
-                <h3 className="text-3xl lg:text-4xl font-display mt-4 mb-6 group-hover:translate-x-2 transition-transform duration-500">
-                  {features[0].title}
-                </h3>
-                <p className="text-lg text-muted-foreground leading-relaxed max-w-md mb-8">
-                  {features[0].description}
-                </p>
-                <div>
-                  <span className="text-5xl lg:text-6xl font-display">
-                    {features[0].stats.value}
+          {featured && (
+            <div
+              className={`lg:col-span-12 relative bg-black border border-foreground/10 min-h-[500px] overflow-hidden group transition-all duration-700 flex ${
+                isVisible
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 translate-y-12'
+              }`}
+            >
+              {/* Left: text content */}
+              <div className="relative flex-1 p-8 lg:p-12 bg-black">
+                <ParticleVisualization />
+                <div className="relative z-10">
+                  <span className="font-mono text-sm text-muted-foreground">
+                    {number(0)}
                   </span>
-                  <span className="block text-sm text-muted-foreground font-mono mt-2">
-                    {features[0].stats.label}
-                  </span>
+                  <h3 className="text-3xl lg:text-4xl font-display mt-4 mb-6 group-hover:translate-x-2 transition-transform duration-500">
+                    {featured.title}
+                  </h3>
+                  <p className="text-lg text-muted-foreground leading-relaxed max-w-md mb-8">
+                    {featured.description}
+                  </p>
                 </div>
               </div>
-            </div>
 
-            {/* Right: mirrored image, full height */}
-            <div className="hidden lg:block relative w-[42%] shrink-0 overflow-hidden">
-              <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Upscaled%20Image%20%2812%29-ng3RrNnsPMJ5CrtOjcPTmhHg01W11q.png"
-                alt=""
-                aria-hidden="true"
-                className="absolute inset-0 w-full h-full object-cover object-center"
-                style={{ transform: 'scaleX(-1)' }}
-              />
-              {/* Fade left edge into black */}
-              <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent" />
+              {/* Right: mirrored image, full height */}
+              <div className="hidden lg:block relative w-[42%] shrink-0 overflow-hidden">
+                <img
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Upscaled%20Image%20%2812%29-ng3RrNnsPMJ5CrtOjcPTmhHg01W11q.png"
+                  alt=""
+                  aria-hidden="true"
+                  className="absolute inset-0 w-full h-full object-cover object-center"
+                  style={{ transform: 'scaleX(-1)' }}
+                />
+                {/* Fade left edge into black */}
+                <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent" />
+              </div>
             </div>
-          </div>
+          )}
+
+          {rest.map((service, index) => (
+            <div
+              key={service.title}
+              className={`lg:col-span-4 relative bg-black border border-foreground/10 p-8 lg:p-12 group transition-all duration-700 ${
+                isVisible
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 translate-y-12'
+              }`}
+              style={{ transitionDelay: `${(index + 1) * 100}ms` }}
+            >
+              <span className="font-mono text-sm text-muted-foreground">
+                {number(index + 1)}
+              </span>
+              <h3 className="text-2xl lg:text-3xl font-display mt-4 mb-6 group-hover:translate-x-2 transition-transform duration-500">
+                {service.title}
+              </h3>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                {service.description}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
