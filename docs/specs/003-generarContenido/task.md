@@ -12,7 +12,7 @@
 - [x] T02 Dominio: tipos del contenido (`Locale`, `Seo`, `Service`, `Project`, `TeamMember`,
       `Contact`, `LandingContent`) y validaciones (título ≤ 60, descripción ≤ 160, palabra clave,
       textos no vacíos, sin `[PENDIENTE]`).
-- [ ] T03 Aplicación: `buildWhatsAppUrl(phone, message)` y `getLandingContent(locale)`, que rechaza
+- [x] T03 Aplicación: `buildWhatsAppUrl(phone, message)` y `getLandingContent(locale)`, que rechaza
       idiomas desconocidos.
 - [ ] T04 Infraestructura: cargar los textos ES/EN de `contenido.md` con datos comunes compartidos
       (nombre, ubicación, WhatsApp, enlaces del equipo); retirar `CompanyProfileSection`,

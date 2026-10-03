@@ -13,7 +13,6 @@ function validContent(): LandingContent {
       name: 'PJM Solutions',
       location: 'Paraíso de Cartago, Costa Rica',
       phone: '+506 6440-0832',
-      whatsappNumber: '50664400832',
     },
     seo: {
       title: 'Desarrollo de software a medida Costa Rica | PJM Solutions',
