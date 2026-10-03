@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import type { Step } from '@modules/company-profile'
+import { sectionIds } from './section-ids'
 
 type HowItWorksSectionProps = {
   label: string
@@ -43,8 +44,8 @@ export function HowItWorksSection({
 
   return (
     <section
-      id="como-trabajamos"
-      aria-labelledby="como-trabajamos-titulo"
+      id={sectionIds.process}
+      aria-labelledby={`${sectionIds.process}-titulo`}
       ref={sectionRef}
       className="relative py-24 lg:py-32 bg-[oklch(0.09_0.01_260)] text-white overflow-hidden"
     >
@@ -64,7 +65,7 @@ export function HowItWorksSection({
             </div>
 
             <h2
-              id="como-trabajamos-titulo"
+              id={`${sectionIds.process}-titulo`}
               className={`text-5xl md:text-6xl lg:text-[88px] font-display tracking-tight leading-[0.9] transition-all duration-1000 delay-100 ${
                 isVisible
                   ? 'translate-y-0 opacity-100'

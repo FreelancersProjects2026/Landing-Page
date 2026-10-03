@@ -2,6 +2,7 @@ import { ArrowUpRight } from 'lucide-react'
 import type { Contact, LandingContent } from '@modules/company-profile'
 
 import { externalLinkProps } from './external-link'
+import { sectionIds } from './section-ids'
 
 type FooterSectionProps = {
   company: Contact
@@ -17,10 +18,10 @@ export function FooterSection({
   whatsappUrl,
 }: FooterSectionProps) {
   const links = [
-    { name: menu.services, href: '#servicios' },
-    { name: menu.process, href: '#como-trabajamos' },
-    { name: menu.projects, href: '#proyectos' },
-    { name: menu.team, href: '#equipo' },
+    { name: menu.services, href: `#${sectionIds.services}` },
+    { name: menu.process, href: `#${sectionIds.process}` },
+    { name: menu.projects, href: `#${sectionIds.projects}` },
+    { name: menu.team, href: `#${sectionIds.team}` },
   ]
 
   return (
@@ -46,7 +47,10 @@ export function FooterSection({
           <div className="grid grid-cols-2 md:grid-cols-6 gap-12 lg:gap-8">
             {/* Brand Column */}
             <div className="col-span-2 md:col-span-3">
-              <a href="#inicio" className="inline-flex items-center gap-2 mb-6">
+              <a
+                href={`#${sectionIds.home}`}
+                className="inline-flex items-center gap-2 mb-6"
+              >
                 <span className="text-2xl font-display text-white">
                   {company.name}
                 </span>

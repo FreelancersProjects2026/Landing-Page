@@ -5,6 +5,7 @@ import { ArrowUpRight } from 'lucide-react'
 import type { TeamMember } from '@modules/company-profile'
 
 import { externalLinkProps } from './external-link'
+import { sectionIds } from './section-ids'
 
 type TeamSectionProps = {
   label: string
@@ -36,8 +37,8 @@ export function TeamSection({
 
   return (
     <section
-      id="equipo"
-      aria-labelledby="equipo-titulo"
+      id={sectionIds.team}
+      aria-labelledby={`${sectionIds.team}-titulo`}
       ref={sectionRef}
       className="relative py-24 lg:py-32 overflow-hidden"
     >
@@ -49,7 +50,7 @@ export function TeamSection({
               {label}
             </span>
             <h2
-              id="equipo-titulo"
+              id={`${sectionIds.team}-titulo`}
               className={`text-5xl md:text-6xl lg:text-[88px] font-display tracking-tight leading-[0.9] transition-all duration-1000 ${
                 isVisible
                   ? 'opacity-100 translate-y-0'

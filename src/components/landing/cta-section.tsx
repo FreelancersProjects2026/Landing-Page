@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { ArrowRight } from 'lucide-react'
 
 import { externalLinkProps } from './external-link'
+import { sectionIds } from './section-ids'
 
 type CtaSectionProps = {
   title: string
@@ -40,8 +41,8 @@ export function CtaSection({ title, text, cta, whatsappUrl }: CtaSectionProps) {
 
   return (
     <section
-      id="contacto"
-      aria-labelledby="contacto-titulo"
+      id={sectionIds.contact}
+      aria-labelledby={`${sectionIds.contact}-titulo`}
       ref={sectionRef}
       className="relative py-24 lg:py-32 overflow-hidden"
     >
@@ -65,7 +66,7 @@ export function CtaSection({ title, text, cta, whatsappUrl }: CtaSectionProps) {
               {/* Left content */}
               <div className="flex-1">
                 <h2
-                  id="contacto-titulo"
+                  id={`${sectionIds.contact}-titulo`}
                   className="text-6xl md:text-7xl lg:text-[72px] font-display tracking-tight mb-8 leading-[0.95]"
                 >
                   {title}

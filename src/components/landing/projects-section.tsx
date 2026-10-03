@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import type { Project } from '@modules/company-profile'
+import { sectionIds } from './section-ids'
 
 type ProjectsSectionProps = {
   label: string
@@ -27,8 +28,8 @@ export function ProjectsSection({ label, title, items }: ProjectsSectionProps) {
 
   return (
     <section
-      id="proyectos"
-      aria-labelledby="proyectos-titulo"
+      id={sectionIds.projects}
+      aria-labelledby={`${sectionIds.projects}-titulo`}
       ref={sectionRef}
       className="relative py-24 lg:py-32 overflow-hidden"
     >
@@ -63,7 +64,7 @@ export function ProjectsSection({ label, title, items }: ProjectsSectionProps) {
             {label}
           </span>
           <h2
-            id="proyectos-titulo"
+            id={`${sectionIds.projects}-titulo`}
             className="text-5xl md:text-6xl lg:text-[88px] font-display tracking-tight leading-[0.9] lg:max-w-[70%]"
           >
             {title}

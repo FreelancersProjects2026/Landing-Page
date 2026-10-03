@@ -37,6 +37,18 @@ describe.each(['es', 'en'])('Home (%s)', (lang) => {
     ])
   })
 
+  it('cada ancla del menú y del footer apunta a una sección existente', async () => {
+    const { container } = render(await renderPage(lang))
+    const anchors = Array.from(
+      container.querySelectorAll('header a[href^="#"], footer a[href^="#"]'),
+    ).map((link) => link.getAttribute('href') ?? '')
+
+    expect(anchors.length).toBeGreaterThan(0)
+    for (const href of anchors) {
+      expect(container.querySelector(`section${href}`), href).not.toBeNull()
+    }
+  })
+
   it('tiene un único <h1> con la palabra clave principal', async () => {
     const { container } = render(await renderPage(lang))
     const headings = container.querySelectorAll('h1')

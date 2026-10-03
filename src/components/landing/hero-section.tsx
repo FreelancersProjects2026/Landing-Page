@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import type { LandingContent } from '@modules/company-profile'
 
 import { externalLinkProps } from './external-link'
+import { sectionIds } from './section-ids'
 
 type HeroSectionProps = {
   hero: LandingContent['hero']
@@ -21,8 +22,8 @@ export function HeroSection({ hero, whatsappUrl }: HeroSectionProps) {
 
   return (
     <section
-      id="inicio"
-      aria-labelledby="inicio-titulo"
+      id={sectionIds.home}
+      aria-labelledby={`${sectionIds.home}-titulo`}
       className="relative min-h-screen flex flex-col justify-center items-start overflow-hidden bg-black"
     >
       {/* Background video */}
@@ -82,7 +83,7 @@ export function HeroSection({ hero, whatsappUrl }: HeroSectionProps) {
             }`}
           >
             <h1
-              id="inicio-titulo"
+              id={`${sectionIds.home}-titulo`}
               className="inline-flex items-center gap-3 text-sm font-mono text-white/60"
             >
               <span className="w-8 h-px bg-white/30" />

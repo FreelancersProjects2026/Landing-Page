@@ -10,6 +10,7 @@ import {
 } from '@modules/company-profile'
 
 import { externalLinkProps } from './external-link'
+import { sectionIds } from './section-ids'
 
 type NavigationProps = {
   brand: string
@@ -30,11 +31,11 @@ export function Navigation({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const navLinks = [
-    { name: menu.services, href: '#servicios' },
-    { name: menu.process, href: '#como-trabajamos' },
-    { name: menu.projects, href: '#proyectos' },
-    { name: menu.team, href: '#equipo' },
-    { name: menu.contact, href: '#contacto' },
+    { name: menu.services, href: `#${sectionIds.services}` },
+    { name: menu.process, href: `#${sectionIds.process}` },
+    { name: menu.projects, href: `#${sectionIds.projects}` },
+    { name: menu.team, href: `#${sectionIds.team}` },
+    { name: menu.contact, href: `#${sectionIds.contact}` },
   ]
 
   useEffect(() => {
@@ -78,7 +79,10 @@ export function Navigation({
           }`}
         >
           {/* Logo */}
-          <a href="#inicio" className="flex items-center gap-2 group">
+          <a
+            href={`#${sectionIds.home}`}
+            className="flex items-center gap-2 group"
+          >
             <span
               className={`font-display tracking-tight transition-all duration-500 ${isScrolled ? 'text-xl text-foreground' : 'text-2xl text-white'}`}
             >
