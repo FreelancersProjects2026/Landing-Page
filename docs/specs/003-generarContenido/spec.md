@@ -121,7 +121,7 @@ de todo Costa Rica encontrarnos y contactarnos, publicado en la landing en `/es`
 - [ ] No aparecen precios, testimonios ni métricas.
 - [ ] Nombre, ubicación y WhatsApp coinciden en todas las secciones e idiomas.
 - [ ] Los pendientes están marcados como `[PENDIENTE]` y no bloquean el resto del contenido.
-- [ ] El equipo aprueba el contenido en ambos idiomas.
+- [x] El equipo aprueba el contenido en ambos idiomas.
 - [ ] `/es` y `/en` muestran las 7 secciones con los textos aprobados y `/` redirige a `/es`.
 - [ ] Cada idioma publica su título y meta description, un único `<h1>` con la palabra clave y el
       `lang` correcto.

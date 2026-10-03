@@ -48,7 +48,8 @@ y `pricing` (fuera de alcance por la spec). `ascii-scene.tsx` se conserva solo s
 ## Decisiones técnicas
 - **Idiomas:** segmento dinámico `src/app/[lang]` con `generateStaticParams` → `['es', 'en']` y
   `dynamicParams = false` (otro valor da 404). Sin librería de i18n: dos objetos de contenido bastan.
-- **Ruta raíz:** `/` redirige a `/es` con `redirect()` de `next/navigation`. Sin detección por
+- **Ruta raíz:** `/` redirige a `/es` con `redirects()` en `next.config.mjs` (no permanente), porque el
+  layout raíz pasa a `src/app/[lang]/layout.tsx` y `/` deja de tener página propia. Sin detección por
   `Accept-Language` (se añade si el equipo lo pide).
 - **Metadatos:** `generateMetadata` toma título y meta description del contenido del idioma;
   `openGraph` con `locale` `es_CR` / `en_US` y `siteName`. Se quita `generator: 'v0.app'`.
@@ -61,13 +62,16 @@ y `pricing` (fuera de alcance por la spec). `ascii-scene.tsx` se conserva solo s
 - **WhatsApp:** `buildWhatsAppUrl` usa `encodeURIComponent` y el número en formato `50664400832`;
   todos los botones usan la misma función (consistencia NAP).
 - **Validación en el límite:** al cargar el contenido se verifica título ≤ 60, descripción ≤ 160,
-  palabra clave principal y «Costa Rica» en título, H1 y descripción, textos no vacíos y ausencia de
+  palabra clave principal en dos partes («desarrollo de software a medida» / «custom software
+  development» y, por separado, «Costa Rica», sin distinguir mayúsculas) en título, H1 y descripción, textos no vacíos y ausencia de
   `[PENDIENTE]`. Un contenido inválido rompe el build, nunca llega a producción.
 - **Consistencia entre idiomas:** nombre, ubicación, teléfono, número de proyectos y de integrantes
   y enlaces del equipo se definen una vez y se comparten; solo los textos cambian por idioma.
 - **Componentes cliente:** solo los que ya usan estado o efectos (menú móvil, animaciones); el
   contenido se pasa por props desde el Server Component.
-- **Imágenes:** sin fotos ni capturas (fuera de alcance); se retiran los `placeholder-*` no usados.
+- **Imágenes y recursos:** sin fotos ni capturas (fuera de alcance). Se elimina todo lo que quede sin
+  uso: `placeholder-*`, `public/images/*`, `ascii-scene.tsx` y, si nada más las usa, las dependencias
+  `three` y `@react-three/fiber`.
 
 ## Pruebas (TDD)
 Cada comportamiento se escribe primero como prueba que falla:

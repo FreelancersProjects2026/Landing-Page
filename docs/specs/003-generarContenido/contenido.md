@@ -1,6 +1,6 @@
 # Contenido de la landing — PJM Solutions
 
-Estado: borrador, pendiente de aprobación del equipo (Spec 003).
+Estado: aprobado por el equipo (Spec 003, 2026-10-02). Fuente de verdad del código.
 
 Datos comunes a ambos idiomas:
 
