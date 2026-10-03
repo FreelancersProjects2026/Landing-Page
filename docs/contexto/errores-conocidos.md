@@ -8,8 +8,14 @@
   `src/app/[lang]/page.tsx` como texto de interfaz.
 - Algunos grupos de palabras clave de la spec aparecen integrados en frases naturales y no como la frase
   exacta (p. ej. «empresa de desarrollo de software de Paraíso de Cartago», «harvest tracking with full history»).
-- El video del hero y varias imágenes decorativas siguen cargándose desde el almacenamiento de la plantilla
-  (`*.public.blob.vercel-storage.com`).
+- El video del hero y 4 imágenes decorativas (servicios, cómo trabajamos, proyectos y footer) siguen
+  cargándose desde el almacenamiento de la plantilla (`*.public.blob.vercel-storage.com`). Se conservan por
+  decisión del equipo, con estos riesgos:
+  - **Host ajeno:** el dueño de la plantilla puede borrarlos o moverlos y la landing quedaría sin ellos.
+  - **Licencia desconocida:** no consta que su uso comercial esté permitido.
+  - **Privacidad y disponibilidad:** cada visita hace peticiones a un tercero que no controlamos.
+  - **Rendimiento:** el video se reproduce en `autoplay` sin `poster`, lo que perjudica el LCP.
+  - **Marca:** no representan a PJM Solutions; habrá que sustituirlos por recursos propios.
 
 ## Arquitectura
 - La regla de API pública protege imports desde `src/app/` y `src/components/`, pero no impide que un módulo futuro importe capas internas de otro módulo.
