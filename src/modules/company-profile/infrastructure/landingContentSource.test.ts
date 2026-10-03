@@ -14,6 +14,8 @@ describe('landingContentSource', () => {
     expect(es.company).toEqual({
       name: 'PJM Solutions',
       location: 'Paraíso de Cartago, Costa Rica',
+      address: { locality: 'Paraíso', region: 'Cartago', country: 'CR' },
+      areaServed: 'Costa Rica',
       phone: '+506 6440-0832',
     })
     expect(en.company).toEqual(es.company)

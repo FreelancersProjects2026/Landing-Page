@@ -8,6 +8,7 @@ export type {
   ExternalLink,
   LandingContent,
   Locale,
+  PostalAddress,
   Project,
   Seo,
   Service,

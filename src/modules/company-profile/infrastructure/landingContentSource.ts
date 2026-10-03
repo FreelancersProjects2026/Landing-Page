@@ -10,6 +10,8 @@ import {
 const company: Contact = {
   name: 'PJM Solutions',
   location: 'Paraíso de Cartago, Costa Rica',
+  address: { locality: 'Paraíso', region: 'Cartago', country: 'CR' },
+  areaServed: 'Costa Rica',
   phone: '+506 6440-0832',
 }
 

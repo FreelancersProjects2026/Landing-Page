@@ -19,7 +19,7 @@
       `useCompanyProfile` y actualizar `index.ts`.
 - [x] T05 Rutas: `src/app/[lang]/` con `generateStaticParams`, `dynamicParams = false`, `lang` del
       documento, y redirección de `/` a `/es` en `next.config.mjs`.
-- [ ] T06 SEO: `generateMetadata` por idioma (título, descripción, `openGraph`), quitar los metadatos
+- [x] T06 SEO: `generateMetadata` por idioma (título, descripción, `openGraph`), quitar los metadatos
       de COMPUTE y añadir el JSON-LD `ProfessionalService`.
 - [ ] T07 Secciones existentes: adaptar menú (anclas, WhatsApp, selector ES/EN), hero (único `<h1>`),
       servicios, cómo trabajamos, contacto y footer para recibir el contenido por props.

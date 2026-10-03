@@ -3,7 +3,13 @@ import { hydrateRoot } from 'react-dom/client'
 import { renderToString } from 'react-dom/server'
 import { describe, expect, it, vi } from 'vitest'
 
-import RootLayout, { dynamicParams, generateStaticParams } from './layout'
+import { getLandingContent } from '@modules/company-profile'
+
+import RootLayout, {
+  dynamicParams,
+  generateMetadata,
+  generateStaticParams,
+} from './layout'
 
 vi.mock('next/font/google', () => {
   const font = () => ({ variable: 'font' })
@@ -29,6 +35,27 @@ describe('RootLayout', () => {
       { lang: 'en' },
     ])
     expect(dynamicParams).toBe(false)
+  })
+
+  it.each([
+    ['es', 'es_CR'],
+    ['en', 'en_US'],
+  ])('publica los metadatos de %s', async (lang, ogLocale) => {
+    const { seo, company } = getLandingContent(lang)
+
+    expect(
+      await generateMetadata({ params: Promise.resolve({ lang }) }),
+    ).toEqual({
+      title: seo.title,
+      description: seo.description,
+      openGraph: {
+        title: seo.title,
+        description: seo.description,
+        locale: ogLocale,
+        siteName: company.name,
+        type: 'website',
+      },
+    })
   })
 
   it.each(['es', 'en'])('fija lang="%s" en el documento', async (lang) => {

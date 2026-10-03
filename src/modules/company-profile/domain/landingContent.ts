@@ -11,9 +11,17 @@ export interface Seo {
   readonly description: string
 }
 
+export interface PostalAddress {
+  readonly locality: string
+  readonly region: string
+  readonly country: string
+}
+
 export interface Contact {
   readonly name: string
   readonly location: string
+  readonly address: PostalAddress
+  readonly areaServed: string
   readonly phone: string
 }
 

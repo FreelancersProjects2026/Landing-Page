@@ -6,7 +6,7 @@ import {
   JetBrains_Mono,
 } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import { locales } from '@modules/company-profile'
+import { getLandingContent, locales } from '@modules/company-profile'
 import '../globals.css'
 
 const instrumentSans = Instrument_Sans({
@@ -25,11 +25,27 @@ const jetbrainsMono = JetBrains_Mono({
   variable: '--font-jetbrains',
 })
 
-export const metadata: Metadata = {
-  title: 'COMPUTE - AI Agents for Distributed Computing',
-  description:
-    'Deploy autonomous AI agents on distributed infrastructure. Offload complex tasks to intelligent workers that run 24/7.',
-  generator: 'v0.app',
+const openGraphLocale: Record<string, string> = { es: 'es_CR', en: 'en_US' }
+
+type LayoutParams = { params: Promise<{ lang: string }> }
+
+export async function generateMetadata({
+  params,
+}: LayoutParams): Promise<Metadata> {
+  const { lang } = await params
+  const { seo, company } = getLandingContent(lang)
+
+  return {
+    title: seo.title,
+    description: seo.description,
+    openGraph: {
+      title: seo.title,
+      description: seo.description,
+      locale: openGraphLocale[lang],
+      siteName: company.name,
+      type: 'website',
+    },
+  }
 }
 
 export const dynamicParams = false
@@ -41,10 +57,7 @@ export async function generateStaticParams() {
 export default async function RootLayout({
   children,
   params,
-}: Readonly<{
-  children: React.ReactNode
-  params: Promise<{ lang: string }>
-}>) {
+}: Readonly<LayoutParams & { children: React.ReactNode }>) {
   const { lang } = await params
 
   return (
