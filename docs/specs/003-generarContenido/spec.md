@@ -109,6 +109,8 @@ de todo Costa Rica encontrarnos y contactarnos, publicado en la landing en `/es`
 
 ## Pendientes
 - [ ] Dominio (bloquea la URL canónica, el sitemap y el `hreflang`), correo, redes y Google Business.
+- [ ] Mejora opcional: integrar en inglés las frases del grupo Agro («agricultural software Costa Rica»,
+      «harvest tracking software»), hoy presentes como «agricultural software» y «harvest tracking».
 
 ## Criterios de aceptación
 - [ ] La spec recoge identidad, propuesta de valor, servicios, proyectos, equipo, contacto,
@@ -116,7 +118,8 @@ de todo Costa Rica encontrarnos y contactarnos, publicado en la landing en `/es`
 - [x] `contenido.md` contiene los textos de las 7 secciones en español e inglés.
 - [x] Cada idioma tiene un título (≤ 60 caracteres) y una meta description (≤ 160 caracteres) que
       incluyen la palabra clave principal y «Costa Rica».
-- [ ] Cada grupo de palabras clave aparece al menos una vez en `contenido.md`, en ambos idiomas.
+- [x] Cada grupo de palabras clave aparece integrado de forma natural (se admiten preposiciones) al
+      menos una vez en `contenido.md`, en ambos idiomas.
 - [x] Los proyectos no incluyen enlaces, datos de clientes ni capturas.
 - [x] No aparecen precios, testimonios ni métricas.
 - [x] Nombre, ubicación y WhatsApp coinciden en todas las secciones e idiomas.
