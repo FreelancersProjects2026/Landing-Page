@@ -7,7 +7,7 @@
 - Un commit por tarea.
 
 ## Tareas
-- [ ] T01 Confirmar la aprobación de `contenido.md` por el equipo y ejecutar `pnpm validate` como
+- [x] T01 Confirmar la aprobación de `contenido.md` por el equipo y ejecutar `pnpm validate` como
       línea base.
 - [ ] T02 Dominio: tipos del contenido (`Locale`, `Seo`, `Service`, `Project`, `TeamMember`,
       `Contact`, `LandingContent`) y validaciones (título ≤ 60, descripción ≤ 160, palabra clave,
