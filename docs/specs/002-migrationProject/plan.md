@@ -87,6 +87,7 @@ Se retiran: `index.html`, `vite.config.ts`, `src/main.tsx`, `src/app/` del proye
 - Las pruebas de `company-profile` actúan como red de seguridad: no deben cambiar su lógica.
 - Una prueba de la página principal confirma que se muestran todas las secciones de la plantilla.
 - Una prueba de hidratación (`renderToString` + `hydrateRoot`) falla ante errores de hidratación.
+- `src/app/layout.test.tsx` hidrata el layout con un atributo ajeno en `<body>` y falla sin `suppressHydrationWarning`.
 - La escena 3D (`three`, `@react-three/fiber`) se aísla en las pruebas si jsdom no soporta WebGL.
 - La comparación visual con la plantilla original se hace de forma manual en el navegador.
 
