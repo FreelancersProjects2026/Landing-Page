@@ -23,7 +23,7 @@
       de COMPUTE y añadir el JSON-LD `ProfessionalService`.
 - [x] T07 Secciones existentes: adaptar menú (anclas, WhatsApp, selector ES/EN), hero (único `<h1>`),
       servicios, cómo trabajamos, contacto y footer para recibir el contenido por props.
-- [ ] T08 Secciones nuevas: crear proyectos y equipo; eliminar las secciones de la plantilla fuera de
+- [x] T08 Secciones nuevas: crear proyectos y equipo; eliminar las secciones de la plantilla fuera de
       alcance y todo recurso sin uso (`placeholder-*`, `public/images/*`, `ascii-scene.tsx`,
       `three`/`@react-three/fiber` si quedan sin uso).
 - [ ] T09 Página: reescribir `page.test.tsx` por idioma (7 secciones en orden, un `<h1>`, botones a

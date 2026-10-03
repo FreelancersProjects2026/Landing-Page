@@ -8,7 +8,9 @@ import { FooterSection } from './footer-section'
 import { HeroSection } from './hero-section'
 import { HowItWorksSection } from './how-it-works-section'
 import { Navigation } from './navigation'
+import { ProjectsSection } from './projects-section'
 import { ServicesSection } from './services-section'
+import { TeamSection } from './team-section'
 
 const content = getLandingContent('es')
 const whatsappUrl = 'https://wa.me/50664400832?text=Hola'
@@ -157,5 +159,62 @@ describe('FooterSection', () => {
       within(footer).getByRole('link', { name: 'WhatsApp +506 6440-0832' }),
     )
     expect(within(footer).getByText('© 2026 PJM Solutions')).toBeVisible()
+  })
+})
+
+describe('ProjectsSection', () => {
+  it('muestra cada proyecto con su nombre y lo logrado, sin enlaces', () => {
+    const { projects } = getLandingContent('en')
+    render(<ProjectsSection label="Projects" {...projects} />)
+    const section = screen.getByRole('region', { name: projects.title })
+
+    expect(section).toHaveAttribute('id', 'proyectos')
+    for (const project of projects.items) {
+      expect(
+        within(section).getByRole('heading', { name: project.name }),
+      ).toBeInTheDocument()
+      expect(within(section).getByText(project.description)).toBeVisible()
+    }
+    expect(
+      within(section).getByText(
+        'Centralized Tourism Control and Management System',
+      ),
+    ).toBeVisible()
+    expect(within(section).queryAllByRole('link')).toHaveLength(0)
+  })
+})
+
+describe('TeamSection', () => {
+  it('muestra a cada integrante con su rol y sus enlaces externos', () => {
+    render(<TeamSection label={content.menu.team} {...content.team} />)
+    const section = screen.getByRole('region', { name: content.team.title })
+
+    expect(section).toHaveAttribute('id', 'equipo')
+    expect(within(section).getByText(content.team.intro)).toBeVisible()
+    expect(within(section).queryAllByRole('img')).toHaveLength(0)
+    for (const member of content.team.members) {
+      const card = within(section)
+        .getByRole('heading', { name: member.name })
+        .closest('article') as HTMLElement
+
+      expect(within(card).getByText(member.role)).toBeVisible()
+      expect(
+        within(card)
+          .getAllByRole('link')
+          .map((link) => [
+            link.textContent,
+            link.getAttribute('href'),
+            link.getAttribute('target'),
+            link.getAttribute('rel'),
+          ]),
+      ).toEqual(
+        member.links.map(({ label, url }) => [
+          label,
+          url,
+          '_blank',
+          'noopener noreferrer',
+        ]),
+      )
+    }
   })
 })

@@ -1,27 +1,15 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import type { Project } from '@modules/company-profile'
 
-const features = [
-  {
-    title: 'TypeScript native',
-    description: 'Full type safety for agent configs and responses.',
-  },
-  {
-    title: 'Streaming results',
-    description: 'Watch your agents think and act in real-time.',
-  },
-  {
-    title: 'Multi-model support',
-    description: 'OpenAI, Anthropic, Mistral, or bring your own.',
-  },
-  {
-    title: 'Local debugging',
-    description: 'Test agents locally before deploying to cloud.',
-  },
-]
+type ProjectsSectionProps = {
+  label: string
+  title: string
+  items: readonly Project[]
+}
 
-export function DevelopersSection() {
+export function ProjectsSection({ label, title, items }: ProjectsSectionProps) {
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
 
@@ -39,7 +27,8 @@ export function DevelopersSection() {
 
   return (
     <section
-      id="developers"
+      id="proyectos"
+      aria-labelledby="proyectos-titulo"
       ref={sectionRef}
       className="relative py-24 lg:py-32 overflow-hidden"
     >
@@ -71,43 +60,41 @@ export function DevelopersSection() {
         >
           <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-6">
             <span className="w-8 h-px bg-foreground/30" />
-            Developer SDK
+            {label}
           </span>
-          <h2 className="text-6xl md:text-7xl lg:text-[128px] font-display tracking-tight leading-[0.9]">
-            Code your agents.
-            <br />
-            <span className="text-muted-foreground">Or let them code.</span>
+          <h2
+            id="proyectos-titulo"
+            className="text-5xl md:text-6xl lg:text-[88px] font-display tracking-tight leading-[0.9] lg:max-w-[70%]"
+          >
+            {title}
           </h2>
         </div>
 
-        {/* Description + Features — left half only */}
-        <div
-          className={`max-w-[50%] transition-all duration-700 delay-100 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}
-        >
-          <p className="text-xl text-muted-foreground mb-12 leading-relaxed max-w-md">
-            A powerful SDK for building, deploying, and orchestrating AI agents.
-            Define behaviors in code or natural language.
-          </p>
-          <div className="grid grid-cols-2 gap-6">
-            {features.map((feature, index) => (
-              <div
-                key={feature.title}
-                className={`transition-all duration-500 ${
-                  isVisible
-                    ? 'opacity-100 translate-y-0'
-                    : 'opacity-0 translate-y-4'
-                }`}
-                style={{ transitionDelay: `${index * 50 + 200}ms` }}
-              >
-                <h3 className="font-medium mb-1">{feature.title}</h3>
-                <p className="text-sm text-muted-foreground">
-                  {feature.description}
+        {/* Projects — left half only on large screens */}
+        <div className="lg:max-w-[50%] grid gap-10">
+          {items.map((project, index) => (
+            <article
+              key={project.name}
+              className={`transition-all duration-500 ${
+                isVisible
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 translate-y-4'
+              }`}
+              style={{ transitionDelay: `${index * 50 + 200}ms` }}
+            >
+              <h3 className="text-2xl lg:text-3xl font-display mb-1">
+                {project.name}
+              </h3>
+              {project.nameTranslation && (
+                <p className="text-sm font-mono text-muted-foreground mb-3">
+                  {project.nameTranslation}
                 </p>
-              </div>
-            ))}
-          </div>
+              )}
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                {project.description}
+              </p>
+            </article>
+          ))}
         </div>
       </div>
     </section>
