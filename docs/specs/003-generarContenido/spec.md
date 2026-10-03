@@ -8,12 +8,12 @@ buscadores.
 
 ## Solución
 Recopilar, definir y aprobar el contenido real de PJM Solutions (identidad, servicios, proyectos,
-equipo, contacto y SEO) en español e inglés, antes de implementarlo. La implementación en la landing
-será una spec posterior (Spec 004).
+equipo, contacto y SEO) en español e inglés y, una vez aprobado, implementarlo en la landing
+dentro de esta misma spec (ver `plan.md`).
 
 ## Objetivo
 Contar con un contenido verídico, aprobado por el equipo y orientado a SEO que permita a negocios
-de todo Costa Rica encontrarnos y contactarnos.
+de todo Costa Rica encontrarnos y contactarnos, publicado en la landing en `/es` y `/en`.
 
 ## Información recopilada
 
@@ -81,10 +81,11 @@ de todo Costa Rica encontrarnos y contactarnos.
   inglés, incluidos el título y la meta description de cada idioma.
 - Definir las palabras clave principales por idioma y su ubicación (título, H1, descripción).
 - Revisar el contenido con el equipo y registrar su aprobación.
+- Implementar el contenido aprobado en la landing según `plan.md`: rutas `/es` y `/en`, metadatos
+  por idioma, las 7 secciones, JSON-LD y retiro de las secciones de la plantilla, con pruebas (TDD).
 
 ## Fuera de alcance
-- Modificar código, componentes, metadatos o rutas (Spec 004).
-- Implementar la internacionalización (`/es`, `/en`) y el `hreflang`.
+- URL canónica, `hreflang`, sitemap y `metadataBase` (bloqueados por el dominio).
 - Secciones de precios, testimonios, métricas, integraciones, seguridad, infraestructura y
   desarrolladores de la plantilla.
 - Dominio, correo corporativo, redes sociales y perfil de Google Business.
@@ -121,3 +122,8 @@ de todo Costa Rica encontrarnos y contactarnos.
 - [ ] Nombre, ubicación y WhatsApp coinciden en todas las secciones e idiomas.
 - [ ] Los pendientes están marcados como `[PENDIENTE]` y no bloquean el resto del contenido.
 - [ ] El equipo aprueba el contenido en ambos idiomas.
+- [ ] `/es` y `/en` muestran las 7 secciones con los textos aprobados y `/` redirige a `/es`.
+- [ ] Cada idioma publica su título y meta description, un único `<h1>` con la palabra clave y el
+      `lang` correcto.
+- [ ] Todos los botones de contacto abren WhatsApp con el mensaje del idioma.
+- [ ] `pnpm validate` pasa en verde.
