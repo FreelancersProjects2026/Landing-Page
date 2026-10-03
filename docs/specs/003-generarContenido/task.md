@@ -17,7 +17,7 @@
 - [x] T04 Infraestructura: cargar los textos ES/EN de `contenido.md` con datos comunes compartidos
       (nombre, ubicación, WhatsApp, enlaces del equipo); retirar `CompanyProfileSection`,
       `useCompanyProfile` y actualizar `index.ts`.
-- [ ] T05 Rutas: `src/app/[lang]/` con `generateStaticParams`, `dynamicParams = false`, `lang` del
+- [x] T05 Rutas: `src/app/[lang]/` con `generateStaticParams`, `dynamicParams = false`, `lang` del
       documento, y redirección de `/` a `/es` en `next.config.mjs`.
 - [ ] T06 SEO: `generateMetadata` por idioma (título, descripción, `openGraph`), quitar los metadatos
       de COMPUTE y añadir el JSON-LD `ProfessionalService`.

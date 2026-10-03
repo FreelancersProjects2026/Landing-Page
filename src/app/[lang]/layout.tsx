@@ -6,7 +6,8 @@ import {
   JetBrains_Mono,
 } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import './globals.css'
+import { locales } from '@modules/company-profile'
+import '../globals.css'
 
 const instrumentSans = Instrument_Sans({
   subsets: ['latin'],
@@ -31,13 +32,23 @@ export const metadata: Metadata = {
   generator: 'v0.app',
 }
 
-export default function RootLayout({
+export const dynamicParams = false
+
+export async function generateStaticParams() {
+  return locales.map((lang) => ({ lang }))
+}
+
+export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode
+  params: Promise<{ lang: string }>
 }>) {
+  const { lang } = await params
+
   return (
-    <html lang="en">
+    <html lang={lang}>
       <body
         suppressHydrationWarning
         className={`${instrumentSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} font-sans antialiased`}
