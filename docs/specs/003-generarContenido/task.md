@@ -14,7 +14,7 @@
       textos no vacíos, sin `[PENDIENTE]`).
 - [x] T03 Aplicación: `buildWhatsAppUrl(phone, message)` y `getLandingContent(locale)`, que rechaza
       idiomas desconocidos.
-- [ ] T04 Infraestructura: cargar los textos ES/EN de `contenido.md` con datos comunes compartidos
+- [x] T04 Infraestructura: cargar los textos ES/EN de `contenido.md` con datos comunes compartidos
       (nombre, ubicación, WhatsApp, enlaces del equipo); retirar `CompanyProfileSection`,
       `useCompanyProfile` y actualizar `index.ts`.
 - [ ] T05 Rutas: `src/app/[lang]/` con `generateStaticParams`, `dynamicParams = false`, `lang` del

@@ -1,4 +1,18 @@
-export { createGetCompanyProfile } from './application/getCompanyProfile.ts'
-export type { GetCompanyProfile } from './application/getCompanyProfile.ts'
-export { StaticCompanyProfileRepository } from './infrastructure/StaticCompanyProfileRepository.ts'
-export { CompanyProfileSection } from './ui/CompanyProfileSection.tsx'
+import { createGetLandingContent } from './application/landingContent.ts'
+import { landingContentSource } from './infrastructure/landingContentSource.ts'
+
+export { buildWhatsAppUrl } from './application/landingContent.ts'
+export { isLocale, locales } from './domain/landingContent.ts'
+export type {
+  Contact,
+  ExternalLink,
+  LandingContent,
+  Locale,
+  Project,
+  Seo,
+  Service,
+  Step,
+  TeamMember,
+} from './domain/landingContent.ts'
+
+export const getLandingContent = createGetLandingContent(landingContentSource)

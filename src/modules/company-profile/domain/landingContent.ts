@@ -29,6 +29,8 @@ export interface Step {
 
 export interface Project {
   readonly name: string
+  /** Traducción del nombre cuando este se conserva en otro idioma. */
+  readonly nameTranslation?: string
   readonly description: string
 }
 
@@ -69,6 +71,7 @@ export interface LandingContent {
   readonly process: {
     readonly title: string
     readonly steps: readonly Step[]
+    readonly differentiatorsTitle: string
     readonly differentiators: readonly string[]
   }
   readonly projects: {
@@ -103,9 +106,12 @@ const primaryKeyword: Record<Locale, readonly string[]> = {
 const PENDING_MARK = '[PENDIENTE]'
 
 export class InvalidLandingContentError extends Error {
-  constructor(readonly problems: readonly string[]) {
+  readonly problems: readonly string[]
+
+  constructor(problems: readonly string[]) {
     super(`El contenido de la landing no es válido: ${problems.join('; ')}`)
     this.name = 'InvalidLandingContentError'
+    this.problems = problems
   }
 }
 

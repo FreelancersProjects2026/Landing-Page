@@ -40,6 +40,7 @@ function validContent(): LandingContent {
     process: {
       title: 'Primero entendemos tu negocio',
       steps: [{ title: 'Entender', description: 'Conversamos contigo.' }],
+      differentiatorsTitle: 'Diferenciadores',
       differentiators: ['Trato directo.'],
     },
     projects: {
