@@ -3,7 +3,13 @@ import { hydrateRoot } from 'react-dom/client'
 import { renderToString } from 'react-dom/server'
 import { describe, expect, it, vi } from 'vitest'
 
-import RootLayout from './layout'
+import { getLandingContent } from '@modules/company-profile'
+
+import RootLayout, {
+  dynamicParams,
+  generateMetadata,
+  generateStaticParams,
+} from './layout'
 
 vi.mock('next/font/google', () => {
   const font = () => ({ variable: 'font' })
@@ -15,13 +21,51 @@ vi.mock('next/font/google', () => {
 })
 vi.mock('@vercel/analytics/next', () => ({ Analytics: () => null }))
 
+function renderLayout(lang: string) {
+  return RootLayout({
+    children: <main>contenido</main>,
+    params: Promise.resolve({ lang }),
+  })
+}
+
 describe('RootLayout', () => {
+  it('genera solo las rutas /es y /en', async () => {
+    expect(await generateStaticParams()).toEqual([
+      { lang: 'es' },
+      { lang: 'en' },
+    ])
+    expect(dynamicParams).toBe(false)
+  })
+
+  it.each([
+    ['es', 'es_CR'],
+    ['en', 'en_US'],
+  ])('publica los metadatos de %s', async (lang, ogLocale) => {
+    const { seo, company } = getLandingContent(lang)
+
+    expect(
+      await generateMetadata({ params: Promise.resolve({ lang }) }),
+    ).toEqual({
+      title: seo.title,
+      description: seo.description,
+      openGraph: {
+        title: seo.title,
+        description: seo.description,
+        locale: ogLocale,
+        siteName: company.name,
+        type: 'website',
+      },
+    })
+  })
+
+  it.each(['es', 'en'])('fija lang="%s" en el documento', async (lang) => {
+    const html = renderToString(await renderLayout(lang))
+
+    expect(html).toMatch(new RegExp(`^<html lang="${lang}"`))
+  })
+
   it('tolera atributos que las extensiones del navegador añaden a <body>', async () => {
-    const layout = (
-      <RootLayout>
-        <main>contenido</main>
-      </RootLayout>
-    )
+    const layout = await renderLayout('es')
     const serverHtml = new DOMParser().parseFromString(
       renderToString(layout),
       'text/html',

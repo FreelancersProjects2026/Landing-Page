@@ -8,23 +8,28 @@
 - Analítica: `<Analytics />` de `@vercel/analytics` está en el layout, sin configurar.
 
 ## Mapa
-- `src/app/layout.tsx` y `src/app/page.tsx`: layout raíz (fuentes, metadatos) y página principal de la plantilla.
-- `src/components/landing`: 13 secciones de la landing (navegación, hero, features, ..., footer); `ascii-scene.tsx` existe pero no se usa.
+- `src/app/[lang]/layout.tsx`: layout raíz por idioma (`<html lang>`, fuentes, `generateMetadata`,
+  `generateStaticParams` con `es` y `en`, `dynamicParams = false`).
+- `src/app/[lang]/page.tsx`: compone las secciones con el contenido del idioma y publica el JSON-LD
+  (`structured-data.ts`). `next.config.mjs` redirige `/` a `/es` (307).
+- `src/components/landing`: menú, hero, servicios, cómo trabajamos, proyectos, equipo, contacto y footer;
+  reciben los textos por props.
 - `src/components/ui`, `src/hooks`, `src/lib`: componentes shadcn/ui y utilidades.
-- `public` (en la raíz): imágenes e iconos. Los estilos globales están en `src/app/globals.css`.
-- `src/modules/company-profile`: único módulo; contiene `domain`, `application`, `infrastructure`, `ui` e `index.ts` público.
+- `public` (en la raíz): iconos. Los estilos globales están en `src/app/globals.css`.
+- `src/modules/company-profile`: contenido de la landing; contiene `domain`, `application`, `infrastructure`
+  e `index.ts` público.
 - `src/shared`: reservado para recursos técnicos reutilizados; hoy solo contiene un README.
 - `src/test`: configuración global de pruebas.
 - `docs/specs`, `docs/adr`: especificación, plan, tareas y decisión arquitectónica.
 
 ## Flujo de datos
-La landing actual es estática y no usa ningún módulo. `company-profile` no está conectado a ninguna
-página desde la Spec 002; su flujo, cubierto por pruebas, es:
-1. Un componente de composición crea `StaticCompanyProfileRepository` y lo inyecta en `createGetCompanyProfile`.
-2. El caso de uso llama al contrato `CompanyProfileRepository.find()`.
-3. El adaptador estático valida datos `unknown` y delega las invariantes a `createCompanyProfile`.
-4. `useCompanyProfile` transforma la promesa en `loading`, `empty`, `success` o `error`.
-5. `CompanyProfileSection` renderiza el estado; los errores internos no se exponen.
+1. `infrastructure/landingContentSource.ts` define los textos ES/EN de `contenido.md` y los datos comunes
+   (nombre, ubicación, teléfono, proyectos, enlaces del equipo); cada idioma pasa por
+   `validateLandingContent` al cargarse, así que un contenido inválido rompe el build.
+2. `index.ts` compone `getLandingContent = createGetLandingContent(landingContentSource)`; el caso de uso
+   rechaza idiomas desconocidos.
+3. La página (Server Component) obtiene el contenido del idioma, calcula el enlace con
+   `buildWhatsAppUrl` y pasa a cada sección solo su parte por props.
 
 ## Fronteras
 - Dominio no depende de React ni de capas externas.
@@ -36,4 +41,5 @@ página desde la Spec 002; su flujo, cubierto por pruebas, es:
 - Backend, API remota, base de datos o persistencia real.
 - Autenticación, formularios funcionales o librería global de estado.
 - CI/CD, configuración de hosting o proceso de despliegue.
-- Módulos de negocio de clientes; `company-profile` es el único módulo de referencia.
+- Módulos de negocio de clientes; `company-profile` es el único módulo.
+- URL canónica, `hreflang`, sitemap y `metadataBase` (bloqueados por el dominio).
