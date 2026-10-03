@@ -113,7 +113,7 @@ de todo Costa Rica encontrarnos y contactarnos, publicado en la landing en `/es`
       «harvest tracking software»), hoy presentes como «agricultural software» y «harvest tracking».
 
 ## Criterios de aceptación
-- [ ] La spec recoge identidad, propuesta de valor, servicios, proyectos, equipo, contacto,
+- [x] La spec recoge identidad, propuesta de valor, servicios, proyectos, equipo, contacto,
       secciones y palabras clave, sin datos inventados.
 - [x] `contenido.md` contiene los textos de las 7 secciones en español e inglés.
 - [x] Cada idioma tiene un título (≤ 60 caracteres) y una meta description (≤ 160 caracteres) que
