@@ -141,6 +141,12 @@ describe('HowItWorksSection: accesibilidad', () => {
     ).toHaveLength(0)
   })
 
+  it('no anima el indicador del paso activo como si fuera a avanzar solo', () => {
+    const { container } = renderProcess()
+
+    expect(container.querySelector('.animate-progress')).toBeNull()
+  })
+
   it('no cambia de paso sola: el paso activo cambia solo con un clic', () => {
     vi.useFakeTimers()
     try {

@@ -1,6 +1,7 @@
 # Contenido de la landing — PJM Solutions
 
 Estado: aprobado por el equipo (Spec 003, 2026-10-02). Fuente de verdad del código.
+Enmienda aprobada 2026-10-02: etiqueta del menú móvil (Menú/Menu) y mayúscula inicial en las descripciones.
 
 Datos comunes a ambos idiomas:
 

@@ -97,7 +97,7 @@ export function HowItWorksSection({
                   : 'bg-[#000000] border-white/25 hover:border-white/50'
               }`}
             >
-              {/* Step number with animated line */}
+              {/* Step number with active line */}
               <div className="flex items-center gap-4 mb-8">
                 <span
                   className={`text-4xl font-display transition-colors duration-300 ${
@@ -108,7 +108,7 @@ export function HowItWorksSection({
                 </span>
                 <div className="flex-1 h-px bg-white/10 overflow-hidden">
                   {activeStep === index && (
-                    <div className="h-full bg-[#eca8d6]/50 animate-progress" />
+                    <div className="h-full bg-[#eca8d6]/50" />
                   )}
                 </div>
               </div>
@@ -164,20 +164,6 @@ export function HowItWorksSection({
           </ul>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes progress {
-          from {
-            width: 0%;
-          }
-          to {
-            width: 100%;
-          }
-        }
-        .animate-progress {
-          animation: progress 6s linear forwards;
-        }
-      `}</style>
     </section>
   )
 }
