@@ -9,7 +9,7 @@
 ## Tareas
 - [x] T01 Confirmar la aprobación de `contenido.md` por el equipo y ejecutar `pnpm validate` como
       línea base.
-- [ ] T02 Dominio: tipos del contenido (`Locale`, `Seo`, `Service`, `Project`, `TeamMember`,
+- [x] T02 Dominio: tipos del contenido (`Locale`, `Seo`, `Service`, `Project`, `TeamMember`,
       `Contact`, `LandingContent`) y validaciones (título ≤ 60, descripción ≤ 160, palabra clave,
       textos no vacíos, sin `[PENDIENTE]`).
 - [ ] T03 Aplicación: `buildWhatsAppUrl(phone, message)` y `getLandingContent(locale)`, que rechaza
