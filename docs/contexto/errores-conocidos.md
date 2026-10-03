@@ -4,8 +4,6 @@
 - Los commits `first commit` y `second commit` no describen su contenido ni decisiones.
 
 ## Interfaz y contenido
-- La etiqueta accesible del botón del menú móvil («Menú» / «Menu») no está en `contenido.md`; se define en
-  `src/app/[lang]/page.tsx` como texto de interfaz.
 - Algunos grupos de palabras clave de la spec aparecen integrados en frases naturales y no como la frase
   exacta (p. ej. «empresa de desarrollo de software de Paraíso de Cartago», «harvest tracking with full history»).
 - El video del hero y 4 imágenes decorativas (servicios, cómo trabajamos, proyectos y footer) siguen

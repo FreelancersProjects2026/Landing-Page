@@ -1,9 +1,23 @@
+import { readFileSync } from 'node:fs'
+
 import { describe, expect, it } from 'vitest'
 
 import { validateLandingContent } from '../domain/landingContent.ts'
 import { landingContentSource } from './landingContentSource.ts'
 
 const { es, en } = landingContentSource
+
+// Vitest se ejecuta desde la raíz del repositorio.
+const approvedContent = readFileSync(
+  'docs/specs/003-generarContenido/contenido.md',
+  'utf8',
+).replace(/\s+/g, ' ')
+
+function collectTexts(value: unknown): string[] {
+  if (typeof value === 'string') return [value]
+  if (typeof value !== 'object' || value === null) return []
+  return Object.values(value).flatMap(collectTexts)
+}
 
 describe('landingContentSource', () => {
   it.each([es, en])('el contenido en $locale es válido', (content) => {
@@ -37,4 +51,17 @@ describe('landingContentSource', () => {
 
     expect(projects).not.toMatch(/https?:|www\./)
   })
+
+  it.each([es, en])(
+    'copia literalmente de contenido.md los textos en $locale',
+    (content) => {
+      // Datos técnicos que no se muestran: el idioma y el código ISO del país (JSON-LD).
+      const technical = [content.locale, content.company.address.country]
+      const missing = collectTexts(content).filter(
+        (text) => !technical.includes(text) && !approvedContent.includes(text),
+      )
+
+      expect(missing).toEqual([])
+    },
+  )
 })

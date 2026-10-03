@@ -81,8 +81,8 @@ y `pricing` (fuera de alcance por la spec), además de `ascii-scene.tsx` (el her
   `Project.nameTranslation` (nombre en español con su traducción en inglés) y
   `process.differentiatorsTitle` («Diferenciadores» / «What sets us apart»). El número de WhatsApp se deriva
   del teléfono (`buildWhatsAppUrl` usa solo sus dígitos), sin campo aparte.
-- **Interfaz:** la etiqueta accesible del botón del menú móvil («Menú» / «Menu») no está en `contenido.md`;
-  se define en `src/app/[lang]/page.tsx`. El botón del menú usa el texto del hero («Cotiza por WhatsApp»).
+- **Interfaz:** la etiqueta accesible del botón del menú móvil («Menú» / «Menu») se aprobó en `contenido.md`
+  y forma parte de `menu.toggleLabel`. El botón del menú usa el texto del hero («Cotiza por WhatsApp»).
 - **Adaptación visual:** los `<h2>` largos bajan de 128px a 88px; el hero pierde las palabras rotativas y
   las estadísticas; el contacto pierde la imagen `bridge.png` (en `public/images`). El video y las imágenes
   decorativas externas de la plantilla se conservan.

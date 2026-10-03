@@ -17,7 +17,6 @@ type NavigationProps = {
   cta: string
   whatsappUrl: string
   locale: Locale
-  toggleLabel: string
 }
 
 export function Navigation({
@@ -26,7 +25,6 @@ export function Navigation({
   cta,
   whatsappUrl,
   locale,
-  toggleLabel,
 }: NavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -126,7 +124,7 @@ export function Navigation({
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className={`md:hidden p-2 transition-colors duration-500 ${isScrolled || isMobileMenuOpen ? 'text-foreground' : 'text-white'}`}
-            aria-label={toggleLabel}
+            aria-label={menu.toggleLabel}
             aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? (

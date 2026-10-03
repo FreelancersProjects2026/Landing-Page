@@ -25,6 +25,8 @@ Datos comunes a ambos idiomas:
 
 Servicios · Cómo trabajamos · Proyectos · Equipo · Contacto
 
+- **Botón del menú móvil (etiqueta accesible):** Menú
+
 ### 1. Hero
 
 - **H1 (etiqueta superior):** Desarrollo de software a medida en Costa Rica
@@ -38,19 +40,19 @@ Servicios · Cómo trabajamos · Proyectos · Equipo · Contacto
 - **Título:** Aplicaciones web a medida para tu operación
 - **Introducción:** Si buscas crear software a la medida, hacer un sistema para tu negocio o
   desarrollar una aplicación web, construimos la herramienta que tu operación necesita.
-- **Sistemas de gestión empresarial:** centraliza la información de tu negocio en un solo lugar,
+- **Sistemas de gestión empresarial:** Centraliza la información de tu negocio en un solo lugar,
   con software administrativo pensado para pymes.
-- **Control de personal y producción:** registra qué hizo cada trabajador, cuándo y cuánto.
-- **Control de cuentas y cobros:** lleva tus cuentas, viajes, pedidos y cobros sin hojas sueltas.
-- **Historial y métricas del negocio:** consulta tu historial y toma decisiones con datos reales.
+- **Control de personal y producción:** Registra qué hizo cada trabajador, cuándo y cuánto.
+- **Control de cuentas y cobros:** Lleva tus cuentas, viajes, pedidos y cobros sin hojas sueltas.
+- **Historial y métricas del negocio:** Consulta tu historial y toma decisiones con datos reales.
 
 ### 3. Cómo trabajamos
 
 - **Título:** Primero entendemos tu negocio, después programamos
-- **1. Entender:** conversamos contigo para conocer tu operación, tus procesos y tus problemas.
-- **2. Diseñar:** convertimos lo que aprendimos en un modelo claro del sistema que necesitas.
-- **3. Construir:** desarrollamos tu software con avances que puedes revisar.
-- **4. Acompañar:** entregamos el sistema funcionando y te acompañamos en su puesta en marcha.
+- **1. Entender:** Conversamos contigo para conocer tu operación, tus procesos y tus problemas.
+- **2. Diseñar:** Convertimos lo que aprendimos en un modelo claro del sistema que necesitas.
+- **3. Construir:** Desarrollamos tu software con avances que puedes revisar.
+- **4. Acompañar:** Entregamos el sistema funcionando y te acompañamos en su puesta en marcha.
 - **Diferenciadores:**
   - Trato directo con quienes construyen tu software, sin intermediarios.
   - Software hecho para tu operación real, no plantillas genéricas.
@@ -58,10 +60,10 @@ Servicios · Cómo trabajamos · Proyectos · Equipo · Contacto
 ### 4. Proyectos
 
 - **Título:** Proyectos que ya resuelven problemas reales
-- **Agromonitoreo:** software agrícola que centraliza las métricas de los agricultores: control de
+- **Agromonitoreo:** Software agrícola que centraliza las métricas de los agricultores: control de
   cosechas con su historial, tramos trabajados y registro de producción por trabajador mediante
   plantillas.
-- **Sistema Centralizado para el Control y Manejo de Turismo:** software para empresas de turismo
+- **Sistema Centralizado para el Control y Manejo de Turismo:** Software para empresas de turismo
   que reúne el control de transporte privado en un solo sistema: gestión de viajes, cuentas y
   cobros.
 
@@ -104,6 +106,8 @@ Servicios · Cómo trabajamos · Proyectos · Equipo · Contacto
 
 Services · How we work · Projects · Team · Contact
 
+- **Mobile menu button (accessible label):** Menu
+
 ### 1. Hero
 
 - **H1 (eyebrow):** Custom software development in Costa Rica
@@ -117,20 +121,20 @@ Services · How we work · Projects · Team · Contact
 - **Title:** Custom web applications for your operation
 - **Intro:** Whether you want to build custom software, need custom software for your business or a
   web application, we build the tool your operation needs.
-- **Business management software:** bring your business information together in one place, with
+- **Business management software:** Bring your business information together in one place, with
   small business software designed around you.
-- **Employee and production tracking:** record what each worker did, when and how much.
-- **Billing and accounts management:** keep track of accounts, trips, orders and payments without
+- **Employee and production tracking:** Record what each worker did, when and how much.
+- **Billing and accounts management:** Keep track of accounts, trips, orders and payments without
   scattered spreadsheets.
-- **History and business metrics:** check your history and make decisions with real data.
+- **History and business metrics:** Check your history and make decisions with real data.
 
 ### 3. How we work
 
 - **Title:** We understand your business first, then we code
-- **1. Understand:** we talk with you to learn your operation, processes and problems.
-- **2. Design:** we turn what we learned into a clear model of the system you need.
-- **3. Build:** we develop your software with progress you can review.
-- **4. Support:** we deliver a working system and support you while you put it into use.
+- **1. Understand:** We talk with you to learn your operation, processes and problems.
+- **2. Design:** We turn what we learned into a clear model of the system you need.
+- **3. Build:** We develop your software with progress you can review.
+- **4. Support:** We deliver a working system and support you while you put it into use.
 - **What sets us apart:**
   - Direct contact with the people who build your software, no middlemen.
   - Software made for your real operation, not generic templates.
@@ -138,10 +142,10 @@ Services · How we work · Projects · Team · Contact
 ### 4. Projects
 
 - **Title:** Projects already solving real problems
-- **Agromonitoreo:** agricultural software that centralizes farmers' metrics: harvest tracking with
+- **Agromonitoreo:** Agricultural software that centralizes farmers' metrics: harvest tracking with
   full history, worked sections and production records per worker using templates.
 - **Sistema Centralizado para el Control y Manejo de Turismo** (Centralized Tourism Control and
-  Management System): tourism management software that brings private transport into one system —
+  Management System): Tourism management software that brings private transport into one system —
   a private transport management system for trips, accounts and payments.
 
 ### 5. Team

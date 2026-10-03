@@ -30,7 +30,6 @@ describe('Navigation', () => {
         cta={content.hero.cta}
         whatsappUrl={whatsappUrl}
         locale="es"
-        toggleLabel="Menú"
       />,
     )
     const nav = screen.getByRole('navigation')

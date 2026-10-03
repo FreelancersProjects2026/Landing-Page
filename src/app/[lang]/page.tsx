@@ -6,16 +6,9 @@ import { ProjectsSection } from '@/components/landing/projects-section'
 import { TeamSection } from '@/components/landing/team-section'
 import { CtaSection } from '@/components/landing/cta-section'
 import { FooterSection } from '@/components/landing/footer-section'
-import {
-  buildWhatsAppUrl,
-  getLandingContent,
-  type Locale,
-} from '@modules/company-profile'
+import { buildWhatsAppUrl, getLandingContent } from '@modules/company-profile'
 
 import { buildStructuredData, serializeJsonLd } from './structured-data'
-
-// Etiqueta accesible del botón del menú móvil (texto de interfaz, no de contenido).
-const menuToggleLabel: Record<Locale, string> = { es: 'Menú', en: 'Menu' }
 
 export default async function Home({
   params,
@@ -43,7 +36,6 @@ export default async function Home({
           cta={content.hero.cta}
           whatsappUrl={whatsappUrl}
           locale={content.locale}
-          toggleLabel={menuToggleLabel[content.locale]}
         />
         <HeroSection hero={content.hero} whatsappUrl={whatsappUrl} />
         <ServicesSection label={content.menu.services} {...content.services} />

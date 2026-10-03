@@ -62,6 +62,7 @@ const es = validateLandingContent({
     projects: 'Proyectos',
     team: 'Equipo',
     contact: 'Contacto',
+    toggleLabel: 'Menú',
   },
   hero: {
     heading: 'Desarrollo de software a medida en Costa Rica',
@@ -78,21 +79,21 @@ const es = validateLandingContent({
       {
         title: 'Sistemas de gestión empresarial',
         description:
-          'centraliza la información de tu negocio en un solo lugar, con software administrativo pensado para pymes.',
+          'Centraliza la información de tu negocio en un solo lugar, con software administrativo pensado para pymes.',
       },
       {
         title: 'Control de personal y producción',
-        description: 'registra qué hizo cada trabajador, cuándo y cuánto.',
+        description: 'Registra qué hizo cada trabajador, cuándo y cuánto.',
       },
       {
         title: 'Control de cuentas y cobros',
         description:
-          'lleva tus cuentas, viajes, pedidos y cobros sin hojas sueltas.',
+          'Lleva tus cuentas, viajes, pedidos y cobros sin hojas sueltas.',
       },
       {
         title: 'Historial y métricas del negocio',
         description:
-          'consulta tu historial y toma decisiones con datos reales.',
+          'Consulta tu historial y toma decisiones con datos reales.',
       },
     ],
   },
@@ -102,22 +103,22 @@ const es = validateLandingContent({
       {
         title: 'Entender',
         description:
-          'conversamos contigo para conocer tu operación, tus procesos y tus problemas.',
+          'Conversamos contigo para conocer tu operación, tus procesos y tus problemas.',
       },
       {
         title: 'Diseñar',
         description:
-          'convertimos lo que aprendimos en un modelo claro del sistema que necesitas.',
+          'Convertimos lo que aprendimos en un modelo claro del sistema que necesitas.',
       },
       {
         title: 'Construir',
         description:
-          'desarrollamos tu software con avances que puedes revisar.',
+          'Desarrollamos tu software con avances que puedes revisar.',
       },
       {
         title: 'Acompañar',
         description:
-          'entregamos el sistema funcionando y te acompañamos en su puesta en marcha.',
+          'Entregamos el sistema funcionando y te acompañamos en su puesta en marcha.',
       },
     ],
     differentiatorsTitle: 'Diferenciadores',
@@ -132,12 +133,12 @@ const es = validateLandingContent({
       {
         name: projectNames.agro,
         description:
-          'software agrícola que centraliza las métricas de los agricultores: control de cosechas con su historial, tramos trabajados y registro de producción por trabajador mediante plantillas.',
+          'Software agrícola que centraliza las métricas de los agricultores: control de cosechas con su historial, tramos trabajados y registro de producción por trabajador mediante plantillas.',
       },
       {
         name: projectNames.tourism,
         description:
-          'software para empresas de turismo que reúne el control de transporte privado en un solo sistema: gestión de viajes, cuentas y cobros.',
+          'Software para empresas de turismo que reúne el control de transporte privado en un solo sistema: gestión de viajes, cuentas y cobros.',
       },
     ],
   },
@@ -184,6 +185,7 @@ const en = validateLandingContent({
     projects: 'Projects',
     team: 'Team',
     contact: 'Contact',
+    toggleLabel: 'Menu',
   },
   hero: {
     heading: 'Custom software development in Costa Rica',
@@ -200,20 +202,20 @@ const en = validateLandingContent({
       {
         title: 'Business management software',
         description:
-          'bring your business information together in one place, with small business software designed around you.',
+          'Bring your business information together in one place, with small business software designed around you.',
       },
       {
         title: 'Employee and production tracking',
-        description: 'record what each worker did, when and how much.',
+        description: 'Record what each worker did, when and how much.',
       },
       {
         title: 'Billing and accounts management',
         description:
-          'keep track of accounts, trips, orders and payments without scattered spreadsheets.',
+          'Keep track of accounts, trips, orders and payments without scattered spreadsheets.',
       },
       {
         title: 'History and business metrics',
-        description: 'check your history and make decisions with real data.',
+        description: 'Check your history and make decisions with real data.',
       },
     ],
   },
@@ -223,21 +225,21 @@ const en = validateLandingContent({
       {
         title: 'Understand',
         description:
-          'we talk with you to learn your operation, processes and problems.',
+          'We talk with you to learn your operation, processes and problems.',
       },
       {
         title: 'Design',
         description:
-          'we turn what we learned into a clear model of the system you need.',
+          'We turn what we learned into a clear model of the system you need.',
       },
       {
         title: 'Build',
-        description: 'we develop your software with progress you can review.',
+        description: 'We develop your software with progress you can review.',
       },
       {
         title: 'Support',
         description:
-          'we deliver a working system and support you while you put it into use.',
+          'We deliver a working system and support you while you put it into use.',
       },
     ],
     differentiatorsTitle: 'What sets us apart',
@@ -252,13 +254,13 @@ const en = validateLandingContent({
       {
         name: projectNames.agro,
         description:
-          "agricultural software that centralizes farmers' metrics: harvest tracking with full history, worked sections and production records per worker using templates.",
+          "Agricultural software that centralizes farmers' metrics: harvest tracking with full history, worked sections and production records per worker using templates.",
       },
       {
         name: projectNames.tourism,
         nameTranslation: 'Centralized Tourism Control and Management System',
         description:
-          'tourism management software that brings private transport into one system — a private transport management system for trips, accounts and payments.',
+          'Tourism management software that brings private transport into one system — a private transport management system for trips, accounts and payments.',
       },
     ],
   },

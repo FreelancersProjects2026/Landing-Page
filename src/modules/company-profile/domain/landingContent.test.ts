@@ -27,6 +27,7 @@ function validContent(): LandingContent {
       projects: 'Proyectos',
       team: 'Equipo',
       contact: 'Contacto',
+      toggleLabel: 'Menú',
     },
     hero: {
       heading: 'Desarrollo de software a medida en Costa Rica',

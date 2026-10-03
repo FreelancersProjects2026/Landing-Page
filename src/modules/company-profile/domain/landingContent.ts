@@ -64,6 +64,7 @@ export interface LandingContent {
     readonly projects: string
     readonly team: string
     readonly contact: string
+    readonly toggleLabel: string
   }
   readonly hero: {
     readonly heading: string
