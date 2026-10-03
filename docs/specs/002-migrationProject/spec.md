@@ -26,6 +26,8 @@ existentes (`company-profile`), conservando sus pruebas.
 - Usar la plantilla tal como está: todas sus secciones, textos, identidad visual y escena 3D.
 - Excepción aprobada: corregir el error de hidratación del patrón ASCII de
   `TestimonialsSection`, sin cambio visual.
+- Excepción aprobada: tolerar en `<body>` los atributos que inyectan extensiones del navegador
+  (p. ej. `cz-shortcut-listen` de ColorZilla) con `suppressHydrationWarning`.
 - Reubicar `app/`, `components/`, `hooks/` y `lib/` dentro de `src/` (todo el código en `src/`;
   `public/` permanece en la raíz) y eliminar `styles/globals.css`, que no se usa.
 - Adaptar `.dependency-cruiser.cjs`, `tsconfig` y `eslint.config.js` a la nueva estructura.

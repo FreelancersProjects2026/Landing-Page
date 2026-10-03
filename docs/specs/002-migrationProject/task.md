@@ -83,3 +83,8 @@
 - [x] T50 Confirmar que la regla de API pública de módulos sigue detectando importaciones ilegales.
 - [x] T51 Confirmar que `pnpm validate` pasa en verde.
 - [x] T52 Actualizar README, AGENTS, architecture, constitution, contexto y ADR 002 con la nueva estructura.
+
+## 11. Atributos inyectados por extensiones del navegador
+- [x] T53 Escribir una prueba que hidrate el layout con un atributo ajeno en `<body>` y falle (rojo).
+- [x] T54 Añadir `suppressHydrationWarning` a `<body>` en `src/app/layout.tsx` (verde).
+- [x] T55 Documentar la causa (extensión ColorZilla) en `docs/contexto/errores-conocidos.md`.

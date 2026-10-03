@@ -33,3 +33,9 @@
   patrón es decorativo y aleatorio a propósito, su `<div>` lleva `suppressHydrationWarning`: React conserva
   el texto del servidor y no hay cambio visual. `src/app/page.test.tsx` hidrata la página en jsdom y falla
   ante cualquier error de hidratación.
+- **Resuelto:** en `pnpm dev` aparecía "A tree hydrated but some attributes of the server rendered HTML
+  didn't match the client properties" con `cz-shortcut-listen="true"` en `<body>` (en `RootLayout`). No
+  lo genera nuestro código: lo inyecta la extensión del navegador ColorZilla antes de que React hidrate.
+  `<body>` en `src/app/layout.tsx` lleva `suppressHydrationWarning`, que solo ignora diferencias de
+  atributos de ese elemento (no de sus hijos). `src/app/layout.test.tsx` simula el atributo y falla sin
+  esa propiedad.

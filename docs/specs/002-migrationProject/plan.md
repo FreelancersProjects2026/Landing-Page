@@ -80,6 +80,8 @@ Se retiran: `index.html`, `vite.config.ts`, `src/main.tsx`, `src/app/` del proye
     cambiar el alias `@/*` a `./src/*`, actualizar `components.json`, dependency-cruiser, ESLint,
     Prettier, Vitest y la documentación, y eliminar `styles/globals.css` (sin uso). Sin cambios
     de contenido ni visuales.
+11. **Atributos de extensiones:** añadir `suppressHydrationWarning` a `<body>` en
+    `src/app/layout.tsx` para tolerar atributos inyectados por extensiones (ColorZilla).
 
 ## Estrategia de pruebas
 - Las pruebas de `company-profile` actúan como red de seguridad: no deben cambiar su lógica.
