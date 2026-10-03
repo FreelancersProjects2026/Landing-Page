@@ -3,7 +3,7 @@ import { hydrateRoot } from 'react-dom/client'
 import { renderToString } from 'react-dom/server'
 import { describe, expect, it, vi } from 'vitest'
 
-import { getLandingContent } from '@modules/company-profile'
+import { buildWhatsAppUrl, getLandingContent } from '@modules/company-profile'
 
 import Home from './page'
 import { buildStructuredData } from './structured-data'
@@ -12,42 +12,67 @@ function renderPage(lang: string) {
   return Home({ params: Promise.resolve({ lang }) })
 }
 
-describe('Home', () => {
-  it.each(['es', 'en'])('publica el JSON-LD de %s', async (lang) => {
+describe.each(['es', 'en'])('Home (%s)', (lang) => {
+  const content = getLandingContent(lang)
+
+  it('renderiza el menú, las 7 secciones y el footer en orden', async () => {
+    const { container } = render(await renderPage(lang))
+
+    const sections = Array.from(
+      container.querySelector('main')?.children ?? [],
+    ).map((element) => ({
+      id: element.id || element.tagName.toLowerCase(),
+      title: element.querySelector('h1, h2')?.textContent,
+    }))
+
+    expect(sections).toEqual([
+      { id: 'header', title: undefined },
+      { id: 'inicio', title: content.hero.heading },
+      { id: 'servicios', title: content.services.title },
+      { id: 'como-trabajamos', title: content.process.title },
+      { id: 'proyectos', title: content.projects.title },
+      { id: 'equipo', title: content.team.title },
+      { id: 'contacto', title: content.contact.title },
+      { id: 'footer', title: undefined },
+    ])
+  })
+
+  it('tiene un único <h1> con la palabra clave principal', async () => {
+    const { container } = render(await renderPage(lang))
+    const headings = container.querySelectorAll('h1')
+
+    expect(headings).toHaveLength(1)
+    expect(headings[0]).toHaveTextContent(content.hero.heading)
+  })
+
+  it('todos los botones de contacto abren WhatsApp con el mensaje del idioma', async () => {
+    const { container } = render(await renderPage(lang))
+    const whatsappUrl = buildWhatsAppUrl(
+      content.company.phone,
+      content.whatsappMessage,
+    )
+    const whatsappLinks = Array.from(
+      container.querySelectorAll('a[href*="wa.me"]'),
+    )
+
+    // Menú (escritorio y móvil), hero, contacto y footer.
+    expect(whatsappLinks).toHaveLength(5)
+    for (const link of whatsappLinks) {
+      expect(link).toHaveAttribute('href', whatsappUrl)
+    }
+  })
+
+  it('publica el JSON-LD del idioma', async () => {
     const { container } = render(await renderPage(lang))
     const script = container.querySelector('script[type="application/ld+json"]')
 
     expect(JSON.parse(script?.textContent ?? '')).toEqual(
-      buildStructuredData(getLandingContent(lang)),
+      buildStructuredData(content),
     )
-  })
-
-  it('renderiza todas las secciones de la plantilla en orden', async () => {
-    const { container } = render(await renderPage('es'))
-
-    // Cada sección se identifica por su título; navegación y pie, por su etiqueta.
-    const sections = Array.from(
-      container.querySelector('main')?.children ?? [],
-    ).map(
-      (element) =>
-        element.querySelector('h1, h2')?.textContent ??
-        element.tagName.toLowerCase(),
-    )
-
-    expect(sections).toEqual([
-      'header',
-      'Desarrollo de software a medida en Costa Rica',
-      'Aplicaciones web a medida para tu operación',
-      'Primero entendemos tu negocio, después programamos',
-      'Proyectos que ya resuelven problemas reales',
-      'Tres desarrolladores, un mismo equipo',
-      '¿Listo para crear software a la medida?',
-      'footer',
-    ])
   })
 
   it('se hidrata sin errores a partir del HTML del servidor', async () => {
-    const page = await renderPage('es')
+    const page = await renderPage(lang)
     const container = document.createElement('div')
     container.innerHTML = renderToString(page)
     document.body.appendChild(container)

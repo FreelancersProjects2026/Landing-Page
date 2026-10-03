@@ -26,7 +26,7 @@
 - [x] T08 Secciones nuevas: crear proyectos y equipo; eliminar las secciones de la plantilla fuera de
       alcance y todo recurso sin uso (`placeholder-*`, `public/images/*`, `ascii-scene.tsx`,
       `three`/`@react-three/fiber` si quedan sin uso).
-- [ ] T09 Página: reescribir `page.test.tsx` por idioma (7 secciones en orden, un `<h1>`, botones a
+- [x] T09 Página: reescribir `page.test.tsx` por idioma (7 secciones en orden, un `<h1>`, botones a
       WhatsApp, hidratación) y componer `src/app/[lang]/page.tsx`.
 - [ ] T10 Cierre: `pnpm validate` en verde, revisión manual en `/es` y `/en` (móvil, escritorio,
       Lighthouse), marcar criterios de la spec y sincronizar plan, `README.md` y `docs/contexto/`.
