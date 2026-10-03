@@ -25,6 +25,6 @@
 - **TDD:** Test-Driven Development; ciclo prueba fallida, implementación mínima y refactor.
 - **ADR:** Architecture Decision Record; documento de una decisión arquitectónica.
 - **API pública:** exportaciones del `index.ts` de un módulo, no una API HTTP.
-- **PJM:** [PENDIENTE: significado de las iniciales no documentado en el repositorio.]
+- **PJM:** iniciales de Patrick, Jason y Michael, los integrantes del equipo.
 
 [PENDIENTE: agregar términos y entidades cuando exista un dominio real de cliente.]
