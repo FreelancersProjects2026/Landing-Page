@@ -4,6 +4,7 @@
 - TypeScript `strict`, sin emisión, con el `tsconfig.json` de la plantilla Next.js. Respecto al anterior `tsconfig.app.json`, desde la Spec 002 se perdieron `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noUnusedLocals`, `noUnusedParameters`, `verbatimModuleSyntax`, `erasableSyntaxOnly` y `noFallthroughCasesInSwitch`; los cuatro primeros junto con el último generaban 56 errores en la plantilla. Recuperarlos (por ejemplo, solo para `src/`) queda para una spec posterior.
 - Se conserva `allowImportingTsExtensions`, que ya existía en `tsconfig.app.json`; los módulos importan con extensión `.ts`/`.tsx`.
 - Prettier: sin punto y coma, comillas simples y coma final.
+- Finales de línea LF: `.gitattributes` (`* text=auto eol=lf`) los fija en el repositorio para que `core.autocrlf=true` en Windows no convierta la copia de trabajo a CRLF y rompa `prettier --check`.
 - Componentes y clases en `PascalCase`; funciones, hooks y casos de uso en `camelCase`; módulos en `kebab-case`.
 - Interfaces y propiedades del dominio son `readonly`; los perfiles creados se congelan.
 - Alias entre espacios: `@/*` (`./src/*`), `@modules`, `@shared`; importaciones internas relativas.
