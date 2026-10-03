@@ -35,13 +35,6 @@ export function HowItWorksSection({
     return () => observer.disconnect()
   }, [])
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveStep((prev) => (prev + 1) % steps.length)
-    }, 6000)
-    return () => clearInterval(interval)
-  }, [steps.length])
-
   return (
     <section
       id={sectionIds.process}
@@ -76,7 +69,7 @@ export function HowItWorksSection({
             </h2>
           </div>
 
-          {/* Image cerisier — se colle en bas sur les blocs */}
+          {/* Imagen decorativa apoyada sobre las tarjetas */}
           <div
             className={`relative h-[320px] lg:h-[640px] overflow-hidden transition-all duration-1000 delay-200 ${
               isVisible ? 'opacity-100' : 'opacity-0'
@@ -88,7 +81,7 @@ export function HowItWorksSection({
               aria-hidden="true"
               className="absolute bottom-0 left-0 w-full h-full object-contain object-bottom"
             />
-            {/* Fade sur le bord gauche */}
+            {/* Degradado en el borde izquierdo */}
             <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.09_0.01_260)] via-transparent to-transparent pointer-events-none" />
           </div>
         </div>
@@ -96,10 +89,8 @@ export function HowItWorksSection({
         {/* Horizontal Steps Layout */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           {steps.map((step, index) => (
-            <button
+            <div
               key={step.title}
-              type="button"
-              onClick={() => setActiveStep(index)}
               className={`relative text-left p-8 lg:p-10 border transition-all duration-500 ${
                 activeStep === index
                   ? 'bg-[#000000] border-white/60'
@@ -122,9 +113,16 @@ export function HowItWorksSection({
                 </div>
               </div>
 
-              {/* Title */}
+              {/* Title: el botón cubre toda la tarjeta (after:inset-0) sin anidar el h3 en él */}
               <h3 className="text-3xl lg:text-4xl font-display mb-6">
-                {step.title}
+                <button
+                  type="button"
+                  aria-pressed={activeStep === index}
+                  onClick={() => setActiveStep(index)}
+                  className="text-left after:absolute after:inset-0 focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-white/60"
+                >
+                  {step.title}
+                </button>
               </h3>
 
               {/* Description */}
@@ -142,7 +140,7 @@ export function HowItWorksSection({
                   activeStep === index ? 'scale-x-100' : 'scale-x-0'
                 }`}
               />
-            </button>
+            </div>
           ))}
         </div>
 

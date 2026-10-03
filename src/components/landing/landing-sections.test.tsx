@@ -1,5 +1,5 @@
-import { render, screen, within } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { act, fireEvent, render, screen, within } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
 
 import { getLandingContent } from '@modules/company-profile'
 
@@ -120,6 +120,43 @@ describe('HowItWorksSection', () => {
     ).toBeVisible()
     for (const differentiator of content.process.differentiators) {
       expect(within(section).getByText(differentiator)).toBeVisible()
+    }
+  })
+})
+
+describe('HowItWorksSection: accesibilidad', () => {
+  function renderProcess() {
+    return render(
+      <HowItWorksSection label={content.menu.process} {...content.process} />,
+    )
+  }
+
+  it('no anida encabezados dentro de botones', () => {
+    const { container } = renderProcess()
+
+    expect(
+      container.querySelectorAll(
+        'button h1, button h2, button h3, button h4, button h5, button h6',
+      ),
+    ).toHaveLength(0)
+  })
+
+  it('no cambia de paso sola: el paso activo cambia solo con un clic', () => {
+    vi.useFakeTimers()
+    try {
+      renderProcess()
+      const [first, second] = content.process.steps.map((step) =>
+        screen.getByRole('button', { name: step.title }),
+      )
+
+      act(() => vi.advanceTimersByTime(20_000))
+      expect(first).toHaveAttribute('aria-pressed', 'true')
+
+      fireEvent.click(second as HTMLElement)
+      expect(second).toHaveAttribute('aria-pressed', 'true')
+      expect(first).toHaveAttribute('aria-pressed', 'false')
+    } finally {
+      vi.useRealTimers()
     }
   })
 })
