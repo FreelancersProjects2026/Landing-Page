@@ -21,7 +21,7 @@
 
 ## 3. Retiro de Vite
 - [x] T08 Eliminar `index.html`, `vite.config.ts` y `src/main.tsx`.
-- [x] T09 Eliminar `src/app/` del proyecto Vite y `src/styles.css`.
+- [x] T09 Eliminar `src/app/` y `src/styles.css`.
 - [x] T10 Eliminar `tsconfig.app.json`, `tsconfig.node.json` y `dist/`.
 - [x] T11 Retirar `vite` y `@vitejs/plugin-react` de las dependencias.
 
@@ -70,7 +70,7 @@
 ## 9. Corrección del error de hidratación
 - [x] T41 Escribir una prueba que hidrate la página y falle ante errores de hidratación (rojo).
 - [x] T42 Marcar el patrón ASCII de `TestimonialsSection` con `suppressHydrationWarning` (verde).
-- [ ] T43 Confirmar en `pnpm dev` que la consola no muestra errores de hidratación.
+- [x] T43 Confirmar en `pnpm dev` que la consola no muestra errores de hidratación.
   Pendiente: el usuario recarga http://localhost:3000 y confirma que la consola no muestra 'Hydration failed'.
 - [x] T44 Actualizar `docs/contexto/errores-conocidos.md` como resuelto.
 
@@ -83,8 +83,3 @@
 - [x] T50 Confirmar que la regla de API pública de módulos sigue detectando importaciones ilegales.
 - [x] T51 Confirmar que `pnpm validate` pasa en verde.
 - [x] T52 Actualizar README, AGENTS, architecture, constitution, contexto y ADR 002 con la nueva estructura.
-
-## 11. Atributos inyectados por extensiones del navegador
-- [x] T53 Escribir una prueba que hidrate el layout con un atributo ajeno en `<body>` y falle (rojo).
-- [x] T54 Añadir `suppressHydrationWarning` a `<body>` en `src/app/layout.tsx` (verde).
-- [x] T55 Documentar la causa (extensión ColorZilla) en `docs/contexto/errores-conocidos.md`.
