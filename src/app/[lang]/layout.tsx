@@ -6,7 +6,11 @@ import {
   JetBrains_Mono,
 } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import { getLandingContent, locales } from '@modules/company-profile'
+import {
+  getLandingContent,
+  locales,
+  type Locale,
+} from '@modules/company-profile'
 import '../globals.css'
 
 const instrumentSans = Instrument_Sans({
@@ -25,7 +29,7 @@ const jetbrainsMono = JetBrains_Mono({
   variable: '--font-jetbrains',
 })
 
-const openGraphLocale: Record<string, string> = { es: 'es_CR', en: 'en_US' }
+const openGraphLocale: Record<Locale, string> = { es: 'es_CR', en: 'en_US' }
 
 type LayoutParams = { params: Promise<{ lang: string }> }
 
@@ -33,7 +37,7 @@ export async function generateMetadata({
   params,
 }: LayoutParams): Promise<Metadata> {
   const { lang } = await params
-  const { seo, company } = getLandingContent(lang)
+  const { seo, company, locale } = getLandingContent(lang)
 
   return {
     title: seo.title,
@@ -41,7 +45,7 @@ export async function generateMetadata({
     openGraph: {
       title: seo.title,
       description: seo.description,
-      locale: openGraphLocale[lang],
+      locale: openGraphLocale[locale],
       siteName: company.name,
       type: 'website',
     },
