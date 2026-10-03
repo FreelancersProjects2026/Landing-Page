@@ -2,7 +2,22 @@
 node_modules
 dist
 dist-ssr
+.next/
+next-env.d.ts
+*.tsbuildinfo
 *.local
+
+# Environment variables
+.env*.local
+
+# v0 sandbox internal files
+__v0_runtime_loader.js
+__v0_devtools.tsx
+__v0_jsx-dev-runtime.ts
+.snowflake/
+.v0-trash/
+.vercel/
+next.user-config.*
 
 # Logs
 *.log

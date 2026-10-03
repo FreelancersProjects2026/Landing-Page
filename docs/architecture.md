@@ -5,10 +5,13 @@
 - Especificación: [`spec.md`](specs/001-definir-arquitectura/spec.md).
 - Plan: [`plan.md`](specs/001-definir-arquitectura/plan.md).
 - Tareas: [`task.md`](specs/001-definir-arquitectura/task.md).
-- Decisión: [`ADR-001`](adr/001-arquitectura-modular-por-dominio.md).
+- Decisiones: [`ADR-001`](adr/001-arquitectura-modular-por-dominio.md) y [`ADR-002`](adr/002-migracion-de-vite-a-nextjs.md).
+- Migración a Next.js: [`spec 002`](specs/002-migrationProject/spec.md).
 
 ## Estructura
-- `src/app`: composición global; conecta módulos y adaptadores.
+- `src/app/`: composición global con Next.js App Router; páginas y layout.
+- `src/components/landing/`: secciones visuales de la landing.
+- `src/components/ui/`, `src/hooks/`, `src/lib/`: componentes shadcn/ui y utilidades técnicas.
 - `src/modules`: capacidades del negocio independientes.
 - `domain`: entidades, reglas e invariantes sin React.
 - `application`: casos de uso y contratos de entrada o salida.
@@ -29,13 +32,13 @@ flowchart LR
   Application --> Domain
 ```
 
-Las dependencias apuntan hacia aplicación y dominio. `pnpm architecture` bloquea ciclos, acceso de `app` a capas internas y dependencias desde capas internas hacia capas externas.
+Las dependencias apuntan hacia aplicación y dominio. `pnpm architecture` bloquea ciclos, acceso de `src/app/` y `src/components/` a capas internas y dependencias desde capas internas hacia capas externas.
 
 ## Convenciones
 - Un módulo usa un nombre de capacidad de negocio en `kebab-case`.
 - Cada módulo expone únicamente su `index.ts` a consumidores externos.
 - Los archivos de componentes y clases usan `PascalCase`; funciones y casos de uso, `camelCase`.
-- Los alias `@app`, `@modules` y `@shared` se reservan para cruces entre espacios.
+- Los alias `@/*` (`./src/*`), `@modules` y `@shared` se reservan para cruces entre espacios.
 - Las importaciones internas de un módulo son relativas.
 
 ## Responsabilidades
@@ -45,7 +48,7 @@ Las dependencias apuntan hacia aplicación y dominio. `pnpm architecture` bloque
 | Aplicación | Casos de uso y contratos | Componentes o adaptadores concretos |
 | Infraestructura | Adaptadores y validación externa | Reglas de presentación |
 | Interfaz | Componentes y estados visuales | Reglas de negocio |
-| App | Composición y arranque | Detalles internos de módulos |
+| App y componentes de página | Composición, rutas y secciones visuales | Reglas de negocio o detalles internos de módulos |
 
 ## Datos y errores
 - Cada flujo mantiene una sola fuente de verdad.
@@ -58,10 +61,11 @@ Las dependencias apuntan hacia aplicación y dominio. `pnpm architecture` bloque
 - Aplicación: contratos sustituidos por dobles.
 - Infraestructura: validación y transformación de entradas.
 - Interfaz: comportamiento observable con React Testing Library.
+- Página principal: `src/app/page.test.tsx` verifica que se renderizan todas las secciones.
 - Arquitectura: reglas de dependencias con dependency-cruiser.
 
 ## Verificación
 - `pnpm check`: formato, lint y tipos.
 - `pnpm test`: pruebas unitarias y de componentes.
 - `pnpm architecture`: fronteras entre capas.
-- `pnpm validate`: validación completa y build de producción.
+- `pnpm validate`: validación completa y build de producción de Next.js.

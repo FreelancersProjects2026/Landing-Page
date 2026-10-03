@@ -8,18 +8,31 @@ Somos un equipo de tres profesionales. Nuestro punto de partida es comprender el
 
 ## Stack
 
-- React 19
-- Vite
+- Next.js 16 (App Router) y React 19
+- Tailwind CSS 4 y shadcn/ui
 - TypeScript
-- pnpm
-- Vitest y React Testing Library
+- pnpm 10
+- Vitest, jsdom y React Testing Library
+- ESLint, Prettier y dependency-cruiser
 
 ## Desarrollo
 
 - `pnpm install`: instala las dependencias.
-- `pnpm dev`: inicia el entorno local.
+- `pnpm dev`: inicia el entorno local de Next.js en `http://localhost:3000`.
+- `pnpm build` / `pnpm start`: genera y sirve la compilación de producción.
 - `pnpm test`: ejecuta las pruebas.
+- `pnpm check`: formato, lint y tipos.
+- `pnpm architecture`: valida las fronteras entre capas.
 - `pnpm validate`: ejecuta todos los controles y el build.
+
+## Estructura
+
+- `src/app/`: páginas y layout (App Router).
+- `src/components/landing/`: secciones de la landing (plantilla base).
+- `src/components/ui/`, `src/hooks/`, `src/lib/`: componentes shadcn/ui y utilidades técnicas.
+- `public/`: recursos estáticos (en la raíz). Los estilos globales están en `src/app/globals.css`.
+- `src/modules/`: módulos de dominio con sus capas (`company-profile`).
+- `src/shared/`, `src/test/`: recursos transversales y configuración de pruebas.
 
 ## Principios de desarrollo
 
@@ -33,5 +46,6 @@ Somos un equipo de tres profesionales. Nuestro punto de partida es comprender el
 
 - [Constitución del proyecto](docs/constitution.md)
 - [Arquitectura frontend](docs/architecture.md)
-- [Decisión arquitectónica](docs/adr/001-arquitectura-modular-por-dominio.md)
+- [ADR-001: arquitectura modular por dominio](docs/adr/001-arquitectura-modular-por-dominio.md)
+- [ADR-002: migración de Vite a Next.js](docs/adr/002-migracion-de-vite-a-nextjs.md)
 - [Instrucciones para agentes](AGENTS.md)
