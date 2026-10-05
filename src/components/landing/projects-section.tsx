@@ -35,7 +35,7 @@ export function ProjectsSection({ label, title, items }: ProjectsSectionProps) {
     >
       {/* Image — absolute, bottom-right, behind all content */}
       <div
-        className={`absolute bottom-0 right-0 w-[55%] h-[85%] pointer-events-none transition-all duration-1000 delay-300 ${
+        className={`absolute bottom-0 right-0 w-[55%] aspect-[1669/942] pointer-events-none transition-all duration-1000 delay-300 ${
           isVisible ? 'opacity-100' : 'opacity-0'
         }`}
       >
@@ -43,12 +43,12 @@ export function ProjectsSection({ label, title, items }: ProjectsSectionProps) {
           src="/Proyectos/Proyectos.png"
           alt=""
           aria-hidden="true"
-          className="w-full h-full object-cover object-left-top"
+          className="w-full h-full object-contain"
         />
         {/* Fade left edge */}
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background to-transparent to-25%" />
         {/* Fade top edge */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background to-transparent to-15%" />
       </div>
 
       {/* All text content sits on top */}
