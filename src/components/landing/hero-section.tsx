@@ -36,10 +36,7 @@ export function HeroSection({ hero, whatsappUrl }: HeroSectionProps) {
           aria-hidden="true"
           className="w-full h-full object-cover object-center opacity-80"
         >
-          <source
-            src="/VideoHero/videoHero.mp4"
-            type="video/mp4"
-          />
+          <source src="/VideoHero/videoHero.mp4" type="video/mp4" />
         </video>
         {/* Subtle overlay to ensure text readability on the left */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
