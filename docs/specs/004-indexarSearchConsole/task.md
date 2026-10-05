@@ -12,7 +12,7 @@
 - [x] T01 Preparación: crear la rama y ejecutar `pnpm validate` como línea base.
 - [x] T02 Dominio: regla de la URL del sitio (absoluta, `https`, sin `www`, sin ruta ni barra final)
       y `defaultLocale = 'es'` junto a `locales` en `domain/landingContent.ts`.
-- [ ] T03 Aplicación: `buildLocaleUrl(siteUrl, locale)` y `buildLanguageAlternates(siteUrl)`
+- [x] T03 Aplicación: `buildLocaleUrl(siteUrl, locale)` y `buildLanguageAlternates(siteUrl)`
       (`es`, `en` y `x-default` → `/es`, todas absolutas).
 - [ ] T04 Infraestructura: `siteUrl = 'https://solutionspjm.com'` validada al cargarse; exportar
       `siteUrl`, `defaultLocale` y las dos funciones desde `index.ts`.
