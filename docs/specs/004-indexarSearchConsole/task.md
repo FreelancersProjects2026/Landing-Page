@@ -14,7 +14,7 @@
       y `defaultLocale = 'es'` junto a `locales` en `domain/landingContent.ts`.
 - [x] T03 Aplicación: `buildLocaleUrl(siteUrl, locale)` y `buildLanguageAlternates(siteUrl)`
       (`es`, `en` y `x-default` → `/es`, todas absolutas).
-- [ ] T04 Infraestructura: `siteUrl = 'https://solutionspjm.com'` validada al cargarse; exportar
+- [x] T04 Infraestructura: `siteUrl = 'https://solutionspjm.com'` validada al cargarse; exportar
       `siteUrl`, `defaultLocale` y las dos funciones desde `index.ts`.
 - [ ] T05 Metadatos: `metadataBase`, `alternates.canonical`, `alternates.languages` y
       `openGraph.url` en `generateMetadata` de `src/app/[lang]/layout.tsx` (actualizar

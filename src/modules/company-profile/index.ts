@@ -2,7 +2,12 @@ import { createGetLandingContent } from './application/landingContent.ts'
 import { landingContentSource } from './infrastructure/landingContentSource.ts'
 
 export { buildWhatsAppUrl } from './application/landingContent.ts'
-export { isLocale, locales } from './domain/landingContent.ts'
+export {
+  buildLanguageAlternates,
+  buildLocaleUrl,
+  type LanguageAlternates,
+} from './application/siteUrls.ts'
+export { defaultLocale, isLocale, locales } from './domain/landingContent.ts'
 export type {
   Contact,
   ExternalLink,
@@ -15,5 +20,6 @@ export type {
   Step,
   TeamMember,
 } from './domain/landingContent.ts'
+export { siteUrl } from './infrastructure/landingContentSource.ts'
 
 export const getLandingContent = createGetLandingContent(landingContentSource)

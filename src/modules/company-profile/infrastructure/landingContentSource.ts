@@ -4,6 +4,7 @@ import {
   type Contact,
   type ExternalLink,
 } from '../domain/landingContent.ts'
+import { validateSiteUrl } from '../domain/siteUrl.ts'
 
 // Textos copiados literalmente de docs/specs/003-generarContenido/contenido.md (aprobado).
 
@@ -14,6 +15,9 @@ const company: Contact = {
   areaServed: 'Costa Rica',
   phone: '+506 6440-0832',
 }
+
+// Origen canónico del sitio (spec 004): sin www; www.solutionspjm.com redirige aquí con 308.
+export const siteUrl = validateSiteUrl('https://solutionspjm.com')
 
 const linkedIn = (url: string): ExternalLink => ({ label: 'LinkedIn', url })
 const gitHub = (url: string): ExternalLink => ({ label: 'GitHub', url })
