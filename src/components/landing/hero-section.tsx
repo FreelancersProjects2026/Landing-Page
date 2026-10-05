@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import type { LandingContent } from '@modules/company-profile'
 
 import { externalLinkProps } from './external-link'
+import { ParticleVisualization } from './particle-visualization'
 import { sectionIds } from './section-ids'
 
 type HeroSectionProps = {
@@ -18,13 +19,6 @@ const heroPetals = Array.from({ length: 20 }, (_, i) => ({
   left: `${52 + ((i * 37) % 46)}%`,
   delay: `${(i * 0.65).toFixed(2)}s`,
   duration: `${9 + ((i * 3) % 6)}s`,
-}))
-
-// Chispas que suben por la columna de texto mientras el cursor está encima.
-const heroSparks = Array.from({ length: 24 }, (_, i) => ({
-  left: `${(i * 61) % 100}%`,
-  delay: `${((i * 0.37) % 2.4).toFixed(2)}s`,
-  duration: `${2.4 + ((i * 7) % 5) * 0.3}s`,
 }))
 
 export function HeroSection({ hero, whatsappUrl }: HeroSectionProps) {
@@ -69,6 +63,10 @@ export function HeroSection({ hero, whatsappUrl }: HeroSectionProps) {
         {/* Subtle overlay to ensure text readability on the left */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />
+        {/* Partículas que reaccionan al cursor en la mitad izquierda, como en Servicios */}
+        <div className="absolute inset-y-0 left-0 w-1/2 motion-reduce:hidden">
+          <ParticleVisualization />
+        </div>
       </div>
 
       {/* Subtle grid lines */}
@@ -98,20 +96,7 @@ export function HeroSection({ hero, whatsappUrl }: HeroSectionProps) {
       </div>
 
       <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 lg:px-12 py-32 lg:py-40">
-        <div className="group/hero relative lg:max-w-[55%]">
-          <div className="absolute -inset-x-12 -inset-y-24 -z-10 pointer-events-none opacity-0 transition-opacity duration-700 group-hover/hero:opacity-100 motion-reduce:hidden">
-            {heroSparks.map((spark, i) => (
-              <span
-                key={i}
-                className="absolute bottom-0 w-1.5 h-1.5 rounded-full bg-amber-100 shadow-[0_0_12px_4px_rgba(251,191,36,0.8)] animate-hero-spark [animation-play-state:paused] group-hover/hero:[animation-play-state:running]"
-                style={{
-                  left: spark.left,
-                  animationDelay: spark.delay,
-                  animationDuration: spark.duration,
-                }}
-              />
-            ))}
-          </div>
+        <div className="lg:max-w-[55%]">
           {/* Eyebrow: H1 con la palabra clave principal */}
           <div
             className={`mb-8 transition-all duration-700 ${

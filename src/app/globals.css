@@ -221,7 +221,7 @@
     }
   }
 
-  /* Hero: brillo pulsante, pétalos y chispas al hover (desactivados con prefers-reduced-motion) */
+  /* Hero: brillo pulsante y pétalos (desactivados con prefers-reduced-motion) */
   .animate-hero-glow {
     animation: hero-glow 5s ease-in-out infinite;
   }
@@ -229,25 +229,6 @@
   .animate-hero-petal {
     animation: hero-petal linear infinite;
     opacity: 0;
-  }
-
-  .animate-hero-spark {
-    animation: hero-spark ease-out infinite;
-    opacity: 0;
-  }
-
-  @keyframes hero-spark {
-    0% {
-      opacity: 0;
-      transform: translate(0, 0) scale(0.6);
-    }
-    20% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-      transform: translate(1.5rem, -60vh) scale(1.2);
-    }
   }
 
   @keyframes hero-glow {
