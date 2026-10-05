@@ -10,17 +10,17 @@ function validContent(): LandingContent {
   return {
     locale: 'es',
     company: {
-      name: 'PJM Solutions',
+      name: 'solutionsPJM',
       location: 'Paraíso de Cartago, Costa Rica',
       address: { locality: 'Paraíso', region: 'Cartago', country: 'CR' },
       areaServed: 'Costa Rica',
       phone: '+506 6440-0832',
     },
     seo: {
-      title: 'Desarrollo de software a medida Costa Rica | PJM Solutions',
+      title: 'Desarrollo de software a medida Costa Rica | solutionsPJM',
       description: 'Desarrollo de software a medida en Costa Rica.',
     },
-    whatsappMessage: 'Hola PJM Solutions',
+    whatsappMessage: 'Hola solutionsPJM',
     menu: {
       services: 'Servicios',
       process: 'Cómo trabajamos',
@@ -31,7 +31,8 @@ function validContent(): LandingContent {
     },
     hero: {
       heading: 'Desarrollo de software a medida en Costa Rica',
-      slogan: 'Software que comienza por entender tu negocio.',
+      slogan: 'Software que comienza por entender tu negocio',
+      sloganWords: ['negocio', 'empresa'],
       subtitle: 'Desarrollamos software a medida.',
       cta: 'Cotiza por WhatsApp',
     },
@@ -66,7 +67,7 @@ function validContent(): LandingContent {
       text: 'Cuéntanos.',
       cta: 'Escríbenos por WhatsApp',
     },
-    footer: { text: 'PJM Solutions — desarrollo.', rights: '© 2026 PJM' },
+    footer: { text: 'solutionsPJM — desarrollo.', rights: '© 2026 PJM' },
   }
 }
 
@@ -169,5 +170,16 @@ describe('validateLandingContent', () => {
         footer: { ...content.footer, text: '[PENDIENTE]' },
       }),
     ).toThrow(/PENDIENTE/)
+  })
+
+  it('exige que el eslogan contenga la primera palabra rotativa', () => {
+    const content = validContent()
+
+    expect(() =>
+      validateLandingContent({
+        ...content,
+        hero: { ...content.hero, sloganWords: ['empresa', 'negocio'] },
+      }),
+    ).toThrow(/palabra rotativa/)
   })
 })

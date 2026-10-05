@@ -222,10 +222,6 @@
   }
 
   /* Hero: brillo pulsante y pétalos (desactivados con prefers-reduced-motion) */
-  .animate-hero-glow {
-    animation: hero-glow 5s ease-in-out infinite;
-  }
-
   .animate-hero-petal {
     animation: hero-petal linear infinite;
     opacity: 0;
@@ -256,5 +252,41 @@
       opacity: 0;
       transform: translate(-12vw, 105vh) rotate(540deg);
     }
+  }
+}
+
+/* Animaciones del hero usadas con motion-safe:; deben ser @utility para que
+   Tailwind 4 genere la variante (en @layer utilities se pierde sin aviso). */
+@utility animate-hero-glow {
+  animation: hero-glow 5s ease-in-out infinite;
+}
+
+/* Letra de la palabra rotativa: pasa de borrosa a nítida con el color de su
+   posición en el degradado y luego vira a blanco. Retrasos y colores llegan
+   por variables desde el componente. */
+@utility animate-hero-letter {
+  animation:
+    hero-letter-in var(--letter-fade) cubic-bezier(0.33, 1, 0.68, 1)
+      var(--letter-delay) both,
+    hero-letter-settle 0.4s ease var(--letter-hold) both;
+}
+
+@keyframes hero-letter-in {
+  from {
+    opacity: 0;
+    filter: blur(20px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes hero-letter-settle {
+  from {
+    color: var(--letter-color);
+  }
+  to {
+    color: white;
   }
 }

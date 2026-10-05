@@ -1,4 +1,4 @@
-# PJM Solutions
+# solutionsPJM
 
 Proyecto frontend para crear soluciones de software a medida que respondan a las necesidades reales de cada cliente.
 

@@ -9,7 +9,7 @@ import { validateSiteUrl } from '../domain/siteUrl.ts'
 // Textos copiados literalmente de docs/specs/003-generarContenido/contenido.md (aprobado).
 
 const company: Contact = {
-  name: 'PJM Solutions',
+  name: 'solutionsPJM',
   location: 'Paraíso de Cartago, Costa Rica',
   address: { locality: 'Paraíso', region: 'Cartago', country: 'CR' },
   areaServed: 'Costa Rica',
@@ -49,18 +49,18 @@ const projectNames = {
   payments: 'Seguimiento de Cuentas mediante Lectura de Correos Electrónicos',
 }
 
-const rights = '© 2026 PJM Solutions'
+const rights = '© 2026 solutionsPJM'
 
 const es = validateLandingContent({
   locale: 'es',
   company,
   seo: {
-    title: 'Desarrollo de software a medida Costa Rica | PJM Solutions',
+    title: 'Desarrollo de software a medida Costa Rica | solutionsPJM',
     description:
       'Desarrollo de software a medida en Costa Rica. Creamos sistemas de gestión, control y métricas para tu negocio. Escríbenos por WhatsApp y cotiza tu proyecto.',
   },
   whatsappMessage:
-    'Hola PJM Solutions, quiero cotizar un software a la medida para mi negocio.',
+    'Hola solutionsPJM, quiero cotizar un software a la medida para mi negocio.',
   menu: {
     services: 'Servicios',
     process: 'Cómo trabajamos',
@@ -71,7 +71,8 @@ const es = validateLandingContent({
   },
   hero: {
     heading: 'Desarrollo de software a medida en Costa Rica',
-    slogan: 'Software que comienza por entender tu negocio.',
+    slogan: 'Software que comienza por entender tu negocio',
+    sloganWords: ['negocio', 'empresa', 'operación', 'proceso', 'idea'],
     subtitle:
       'Desarrollamos software a medida para negocios en Costa Rica: sistemas de gestión, control y métricas hechos para tu operación real.',
     cta: 'Cotiza por WhatsApp',
@@ -174,7 +175,7 @@ const es = validateLandingContent({
     cta: 'Escríbenos por WhatsApp',
   },
   footer: {
-    text: 'PJM Solutions — desarrollo de software en Cartago para negocios de todo Costa Rica.',
+    text: 'solutionsPJM — desarrollo de software en Cartago para negocios de todo Costa Rica.',
     rights,
   },
 })
@@ -183,12 +184,12 @@ const en = validateLandingContent({
   locale: 'en',
   company,
   seo: {
-    title: 'Custom Software Development Costa Rica | PJM Solutions',
+    title: 'Custom Software Development Costa Rica | solutionsPJM',
     description:
       'Custom software development in Costa Rica. We build management, tracking and metrics systems for your business. Message us on WhatsApp for a quote.',
   },
   whatsappMessage:
-    "Hi PJM Solutions, I'd like a quote for custom software for my business.",
+    "Hi solutionsPJM, I'd like a quote for custom software for my business.",
   menu: {
     services: 'Services',
     process: 'How we work',
@@ -199,7 +200,8 @@ const en = validateLandingContent({
   },
   hero: {
     heading: 'Custom software development in Costa Rica',
-    slogan: 'Software that starts by understanding your business.',
+    slogan: 'Software that starts by understanding your business',
+    sloganWords: ['business', 'company', 'operation', 'process', 'idea'],
     subtitle:
       'We build custom software for businesses in Costa Rica: management, tracking and metrics systems made for how you actually operate.',
     cta: 'Get a quote on WhatsApp',
@@ -302,7 +304,7 @@ const en = validateLandingContent({
     cta: 'Message us on WhatsApp',
   },
   footer: {
-    text: 'PJM Solutions — software development in Cartago for businesses across Costa Rica.',
+    text: 'solutionsPJM — software development in Cartago for businesses across Costa Rica.',
     rights,
   },
 })

@@ -13,7 +13,7 @@
   - **Licencia desconocida:** no consta que su uso comercial esté permitido.
   - **Privacidad y disponibilidad:** cada visita hace peticiones a un tercero que no controlamos.
   - **Rendimiento:** el video se reproduce en `autoplay` sin `poster`, lo que perjudica el LCP.
-  - **Marca:** no representan a PJM Solutions; habrá que sustituirlos por recursos propios.
+  - **Marca:** no representan a solutionsPJM; habrá que sustituirlos por recursos propios.
 
 ## Arquitectura
 - La regla de API pública protege imports desde `src/app/` y `src/components/`, pero no impide que un módulo futuro importe capas internas de otro módulo.

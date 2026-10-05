@@ -1,4 +1,4 @@
-# Tareas: Implementar el contenido de la landing de PJM Solutions
+# Tareas: Implementar el contenido de la landing de solutionsPJM
 
 ## Base acordada
 - Spec: `docs/specs/003-generarContenido/spec.md`. Plan: `plan.md`. Textos: `contenido.md`.

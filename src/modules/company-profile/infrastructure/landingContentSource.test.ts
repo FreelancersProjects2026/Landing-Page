@@ -27,7 +27,7 @@ describe('landingContentSource', () => {
 
   it('comparte nombre, ubicación y WhatsApp entre idiomas', () => {
     expect(es.company).toEqual({
-      name: 'PJM Solutions',
+      name: 'solutionsPJM',
       location: 'Paraíso de Cartago, Costa Rica',
       address: { locality: 'Paraíso', region: 'Cartago', country: 'CR' },
       areaServed: 'Costa Rica',
@@ -45,6 +45,10 @@ describe('landingContentSource', () => {
     )
     expect(es.team.members).toHaveLength(3)
     expect(es.projects.items).toHaveLength(3)
+  })
+
+  it.each([es, en])('el eslogan en $locale no termina en punto', (content) => {
+    expect(content.hero.slogan).not.toMatch(/\.$/)
   })
 
   it('no publica enlaces en los proyectos', () => {

@@ -71,6 +71,8 @@ export interface LandingContent {
   readonly hero: {
     readonly heading: string
     readonly slogan: string
+    /** Palabras que rotan en el eslogan; la primera es la que aparece en `slogan`. */
+    readonly sloganWords: readonly string[]
     readonly subtitle: string
     readonly cta: string
   }
@@ -159,6 +161,10 @@ export function validateLandingContent(
     if (!hasPrimaryKeyword(text, locale)) {
       problems.push(`falta la palabra clave principal en ${label}`)
     }
+  }
+  const [firstWord] = hero.sloganWords
+  if (!firstWord || !hero.slogan.includes(firstWord)) {
+    problems.push('el eslogan no contiene la primera palabra rotativa')
   }
   for (const [path, text] of collectTexts(content, '')) {
     if (text.trim().length === 0) problems.push(`${path} está vacío`)

@@ -5,21 +5,15 @@ import { Button } from '@/components/ui/button'
 import type { LandingContent } from '@modules/company-profile'
 
 import { externalLinkProps } from './external-link'
+import { HeroPetals } from './hero-petals'
 import { ParticleVisualization } from './particle-visualization'
+import { RotatingSlogan } from './rotating-slogan'
 import { sectionIds } from './section-ids'
 
 type HeroSectionProps = {
   hero: LandingContent['hero']
   whatsappUrl: string
 }
-
-// Posición y ritmo de cada pétalo; caen en la mitad derecha, donde está el árbol.
-// Valores deterministas (sin Math.random) para que servidor y cliente rendericen igual.
-const heroPetals = Array.from({ length: 10 }, (_, i) => ({
-  left: `${52 + ((i * 37) % 46)}%`,
-  delay: `${(i * 1.3).toFixed(2)}s`,
-  duration: `${9 + ((i * 3) % 6)}s`,
-}))
 
 export function HeroSection({ hero, whatsappUrl }: HeroSectionProps) {
   const [isVisible, setIsVisible] = useState(false)
@@ -47,19 +41,7 @@ export function HeroSection({ hero, whatsappUrl }: HeroSectionProps) {
           className="w-full h-full object-cover object-[70%_center] lg:object-center"
         />
         <div className="absolute left-[55%] top-[60%] w-[35%] h-[30%] rounded-full bg-amber-400/25 blur-3xl pointer-events-none motion-safe:animate-hero-glow" />
-        <div className="absolute inset-0 overflow-hidden pointer-events-none motion-reduce:hidden">
-          {heroPetals.map((petal, i) => (
-            <span
-              key={i}
-              className="absolute -top-4 w-2 h-2.5 rounded-[60%_0] bg-pink-300/70 animate-hero-petal"
-              style={{
-                left: petal.left,
-                animationDelay: petal.delay,
-                animationDuration: petal.duration,
-              }}
-            />
-          ))}
-        </div>
+        <HeroPetals />
         {/* Subtle overlay to ensure text readability on the left */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />
@@ -117,13 +99,13 @@ export function HeroSection({ hero, whatsappUrl }: HeroSectionProps) {
           {/* Main headline */}
           <div className="mb-12">
             <p
-              className={`text-left text-[clamp(2rem,6vw,7rem)] font-display leading-[0.92] tracking-tight text-white transition-all duration-1000 ${
+              className={`text-left text-[clamp(2rem,4.5vw,5.5rem)] font-display leading-[0.92] tracking-tight text-white transition-all duration-1000 ${
                 isVisible
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-8'
               }`}
             >
-              {hero.slogan}
+              <RotatingSlogan slogan={hero.slogan} words={hero.sloganWords} />
             </p>
           </div>
 
