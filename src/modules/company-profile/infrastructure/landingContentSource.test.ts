@@ -3,7 +3,8 @@ import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 
 import { validateLandingContent } from '../domain/landingContent.ts'
-import { landingContentSource } from './landingContentSource.ts'
+import { validateSiteUrl } from '../domain/siteUrl.ts'
+import { landingContentSource, siteUrl } from './landingContentSource.ts'
 
 const { es, en } = landingContentSource
 
@@ -64,4 +65,11 @@ describe('landingContentSource', () => {
       expect(missing).toEqual([])
     },
   )
+})
+
+describe('siteUrl', () => {
+  it('es el dominio canónico de producción y pasa la validación', () => {
+    expect(siteUrl).toBe('https://solutionspjm.com')
+    expect(validateSiteUrl(siteUrl)).toBe(siteUrl)
+  })
 })

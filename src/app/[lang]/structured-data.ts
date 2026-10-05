@@ -1,11 +1,15 @@
-import type { LandingContent } from '@modules/company-profile'
+import {
+  buildLocaleUrl,
+  siteUrl,
+  type LandingContent,
+} from '@modules/company-profile'
 
-// Sin `url` hasta que exista el dominio (pendiente de la spec 003).
-export function buildStructuredData({ company, seo }: LandingContent) {
+export function buildStructuredData({ company, seo, locale }: LandingContent) {
   return {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
     name: company.name,
+    url: buildLocaleUrl(siteUrl, locale),
     description: seo.description,
     telephone: company.phone,
     address: {
