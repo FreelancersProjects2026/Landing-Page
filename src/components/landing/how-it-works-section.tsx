@@ -76,7 +76,7 @@ export function HowItWorksSection({
             }`}
           >
             <img
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/tree-uAia6REvB137CQyHFCf0za3O6h2zKO.png"
+              src="/ComoTrabajamos/ComoTrabajamos.png"
               alt=""
               aria-hidden="true"
               className="absolute bottom-0 left-0 w-full h-full object-contain object-bottom"
