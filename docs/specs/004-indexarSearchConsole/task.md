@@ -19,7 +19,7 @@
 - [x] T05 Metadatos: `metadataBase`, `alternates.canonical`, `alternates.languages` y
       `openGraph.url` en `generateMetadata` de `src/app/[lang]/layout.tsx` (actualizar
       `layout.test.tsx`).
-- [ ] T06 Sitemap y robots: `src/app/sitemap.ts` (una entrada por idioma con alternativas, sin `/`)
+- [x] T06 Sitemap y robots: `src/app/sitemap.ts` (una entrada por idioma con alternativas, sin `/`)
       y `src/app/robots.ts` (`allow: '/'` y sitemap absoluto), con sus pruebas.
 - [ ] T07 JSON-LD: agregar `url` del idioma en `structured-data.ts` y quitar el comentario de
       pendiente (actualizar `structured-data.test.ts`).
