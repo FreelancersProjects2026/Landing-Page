@@ -9,7 +9,8 @@
 ## Contexto de despliegue
 - La app está en Vercel y el dominio `solutionspjm.com` se compró en Vercel → los nameservers y el
   DNS se administran desde Vercel; no hay registrador externo.
-- Producción responde en `https://solutionspjm.com`; `www` redirige al apex.
+- Hoy producción responde en `https://solutionspjm.com` y `www` redirige al apex (`307`). Por
+  decisión del equipo se invierte: `https://www.solutionspjm.com` es el dominio principal.
 
 ## Enfoque
 La URL del sitio es un dato de la empresa, igual que su nombre o teléfono: vive en el módulo
@@ -23,9 +24,9 @@ código.
 ## Estructura objetivo
 | Ruta | Cambio | Responsabilidad |
 |------|--------|-----------------|
-| `src/modules/company-profile/domain/` | Ampliar | Regla de la URL del sitio: absoluta, `https`, sin `www`, sin ruta ni barra final. |
-| `src/modules/company-profile/application/` | Ampliar | `buildLocaleUrl(siteUrl, locale)` → `https://solutionspjm.com/es`; `buildLanguageAlternates(siteUrl)` → `{ es, en, 'x-default' }` (x-default = idioma por defecto `es`). |
-| `src/modules/company-profile/infrastructure/` | Ampliar | `siteUrl: 'https://solutionspjm.com'` junto a los datos de la empresa, validado al cargarse. |
+| `src/modules/company-profile/domain/` | Ampliar | Regla de la URL del sitio: absoluta, `https`, con `www`, sin ruta ni barra final. |
+| `src/modules/company-profile/application/` | Ampliar | `buildLocaleUrl(siteUrl, locale)` → `https://www.solutionspjm.com/es`; `buildLanguageAlternates(siteUrl)` → `{ es, en, 'x-default' }` (x-default = idioma por defecto `es`). |
+| `src/modules/company-profile/infrastructure/` | Ampliar | `siteUrl: 'https://www.solutionspjm.com'` junto a los datos de la empresa, validado al cargarse. |
 | `src/modules/company-profile/index.ts` | Actualizar | Exporta `siteUrl`, `defaultLocale` (nuevo en `domain/landingContent.ts`, junto a `locales`) y las dos funciones. |
 | `src/app/[lang]/layout.tsx` | Ampliar | `metadataBase`, `alternates.canonical`, `alternates.languages` y `openGraph.url`. |
 | `src/app/sitemap.ts` | Nuevo | Una entrada por idioma con `alternates.languages`; generado desde `locales`. |
@@ -48,24 +49,26 @@ código.
 - **Verificación:** propiedad de tipo dominio en Search Console con registro TXT en el DNS de
   Vercel. Cubre `https`/`http` y `www`/apex. Sin código ni secretos en el repo. Respaldo (solo si
   falla el DNS): `metadata.verification.google` con token en variable de entorno de Vercel.
-- **Redirección `www`:** se configura en Vercel (Settings → Domains → `www.solutionspjm.com` →
-  redirect a `solutionspjm.com`). Cambiar de `307` a `308` queda sujeto a la duda abierta de la spec.
-  `/` → `/es` sigue temporal en `next.config.mjs` salvo que el equipo decida otra cosa.
+- **Dominio principal `www`:** se configura en Vercel, sin código (Project → Settings → Domains):
+  `www.solutionspjm.com` sin redirección (principal) y `solutionspjm.com` → redirect a
+  `www.solutionspjm.com` con `308`. Vercel ya fuerza `https`. Se hace **antes** del deploy de esta
+  spec: si el canonical apunta a `www` mientras `www` redirige al apex, Google recibe señales
+  contradictorias. `/` → `/es` sigue temporal en `next.config.mjs`.
 - **Validación en el límite:** una `siteUrl` inválida rompe el build (mismo criterio que el
   contenido en la spec 003): nunca llega a producción una canonical rota.
 
 ## Pruebas (TDD)
 Cada comportamiento se escribe primero como prueba que falla:
-1. **Dominio:** la regla de URL rechaza `http://`, `www.`, ruta, barra final y texto no URL; acepta
-   `https://solutionspjm.com`.
-2. **Aplicación:** `buildLocaleUrl` produce `https://solutionspjm.com/es` y `/en`;
+1. **Dominio:** la regla de URL rechaza `http://`, falta de `www.`, ruta, barra final y texto no URL; acepta
+   `https://www.solutionspjm.com`.
+2. **Aplicación:** `buildLocaleUrl` produce `https://www.solutionspjm.com/es` y `/en`;
    `buildLanguageAlternates` devuelve `es`, `en` y `x-default` → `/es`, todas absolutas.
 3. **Infraestructura:** la `siteUrl` cargada pasa la validación.
 4. **Metadatos:** `generateMetadata` de cada idioma incluye `metadataBase`, `alternates.canonical`
    propio, `alternates.languages` completo y `openGraph.url` (se actualiza `layout.test.tsx`).
 5. **Sitemap:** devuelve exactamente una entrada por idioma de `locales`, con URL absoluta y
    alternativas; no incluye `/`.
-6. **Robots:** permite `/` y apunta a `https://solutionspjm.com/sitemap.xml`.
+6. **Robots:** permite `/` y apunta a `https://www.solutionspjm.com/sitemap.xml`.
 7. **JSON-LD:** incluye `url` del idioma (`structured-data.test.ts`).
 
 ## Fases
@@ -77,8 +80,9 @@ Cada comportamiento se escribe primero como prueba que falla:
 5. **Sitemap, robots y JSON-LD:** `src/app/sitemap.ts`, `src/app/robots.ts`, `url` en JSON-LD.
 6. **Verificación local:** `pnpm validate`; `pnpm build && pnpm start` y revisar
    `/sitemap.xml`, `/robots.txt` y el `<head>` de `/es` y `/en`.
-7. **Despliegue:** merge → deploy de producción en Vercel; comprobar con `curl` que
-   `/robots.txt` y `/sitemap.xml` responden `200` en `https://solutionspjm.com`.
+7. **Despliegue:** primero invertir el dominio principal en Vercel (`www`); después merge → deploy
+   de producción; comprobar con `curl` que el apex y `http` redirigen con `308` a
+   `https://www.solutionspjm.com` y que `/robots.txt` y `/sitemap.xml` responden `200`.
 8. **Search Console (manual, ver «Pasos manuales»).** Pasos 1–4 hechos el 2026-10-05: propiedad
    de dominio verificada. Quedan el envío del sitemap, la indexación y los accesos.
 9. **Documentación:** marcar criterios de la spec 004, actualizar pendiente de la spec 003 y
@@ -92,8 +96,8 @@ Los hace Jason con la cuenta propietaria `jason.moyabre.es@gmail.com`:
 3. En Vercel: Domains → `solutionspjm.com` → DNS Records → agregar registro `TXT`, nombre `@`,
    valor copiado. (Alternativa CLI: `vercel dns add solutionspjm.com @ TXT "google-site-verification=…"`.)
 4. Volver a Search Console → «Verificar». Si falla, esperar la propagación del DNS y reintentar.
-5. Sitemaps → enviar `https://solutionspjm.com/sitemap.xml`; esperar estado «Correcto».
-6. Inspección de URL → `https://solutionspjm.com/es` → «Solicitar indexación»; repetir con `/en`.
+5. Sitemaps → enviar `https://www.solutionspjm.com/sitemap.xml`; esperar estado «Correcto».
+6. Inspección de URL → `https://www.solutionspjm.com/es` → «Solicitar indexación»; repetir con `/en`.
 7. Configuración → Usuarios y permisos → agregar a los demás integrantes.
 8. Registrar en la spec la fecha de verificación y del envío del sitemap.
 
