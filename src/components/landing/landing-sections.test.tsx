@@ -90,7 +90,7 @@ describe('HeroSection', () => {
     expect(background).toHaveAttribute('src', '/hero/hero.webp')
     expect(background).toHaveAttribute(
       'srcset',
-      '/hero/hero-960.webp 960w, /hero/hero.webp 1672w',
+      '/hero/hero-960.webp 960w, /hero/hero.webp 1920w',
     )
     expect(background).toHaveAttribute('alt', '')
     expect(background).toHaveAttribute('aria-hidden', 'true')
