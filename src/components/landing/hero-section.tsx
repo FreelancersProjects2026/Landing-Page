@@ -12,17 +12,20 @@ type HeroSectionProps = {
   whatsappUrl: string
 }
 
-// Posición y ritmo de cada pétalo; todos caen en la mitad derecha, donde está el árbol.
-const heroPetals = [
-  { left: '58%', delay: '0s', duration: '11s' },
-  { left: '64%', delay: '3s', duration: '13s' },
-  { left: '70%', delay: '6s', duration: '10s' },
-  { left: '75%', delay: '1.5s', duration: '14s' },
-  { left: '80%', delay: '8s', duration: '12s' },
-  { left: '85%', delay: '4.5s', duration: '11s' },
-  { left: '90%', delay: '2s', duration: '13s' },
-  { left: '95%', delay: '7s', duration: '10s' },
-]
+// Posición y ritmo de cada pétalo; caen en la mitad derecha, donde está el árbol.
+// Valores deterministas (sin Math.random) para que servidor y cliente rendericen igual.
+const heroPetals = Array.from({ length: 20 }, (_, i) => ({
+  left: `${52 + ((i * 37) % 46)}%`,
+  delay: `${(i * 0.65).toFixed(2)}s`,
+  duration: `${9 + ((i * 3) % 6)}s`,
+}))
+
+// Chispas que suben por la columna de texto mientras el cursor está encima.
+const heroSparks = Array.from({ length: 24 }, (_, i) => ({
+  left: `${(i * 61) % 100}%`,
+  delay: `${((i * 0.37) % 2.4).toFixed(2)}s`,
+  duration: `${2.4 + ((i * 7) % 5) * 0.3}s`,
+}))
 
 export function HeroSection({ hero, whatsappUrl }: HeroSectionProps) {
   const [isVisible, setIsVisible] = useState(false)
@@ -95,7 +98,20 @@ export function HeroSection({ hero, whatsappUrl }: HeroSectionProps) {
       </div>
 
       <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 lg:px-12 py-32 lg:py-40">
-        <div className="lg:max-w-[55%]">
+        <div className="group/hero relative lg:max-w-[55%]">
+          <div className="absolute -inset-x-12 -inset-y-24 -z-10 pointer-events-none opacity-0 transition-opacity duration-700 group-hover/hero:opacity-100 motion-reduce:hidden">
+            {heroSparks.map((spark, i) => (
+              <span
+                key={i}
+                className="absolute bottom-0 w-1.5 h-1.5 rounded-full bg-amber-100 shadow-[0_0_12px_4px_rgba(251,191,36,0.8)] animate-hero-spark [animation-play-state:paused] group-hover/hero:[animation-play-state:running]"
+                style={{
+                  left: spark.left,
+                  animationDelay: spark.delay,
+                  animationDuration: spark.duration,
+                }}
+              />
+            ))}
+          </div>
           {/* Eyebrow: H1 con la palabra clave principal */}
           <div
             className={`mb-8 transition-all duration-700 ${
