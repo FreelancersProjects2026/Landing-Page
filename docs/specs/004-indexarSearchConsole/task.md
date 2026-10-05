@@ -27,9 +27,11 @@
       `/robots.txt` y el `<head>` de `/es` y `/en` (canonical, `hreflang`, `og:url`).
       Hecho: `/robots.txt` y `/sitemap.xml` `200`; `/es` y `/en` con `lang`, canonical propio,
       `hreflang` `es`/`en`/`x-default`, `og:url` y `url` en JSON-LD; sin `noindex`.
-- [ ] T09 Despliegue: ✅ en Vercel (Settings → Domains) `www.solutionspjm.com` redirige con `308` (2026-10-05).
-      Falta: merge y deploy de producción; `curl` confirma `200` en
-      `https://solutionspjm.com/robots.txt` y `/sitemap.xml`.
+- [x] T09 Despliegue: en Vercel (Settings → Domains) `www.solutionspjm.com` redirige con `308`
+      (2026-10-05). Merge `--no-ff` de `indexarPagina` en `main` (`gh` no disponible, sin PR) y
+      deploy automático de Vercel. `curl` en producción: `/robots.txt` y `/sitemap.xml` `200`;
+      `www` y `http` → `308` a `https://solutionspjm.com`; `/es` y `/en` con canonical,
+      `hreflang`, `og:url` y `url` en JSON-LD.
 - [ ] T10 Search Console (manual): enviar `https://solutionspjm.com/sitemap.xml` hasta estado
       «Correcto»; solicitar indexación de `/es` y `/en` con la inspección de URL sin errores de
       canonical ni `hreflang`; dar acceso a los demás integrantes.

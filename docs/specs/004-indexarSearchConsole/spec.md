@@ -81,19 +81,19 @@ las búsquedas y los errores.
   mantenerlo temporal por si a futuro se detecta el idioma del navegador.
 
 ## Criterios de aceptación
-- [ ] La URL base `https://solutionspjm.com` está definida una sola vez, validada y con pruebas.
+- [x] La URL base `https://solutionspjm.com` está definida una sola vez, validada y con pruebas.
 - [x] `https://www.solutionspjm.com/es` redirige con `308` a `https://solutionspjm.com/es`
       (2026-10-05: `www` agregado al proyecto `landing-page` con redirect `308`).
-- [ ] `/es` y `/en` publican `<link rel="canonical">` a su propia URL absoluta.
-- [ ] `/es` y `/en` publican `hreflang` `es`, `en` y `x-default` (→ `/es`) con URL absolutas.
-- [ ] Open Graph incluye la `url` canónica de cada idioma.
-- [ ] `https://solutionspjm.com/sitemap.xml` responde `200` con `/es` y `/en` y sus alternativas.
-- [ ] `https://solutionspjm.com/robots.txt` responde `200`, permite el sitio y apunta al sitemap.
-- [ ] El JSON-LD de la organización incluye la `url` canónica de cada idioma.
+- [x] `/es` y `/en` publican `<link rel="canonical">` a su propia URL absoluta.
+- [x] `/es` y `/en` publican `hreflang` `es`, `en` y `x-default` (→ `/es`) con URL absolutas.
+- [x] Open Graph incluye la `url` canónica de cada idioma.
+- [x] `https://solutionspjm.com/sitemap.xml` responde `200` con `/es` y `/en` y sus alternativas.
+- [x] `https://solutionspjm.com/robots.txt` responde `200`, permite el sitio y apunta al sitemap.
+- [x] El JSON-LD de la organización incluye la `url` canónica de cada idioma.
 - [x] La propiedad de dominio `solutionspjm.com` aparece verificada en Search Console
       (2026-10-05, registro TXT en el DNS de Vercel).
 - [ ] El sitemap figura como «Correcto» en Search Console.
 - [ ] Se solicitó la indexación de `/es` y `/en` y la inspección no reporta errores de canonical
       ni de `hreflang`.
 - [ ] La spec 003 actualiza su pendiente de dominio y remite a esta spec.
-- [ ] `pnpm validate` pasa en verde.
+- [x] `pnpm validate` pasa en verde.
