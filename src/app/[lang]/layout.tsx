@@ -7,8 +7,11 @@ import {
 } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import {
+  buildLanguageAlternates,
+  buildLocaleUrl,
   getLandingContent,
   locales,
+  siteUrl,
   type Locale,
 } from '@modules/company-profile'
 import '../globals.css'
@@ -38,13 +41,20 @@ export async function generateMetadata({
 }: LayoutParams): Promise<Metadata> {
   const { lang } = await params
   const { seo, company, locale } = getLandingContent(lang)
+  const canonical = buildLocaleUrl(siteUrl, locale)
 
   return {
+    metadataBase: new URL(siteUrl),
     title: seo.title,
     description: seo.description,
+    alternates: {
+      canonical,
+      languages: buildLanguageAlternates(siteUrl),
+    },
     openGraph: {
       title: seo.title,
       description: seo.description,
+      url: canonical,
       locale: openGraphLocale[locale],
       siteName: company.name,
       type: 'website',

@@ -16,7 +16,7 @@
       (`es`, `en` y `x-default` → `/es`, todas absolutas).
 - [x] T04 Infraestructura: `siteUrl = 'https://solutionspjm.com'` validada al cargarse; exportar
       `siteUrl`, `defaultLocale` y las dos funciones desde `index.ts`.
-- [ ] T05 Metadatos: `metadataBase`, `alternates.canonical`, `alternates.languages` y
+- [x] T05 Metadatos: `metadataBase`, `alternates.canonical`, `alternates.languages` y
       `openGraph.url` en `generateMetadata` de `src/app/[lang]/layout.tsx` (actualizar
       `layout.test.tsx`).
 - [ ] T06 Sitemap y robots: `src/app/sitemap.ts` (una entrada por idioma con alternativas, sin `/`)

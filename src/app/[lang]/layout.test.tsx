@@ -42,15 +42,26 @@ describe('RootLayout', () => {
     ['en', 'en_US'],
   ])('publica los metadatos de %s', async (lang, ogLocale) => {
     const { seo, company } = getLandingContent(lang)
+    const canonical = `https://solutionspjm.com/${lang}`
 
     expect(
       await generateMetadata({ params: Promise.resolve({ lang }) }),
     ).toEqual({
+      metadataBase: new URL('https://solutionspjm.com'),
       title: seo.title,
       description: seo.description,
+      alternates: {
+        canonical,
+        languages: {
+          es: 'https://solutionspjm.com/es',
+          en: 'https://solutionspjm.com/en',
+          'x-default': 'https://solutionspjm.com/es',
+        },
+      },
       openGraph: {
         title: seo.title,
         description: seo.description,
+        url: canonical,
         locale: ogLocale,
         siteName: company.name,
         type: 'website',
