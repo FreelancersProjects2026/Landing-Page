@@ -1,7 +1,7 @@
 export class InvalidSiteUrlError extends Error {
   constructor(value: string) {
     super(
-      `La URL del sitio no es válida: "${value}". Debe ser un origen https con www, sin ruta ni barra final.`,
+      `La URL del sitio no es válida: "${value}". Debe ser un origen https sin www, ruta ni barra final.`,
     )
     this.name = 'InvalidSiteUrlError'
   }
@@ -13,7 +13,7 @@ export function validateSiteUrl(value: string): string {
   const url = new URL(value)
   const isCanonicalOrigin =
     url.protocol === 'https:' &&
-    url.hostname.startsWith('www.') &&
+    !url.hostname.startsWith('www.') &&
     url.origin === value
   if (!isCanonicalOrigin) throw new InvalidSiteUrlError(value)
   return value

@@ -14,7 +14,7 @@ verificar la propiedad del dominio en Google Search Console, enviar el sitemap y
 indexación de `/es` y `/en`.
 
 ## Objetivo
-Que Google indexe `https://www.solutionspjm.com/es` y `https://www.solutionspjm.com/en` como versiones
+Que Google indexe `https://solutionspjm.com/es` y `https://solutionspjm.com/en` como versiones
 alternativas del mismo sitio, y que el equipo pueda monitorear en Search Console la cobertura,
 las búsquedas y los errores.
 
@@ -28,13 +28,13 @@ las búsquedas y los errores.
 | `https://solutionspjm.com/sitemap.xml` | `404` |
 
 ## Alcance
-1. **URL base del sitio:** `https://www.solutionspjm.com` (con `www`) como única fuente de verdad,
+1. **URL base del sitio:** `https://solutionspjm.com` (sin `www`) como única fuente de verdad,
    declarada una sola vez y validada (URL absoluta `https`, sin barra final).
 2. **`metadataBase`** en los metadatos para que las URL relativas (Open Graph, canonical) sean
    absolutas.
 3. **Canonical y `hreflang`** por idioma mediante `alternates`:
-   - `/es` → canonical `https://www.solutionspjm.com/es`.
-   - `/en` → canonical `https://www.solutionspjm.com/en`.
+   - `/es` → canonical `https://solutionspjm.com/es`.
+   - `/en` → canonical `https://solutionspjm.com/en`.
    - Ambas declaran `es`, `en` y `x-default` (→ `/es`).
    - Open Graph publica `url` con la URL canónica del idioma.
 4. **`sitemap.xml`** (`src/app/sitemap.ts`) con `/es` y `/en`, cada una con sus alternativas de
@@ -42,7 +42,7 @@ las búsquedas y los errores.
 5. **`robots.txt`** (`src/app/robots.ts`) que permite todo el sitio y apunta al sitemap.
 6. **Verificación en Search Console** con propiedad de tipo dominio (`solutionspjm.com`) mediante
    registro DNS TXT: cubre `http`/`https` y `www`/apex sin código.
-7. **Alta manual en Search Console:** enviar `https://www.solutionspjm.com/sitemap.xml` y solicitar la
+7. **Alta manual en Search Console:** enviar `https://solutionspjm.com/sitemap.xml` y solicitar la
    indexación de `/es` y `/en` con la herramienta de inspección de URL.
 8. **JSON-LD:** agregar la `url` del sitio a la organización publicada (spec 003).
 
@@ -54,11 +54,8 @@ las búsquedas y los errores.
 - Campañas pagadas (Google Ads).
 
 ## Reglas del negocio
-- El dominio canónico es `https://www.solutionspjm.com`: `https` y `www` por decisión del equipo,
-  para transmitir confianza a los clientes. Toda URL publicada (canonical, `hreflang`, sitemap,
-  Open Graph y JSON-LD) usa ese mismo origen.
-- `solutionspjm.com` (sin `www`) y `http` redirigen de forma permanente (`308`) a
-  `https://www.solutionspjm.com`.
+- El dominio canónico es `https://solutionspjm.com`, sin `www`; toda URL publicada (canonical,
+  `hreflang`, sitemap, Open Graph y JSON-LD) usa ese mismo origen.
 - Español es el idioma por defecto (`x-default` → `/es`), igual que la redirección de `/`.
 - Solo se indexan las páginas reales por idioma: `/` no aparece en el sitemap porque redirige.
 - El sitemap y el `hreflang` se generan desde la lista de idiomas del módulo `company-profile`;
@@ -77,21 +74,18 @@ las búsquedas y los errores.
   en Vercel (Domains → `solutionspjm.com` → DNS Records).
 - [x] Cuenta propietaria de la propiedad en Search Console: `jason.moyabre.es@gmail.com`.
 - [PENDIENTE] ¿A qué integrantes se da acceso y con qué permiso (propietario / completo)?
-- [x] Dominio preferido: `www` (decisión del equipo, 2026-10-05). En Vercel se invierte la
-  redirección actual (`www` → apex `307`): `www.solutionspjm.com` pasa a ser el dominio principal y
-  `solutionspjm.com` redirige a él con `308`. La propiedad Dominio de Search Console ya cubre `www`.
-- [PENDIENTE] `/` → `/es` responde `307` (`permanent: false` en `next.config.mjs`). Recomendado:
-  mantenerlo temporal por si a futuro se detecta el idioma del navegador.
+- [PENDIENTE] `www` → apex y `/` → `/es` responden `307` (temporal). ¿Se cambian a permanentes
+  (`308`)? `www` se configura en el dominio de Vercel; `/` → `/es` en `next.config.mjs`
+  (`permanent: false`). Recomendado: `www` permanente; `/` → `/es` temporal si a futuro se detecta
+  el idioma del navegador.
 
 ## Criterios de aceptación
-- [ ] La URL base `https://www.solutionspjm.com` está definida una sola vez, validada y con pruebas.
-- [ ] `https://solutionspjm.com/es` y `http://www.solutionspjm.com/es` redirigen con `308` a
-      `https://www.solutionspjm.com/es`.
+- [ ] La URL base `https://solutionspjm.com` está definida una sola vez, validada y con pruebas.
 - [ ] `/es` y `/en` publican `<link rel="canonical">` a su propia URL absoluta.
 - [ ] `/es` y `/en` publican `hreflang` `es`, `en` y `x-default` (→ `/es`) con URL absolutas.
 - [ ] Open Graph incluye la `url` canónica de cada idioma.
-- [ ] `https://www.solutionspjm.com/sitemap.xml` responde `200` con `/es` y `/en` y sus alternativas.
-- [ ] `https://www.solutionspjm.com/robots.txt` responde `200`, permite el sitio y apunta al sitemap.
+- [ ] `https://solutionspjm.com/sitemap.xml` responde `200` con `/es` y `/en` y sus alternativas.
+- [ ] `https://solutionspjm.com/robots.txt` responde `200`, permite el sitio y apunta al sitemap.
 - [ ] El JSON-LD de la organización incluye la `url` del sitio.
 - [x] La propiedad de dominio `solutionspjm.com` aparece verificada en Search Console
       (2026-10-05, registro TXT en el DNS de Vercel).
