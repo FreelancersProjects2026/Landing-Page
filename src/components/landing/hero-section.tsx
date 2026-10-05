@@ -15,9 +15,9 @@ type HeroSectionProps = {
 
 // Posición y ritmo de cada pétalo; caen en la mitad derecha, donde está el árbol.
 // Valores deterministas (sin Math.random) para que servidor y cliente rendericen igual.
-const heroPetals = Array.from({ length: 20 }, (_, i) => ({
+const heroPetals = Array.from({ length: 10 }, (_, i) => ({
   left: `${52 + ((i * 37) % 46)}%`,
-  delay: `${(i * 0.65).toFixed(2)}s`,
+  delay: `${(i * 1.3).toFixed(2)}s`,
   duration: `${9 + ((i * 3) % 6)}s`,
 }))
 
