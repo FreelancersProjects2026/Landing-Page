@@ -205,7 +205,7 @@ export function ServicesSection({
               {/* Right: mirrored image, full height */}
               <div className="hidden lg:block relative w-[42%] shrink-0 overflow-hidden">
                 <img
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Upscaled%20Image%20%2812%29-ng3RrNnsPMJ5CrtOjcPTmhHg01W11q.png"
+                  src="/Servicios/Servicios.png"
                   alt=""
                   aria-hidden="true"
                   className="absolute inset-0 w-full h-full object-cover object-center"
