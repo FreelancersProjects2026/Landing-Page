@@ -38,7 +38,7 @@ export function HeroSection({ hero, whatsappUrl }: HeroSectionProps) {
       aria-labelledby={`${sectionIds.home}-titulo`}
       className="relative min-h-screen flex flex-col justify-center items-start overflow-hidden bg-black"
     >
-      {/* Foto de fondo con animación CSS: zoom lento, brillo en las raíces y pétalos */}
+      {/* Foto de fondo con animación CSS: brillo en las raíces y pétalos */}
       <div className="absolute inset-0 z-0">
         <img
           src="/hero/hero.webp"
@@ -47,7 +47,7 @@ export function HeroSection({ hero, whatsappUrl }: HeroSectionProps) {
           alt=""
           aria-hidden="true"
           fetchPriority="high"
-          className="w-full h-full object-cover object-[70%_center] lg:object-center motion-safe:animate-hero-zoom"
+          className="w-full h-full object-cover object-[70%_center] lg:object-center"
         />
         <div className="absolute left-[55%] top-[60%] w-[35%] h-[30%] rounded-full bg-amber-400/25 blur-3xl pointer-events-none motion-safe:animate-hero-glow" />
         <div className="absolute inset-0 overflow-hidden pointer-events-none motion-reduce:hidden">

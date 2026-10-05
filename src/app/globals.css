@@ -221,11 +221,7 @@
     }
   }
 
-  /* Hero: zoom lento, brillo pulsante y pétalos (desactivados con prefers-reduced-motion) */
-  .animate-hero-zoom {
-    animation: hero-zoom 24s ease-in-out infinite alternate;
-  }
-
+  /* Hero: brillo pulsante y pétalos (desactivados con prefers-reduced-motion) */
   .animate-hero-glow {
     animation: hero-glow 5s ease-in-out infinite;
   }
@@ -233,15 +229,6 @@
   .animate-hero-petal {
     animation: hero-petal linear infinite;
     opacity: 0;
-  }
-
-  @keyframes hero-zoom {
-    from {
-      transform: scale(1);
-    }
-    to {
-      transform: scale(1.06);
-    }
   }
 
   @keyframes hero-glow {
