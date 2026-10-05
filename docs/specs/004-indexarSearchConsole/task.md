@@ -23,8 +23,10 @@
       y `src/app/robots.ts` (`allow: '/'` y sitemap absoluto), con sus pruebas.
 - [x] T07 JSON-LD: agregar `url` del idioma en `structured-data.ts` y quitar el comentario de
       pendiente (actualizar `structured-data.test.ts`).
-- [ ] T08 Verificación local: `pnpm validate`; `pnpm build && pnpm start` y revisar `/sitemap.xml`,
+- [x] T08 Verificación local: `pnpm validate`; `pnpm build && pnpm start` y revisar `/sitemap.xml`,
       `/robots.txt` y el `<head>` de `/es` y `/en` (canonical, `hreflang`, `og:url`).
+      Hecho: `/robots.txt` y `/sitemap.xml` `200`; `/es` y `/en` con `lang`, canonical propio,
+      `hreflang` `es`/`en`/`x-default`, `og:url` y `url` en JSON-LD; sin `noindex`.
 - [ ] T09 Despliegue: ✅ en Vercel (Settings → Domains) `www.solutionspjm.com` redirige con `308` (2026-10-05).
       Falta: merge y deploy de producción; `curl` confirma `200` en
       `https://solutionspjm.com/robots.txt` y `/sitemap.xml`.
