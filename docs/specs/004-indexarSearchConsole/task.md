@@ -21,7 +21,7 @@
       `layout.test.tsx`).
 - [x] T06 Sitemap y robots: `src/app/sitemap.ts` (una entrada por idioma con alternativas, sin `/`)
       y `src/app/robots.ts` (`allow: '/'` y sitemap absoluto), con sus pruebas.
-- [ ] T07 JSON-LD: agregar `url` del idioma en `structured-data.ts` y quitar el comentario de
+- [x] T07 JSON-LD: agregar `url` del idioma en `structured-data.ts` y quitar el comentario de
       pendiente (actualizar `structured-data.test.ts`).
 - [ ] T08 Verificación local: `pnpm validate`; `pnpm build && pnpm start` y revisar `/sitemap.xml`,
       `/robots.txt` y el `<head>` de `/es` y `/en` (canonical, `hreflang`, `og:url`).

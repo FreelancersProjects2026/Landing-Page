@@ -44,7 +44,7 @@ las búsquedas y los errores.
    registro DNS TXT: cubre `http`/`https` y `www`/apex sin código.
 7. **Alta manual en Search Console:** enviar `https://solutionspjm.com/sitemap.xml` y solicitar la
    indexación de `/es` y `/en` con la herramienta de inspección de URL.
-8. **JSON-LD:** agregar la `url` del sitio a la organización publicada (spec 003).
+8. **JSON-LD:** agregar la `url` canónica del idioma a la organización publicada (spec 003).
 
 ## Fuera de alcance
 - Google Business Profile, redes sociales y correo corporativo.
@@ -89,7 +89,7 @@ las búsquedas y los errores.
 - [ ] Open Graph incluye la `url` canónica de cada idioma.
 - [ ] `https://solutionspjm.com/sitemap.xml` responde `200` con `/es` y `/en` y sus alternativas.
 - [ ] `https://solutionspjm.com/robots.txt` responde `200`, permite el sitio y apunta al sitemap.
-- [ ] El JSON-LD de la organización incluye la `url` del sitio.
+- [ ] El JSON-LD de la organización incluye la `url` canónica de cada idioma.
 - [x] La propiedad de dominio `solutionspjm.com` aparece verificada en Search Console
       (2026-10-05, registro TXT en el DNS de Vercel).
 - [ ] El sitemap figura como «Correcto» en Search Console.
