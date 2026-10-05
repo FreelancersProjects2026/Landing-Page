@@ -74,13 +74,15 @@ las búsquedas y los errores.
   en Vercel (Domains → `solutionspjm.com` → DNS Records).
 - [x] Cuenta propietaria de la propiedad en Search Console: `jason.moyabre.es@gmail.com`.
 - [PENDIENTE] ¿A qué integrantes se da acceso y con qué permiso (propietario / completo)?
-- [PENDIENTE] `www` → apex y `/` → `/es` responden `307` (temporal). ¿Se cambian a permanentes
-  (`308`)? `www` se configura en el dominio de Vercel; `/` → `/es` en `next.config.mjs`
-  (`permanent: false`). Recomendado: `www` permanente; `/` → `/es` temporal si a futuro se detecta
-  el idioma del navegador.
+- [x] Dominio preferido: sin `www` (decisión del equipo, 2026-10-05). Con o sin `www` no cambia la
+  confianza (la da `https`) ni el SEO (solo importa la consistencia). `www.solutionspjm.com` →
+  `solutionspjm.com` pasa de `307` a `308` (manual en Vercel → Settings → Domains).
+- [PENDIENTE] `/` → `/es` responde `307` (`permanent: false` en `next.config.mjs`). Recomendado:
+  mantenerlo temporal por si a futuro se detecta el idioma del navegador.
 
 ## Criterios de aceptación
 - [ ] La URL base `https://solutionspjm.com` está definida una sola vez, validada y con pruebas.
+- [ ] `https://www.solutionspjm.com/es` redirige con `308` a `https://solutionspjm.com/es`.
 - [ ] `/es` y `/en` publican `<link rel="canonical">` a su propia URL absoluta.
 - [ ] `/es` y `/en` publican `hreflang` `es`, `en` y `x-default` (→ `/es`) con URL absolutas.
 - [ ] Open Graph incluye la `url` canónica de cada idioma.

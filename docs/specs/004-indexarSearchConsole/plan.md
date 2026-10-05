@@ -49,7 +49,7 @@ código.
   Vercel. Cubre `https`/`http` y `www`/apex. Sin código ni secretos en el repo. Respaldo (solo si
   falla el DNS): `metadata.verification.google` con token en variable de entorno de Vercel.
 - **Redirección `www`:** se configura en Vercel (Settings → Domains → `www.solutionspjm.com` →
-  redirect a `solutionspjm.com`). Cambiar de `307` a `308` queda sujeto a la duda abierta de la spec.
+  redirect a `solutionspjm.com`). Se cambia de `307` a `308` (decisión del equipo: sin `www`).
   `/` → `/es` sigue temporal en `next.config.mjs` salvo que el equipo decida otra cosa.
 - **Validación en el límite:** una `siteUrl` inválida rompe el build (mismo criterio que el
   contenido en la spec 003): nunca llega a producción una canonical rota.

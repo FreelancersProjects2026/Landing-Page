@@ -25,7 +25,8 @@
       pendiente (actualizar `structured-data.test.ts`).
 - [ ] T08 Verificación local: `pnpm validate`; `pnpm build && pnpm start` y revisar `/sitemap.xml`,
       `/robots.txt` y el `<head>` de `/es` y `/en` (canonical, `hreflang`, `og:url`).
-- [ ] T09 Despliegue: merge y deploy de producción en Vercel; `curl` confirma `200` en
+- [ ] T09 Despliegue: en Vercel (Settings → Domains) cambiar la redirección de `www.solutionspjm.com`
+      a `308`; merge y deploy de producción; `curl` confirma `308` de `www` y `200` en
       `https://solutionspjm.com/robots.txt` y `/sitemap.xml`.
 - [ ] T10 Search Console (manual): enviar `https://solutionspjm.com/sitemap.xml` hasta estado
       «Correcto»; solicitar indexación de `/es` y `/en` con la inspección de URL sin errores de
