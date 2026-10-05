@@ -42,6 +42,8 @@ de todo Costa Rica encontrarnos y contactarnos, publicado en la landing en `/es`
   trabajador mediante plantillas.
 - **Sistema Centralizado para el Control y Manejo de Turismo:** control de transporte privado;
   viajes, cuentas y cobros.
+- **Seguimiento de Cuentas mediante Lectura de Correos Electrónicos:** registro de pagos recibidos
+  en un dashboard; lee solo los correos de los remitentes bancarios elegidos.
 
 ### Equipo
 | Integrante | Rol | Enlaces |

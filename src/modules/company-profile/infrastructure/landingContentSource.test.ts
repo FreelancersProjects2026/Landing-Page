@@ -44,7 +44,7 @@ describe('landingContentSource', () => {
       es.team.members.map(({ name, links }) => ({ name, links })),
     )
     expect(es.team.members).toHaveLength(3)
-    expect(es.projects.items).toHaveLength(2)
+    expect(es.projects.items).toHaveLength(3)
   })
 
   it('no publica enlaces en los proyectos', () => {

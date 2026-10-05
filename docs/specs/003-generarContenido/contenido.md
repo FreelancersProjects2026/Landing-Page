@@ -67,6 +67,9 @@ Servicios · Cómo trabajamos · Proyectos · Equipo · Contacto
 - **Sistema Centralizado para el Control y Manejo de Turismo:** Software para empresas de turismo
   que reúne el control de transporte privado en un solo sistema: gestión de viajes, cuentas y
   cobros.
+- **Seguimiento de Cuentas mediante Lectura de Correos Electrónicos:** Plataforma que registra
+  automáticamente cada pago recibido: lee únicamente los correos de los bancos autorizados y los
+  presenta en un dashboard claro y siempre actualizado.
 
 ### 5. Equipo
 
@@ -148,6 +151,9 @@ Services · How we work · Projects · Team · Contact
 - **Sistema Centralizado para el Control y Manejo de Turismo** (Centralized Tourism Control and
   Management System): Tourism management software that brings private transport into one system —
   a private transport management system for trips, accounts and payments.
+- **Seguimiento de Cuentas mediante Lectura de Correos Electrónicos** (Account Tracking through
+  Email Reading): A platform that automatically records every payment received: it reads only
+  emails from authorized bank senders and presents them in a clear, always up-to-date dashboard.
 
 ### 5. Team
 

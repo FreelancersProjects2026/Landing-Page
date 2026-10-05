@@ -46,6 +46,7 @@ const team = {
 const projectNames = {
   agro: 'Agromonitoreo',
   tourism: 'Sistema Centralizado para el Control y Manejo de Turismo',
+  payments: 'Seguimiento de Cuentas mediante Lectura de Correos Electrónicos',
 }
 
 const rights = '© 2026 PJM Solutions'
@@ -143,6 +144,11 @@ const es = validateLandingContent({
         name: projectNames.tourism,
         description:
           'Software para empresas de turismo que reúne el control de transporte privado en un solo sistema: gestión de viajes, cuentas y cobros.',
+      },
+      {
+        name: projectNames.payments,
+        description:
+          'Plataforma que registra automáticamente cada pago recibido: lee únicamente los correos de los bancos autorizados y los presenta en un dashboard claro y siempre actualizado.',
       },
     ],
   },
@@ -265,6 +271,12 @@ const en = validateLandingContent({
         nameTranslation: 'Centralized Tourism Control and Management System',
         description:
           'Tourism management software that brings private transport into one system — a private transport management system for trips, accounts and payments.',
+      },
+      {
+        name: projectNames.payments,
+        nameTranslation: 'Account Tracking through Email Reading',
+        description:
+          'A platform that automatically records every payment received: it reads only emails from authorized bank senders and presents them in a clear, always up-to-date dashboard.',
       },
     ],
   },
