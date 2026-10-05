@@ -10,7 +10,7 @@
 - [x] T00 Search Console: propiedad de tipo Dominio `solutionspjm.com` verificada con registro TXT
       en el DNS de Vercel (2026-10-05). El registro TXT no se borra.
 - [x] T01 Preparación: crear la rama y ejecutar `pnpm validate` como línea base.
-- [ ] T02 Dominio: regla de la URL del sitio (absoluta, `https`, sin `www`, sin ruta ni barra final)
+- [x] T02 Dominio: regla de la URL del sitio (absoluta, `https`, sin `www`, sin ruta ni barra final)
       y `defaultLocale = 'es'` junto a `locales` en `domain/landingContent.ts`.
 - [ ] T03 Aplicación: `buildLocaleUrl(siteUrl, locale)` y `buildLanguageAlternates(siteUrl)`
       (`es`, `en` y `x-default` → `/es`, todas absolutas).
