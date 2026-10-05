@@ -82,7 +82,8 @@ las búsquedas y los errores.
 
 ## Criterios de aceptación
 - [ ] La URL base `https://solutionspjm.com` está definida una sola vez, validada y con pruebas.
-- [ ] `https://www.solutionspjm.com/es` redirige con `308` a `https://solutionspjm.com/es`.
+- [x] `https://www.solutionspjm.com/es` redirige con `308` a `https://solutionspjm.com/es`
+      (2026-10-05: `www` agregado al proyecto `landing-page` con redirect `308`).
 - [ ] `/es` y `/en` publican `<link rel="canonical">` a su propia URL absoluta.
 - [ ] `/es` y `/en` publican `hreflang` `es`, `en` y `x-default` (→ `/es`) con URL absolutas.
 - [ ] Open Graph incluye la `url` canónica de cada idioma.
