@@ -79,6 +79,22 @@ describe('HeroSection', () => {
     expect(container.querySelector('section')).toHaveAttribute('id', 'inicio')
     expectWhatsAppLink(screen.getByRole('link', { name: content.hero.cta }))
   })
+
+  it('usa la foto del hero como fondo decorativo en WebP, sin video', () => {
+    const { container } = render(
+      <HeroSection hero={content.hero} whatsappUrl={whatsappUrl} />,
+    )
+    const background = container.querySelector('img')
+
+    expect(container.querySelector('video')).toBeNull()
+    expect(background).toHaveAttribute('src', '/hero/hero.webp')
+    expect(background).toHaveAttribute(
+      'srcset',
+      '/hero/hero-960.webp 960w, /hero/hero.webp 1672w',
+    )
+    expect(background).toHaveAttribute('alt', '')
+    expect(background).toHaveAttribute('aria-hidden', 'true')
+  })
 })
 
 describe('ServicesSection', () => {

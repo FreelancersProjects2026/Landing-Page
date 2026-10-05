@@ -220,4 +220,54 @@
       background-position: 0% 50%;
     }
   }
+
+  /* Hero: zoom lento, brillo pulsante y pétalos (desactivados con prefers-reduced-motion) */
+  .animate-hero-zoom {
+    animation: hero-zoom 24s ease-in-out infinite alternate;
+  }
+
+  .animate-hero-glow {
+    animation: hero-glow 5s ease-in-out infinite;
+  }
+
+  .animate-hero-petal {
+    animation: hero-petal linear infinite;
+    opacity: 0;
+  }
+
+  @keyframes hero-zoom {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.06);
+    }
+  }
+
+  @keyframes hero-glow {
+    0%,
+    100% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+
+  @keyframes hero-petal {
+    0% {
+      opacity: 0;
+      transform: translate(0, 0) rotate(0deg);
+    }
+    10% {
+      opacity: 0.8;
+    }
+    90% {
+      opacity: 0.6;
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-12vw, 105vh) rotate(540deg);
+    }
+  }
 }

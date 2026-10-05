@@ -12,6 +12,18 @@ type HeroSectionProps = {
   whatsappUrl: string
 }
 
+// Posición y ritmo de cada pétalo; todos caen en la mitad derecha, donde está el árbol.
+const heroPetals = [
+  { left: '58%', delay: '0s', duration: '11s' },
+  { left: '64%', delay: '3s', duration: '13s' },
+  { left: '70%', delay: '6s', duration: '10s' },
+  { left: '75%', delay: '1.5s', duration: '14s' },
+  { left: '80%', delay: '8s', duration: '12s' },
+  { left: '85%', delay: '4.5s', duration: '11s' },
+  { left: '90%', delay: '2s', duration: '13s' },
+  { left: '95%', delay: '7s', duration: '10s' },
+]
+
 export function HeroSection({ hero, whatsappUrl }: HeroSectionProps) {
   const [isVisible, setIsVisible] = useState(false)
 
@@ -26,18 +38,31 @@ export function HeroSection({ hero, whatsappUrl }: HeroSectionProps) {
       aria-labelledby={`${sectionIds.home}-titulo`}
       className="relative min-h-screen flex flex-col justify-center items-start overflow-hidden bg-black"
     >
-      {/* Background video */}
+      {/* Foto de fondo con animación CSS: zoom lento, brillo en las raíces y pétalos */}
       <div className="absolute inset-0 z-0">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
+        <img
+          src="/hero/hero.webp"
+          srcSet="/hero/hero-960.webp 960w, /hero/hero.webp 1672w"
+          sizes="100vw"
+          alt=""
           aria-hidden="true"
-          className="w-full h-full object-cover object-center opacity-80"
-        >
-          <source src="/VideoHero/videoHero.mp4" type="video/mp4" />
-        </video>
+          fetchPriority="high"
+          className="w-full h-full object-cover object-[70%_center] lg:object-center motion-safe:animate-hero-zoom"
+        />
+        <div className="absolute left-[55%] top-[60%] w-[35%] h-[30%] rounded-full bg-amber-400/25 blur-3xl pointer-events-none motion-safe:animate-hero-glow" />
+        <div className="absolute inset-0 overflow-hidden pointer-events-none motion-reduce:hidden">
+          {heroPetals.map((petal, i) => (
+            <span
+              key={i}
+              className="absolute -top-4 w-2 h-2.5 rounded-[60%_0] bg-pink-300/70 animate-hero-petal"
+              style={{
+                left: petal.left,
+                animationDelay: petal.delay,
+                animationDuration: petal.duration,
+              }}
+            />
+          ))}
+        </div>
         {/* Subtle overlay to ensure text readability on the left */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />
