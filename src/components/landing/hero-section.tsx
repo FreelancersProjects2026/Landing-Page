@@ -5,6 +5,9 @@ import { Button } from '@/components/ui/button'
 import type { LandingContent } from '@modules/company-profile'
 
 import { externalLinkProps } from './external-link'
+import { HeroPetals } from './hero-petals'
+import { ParticleVisualization } from './particle-visualization'
+import { RotatingSlogan } from './rotating-slogan'
 import { sectionIds } from './section-ids'
 
 type HeroSectionProps = {
@@ -26,24 +29,26 @@ export function HeroSection({ hero, whatsappUrl }: HeroSectionProps) {
       aria-labelledby={`${sectionIds.home}-titulo`}
       className="relative min-h-screen flex flex-col justify-center items-start overflow-hidden bg-black"
     >
-      {/* Background video */}
+      {/* Foto de fondo con animación CSS: brillo en las raíces y pétalos */}
       <div className="absolute inset-0 z-0">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
+        <img
+          src="/hero/hero.webp"
+          srcSet="/hero/hero-960.webp 960w, /hero/hero.webp 1920w"
+          sizes="100vw"
+          alt=""
           aria-hidden="true"
-          className="w-full h-full object-cover object-center opacity-80"
-        >
-          <source
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/bg-hero-0BnFGdr81Ifnj3WbBZoNt1KE4D5DMT.mp4"
-            type="video/mp4"
-          />
-        </video>
+          fetchPriority="high"
+          className="w-full h-full object-cover object-[70%_center] lg:object-center"
+        />
+        <div className="absolute left-[55%] top-[60%] w-[35%] h-[30%] rounded-full bg-amber-400/25 blur-3xl pointer-events-none motion-safe:animate-hero-glow" />
+        <HeroPetals />
         {/* Subtle overlay to ensure text readability on the left */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />
+        {/* Partículas que reaccionan al cursor en la mitad izquierda, como en Servicios */}
+        <div className="absolute inset-y-0 left-0 w-1/2 motion-reduce:hidden">
+          <ParticleVisualization />
+        </div>
       </div>
 
       {/* Subtle grid lines */}
@@ -94,13 +99,13 @@ export function HeroSection({ hero, whatsappUrl }: HeroSectionProps) {
           {/* Main headline */}
           <div className="mb-12">
             <p
-              className={`text-left text-[clamp(2rem,6vw,7rem)] font-display leading-[0.92] tracking-tight text-white transition-all duration-1000 ${
+              className={`text-left text-[clamp(2rem,4.5vw,5.5rem)] font-display leading-[0.92] tracking-tight text-white transition-all duration-1000 ${
                 isVisible
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-8'
               }`}
             >
-              {hero.slogan}
+              <RotatingSlogan slogan={hero.slogan} words={hero.sloganWords} />
             </p>
           </div>
 

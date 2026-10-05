@@ -1,11 +1,11 @@
-# Contenido de la landing — PJM Solutions
+# Contenido de la landing — solutionsPJM
 
 Estado: aprobado por el equipo (Spec 003, 2026-10-02). Fuente de verdad del código.
 Enmienda aprobada 2026-10-02: etiqueta del menú móvil (Menú/Menu) y mayúscula inicial en las descripciones.
 
 Datos comunes a ambos idiomas:
 
-- Nombre: PJM Solutions
+- Nombre: solutionsPJM
 - Ubicación: Paraíso de Cartago, Costa Rica
 - WhatsApp: +506 6440-0832 → `https://wa.me/50664400832?text=<mensaje del idioma>`
 - Dominio, correo y redes: [PENDIENTE]
@@ -16,10 +16,10 @@ Datos comunes a ambos idiomas:
 
 ### SEO
 
-- **Título (58):** Desarrollo de software a medida Costa Rica | PJM Solutions
+- **Título (57):** Desarrollo de software a medida Costa Rica | solutionsPJM
 - **Meta description (157):** Desarrollo de software a medida en Costa Rica. Creamos sistemas de
   gestión, control y métricas para tu negocio. Escríbenos por WhatsApp y cotiza tu proyecto.
-- **Mensaje de WhatsApp:** Hola PJM Solutions, quiero cotizar un software a la medida para mi
+- **Mensaje de WhatsApp:** Hola solutionsPJM, quiero cotizar un software a la medida para mi
   negocio.
 
 ### Menú
@@ -31,7 +31,9 @@ Servicios · Cómo trabajamos · Proyectos · Equipo · Contacto
 ### 1. Hero
 
 - **H1 (etiqueta superior):** Desarrollo de software a medida en Costa Rica
-- **Eslogan (titular visual):** Software que comienza por entender tu negocio.
+- **Eslogan (titular visual):** Software que comienza por entender tu negocio
+- **Palabras rotativas del eslogan (cambian cada 3,5 segundos; la primera es la del eslogan):** negocio,
+  empresa, operación, proceso, idea
 - **Subtítulo:** Desarrollamos software a medida para negocios en Costa Rica: sistemas de gestión,
   control y métricas hechos para tu operación real.
 - **Botón:** Cotiza por WhatsApp
@@ -67,6 +69,9 @@ Servicios · Cómo trabajamos · Proyectos · Equipo · Contacto
 - **Sistema Centralizado para el Control y Manejo de Turismo:** Software para empresas de turismo
   que reúne el control de transporte privado en un solo sistema: gestión de viajes, cuentas y
   cobros.
+- **Seguimiento de Cuentas mediante Lectura de Correos Electrónicos:** Plataforma que registra
+  automáticamente cada pago recibido: lee únicamente los correos de los bancos autorizados y los
+  presenta en un dashboard claro y siempre actualizado.
 
 ### 5. Equipo
 
@@ -87,10 +92,10 @@ Servicios · Cómo trabajamos · Proyectos · Equipo · Contacto
 
 ### 7. Footer
 
-- **Texto:** PJM Solutions — desarrollo de software en Cartago para negocios de todo Costa Rica.
+- **Texto:** solutionsPJM — desarrollo de software en Cartago para negocios de todo Costa Rica.
 - **Ubicación:** Paraíso de Cartago, Costa Rica
 - **Contacto:** WhatsApp +506 6440-0832
-- **Derechos:** © 2026 PJM Solutions
+- **Derechos:** © 2026 solutionsPJM
 
 ---
 
@@ -98,10 +103,10 @@ Servicios · Cómo trabajamos · Proyectos · Equipo · Contacto
 
 ### SEO
 
-- **Title (54):** Custom Software Development Costa Rica | PJM Solutions
+- **Title (53):** Custom Software Development Costa Rica | solutionsPJM
 - **Meta description (147):** Custom software development in Costa Rica. We build management,
   tracking and metrics systems for your business. Message us on WhatsApp for a quote.
-- **WhatsApp message:** Hi PJM Solutions, I'd like a quote for custom software for my business.
+- **WhatsApp message:** Hi solutionsPJM, I'd like a quote for custom software for my business.
 
 ### Menu
 
@@ -112,7 +117,9 @@ Services · How we work · Projects · Team · Contact
 ### 1. Hero
 
 - **H1 (eyebrow):** Custom software development in Costa Rica
-- **Slogan (visual headline):** Software that starts by understanding your business.
+- **Slogan (visual headline):** Software that starts by understanding your business
+- **Slogan rotating words (change every 8 seconds; the first one is the slogan's):** business, company,
+  operation, process, idea
 - **Subtitle:** We build custom software for businesses in Costa Rica: management, tracking and
   metrics systems made for how you actually operate.
 - **Button:** Get a quote on WhatsApp
@@ -148,6 +155,9 @@ Services · How we work · Projects · Team · Contact
 - **Sistema Centralizado para el Control y Manejo de Turismo** (Centralized Tourism Control and
   Management System): Tourism management software that brings private transport into one system —
   a private transport management system for trips, accounts and payments.
+- **Seguimiento de Cuentas mediante Lectura de Correos Electrónicos** (Account Tracking through
+  Email Reading): A platform that automatically records every payment received: it reads only
+  emails from authorized bank senders and presents them in a clear, always up-to-date dashboard.
 
 ### 5. Team
 
@@ -169,10 +179,10 @@ Services · How we work · Projects · Team · Contact
 
 ### 7. Footer
 
-- **Text:** PJM Solutions — software development in Cartago for businesses across Costa Rica.
+- **Text:** solutionsPJM — software development in Cartago for businesses across Costa Rica.
 - **Location:** Paraíso de Cartago, Costa Rica
 - **Contact:** WhatsApp +506 6440-0832
-- **Rights:** © 2026 PJM Solutions
+- **Rights:** © 2026 solutionsPJM
 
 ---
 

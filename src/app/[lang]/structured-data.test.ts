@@ -6,14 +6,14 @@ import { buildStructuredData, serializeJsonLd } from './structured-data'
 
 describe('buildStructuredData', () => {
   it.each(['es', 'en'])(
-    'describe a PJM Solutions como ProfessionalService con la URL de %s',
+    'describe a solutionsPJM como ProfessionalService con la URL de %s',
     (lang) => {
       const content = getLandingContent(lang)
 
       expect(buildStructuredData(content)).toEqual({
         '@context': 'https://schema.org',
         '@type': 'ProfessionalService',
-        name: 'PJM Solutions',
+        name: 'solutionsPJM',
         url: `https://solutionspjm.com/${lang}`,
         description: content.seo.description,
         telephone: '+506 6440-0832',

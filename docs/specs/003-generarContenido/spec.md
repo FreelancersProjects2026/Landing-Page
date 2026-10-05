@@ -1,4 +1,4 @@
-# Spec 003: Generar el contenido de la landing de PJM Solutions
+# Spec 003: Generar el contenido de la landing de solutionsPJM
 
 ## Problema
 Desarrollamos software que resuelve problemas reales de nuestros clientes, pero nadie nos conoce.
@@ -7,7 +7,7 @@ y no dice quiénes somos, qué desarrollamos ni cómo contactarnos, por lo que t
 buscadores.
 
 ## Solución
-Recopilar, definir y aprobar el contenido real de PJM Solutions (identidad, servicios, proyectos,
+Recopilar, definir y aprobar el contenido real de solutionsPJM (identidad, servicios, proyectos,
 equipo, contacto y SEO) en español e inglés y, una vez aprobado, implementarlo en la landing
 dentro de esta misma spec (ver `plan.md`).
 
@@ -18,14 +18,14 @@ de todo Costa Rica encontrarnos y contactarnos, publicado en la landing en `/es`
 ## Información recopilada
 
 ### Identidad
-- Nombre: PJM Solutions (PJM: iniciales de Patrick, Jason y Michael).
+- Nombre: solutionsPJM (PJM: iniciales de Patrick, Jason y Michael).
 - Equipo: tres desarrolladores full-stack.
 - Ubicación: Paraíso de Cartago, Costa Rica.
 - Alcance: todo Costa Rica; cualquier tipo de negocio (sin sector preferente).
 - Idiomas: español e inglés.
 
 ### Propuesta de valor
-- Eslogan: «Software que comienza por entender tu negocio.»
+- Eslogan: «Software que comienza por entender tu negocio»
 - Subtítulo: «Desarrollamos software a medida para negocios en Costa Rica: sistemas de gestión,
   control y métricas hechos para tu operación real.»
 - Diferenciadores:
@@ -42,6 +42,8 @@ de todo Costa Rica encontrarnos y contactarnos, publicado en la landing en `/es`
   trabajador mediante plantillas.
 - **Sistema Centralizado para el Control y Manejo de Turismo:** control de transporte privado;
   viajes, cuentas y cobros.
+- **Seguimiento de Cuentas mediante Lectura de Correos Electrónicos:** registro de pagos recibidos
+  en un dashboard; lee solo los correos de los remitentes bancarios elegidos.
 
 ### Equipo
 | Integrante | Rol | Enlaces |

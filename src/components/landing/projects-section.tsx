@@ -33,24 +33,6 @@ export function ProjectsSection({ label, title, items }: ProjectsSectionProps) {
       ref={sectionRef}
       className="relative py-24 lg:py-32 overflow-hidden"
     >
-      {/* Image — absolute, bottom-right, behind all content */}
-      <div
-        className={`absolute bottom-0 right-0 w-[55%] h-[85%] pointer-events-none transition-all duration-1000 delay-300 ${
-          isVisible ? 'opacity-100' : 'opacity-0'
-        }`}
-      >
-        <img
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Upscaled%20Image%20%2813%29-OQ2DiR3ElVsUg8kTvTL1kC5A3Q6maM.png"
-          alt=""
-          aria-hidden="true"
-          className="w-full h-full object-cover object-left-top"
-        />
-        {/* Fade left edge */}
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
-        {/* Fade top edge */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-transparent" />
-      </div>
-
       {/* All text content sits on top */}
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12">
         {/* Header — Full width */}
@@ -97,6 +79,24 @@ export function ProjectsSection({ label, title, items }: ProjectsSectionProps) {
             </article>
           ))}
         </div>
+      </div>
+
+      {/* Image — below the projects on mobile; bottom-right behind the text on large screens */}
+      <div
+        className={`relative mt-16 w-full aspect-[1669/942] lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:w-[55%] pointer-events-none transition-all duration-1000 delay-300 ${
+          isVisible ? 'opacity-100' : 'opacity-0'
+        }`}
+      >
+        <img
+          src="/Proyectos/Proyectos.png"
+          alt=""
+          aria-hidden="true"
+          className="w-full h-full object-contain"
+        />
+        {/* Fade left edge */}
+        <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-background to-transparent to-25%" />
+        {/* Fade top edge */}
+        <div className="hidden lg:block absolute inset-0 bg-gradient-to-b from-background to-transparent to-15%" />
       </div>
     </section>
   )

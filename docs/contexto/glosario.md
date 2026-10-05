@@ -1,7 +1,7 @@
 # Glosario
 
 ## Dominio actual
-- **PJM Solutions:** equipo de tres desarrolladores full-stack (Patrick, Jason y Michael) de Paraíso de Cartago
+- **solutionsPJM:** equipo de tres desarrolladores full-stack (Patrick, Jason y Michael) de Paraíso de Cartago
   que crea software a medida para negocios de todo Costa Rica.
 - **Contenido de la landing (`LandingContent`):** textos de un idioma: SEO, menú, hero, servicios, cómo
   trabajamos, proyectos, equipo, contacto y footer.
@@ -20,7 +20,7 @@
 - **Interfaz / UI:** componentes y estados visibles.
 - **Fuente de contenido (`LandingContentSource`):** contrato con el contenido de cada idioma; hoy lo implementa `landingContentSource`.
 - **Caso de uso:** operación de aplicación; hoy `getLandingContent` y `buildWhatsAppUrl`.
-- **Plantilla / landing:** base visual oficial del sitio (Next.js), en `src/app/[lang]/` y `src/components/landing/`; con el contenido de PJM Solutions desde la Spec 003.
+- **Plantilla / landing:** base visual oficial del sitio (Next.js), en `src/app/[lang]/` y `src/components/landing/`; con el contenido de solutionsPJM desde la Spec 003.
 - **Sección:** bloque visual de la landing (hero, servicios, cómo trabajamos, proyectos, equipo, contacto, footer).
 
 ## Siglas

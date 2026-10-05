@@ -1,4 +1,4 @@
-# Plan técnico: Implementar el contenido de la landing de PJM Solutions
+# Plan técnico: Implementar el contenido de la landing de solutionsPJM
 
 ## Referencias
 - Especificación: `docs/specs/003-generarContenido/spec.md`.

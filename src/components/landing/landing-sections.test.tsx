@@ -34,7 +34,7 @@ describe('Navigation', () => {
     )
     const nav = screen.getByRole('navigation')
 
-    expect(within(nav).getByText('PJM Solutions')).toBeInTheDocument()
+    expect(within(nav).getByText('solutionsPJM')).toBeInTheDocument()
     expect(
       within(nav)
         .getAllByRole('link', { name: 'Servicios' })
@@ -78,6 +78,74 @@ describe('HeroSection', () => {
     expect(screen.getByText(content.hero.subtitle)).toBeInTheDocument()
     expect(container.querySelector('section')).toHaveAttribute('id', 'inicio')
     expectWhatsAppLink(screen.getByRole('link', { name: content.hero.cta }))
+  })
+
+  it('usa la foto del hero como fondo decorativo en WebP, sin video', () => {
+    const { container } = render(
+      <HeroSection hero={content.hero} whatsappUrl={whatsappUrl} />,
+    )
+    const background = container.querySelector('img')
+
+    expect(container.querySelector('video')).toBeNull()
+    expect(background).toHaveAttribute('src', '/hero/hero.webp')
+    expect(background).toHaveAttribute(
+      'srcset',
+      '/hero/hero-960.webp 960w, /hero/hero.webp 1920w',
+    )
+    expect(background).toHaveAttribute('alt', '')
+    expect(background).toHaveAttribute('aria-hidden', 'true')
+  })
+
+  it('mantiene cada palabra rotativa del eslogan 3,5 segundos', () => {
+    vi.useFakeTimers()
+    try {
+      const { container } = render(
+        <HeroSection hero={content.hero} whatsappUrl={whatsappUrl} />,
+      )
+      const [first, second] = content.hero.sloganWords
+      const visibleWord = () =>
+        container.querySelector('[data-rotating-word]')?.textContent
+
+      act(() => vi.advanceTimersByTime(3_499))
+      expect(visibleWord()).toBe(first)
+
+      act(() => vi.advanceTimersByTime(1))
+      expect(visibleWord()).toBe(second)
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  it('hace entrar la palabra rotativa letra por letra, de forma escalonada', () => {
+    const { container } = render(
+      <HeroSection hero={content.hero} whatsappUrl={whatsappUrl} />,
+    )
+    const [first] = content.hero.sloganWords
+    const letters = container.querySelectorAll<HTMLElement>(
+      '[data-rotating-word] > span',
+    )
+
+    expect(letters).toHaveLength(first.length)
+    expect(letters[0].style.getPropertyValue('--letter-delay')).toBe('0ms')
+    expect(letters[2].style.getPropertyValue('--letter-delay')).toBe('90ms')
+  })
+
+  it('hace caer solo unos pocos pétalos sobre la foto', () => {
+    const { container } = render(
+      <HeroSection hero={content.hero} whatsappUrl={whatsappUrl} />,
+    )
+
+    expect(container.querySelectorAll('.animate-hero-petal')).toHaveLength(6)
+  })
+
+  it('no parte la palabra rotativa entre letras al saltar de línea', () => {
+    const { container } = render(
+      <HeroSection hero={content.hero} whatsappUrl={whatsappUrl} />,
+    )
+
+    expect(container.querySelector('[data-rotating-word]')).toHaveClass(
+      'whitespace-nowrap',
+    )
   })
 })
 
@@ -192,7 +260,7 @@ describe('FooterSection', () => {
     )
     const footer = screen.getByRole('contentinfo')
 
-    expect(within(footer).getByText('PJM Solutions')).toBeVisible()
+    expect(within(footer).getByText('solutionsPJM')).toBeVisible()
     expect(within(footer).getByText(content.footer.text)).toBeVisible()
     expect(
       within(footer).getByText('Paraíso de Cartago, Costa Rica'),
@@ -200,7 +268,7 @@ describe('FooterSection', () => {
     expectWhatsAppLink(
       within(footer).getByRole('link', { name: 'WhatsApp +506 6440-0832' }),
     )
-    expect(within(footer).getByText('© 2026 PJM Solutions')).toBeVisible()
+    expect(within(footer).getByText('© 2026 solutionsPJM')).toBeVisible()
   })
 })
 
