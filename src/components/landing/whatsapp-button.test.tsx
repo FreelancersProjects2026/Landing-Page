@@ -58,6 +58,27 @@ describe('WhatsAppButton', () => {
     ).toEqual(options.map(({ url }) => url))
   })
 
+  it('al abrir no bloquea el scroll ni los clics de la página', async () => {
+    await userEvent.click(renderButton())
+
+    expect(screen.getByRole('menu')).toBeVisible()
+    expect(document.body).not.toHaveAttribute('data-scroll-locked')
+    expect(document.body.style.pointerEvents).not.toBe('none')
+  })
+
+  it('el botón abre y cierra el menú como un interruptor', async () => {
+    const user = userEvent.setup()
+    const button = renderButton()
+
+    await user.click(button)
+    expect(button).toHaveAttribute('aria-expanded', 'true')
+    await user.click(button)
+    expect(button).toHaveAttribute('aria-expanded', 'false')
+    await user.click(button)
+    expect(button).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByRole('menu')).toBeVisible()
+  })
+
   it('abre con Enter, cierra con Esc y devuelve el foco al botón', async () => {
     const user = userEvent.setup()
     const button = renderButton()

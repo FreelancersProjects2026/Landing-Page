@@ -26,6 +26,7 @@ const iconTransition =
   'absolute size-7 motion-safe:transition-[opacity,rotate] motion-safe:duration-300 motion-safe:ease-out'
 
 // Radix resuelve aria-expanded, teclado, Esc y el regreso del foco al botón.
+// modal={false}: un chat flotante no debe bloquear el scroll ni los clics de la página.
 export function WhatsAppButton({
   label,
   name,
@@ -35,7 +36,7 @@ export function WhatsAppButton({
   const greetingId = useId()
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <button
           type="button"
