@@ -279,13 +279,14 @@ describe('CtaSection', () => {
 })
 
 describe('FooterSection', () => {
-  it('muestra nombre, texto, ubicación, WhatsApp y derechos', () => {
+  it('muestra nombre, texto, ubicación, WhatsApp, correo y derechos', () => {
     render(
       <FooterSection
         company={content.company}
         menu={content.menu}
         footer={content.footer}
         whatsappUrl={whatsappUrl}
+        emailUrl="mailto:solutionspjm@gmail.com"
       />,
     )
     const footer = screen.getByRole('contentinfo')
@@ -298,6 +299,11 @@ describe('FooterSection', () => {
     expectWhatsAppLink(
       within(footer).getByRole('link', { name: 'WhatsApp +506 6440-0832' }),
     )
+    const email = within(footer).getByRole('link', {
+      name: 'solutionspjm@gmail.com',
+    })
+    expect(email).toHaveAttribute('href', 'mailto:solutionspjm@gmail.com')
+    expect(email).not.toHaveAttribute('target')
     expect(within(footer).getByText('© 2026 solutionsPJM')).toBeVisible()
   })
 })

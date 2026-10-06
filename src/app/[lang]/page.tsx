@@ -32,6 +32,7 @@ export default async function Home({
       url: buildWhatsAppUrl(content.company.phone, message),
     }),
   )
+  const emailUrl = buildMailtoUrl(content.company.email)
   const structuredData = serializeJsonLd(buildStructuredData(content))
 
   return (
@@ -57,13 +58,14 @@ export default async function Home({
           {...content.contact}
           whatsappUrl={whatsappUrl}
           email={content.company.email}
-          emailUrl={buildMailtoUrl(content.company.email)}
+          emailUrl={emailUrl}
         />
         <FooterSection
           company={content.company}
           menu={content.menu}
           footer={content.footer}
           whatsappUrl={whatsappUrl}
+          emailUrl={emailUrl}
         />
         <WhatsAppButton
           label={content.whatsapp.label}

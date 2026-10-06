@@ -53,5 +53,5 @@
       debajo del botón de WhatsApp), con estilo de la landing y sin desbordar en 390 px.
 - [x] T17 Página y prueba: `page.tsx` arma `buildMailtoUrl`; `page.test.tsx` comprueba
       `mailto:solutionspjm@gmail.com` en `/es` y `/en`. `pnpm validate` y revisión en `pnpm dev`.
-- [ ] T18 Footer: `footer-section.tsx` muestra el mismo `mailto:` junto al teléfono (criterio de la
+- [x] T18 Footer: `footer-section.tsx` muestra el mismo `mailto:` junto al teléfono (criterio de la
       spec «contacto y footer»). Pendiente: fuera de la ronda de contacto.

@@ -6,6 +6,7 @@ import { ArrowRight, ArrowUpRight, Mail } from 'lucide-react'
 
 import { externalLinkProps } from './external-link'
 import { sectionIds } from './section-ids'
+import { splitAfterAt } from './split-after-at'
 
 type CtaSectionProps = {
   title: string
@@ -15,18 +16,6 @@ type CtaSectionProps = {
   emailLabel: string
   email: string
   emailUrl: string
-}
-
-// Permite cortar el correo después de la @ en pantallas angostas.
-function splitAfterAt(email: string) {
-  const at = email.indexOf('@') + 1
-  return (
-    <>
-      {email.slice(0, at)}
-      <wbr />
-      {email.slice(at)}
-    </>
-  )
 }
 
 export function CtaSection({

@@ -3,12 +3,14 @@ import type { Contact, LandingContent } from '@modules/company-profile'
 
 import { externalLinkProps } from './external-link'
 import { sectionIds } from './section-ids'
+import { splitAfterAt } from './split-after-at'
 
 type FooterSectionProps = {
   company: Contact
   menu: LandingContent['menu']
   footer: LandingContent['footer']
   whatsappUrl: string
+  emailUrl: string
 }
 
 export function FooterSection({
@@ -16,6 +18,7 @@ export function FooterSection({
   menu,
   footer,
   whatsappUrl,
+  emailUrl,
 }: FooterSectionProps) {
   const links = [
     { name: menu.services, href: `#${sectionIds.services}` },
@@ -90,6 +93,18 @@ export function FooterSection({
                   >
                     WhatsApp {company.phone}
                     <ArrowUpRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={emailUrl}
+                    className="hover:text-white transition-colors inline-flex items-center gap-1 group"
+                  >
+                    <span>{splitAfterAt(company.email)}</span>
+                    <ArrowUpRight
+                      aria-hidden="true"
+                      className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all"
+                    />
                   </a>
                 </li>
               </ul>
