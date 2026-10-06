@@ -27,5 +27,12 @@
       del idioma activo. Ajustar el conteo de enlaces en `page.test.tsx`.
 - [ ] T11 Revisión manual con `pnpm dev`: móvil y escritorio, teclado, lector de pantalla. El
       botón no tapa CTA, footer ni la barra del navegador.
+      - Verificado en Chrome (escritorio 1920 px y móvil 390×844): `/es` y `/en`, mouse, `Enter`
+        abre, `Esc` cierra y el foco vuelve al botón, `aria-expanded`, enlaces `wa.me` correctos.
+        Al final de la página el botón no tapa el footer; al desplazarse pasa sobre el contenido
+        (incluido el CTA), que queda accesible al seguir desplazando.
+      - Sin verificar: lector de pantalla real (NVDA/VoiceOver) y la barra de un navegador móvil
+        real con `safe-area-inset-bottom`. En `pnpm dev` el indicador de Next.js queda encima del
+        botón (solo desarrollo, no aparece en producción).
 - [ ] T12 Contenido aprobado: reemplazar los textos marcadores por los definitivos (`es` y `en`).
 - [ ] T13 Cierre: marcar criterios de la spec, sincronizar el plan y correr `pnpm validate`.
