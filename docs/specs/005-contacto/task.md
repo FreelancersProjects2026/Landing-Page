@@ -91,7 +91,7 @@
       `dropdown-menu` (teclado, `Esc`, foco, `aria-expanded`) y las pruebas actuales.
 
 ## Resultado en Google (alcance 8)
-- [ ] T26 Favicon de 192×192 px (PNG, desde `LogoPJM.jpeg`) en `public/logo/icono/`; `icons.icon`
+- [x] T26 Favicon de 192×192 px (PNG, desde `LogoPJM.jpeg`) en `public/logo/icono/`; `icons.icon`
       lo usa. Prueba primero en `layout.test.tsx`.
 - [ ] T27 Descripción SEO internacional en `es` y `en` (`contenido.md` y
       `landingContentSource.ts`). Bloqueada hasta que el negocio apruebe el texto.
