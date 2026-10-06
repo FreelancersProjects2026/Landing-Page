@@ -23,7 +23,7 @@
 - [x] T06 Componente `not-found-view.tsx` con su prueba (título, imagen con `alt`, enlace).
 - [x] T07 Botón «obsidiana luminosa»: utilidades en `globals.css` (`@property`, keyframes,
       `motion-safe`) y uso en la vista; la prueba de `globals.css` sigue en verde.
-- [ ] T08 `localized-not-found.tsx` con su prueba (`en`, `fr` y sin `lang`).
+- [x] T08 `localized-not-found.tsx` con su prueba (`en`, `fr` y sin `lang`).
 - [ ] T09 `[lang]/[...rest]/page.tsx` + `[lang]/not-found.tsx` con prueba de `notFound()`.
 - [ ] T10 `global-not-found.tsx` + flag en `next.config.mjs` con su prueba.
 - [ ] T11 Verificación en build (`pnpm build && pnpm start`): `/es/xyz`, `/en/xyz`, `/fr` y `/xyz`
