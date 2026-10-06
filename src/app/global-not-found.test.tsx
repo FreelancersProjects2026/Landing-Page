@@ -20,7 +20,11 @@ describe('global-not-found', () => {
     expect(html).toMatch(/<a[^>]*href="\/es"[^>]*>.*Volver al inicio<\/a>/)
   })
 
-  it('titula la pestaña con el título de la 404', () => {
+  it('titula la pestaña con el título de la 404 y usa los íconos del sitio', () => {
     expect(metadata.title).toBe(notFound.title)
+    expect(metadata.icons).toEqual({
+      icon: '/logo/icono/LogoPJM-192.png',
+      apple: '/logo/icono/LogoPJM.jpeg',
+    })
   })
 })
