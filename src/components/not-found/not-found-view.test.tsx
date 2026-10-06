@@ -1,7 +1,13 @@
 import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import Link from 'next/link'
+import type { ComponentProps } from 'react'
+import { describe, expect, it, vi } from 'vitest'
 
 import { NotFoundView } from './not-found-view'
+
+vi.mock('next/link', () => ({
+  default: vi.fn((props: ComponentProps<'a'>) => <a {...props} />),
+}))
 
 const props = {
   lang: 'es',
@@ -37,6 +43,17 @@ describe('NotFoundView', () => {
     expect(link).toHaveClass(
       'btn-obsidian',
       'motion-safe:animate-obsidian-glow',
+    )
+  })
+
+  // La 404 global es otro layout raíz: una navegación de cliente a /es solo cambia la URL.
+  it('vuelve al inicio con un <a> nativo para forzar la carga completa', () => {
+    render(<NotFoundView {...props} />)
+
+    expect(Link).not.toHaveBeenCalled()
+    expect(screen.getByRole('link', { name: props.cta })).toHaveAttribute(
+      'href',
+      '/es',
     )
   })
 })

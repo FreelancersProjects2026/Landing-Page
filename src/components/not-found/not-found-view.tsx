@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 
 type NotFoundViewProps = {
@@ -47,7 +46,9 @@ export function NotFoundView({
             aria-hidden="true"
             className="pointer-events-none absolute -inset-8 rounded-full bg-[radial-gradient(closest-side,rgb(245_165_36/0.18),rgb(224_50_154/0.1),transparent)] blur-xl"
           />
-          <Link
+          {/* NOTE: <a> y no next/link: de la 404 global (su propio <html>) a [lang] cambia
+              el layout raíz, y la navegación de cliente solo cambiaría la URL. */}
+          <a
             href={homeHref}
             className="group btn-obsidian motion-safe:animate-obsidian-glow inline-flex h-14 items-center gap-3 rounded-full px-8 font-medium"
           >
@@ -56,7 +57,7 @@ export function NotFoundView({
               className="size-5 motion-safe:transition-transform motion-safe:group-hover:-translate-x-1 motion-safe:group-focus-visible:-translate-x-1"
             />
             {cta}
-          </Link>
+          </a>
         </div>
       </div>
     </main>
