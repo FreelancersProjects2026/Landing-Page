@@ -97,3 +97,24 @@ usa `dropdown-menu` de shadcn/ui (Radix), que ya resuelve teclado, `Esc`, foco y
 - `areaServed` del JSON-LD pasa a texto `Worldwide` (aprobado el 2026-10-06, T22); la dirección
   sigue en Costa Rica. Figura en `contenido.md` (datos comunes) y la prueba de copia literal lo
   verifica.
+
+## Resultado en Google (alcance 8)
+
+### Diagnóstico (2026-10-06)
+- Producción (`solutionspjm.com/es`) ya enlaza `<link rel="icon">` y `apple-touch-icon` con
+  `LogoPJM.jpeg`, pero el resultado de Google muestra un título («PJM Solutions - …») y una
+  descripción que ya no están en el sitio: Google no ha vuelto a rastrear la página.
+- `/favicon.ico` responde 404 y el JPEG mide 1024 px (no es múltiplo de 48).
+- `/` redirige con 307 (temporal) a `/es`; Google sigue la redirección. No se cambia.
+
+### Cambios
+- **Favicon:** PNG cuadrado de 192×192 px (múltiplo de 48) generado una vez desde
+  `LogoPJM.jpeg`, en `public/logo/icono/`; `icons.icon` apunta a él y `icons.apple` sigue en el
+  JPEG. Sin dependencias nuevas.
+- **Descripción SEO:** texto internacional aprobado en `contenido.md` (enmienda) y
+  `landingContentSource.ts`, `es` y `en`. La validación SEO actual (≤ 160 caracteres y
+  «Costa Rica») y la prueba de copia literal lo cubren; el título no cambia.
+- **Rastreo (usuario):** tras el merge y el despliegue, pedir la indexación de `/es` y `/en` en
+  Search Console. Google actualiza el logo y el texto cuando quiera (días o semanas).
+- Prueba: `layout.test.tsx` comprueba la nueva ruta de `icons.icon` en `/es` y `/en`.
+- Saltado: `/favicon.ico`; agregarlo si Google no muestra el logo tras el nuevo rastreo.
