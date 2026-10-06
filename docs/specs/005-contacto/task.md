@@ -46,7 +46,7 @@
 - [x] T14 Dominio: `validateEmail` en `domain/email.ts` (formato válido y en minúsculas) y
       `Contact.email`. Prueba: acepta `solutionspjm@gmail.com`; rechaza mayúsculas, sin `@`, sin
       dominio y vacío.
-- [ ] T15 Aplicación e infraestructura: `buildMailtoUrl(email)` exportado por `index.ts`;
+- [x] T15 Aplicación e infraestructura: `buildMailtoUrl(email)` exportado por `index.ts`;
       `company.email` validado al cargarse; etiqueta `contact.emailLabel` en `es` y `en`.
 - [ ] T16 Componente: `cta-section.tsx` recibe `email`, `emailUrl` y `emailLabel` por props y
       muestra el correo como `<a href="mailto:…">` en la columna derecha de la tarjeta (en móvil,

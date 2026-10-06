@@ -25,6 +25,7 @@ export interface Contact {
   readonly address: PostalAddress
   readonly areaServed: string
   readonly phone: string
+  readonly email: string
 }
 
 export interface Service {
@@ -110,6 +111,7 @@ export interface LandingContent {
     readonly title: string
     readonly text: string
     readonly cta: string
+    readonly emailLabel: string
   }
   readonly footer: {
     readonly text: string

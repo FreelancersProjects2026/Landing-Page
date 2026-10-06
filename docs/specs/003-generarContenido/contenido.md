@@ -2,13 +2,15 @@
 
 Estado: aprobado por el equipo (Spec 003, 2026-10-02). Fuente de verdad del código.
 Enmienda aprobada 2026-10-02: etiqueta del menú móvil (Menú/Menu) y mayúscula inicial en las descripciones.
+Enmienda 2026-10-06 (Spec 005): correo y su etiqueta en la sección de contacto.
 
 Datos comunes a ambos idiomas:
 
 - Nombre: solutionsPJM
 - Ubicación: Paraíso de Cartago, Costa Rica
 - WhatsApp: +506 6440-0832 → `https://wa.me/50664400832?text=<mensaje del idioma>`
-- Dominio, correo y redes: [PENDIENTE]
+- Correo: solutionspjm@gmail.com → `mailto:solutionspjm@gmail.com`
+- Dominio y redes: [PENDIENTE]
 
 ---
 
@@ -89,6 +91,7 @@ Servicios · Cómo trabajamos · Proyectos · Equipo · Contacto
 - **Título:** ¿Listo para crear software a la medida?
 - **Texto:** Cuéntanos qué problema quieres resolver y cotiza tu proyecto sin compromiso.
 - **Botón:** Escríbenos por WhatsApp
+- **Correo:** O escríbenos al correo
 
 ### 7. Footer
 
@@ -176,6 +179,7 @@ Services · How we work · Projects · Team · Contact
 - **Text:** Tell us what problem you want to solve and get a custom software quote, no strings
   attached.
 - **Button:** Message us on WhatsApp
+- **Email:** Or email us
 
 ### 7. Footer
 

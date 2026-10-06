@@ -4,6 +4,7 @@ import {
   type Contact,
   type ExternalLink,
 } from '../domain/landingContent.ts'
+import { validateEmail } from '../domain/email.ts'
 import { validateSiteUrl } from '../domain/siteUrl.ts'
 
 // Textos copiados literalmente de docs/specs/003-generarContenido/contenido.md (aprobado).
@@ -14,6 +15,7 @@ const company: Contact = {
   address: { locality: 'Paraíso', region: 'Cartago', country: 'CR' },
   areaServed: 'Costa Rica',
   phone: '+506 6440-0832',
+  email: validateEmail('solutionspjm@gmail.com'),
 }
 
 // Origen canónico del sitio (spec 004): sin www; www.solutionspjm.com redirige aquí con 308.
@@ -192,6 +194,7 @@ const es = validateLandingContent({
     title: '¿Listo para crear software a la medida?',
     text: 'Cuéntanos qué problema quieres resolver y cotiza tu proyecto sin compromiso.',
     cta: 'Escríbenos por WhatsApp',
+    emailLabel: 'O escríbenos al correo',
   },
   footer: {
     text: 'solutionsPJM — desarrollo de software en Cartago para negocios de todo Costa Rica.',
@@ -339,6 +342,7 @@ const en = validateLandingContent({
     title: 'Ready to build custom software?',
     text: 'Tell us what problem you want to solve and get a custom software quote, no strings attached.',
     cta: 'Message us on WhatsApp',
+    emailLabel: 'Or email us',
   },
   footer: {
     text: 'solutionsPJM — software development in Cartago for businesses across Costa Rica.',

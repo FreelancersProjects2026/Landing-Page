@@ -24,6 +24,10 @@ export function createGetLandingContent(
   }
 }
 
+export function buildMailtoUrl(email: string): string {
+  return `mailto:${email}`
+}
+
 export function buildWhatsAppUrl(phone: string, message: string): string {
   return `https://wa.me/${phone.replace(/\D/g, '')}?text=${encodeURIComponent(message)}`
 }

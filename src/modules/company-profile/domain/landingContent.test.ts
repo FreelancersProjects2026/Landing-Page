@@ -15,6 +15,7 @@ function validContent(): LandingContent {
       address: { locality: 'Paraíso', region: 'Cartago', country: 'CR' },
       areaServed: 'Costa Rica',
       phone: '+506 6440-0832',
+      email: 'solutionspjm@gmail.com',
     },
     seo: {
       title: 'Desarrollo de software a medida Costa Rica | solutionsPJM',
@@ -72,6 +73,7 @@ function validContent(): LandingContent {
       title: '¿Listo?',
       text: 'Cuéntanos.',
       cta: 'Escríbenos por WhatsApp',
+      emailLabel: 'O escríbenos al correo',
     },
     footer: { text: 'solutionsPJM — desarrollo.', rights: '© 2026 PJM' },
   }

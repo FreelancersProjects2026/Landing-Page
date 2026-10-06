@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 
 import { validateLandingContent } from '../domain/landingContent.ts'
+import { validateEmail } from '../domain/email.ts'
 import { validateSiteUrl } from '../domain/siteUrl.ts'
 import { landingContentSource, siteUrl } from './landingContentSource.ts'
 
@@ -32,6 +33,7 @@ describe('landingContentSource', () => {
       address: { locality: 'Paraíso', region: 'Cartago', country: 'CR' },
       areaServed: 'Costa Rica',
       phone: '+506 6440-0832',
+      email: 'solutionspjm@gmail.com',
     })
     expect(en.company).toEqual(es.company)
   })
@@ -51,6 +53,13 @@ describe('landingContentSource', () => {
     expect(es.whatsapp.options.length).toBeGreaterThan(0)
     expect(en.whatsapp.options).toHaveLength(es.whatsapp.options.length)
   })
+
+  it.each([es, en])(
+    'el correo en $locale pasa la validación de dominio',
+    (content) => {
+      expect(validateEmail(content.company.email)).toBe(content.company.email)
+    },
+  )
 
   it.each([es, en])('el eslogan en $locale no termina en punto', (content) => {
     expect(content.hero.slogan).not.toMatch(/\.$/)
