@@ -73,15 +73,22 @@ describe('landingContentSource', () => {
     )
   })
 
-  it.each([es, en])(
-    'copia de la Spec 006 los textos de la 404 en $locale',
-    (content) => {
-      const texts = Object.values(content.notFound)
+  it('copia de la tabla de la Spec 006 los textos de la 404 por idioma', () => {
+    const rows = {
+      title: 'Título',
+      text: 'Texto',
+      cta: 'Botón',
+      imageAlt: '`alt` imagen',
+    } as const
 
-      expect(texts).toHaveLength(4)
-      for (const text of texts) expect(notFoundSpec).toContain(`| ${text} |`)
-    },
-  )
+    expect(Object.keys(es.notFound)).toEqual(Object.keys(rows))
+    for (const [field, label] of Object.entries(rows)) {
+      const key = field as keyof typeof rows
+      expect(notFoundSpec).toContain(
+        `| ${label} | ${es.notFound[key]} | ${en.notFound[key]} |`,
+      )
+    }
+  })
 
   it.each([es, en])('el eslogan en $locale no termina en punto', (content) => {
     expect(content.hero.slogan).not.toMatch(/\.$/)
