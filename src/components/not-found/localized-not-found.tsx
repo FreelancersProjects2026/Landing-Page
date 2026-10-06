@@ -1,15 +1,15 @@
 'use client'
 
 import { useParams } from 'next/navigation'
-import type { NotFoundContent } from '@modules/company-profile'
+import type { Locale, NotFoundContent } from '@modules/company-profile'
 
 import { NotFoundView } from './not-found-view'
 
 type LocalizedTexts = NotFoundContent & { homeHref: string }
 
 type LocalizedNotFoundProps = {
-  byLocale: Readonly<Record<string, LocalizedTexts>>
-  fallbackLocale: string
+  byLocale: Readonly<Record<Locale, LocalizedTexts>>
+  fallbackLocale: Locale
   imageSrc: string
 }
 
@@ -22,7 +22,7 @@ export function LocalizedNotFound({
   const lang = useParams()?.lang
   const locale =
     typeof lang === 'string' && Object.hasOwn(byLocale, lang)
-      ? lang
+      ? (lang as Locale)
       : fallbackLocale
 
   return <NotFoundView {...byLocale[locale]} imageSrc={imageSrc} />
