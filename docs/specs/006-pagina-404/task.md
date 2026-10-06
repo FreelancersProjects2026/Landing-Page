@@ -25,7 +25,7 @@
       `motion-safe`) y uso en la vista; la prueba de `globals.css` sigue en verde.
 - [x] T08 `localized-not-found.tsx` con su prueba (`en`, `fr` y sin `lang`).
 - [x] T09 `[lang]/[...rest]/page.tsx` + `[lang]/not-found.tsx` con prueba de `notFound()`.
-- [ ] T10 `global-not-found.tsx` + flag en `next.config.mjs` con su prueba.
+- [x] T10 `global-not-found.tsx` + flag en `next.config.mjs` con su prueba.
 - [ ] T11 Verificación en build (`pnpm build && pnpm start`): `/es/xyz`, `/en/xyz`, `/fr` y `/xyz`
       responden 404 con el idioma y enlace correctos; `/es` y `/en` siguen en 200.
 - [ ] T12 Revisión manual: 390×844 y 1440×900, teclado, `prefers-reduced-motion`, sin scroll
