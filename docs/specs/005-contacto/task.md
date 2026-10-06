@@ -60,8 +60,16 @@
 - [x] T19 Ícono: `generateMetadata` en `layout.tsx` con `icons.icon` e `icons.apple` →
       `/logo/icono/LogoPJM.jpeg`. Prueba primero en `layout.test.tsx` (`/es` y `/en`). Commitear
       `LogoPJM.jpeg`.
-- [ ] T20 Verificación: `pnpm dev` muestra el logo en la pestaña; el HTML tiene los `<link>` de
+- [x] T20 Verificación: `pnpm dev` muestra el logo en la pestaña; el HTML tiene los `<link>` de
       ícono y `apple-touch-icon`. Borrar íconos viejos solo si el negocio lo confirma.
+      - Verificado con `pnpm dev` (2026-10-06): el HTML de `/es` y `/en` trae
+        `<link rel="icon">` y `<link rel="apple-touch-icon">` con `/logo/icono/LogoPJM.jpeg`, que
+        responde 200 `image/jpeg` (85 961 bytes). `robots.txt` permite todo (`Allow: /`).
+      - Los íconos viejos (`icon.svg`, `icon-*-32x32.png`, `apple-icon.png`) no se referencian
+        en el código, solo en la spec y el plan; no se borraron.
+      - Sin verificar a la vista: la pestaña del navegador (la captura no incluye la barra de
+        pestañas). Nota: el logo tiene texto pequeño que a 16–32 px no se lee; solo se distingue
+        «PJM».
 
 ## Alcance internacional (bloqueado: textos sin aprobar)
 - [ ] T21 Textos aprobados en `contenido.md` (enmienda) y `landingContentSource.ts`, `es` y `en`,
