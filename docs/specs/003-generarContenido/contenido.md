@@ -4,6 +4,7 @@ Estado: aprobado por el equipo (Spec 003, 2026-10-02). Fuente de verdad del cód
 Enmienda aprobada 2026-10-02: etiqueta del menú móvil (Menú/Menu) y mayúscula inicial en las descripciones.
 Enmienda aprobada 2026-10-06 (Spec 005): correo y su etiqueta en la sección de contacto.
 Enmienda aprobada 2026-10-06 (Spec 005): opciones y mensajes del botón flotante de WhatsApp.
+Enmienda aprobada 2026-10-06 (Spec 005): alcance internacional (subtítulo del hero y texto del footer).
 
 Datos comunes a ambos idiomas:
 
@@ -37,8 +38,8 @@ Servicios · Cómo trabajamos · Proyectos · Equipo · Contacto
 - **Eslogan (titular visual):** Software que comienza por entender tu negocio
 - **Palabras rotativas del eslogan (cambian cada 3,5 segundos; la primera es la del eslogan):** negocio,
   empresa, operación, proceso, idea
-- **Subtítulo:** Desarrollamos software a medida para negocios en Costa Rica: sistemas de gestión,
-  control y métricas hechos para tu operación real.
+- **Subtítulo:** Desde Costa Rica desarrollamos software a medida para negocios de cualquier país:
+  sistemas de gestión, control y métricas hechos para tu operación real.
 - **Botón:** Cotiza por WhatsApp
 
 ### 2. Servicios
@@ -106,7 +107,7 @@ Servicios · Cómo trabajamos · Proyectos · Equipo · Contacto
 
 ### 7. Footer
 
-- **Texto:** solutionsPJM — desarrollo de software en Cartago para negocios de todo Costa Rica.
+- **Texto:** solutionsPJM — desarrollo de software en Cartago para negocios de Costa Rica y del mundo.
 - **Ubicación:** Paraíso de Cartago, Costa Rica
 - **Contacto:** WhatsApp +506 6440-0832
 - **Derechos:** © 2026 solutionsPJM
@@ -134,8 +135,8 @@ Services · How we work · Projects · Team · Contact
 - **Slogan (visual headline):** Software that starts by understanding your business
 - **Slogan rotating words (change every 8 seconds; the first one is the slogan's):** business, company,
   operation, process, idea
-- **Subtitle:** We build custom software for businesses in Costa Rica: management, tracking and
-  metrics systems made for how you actually operate.
+- **Subtitle:** From Costa Rica, we build custom software for businesses anywhere: management,
+  tracking and metrics systems made for how you actually operate.
 - **Button:** Get a quote on WhatsApp
 
 ### 2. Services
@@ -204,7 +205,8 @@ Services · How we work · Projects · Team · Contact
 
 ### 7. Footer
 
-- **Text:** solutionsPJM — software development in Cartago for businesses across Costa Rica.
+- **Text:** solutionsPJM — software development in Cartago for businesses in Costa Rica and around
+  the world.
 - **Location:** Paraíso de Cartago, Costa Rica
 - **Contact:** WhatsApp +506 6440-0832
 - **Rights:** © 2026 solutionsPJM

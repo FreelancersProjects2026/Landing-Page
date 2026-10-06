@@ -94,7 +94,7 @@ const es = validateLandingContent({
     slogan: 'Software que comienza por entender tu negocio',
     sloganWords: ['negocio', 'empresa', 'operación', 'proceso', 'idea'],
     subtitle:
-      'Desarrollamos software a medida para negocios en Costa Rica: sistemas de gestión, control y métricas hechos para tu operación real.',
+      'Desde Costa Rica desarrollamos software a medida para negocios de cualquier país: sistemas de gestión, control y métricas hechos para tu operación real.',
     cta: 'Cotiza por WhatsApp',
   },
   services: {
@@ -196,7 +196,7 @@ const es = validateLandingContent({
     emailLabel: 'O escríbenos al correo',
   },
   footer: {
-    text: 'solutionsPJM — desarrollo de software en Cartago para negocios de todo Costa Rica.',
+    text: 'solutionsPJM — desarrollo de software en Cartago para negocios de Costa Rica y del mundo.',
     rights,
   },
 })
@@ -241,7 +241,7 @@ const en = validateLandingContent({
     slogan: 'Software that starts by understanding your business',
     sloganWords: ['business', 'company', 'operation', 'process', 'idea'],
     subtitle:
-      'We build custom software for businesses in Costa Rica: management, tracking and metrics systems made for how you actually operate.',
+      'From Costa Rica, we build custom software for businesses anywhere: management, tracking and metrics systems made for how you actually operate.',
     cta: 'Get a quote on WhatsApp',
   },
   services: {
@@ -343,7 +343,7 @@ const en = validateLandingContent({
     emailLabel: 'Or email us',
   },
   footer: {
-    text: 'solutionsPJM — software development in Cartago for businesses across Costa Rica.',
+    text: 'solutionsPJM — software development in Cartago for businesses in Costa Rica and around the world.',
     rights,
   },
 })

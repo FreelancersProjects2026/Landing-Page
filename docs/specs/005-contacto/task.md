@@ -72,6 +72,6 @@
         «PJM».
 
 ## Alcance internacional (bloqueado: textos sin aprobar)
-- [ ] T21 Textos aprobados en `contenido.md` (enmienda) y `landingContentSource.ts`, `es` y `en`,
+- [x] T21 Textos aprobados en `contenido.md` (enmienda) y `landingContentSource.ts`, `es` y `en`,
       sin perder la palabra clave principal.
 - [ ] T22 `areaServed` del JSON-LD según la decisión del negocio, con su prueba.
