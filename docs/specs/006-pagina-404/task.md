@@ -34,7 +34,20 @@
         404, h1, texto y enlace en español a `/es`; `/en/xyz` y `/en/a/b` → 404 en inglés con
         enlace a `/en`; todas con `noindex`. `/es` y `/en` → 200 prerenderizadas (`HIT`); `/` → 307
         a `/es`. En Chrome, `/en/xyz` carga sin errores de hidratación en la consola.
-- [ ] T12 Revisión manual: 390×844 y 1440×900, teclado, `prefers-reduced-motion`, sin scroll
+- [x] T12 Revisión manual: 390×844 y 1440×900, teclado, `prefers-reduced-motion`, sin scroll
       horizontal, título en ≤ 2 líneas.
+      - Revisado en Chrome (2026-10-06), `/es/xyz` y `/en/xyz` en iframes del tamaño exacto:
+        390×844 → título en 2 líneas (32 px), sin scroll horizontal ni vertical, botón visible
+        (borde inferior a 649 px); 1440×900 → título en 1 línea (en) y 2 (es) a 56 px, imagen y
+        botón visibles sin desplazarse (borde inferior a 811/834 px).
+      - Teclado: el botón es el único elemento enfocable; con `:focus-visible` muestra el anillo
+        ámbar de 2 px con offset de 4 px, sube 2 px y cruza el destello.
+      - `prefers-reduced-motion`: no se pudo emular en el navegador. Verificado en la CSS
+        generada: el giro del borde, el `translate` y el destello solo existen bajo
+        `prefers-reduced-motion: no-preference`; con `reduce` solo queda la transición de la
+        sombra en hover/focus (no continua).
+      - Hallazgo previo, fuera de esta spec: `.font-display` usa `var(--font-display)`, que
+        `@theme inline` no emite; el título (y los `font-display` de la landing) salen en
+        Instrument Sans y no en Serif.
 - [ ] T13 Pendiente del negocio: aprobación de textos; `<html lang>` y `<title>` en `es` también en
       `/en/xyz` (ver spec).
