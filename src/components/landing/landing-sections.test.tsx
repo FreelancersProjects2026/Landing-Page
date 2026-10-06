@@ -236,9 +236,23 @@ describe('HowItWorksSection: accesibilidad', () => {
 })
 
 describe('CtaSection', () => {
+  const email = 'solutionspjm@gmail.com'
+  const emailUrl = 'mailto:solutionspjm@gmail.com'
+
+  function renderCta() {
+    render(
+      <CtaSection
+        {...content.contact}
+        whatsappUrl={whatsappUrl}
+        email={email}
+        emailUrl={emailUrl}
+      />,
+    )
+    return screen.getByRole('region', { name: content.contact.title })
+  }
+
   it('muestra el contacto con su botón de WhatsApp', () => {
-    render(<CtaSection {...content.contact} whatsappUrl={whatsappUrl} />)
-    const section = screen.getByRole('region', { name: content.contact.title })
+    const section = renderCta()
 
     expect(section).toHaveAttribute('id', 'contacto')
     expect(within(section).getByText(content.contact.text)).toBeVisible()
@@ -246,16 +260,33 @@ describe('CtaSection', () => {
       within(section).getByRole('link', { name: content.contact.cta }),
     )
   })
+
+  it('muestra el correo como una tarjeta-botón mailto: con su etiqueta', () => {
+    const section = renderCta()
+    const link = within(section).getByRole('link', {
+      name: `${content.contact.emailLabel} ${email}`,
+    })
+
+    expect(link).toHaveAttribute('href', emailUrl)
+    expect(link).not.toHaveAttribute('target')
+    // Los íconos (correo y flecha) son decorativos: no agregan nada al nombre accesible.
+    const icons = link.querySelectorAll('svg')
+    expect(icons).toHaveLength(2)
+    for (const icon of icons) {
+      expect(icon).toHaveAttribute('aria-hidden', 'true')
+    }
+  })
 })
 
 describe('FooterSection', () => {
-  it('muestra nombre, texto, ubicación, WhatsApp y derechos', () => {
+  it('muestra nombre, texto, ubicación, WhatsApp, correo y derechos', () => {
     render(
       <FooterSection
         company={content.company}
         menu={content.menu}
         footer={content.footer}
         whatsappUrl={whatsappUrl}
+        emailUrl="mailto:solutionspjm@gmail.com"
       />,
     )
     const footer = screen.getByRole('contentinfo')
@@ -268,6 +299,11 @@ describe('FooterSection', () => {
     expectWhatsAppLink(
       within(footer).getByRole('link', { name: 'WhatsApp +506 6440-0832' }),
     )
+    const email = within(footer).getByRole('link', {
+      name: 'solutionspjm@gmail.com',
+    })
+    expect(email).toHaveAttribute('href', 'mailto:solutionspjm@gmail.com')
+    expect(email).not.toHaveAttribute('target')
     expect(within(footer).getByText('© 2026 solutionsPJM')).toBeVisible()
   })
 })

@@ -36,6 +36,8 @@ const openGraphLocale: Record<Locale, string> = { es: 'es_CR', en: 'en_US' }
 
 type LayoutParams = { params: Promise<{ lang: string }> }
 
+const siteIcon = '/logo/icono/LogoPJM.jpeg'
+
 export async function generateMetadata({
   params,
 }: LayoutParams): Promise<Metadata> {
@@ -59,6 +61,8 @@ export async function generateMetadata({
       siteName: company.name,
       type: 'website',
     },
+    // Una sola fuente para la pestaña y el ícono de iOS; Next genera los <link>.
+    icons: { icon: siteIcon, apple: siteIcon },
   }
 }
 

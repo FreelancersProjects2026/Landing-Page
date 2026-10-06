@@ -4,6 +4,7 @@ import {
   type Contact,
   type ExternalLink,
 } from '../domain/landingContent.ts'
+import { validateEmail } from '../domain/email.ts'
 import { validateSiteUrl } from '../domain/siteUrl.ts'
 
 // Textos copiados literalmente de docs/specs/003-generarContenido/contenido.md (aprobado).
@@ -12,8 +13,9 @@ const company: Contact = {
   name: 'solutionsPJM',
   location: 'Paraíso de Cartago, Costa Rica',
   address: { locality: 'Paraíso', region: 'Cartago', country: 'CR' },
-  areaServed: 'Costa Rica',
+  areaServed: 'Worldwide',
   phone: '+506 6440-0832',
+  email: validateEmail('solutionspjm@gmail.com'),
 }
 
 // Origen canónico del sitio (spec 004): sin www; www.solutionspjm.com redirige aquí con 308.
@@ -61,6 +63,24 @@ const es = validateLandingContent({
   },
   whatsappMessage:
     'Hola solutionsPJM, quiero cotizar un software a la medida para mi negocio.',
+  whatsapp: {
+    label: 'Escríbenos por WhatsApp',
+    options: [
+      {
+        label: 'Cotizar un proyecto',
+        message: 'Hola solutionsPJM, quiero cotizar un proyecto de software.',
+      },
+      {
+        label: 'Soporte de un sistema existente',
+        message:
+          'Hola solutionsPJM, necesito soporte para un sistema existente.',
+      },
+      {
+        label: 'Otra consulta',
+        message: 'Hola solutionsPJM, tengo una consulta.',
+      },
+    ],
+  },
   menu: {
     services: 'Servicios',
     process: 'Cómo trabajamos',
@@ -74,7 +94,7 @@ const es = validateLandingContent({
     slogan: 'Software que comienza por entender tu negocio',
     sloganWords: ['negocio', 'empresa', 'operación', 'proceso', 'idea'],
     subtitle:
-      'Desarrollamos software a medida para negocios en Costa Rica: sistemas de gestión, control y métricas hechos para tu operación real.',
+      'Desde Costa Rica desarrollamos software a medida para negocios de cualquier país: sistemas de gestión, control y métricas hechos para tu operación real.',
     cta: 'Cotiza por WhatsApp',
   },
   services: {
@@ -173,9 +193,10 @@ const es = validateLandingContent({
     title: '¿Listo para crear software a la medida?',
     text: 'Cuéntanos qué problema quieres resolver y cotiza tu proyecto sin compromiso.',
     cta: 'Escríbenos por WhatsApp',
+    emailLabel: 'O escríbenos al correo',
   },
   footer: {
-    text: 'solutionsPJM — desarrollo de software en Cartago para negocios de todo Costa Rica.',
+    text: 'solutionsPJM — desarrollo de software en Cartago para negocios de Costa Rica y del mundo.',
     rights,
   },
 })
@@ -190,6 +211,23 @@ const en = validateLandingContent({
   },
   whatsappMessage:
     "Hi solutionsPJM, I'd like a quote for custom software for my business.",
+  whatsapp: {
+    label: 'Message us on WhatsApp',
+    options: [
+      {
+        label: 'Get a project quote',
+        message: "Hi solutionsPJM, I'd like a quote for a software project.",
+      },
+      {
+        label: 'Support for an existing system',
+        message: 'Hi solutionsPJM, I need support for an existing system.',
+      },
+      {
+        label: 'Other inquiry',
+        message: 'Hi solutionsPJM, I have a question.',
+      },
+    ],
+  },
   menu: {
     services: 'Services',
     process: 'How we work',
@@ -203,7 +241,7 @@ const en = validateLandingContent({
     slogan: 'Software that starts by understanding your business',
     sloganWords: ['business', 'company', 'operation', 'process', 'idea'],
     subtitle:
-      'We build custom software for businesses in Costa Rica: management, tracking and metrics systems made for how you actually operate.',
+      'From Costa Rica, we build custom software for businesses anywhere: management, tracking and metrics systems made for how you actually operate.',
     cta: 'Get a quote on WhatsApp',
   },
   services: {
@@ -302,9 +340,10 @@ const en = validateLandingContent({
     title: 'Ready to build custom software?',
     text: 'Tell us what problem you want to solve and get a custom software quote, no strings attached.',
     cta: 'Message us on WhatsApp',
+    emailLabel: 'Or email us',
   },
   footer: {
-    text: 'solutionsPJM — software development in Cartago for businesses across Costa Rica.',
+    text: 'solutionsPJM — software development in Cartago for businesses in Costa Rica and around the world.',
     rights,
   },
 })

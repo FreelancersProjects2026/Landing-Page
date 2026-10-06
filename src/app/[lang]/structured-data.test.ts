@@ -23,7 +23,7 @@ describe('buildStructuredData', () => {
           addressRegion: 'Cartago',
           addressCountry: 'CR',
         },
-        areaServed: { '@type': 'Country', name: 'Costa Rica' },
+        areaServed: 'Worldwide',
       })
     },
   )

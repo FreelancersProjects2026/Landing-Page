@@ -15,12 +15,19 @@ function validContent(): LandingContent {
       address: { locality: 'Paraíso', region: 'Cartago', country: 'CR' },
       areaServed: 'Costa Rica',
       phone: '+506 6440-0832',
+      email: 'solutionspjm@gmail.com',
     },
     seo: {
       title: 'Desarrollo de software a medida Costa Rica | solutionsPJM',
       description: 'Desarrollo de software a medida en Costa Rica.',
     },
     whatsappMessage: 'Hola solutionsPJM',
+    whatsapp: {
+      label: 'Escríbenos por WhatsApp',
+      options: [
+        { label: 'Otra consulta', message: 'Hola, tengo una consulta.' },
+      ],
+    },
     menu: {
       services: 'Servicios',
       process: 'Cómo trabajamos',
@@ -66,6 +73,7 @@ function validContent(): LandingContent {
       title: '¿Listo?',
       text: 'Cuéntanos.',
       cta: 'Escríbenos por WhatsApp',
+      emailLabel: 'O escríbenos al correo',
     },
     footer: { text: 'solutionsPJM — desarrollo.', rights: '© 2026 PJM' },
   }
@@ -181,5 +189,41 @@ describe('validateLandingContent', () => {
         hero: { ...content.hero, sloganWords: ['empresa', 'negocio'] },
       }),
     ).toThrow(/palabra rotativa/)
+  })
+
+  it.each([
+    ['vacío', '  '],
+    ['marcado como [PENDIENTE]', '[PENDIENTE]'],
+  ])('rechaza una opción de WhatsApp con mensaje %s', (_, message) => {
+    const content = validContent()
+    const whatsapp = {
+      ...content.whatsapp,
+      options: [{ label: 'Otra consulta', message }],
+    }
+
+    let error: unknown
+    try {
+      validateLandingContent({ ...content, whatsapp })
+    } catch (caught) {
+      error = caught
+    }
+
+    expect(error).toBeInstanceOf(InvalidLandingContentError)
+    expect((error as InvalidLandingContentError).problems).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining('whatsapp.options.0.message'),
+      ]),
+    )
+  })
+
+  it('exige al menos una opción de WhatsApp', () => {
+    const content = validContent()
+
+    expect(() =>
+      validateLandingContent({
+        ...content,
+        whatsapp: { ...content.whatsapp, options: [] },
+      }),
+    ).toThrow(/opción de WhatsApp/)
   })
 })

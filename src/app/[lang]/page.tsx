@@ -6,7 +6,12 @@ import { ProjectsSection } from '@/components/landing/projects-section'
 import { TeamSection } from '@/components/landing/team-section'
 import { CtaSection } from '@/components/landing/cta-section'
 import { FooterSection } from '@/components/landing/footer-section'
-import { buildWhatsAppUrl, getLandingContent } from '@modules/company-profile'
+import { WhatsAppButton } from '@/components/landing/whatsapp-button'
+import {
+  buildMailtoUrl,
+  buildWhatsAppUrl,
+  getLandingContent,
+} from '@modules/company-profile'
 
 import { buildStructuredData, serializeJsonLd } from './structured-data'
 
@@ -21,6 +26,13 @@ export default async function Home({
     content.company.phone,
     content.whatsappMessage,
   )
+  const whatsappOptions = content.whatsapp.options.map(
+    ({ label, message }) => ({
+      label,
+      url: buildWhatsAppUrl(content.company.phone, message),
+    }),
+  )
+  const emailUrl = buildMailtoUrl(content.company.email)
   const structuredData = serializeJsonLd(buildStructuredData(content))
 
   return (
@@ -42,12 +54,24 @@ export default async function Home({
         <HowItWorksSection label={content.menu.process} {...content.process} />
         <ProjectsSection label={content.menu.projects} {...content.projects} />
         <TeamSection label={content.menu.team} {...content.team} />
-        <CtaSection {...content.contact} whatsappUrl={whatsappUrl} />
+        <CtaSection
+          {...content.contact}
+          whatsappUrl={whatsappUrl}
+          email={content.company.email}
+          emailUrl={emailUrl}
+        />
         <FooterSection
           company={content.company}
           menu={content.menu}
           footer={content.footer}
           whatsappUrl={whatsappUrl}
+          emailUrl={emailUrl}
+        />
+        <WhatsAppButton
+          label={content.whatsapp.label}
+          name={content.company.name}
+          greeting={content.contact.text}
+          options={whatsappOptions}
         />
       </main>
     </>

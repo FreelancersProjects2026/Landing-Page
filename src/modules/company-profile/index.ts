@@ -1,7 +1,10 @@
 import { createGetLandingContent } from './application/landingContent.ts'
 import { landingContentSource } from './infrastructure/landingContentSource.ts'
 
-export { buildWhatsAppUrl } from './application/landingContent.ts'
+export {
+  buildMailtoUrl,
+  buildWhatsAppUrl,
+} from './application/landingContent.ts'
 export {
   buildLanguageAlternates,
   buildLocaleUrl,

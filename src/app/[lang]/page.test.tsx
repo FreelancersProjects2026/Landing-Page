@@ -1,4 +1,5 @@
-import { act, render } from '@testing-library/react'
+import { act, render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { hydrateRoot } from 'react-dom/client'
 import { renderToString } from 'react-dom/server'
 import { describe, expect, it, vi } from 'vitest'
@@ -15,12 +16,13 @@ function renderPage(lang: string) {
 describe.each(['es', 'en'])('Home (%s)', (lang) => {
   const content = getLandingContent(lang)
 
-  it('renderiza el menú, las 7 secciones y el footer en orden', async () => {
+  it('renderiza el menú, las 7 secciones, el footer y el botón flotante en orden', async () => {
     const { container } = render(await renderPage(lang))
+    const children = Array.from(container.querySelector('main')?.children ?? [])
+    const floatingButton = children.pop()
 
-    const sections = Array.from(
-      container.querySelector('main')?.children ?? [],
-    ).map((element) => ({
+    expect(floatingButton).toHaveAccessibleName(content.whatsapp.label)
+    const sections = children.map((element) => ({
       id: element.id || element.tagName.toLowerCase(),
       title: element.querySelector('h1, h2')?.textContent,
     }))
@@ -72,6 +74,48 @@ describe.each(['es', 'en'])('Home (%s)', (lang) => {
     for (const link of whatsappLinks) {
       expect(link).toHaveAttribute('href', whatsappUrl)
     }
+  })
+
+  it('el botón flotante abre WhatsApp con el mensaje de cada opción del idioma', async () => {
+    render(await renderPage(lang))
+
+    await userEvent.click(
+      screen.getByRole('button', { name: content.whatsapp.label }),
+    )
+
+    expect(
+      screen.getAllByRole('menuitem').map((item) => ({
+        label: item.textContent,
+        href: item.getAttribute('href'),
+      })),
+    ).toEqual(
+      content.whatsapp.options.map(({ label, message }) => ({
+        label,
+        href: buildWhatsAppUrl(content.company.phone, message),
+      })),
+    )
+    for (const item of screen.getAllByRole('menuitem')) {
+      expect(item.getAttribute('href')).toMatch(
+        /^https:\/\/wa\.me\/50664400832\?text=/,
+      )
+    }
+  })
+
+  it('la sección de contacto publica el correo como mailto:', async () => {
+    const { container } = render(await renderPage(lang))
+    const mailto = container.querySelectorAll('#contacto a[href^="mailto:"]')
+
+    expect(mailto).toHaveLength(1)
+    expect(mailto[0]).toHaveAttribute('href', 'mailto:solutionspjm@gmail.com')
+    expect(mailto[0]).toHaveTextContent('solutionspjm@gmail.com')
+  })
+
+  it('el footer publica el correo como mailto:', async () => {
+    const { container } = render(await renderPage(lang))
+    const mailto = container.querySelectorAll('footer a[href^="mailto:"]')
+
+    expect(mailto).toHaveLength(1)
+    expect(mailto[0]).toHaveAttribute('href', 'mailto:solutionspjm@gmail.com')
   })
 
   it('publica el JSON-LD del idioma', async () => {

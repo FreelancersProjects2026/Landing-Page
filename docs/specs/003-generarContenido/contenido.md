@@ -2,13 +2,18 @@
 
 Estado: aprobado por el equipo (Spec 003, 2026-10-02). Fuente de verdad del código.
 Enmienda aprobada 2026-10-02: etiqueta del menú móvil (Menú/Menu) y mayúscula inicial en las descripciones.
+Enmienda aprobada 2026-10-06 (Spec 005): correo y su etiqueta en la sección de contacto.
+Enmienda aprobada 2026-10-06 (Spec 005): opciones y mensajes del botón flotante de WhatsApp.
+Enmienda aprobada 2026-10-06 (Spec 005): alcance internacional (subtítulo del hero, texto del footer y área atendida).
 
 Datos comunes a ambos idiomas:
 
 - Nombre: solutionsPJM
 - Ubicación: Paraíso de Cartago, Costa Rica
 - WhatsApp: +506 6440-0832 → `https://wa.me/50664400832?text=<mensaje del idioma>`
-- Dominio, correo y redes: [PENDIENTE]
+- Correo: solutionspjm@gmail.com → `mailto:solutionspjm@gmail.com`
+- Área atendida (JSON-LD): Worldwide
+- Dominio y redes: [PENDIENTE]
 
 ---
 
@@ -34,8 +39,8 @@ Servicios · Cómo trabajamos · Proyectos · Equipo · Contacto
 - **Eslogan (titular visual):** Software que comienza por entender tu negocio
 - **Palabras rotativas del eslogan (cambian cada 3,5 segundos; la primera es la del eslogan):** negocio,
   empresa, operación, proceso, idea
-- **Subtítulo:** Desarrollamos software a medida para negocios en Costa Rica: sistemas de gestión,
-  control y métricas hechos para tu operación real.
+- **Subtítulo:** Desde Costa Rica desarrollamos software a medida para negocios de cualquier país:
+  sistemas de gestión, control y métricas hechos para tu operación real.
 - **Botón:** Cotiza por WhatsApp
 
 ### 2. Servicios
@@ -89,10 +94,21 @@ Servicios · Cómo trabajamos · Proyectos · Equipo · Contacto
 - **Título:** ¿Listo para crear software a la medida?
 - **Texto:** Cuéntanos qué problema quieres resolver y cotiza tu proyecto sin compromiso.
 - **Botón:** Escríbenos por WhatsApp
+- **Correo:** O escríbenos al correo
+
+### Botón flotante de WhatsApp
+
+- **Botón:** Escríbenos por WhatsApp
+- **Opción:** Cotizar un proyecto
+  - **Mensaje:** Hola solutionsPJM, quiero cotizar un proyecto de software.
+- **Opción:** Soporte de un sistema existente
+  - **Mensaje:** Hola solutionsPJM, necesito soporte para un sistema existente.
+- **Opción:** Otra consulta
+  - **Mensaje:** Hola solutionsPJM, tengo una consulta.
 
 ### 7. Footer
 
-- **Texto:** solutionsPJM — desarrollo de software en Cartago para negocios de todo Costa Rica.
+- **Texto:** solutionsPJM — desarrollo de software en Cartago para negocios de Costa Rica y del mundo.
 - **Ubicación:** Paraíso de Cartago, Costa Rica
 - **Contacto:** WhatsApp +506 6440-0832
 - **Derechos:** © 2026 solutionsPJM
@@ -120,8 +136,8 @@ Services · How we work · Projects · Team · Contact
 - **Slogan (visual headline):** Software that starts by understanding your business
 - **Slogan rotating words (change every 8 seconds; the first one is the slogan's):** business, company,
   operation, process, idea
-- **Subtitle:** We build custom software for businesses in Costa Rica: management, tracking and
-  metrics systems made for how you actually operate.
+- **Subtitle:** From Costa Rica, we build custom software for businesses anywhere: management,
+  tracking and metrics systems made for how you actually operate.
 - **Button:** Get a quote on WhatsApp
 
 ### 2. Services
@@ -176,10 +192,22 @@ Services · How we work · Projects · Team · Contact
 - **Text:** Tell us what problem you want to solve and get a custom software quote, no strings
   attached.
 - **Button:** Message us on WhatsApp
+- **Email:** Or email us
+
+### Floating WhatsApp button
+
+- **Button:** Message us on WhatsApp
+- **Option:** Get a project quote
+  - **Message:** Hi solutionsPJM, I'd like a quote for a software project.
+- **Option:** Support for an existing system
+  - **Message:** Hi solutionsPJM, I need support for an existing system.
+- **Option:** Other inquiry
+  - **Message:** Hi solutionsPJM, I have a question.
 
 ### 7. Footer
 
-- **Text:** solutionsPJM — software development in Cartago for businesses across Costa Rica.
+- **Text:** solutionsPJM — software development in Cartago for businesses in Costa Rica and around
+  the world.
 - **Location:** Paraíso de Cartago, Costa Rica
 - **Contact:** WhatsApp +506 6440-0832
 - **Rights:** © 2026 solutionsPJM
