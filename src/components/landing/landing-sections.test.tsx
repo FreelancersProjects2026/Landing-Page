@@ -269,8 +269,10 @@ describe('CtaSection', () => {
 
     expect(link).toHaveAttribute('href', emailUrl)
     expect(link).not.toHaveAttribute('target')
-    // Los íconos son decorativos: no agregan nada al nombre accesible.
-    for (const icon of link.querySelectorAll('svg')) {
+    // Los íconos (correo y flecha) son decorativos: no agregan nada al nombre accesible.
+    const icons = link.querySelectorAll('svg')
+    expect(icons).toHaveLength(2)
+    for (const icon of icons) {
       expect(icon).toHaveAttribute('aria-hidden', 'true')
     }
   })

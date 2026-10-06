@@ -115,7 +115,7 @@ export function CtaSection({
 
               {/* Correo: tarjeta-botón a la derecha en escritorio, debajo de WhatsApp en móvil */}
               <div
-                className={`w-full lg:w-auto lg:shrink-0 transition-all duration-1000 delay-300 ${
+                className={`w-full lg:w-auto transition-all duration-1000 delay-300 ${
                   isVisible
                     ? 'opacity-100 translate-y-0'
                     : 'opacity-0 translate-y-4'
@@ -123,7 +123,7 @@ export function CtaSection({
               >
                 <a
                   href={emailUrl}
-                  className="group relative flex flex-col gap-10 overflow-hidden rounded-2xl border border-foreground/20 p-6 lg:p-8 text-foreground hover:text-background focus-visible:text-background motion-safe:transition-colors motion-safe:duration-700 motion-safe:ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+                  className="group relative flex flex-col gap-10 overflow-hidden rounded-2xl border border-foreground/20 p-6 lg:p-8 text-foreground hover:text-background focus-visible:text-background motion-safe:transition-colors motion-safe:duration-300 motion-safe:ease-out motion-safe:hover:delay-150 motion-safe:focus-visible:delay-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-4 focus-visible:ring-offset-background"
                 >
                   {/* Relleno que sube desde abajo e invierte los colores */}
                   <span
@@ -142,7 +142,7 @@ export function CtaSection({
                     </span>
                   </span>
                   <span className="relative flex flex-col gap-2">
-                    <span className="text-sm text-foreground/70 group-hover:text-background/70 group-focus-visible:text-background/70 motion-safe:transition-colors motion-safe:duration-700">
+                    <span className="text-sm text-foreground/70 group-hover:text-background/70 group-focus-visible:text-background/70 motion-safe:transition-colors motion-safe:duration-300 motion-safe:group-hover:delay-150 motion-safe:group-focus-visible:delay-150">
                       {emailLabel}
                     </span>{' '}
                     <span className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl tracking-tight break-words">
