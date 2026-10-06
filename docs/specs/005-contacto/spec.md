@@ -77,7 +77,7 @@ claro desde el primer contacto.
 - [x] Contenido inválido (opción sin mensaje, correo mal formado) falla con pruebas unitarias.
 - [x] Los componentes de `src/components/landing/` reciben textos por props, sin reglas de negocio.
 - [x] La pestaña muestra `LogoPJM` en `/es` y `/en`; el HTML enlaza favicon y `apple-touch-icon`.
-- [ ] El favicon tiene un tamaño múltiplo de 48 px y Google puede descargarlo en producción.
+- [x] El favicon tiene un tamaño múltiplo de 48 px y Google puede descargarlo en producción.
 - [x] La descripción SEO aprobada está en `/es` y `/en` (T27).
 - [ ] Tras el nuevo rastreo, Google muestra el logo y la descripción nueva (T28, depende de
       Google).
