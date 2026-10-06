@@ -13,7 +13,7 @@ const company: Contact = {
   name: 'solutionsPJM',
   location: 'Paraíso de Cartago, Costa Rica',
   address: { locality: 'Paraíso', region: 'Cartago', country: 'CR' },
-  areaServed: 'Costa Rica',
+  areaServed: 'Worldwide',
   phone: '+506 6440-0832',
   email: validateEmail('solutionspjm@gmail.com'),
 }

@@ -18,7 +18,7 @@ export function buildStructuredData({ company, seo, locale }: LandingContent) {
       addressRegion: company.address.region,
       addressCountry: company.address.country,
     },
-    areaServed: { '@type': 'Country', name: company.areaServed },
+    areaServed: company.areaServed,
   }
 }
 

@@ -31,7 +31,7 @@ describe('landingContentSource', () => {
       name: 'solutionsPJM',
       location: 'Paraíso de Cartago, Costa Rica',
       address: { locality: 'Paraíso', region: 'Cartago', country: 'CR' },
-      areaServed: 'Costa Rica',
+      areaServed: 'Worldwide',
       phone: '+506 6440-0832',
       email: 'solutionspjm@gmail.com',
     })
@@ -74,8 +74,13 @@ describe('landingContentSource', () => {
   it.each([es, en])(
     'copia literalmente de contenido.md los textos en $locale',
     (content) => {
-      // Datos técnicos que no se muestran: el idioma y el código ISO del país (JSON-LD).
-      const technical = [content.locale, content.company.address.country]
+      // Datos técnicos que no se muestran: el idioma, el código ISO del país y el área
+      // atendida (JSON-LD).
+      const technical = [
+        content.locale,
+        content.company.address.country,
+        content.company.areaServed,
+      ]
       const missing = collectTexts(content).filter(
         (text) => !technical.includes(text) && !approvedContent.includes(text),
       )

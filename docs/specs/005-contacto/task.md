@@ -74,4 +74,4 @@
 ## Alcance internacional (bloqueado: textos sin aprobar)
 - [x] T21 Textos aprobados en `contenido.md` (enmienda) y `landingContentSource.ts`, `es` y `en`,
       sin perder la palabra clave principal.
-- [ ] T22 `areaServed` del JSON-LD según la decisión del negocio, con su prueba.
+- [x] T22 `areaServed` del JSON-LD según la decisión del negocio, con su prueba.
