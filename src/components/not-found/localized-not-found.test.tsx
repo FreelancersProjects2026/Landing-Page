@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react'
-import { useParams } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { LocalizedNotFound } from './localized-not-found'
 
-vi.mock('next/navigation', () => ({ useParams: vi.fn() }))
+vi.mock('next/navigation', () => ({ usePathname: vi.fn() }))
 
 const byLocale = {
   es: {
@@ -23,8 +23,8 @@ const byLocale = {
   },
 }
 
-function renderWith(params: Record<string, string> | null) {
-  vi.mocked(useParams).mockReturnValue(params as never)
+function renderAt(pathname: string | null) {
+  vi.mocked(usePathname).mockReturnValue(pathname as never)
   render(
     <LocalizedNotFound
       byLocale={byLocale}
@@ -35,10 +35,10 @@ function renderWith(params: Record<string, string> | null) {
 }
 
 describe('LocalizedNotFound', () => {
-  beforeEach(() => vi.mocked(useParams).mockReset())
+  beforeEach(() => vi.mocked(usePathname).mockReset())
 
-  it('usa los textos y el inicio del idioma de la URL', () => {
-    renderWith({ lang: 'en' })
+  it('usa los textos y el inicio del idioma del primer segmento de la ruta', () => {
+    renderAt('/en/xyz')
 
     expect(
       screen.getByRole('heading', { name: 'Lost page' }),
@@ -50,12 +50,15 @@ describe('LocalizedNotFound', () => {
   })
 
   it.each([
-    ['un idioma desconocido', { lang: 'fr' }],
-    ['una clave heredada del prototipo', { lang: 'toString' }],
-    ['una URL sin idioma', {}],
-    ['sin parámetros', null],
-  ])('con %s usa el idioma por defecto', (_, params) => {
-    renderWith(params)
+    ['/es/xyz'],
+    ['/fr'],
+    ['/xyz'],
+    ['/fr/abc'],
+    ['/toString/x'],
+    ['/'],
+    [null],
+  ])('en %s usa el español', (pathname) => {
+    renderAt(pathname)
 
     expect(
       screen.getByRole('heading', { name: 'Página perdida' }),

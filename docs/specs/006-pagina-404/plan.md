@@ -5,18 +5,20 @@
 - Next 16: `node_modules/next/dist/docs/01-app/03-api-reference/03-file-conventions/not-found.md`.
 
 ## Enfoque
-El layout raíz es `app/[lang]/layout.tsx` (segmento dinámico con `dynamicParams = false`), así que
-se combinan dos convenciones de Next:
+El layout raíz es `app/[lang]/layout.tsx` (segmento dinámico con `dynamicParams = false`). Una sola
+página atiende **toda** URL que no coincide con una ruta (`/fr`, `/xyz`, `/es/xyz`, `/en/a/b`):
+`app/global-not-found.tsx` (flag `experimental.globalNotFound`). Devuelve su propio
+`<html>`/`<body>`, importa `globals.css`, las fuentes y los íconos.
 
-- **Por idioma:** `app/[lang]/[...rest]/page.tsx` captura `/es/<algo>` y `/en/<algo>` y llama a
-  `notFound()`; lo renderiza `app/[lang]/not-found.tsx` dentro del layout del idioma.
-- **Global:** `app/global-not-found.tsx` (flag `experimental.globalNotFound`) atiende lo que no
-  coincide con ninguna ruta (`/fr`). Devuelve su propio `<html>`/`<body>`, importa
-  `globals.css` y las fuentes.
+`global-not-found` no recibe `params` y `headers()` no trae la ruta. Por eso el servidor pasa los
+textos de **ambos** idiomas y un componente cliente mínimo elige por el primer segmento de
+`usePathname()` (si no es `es`/`en`, usa `defaultLocale`). `usePathname()` devuelve la ruta real
+también en el SSR, así que el HTML sale ya en el idioma de la URL, sin parpadeo. Para eso la
+página llama a `await connection()`: si se prerenderiza, el SSR no ve la ruta real. El cliente
+no importa el módulo `company-profile` (solo sus tipos).
 
-`not-found.tsx` no recibe `params`. Por eso el servidor pasa los textos de **ambos** idiomas y un
-componente cliente mínimo elige con `useParams().lang` (si no es `es`/`en`, usa `defaultLocale`).
-Así el cliente no importa el módulo `company-profile`.
+**Limitación conocida:** `<html lang>` y el `<title>` quedan en el idioma por defecto (`es`)
+también en `/en/xyz`; el contenido visible sí sale en inglés. Con `noindex` no afecta a Google.
 
 Las fuentes se declaran una sola vez en `app/fonts.ts` y las usan `[lang]/layout.tsx` y
 `global-not-found.tsx`.
@@ -48,11 +50,11 @@ Sin dependencias nuevas: la entrada usa `tw-animate-css` (ya instalado) y el bot
 | `modules/company-profile/infrastructure/landingContentSource.ts` | Ampliar | Textos `es` y `en` de la spec. |
 | `modules/company-profile/index.ts` | Actualizar | Exporta el tipo `NotFoundContent`. |
 | `components/not-found/not-found-view.tsx` | Nuevo | Vista visual: recibe textos, `homeHref` e imagen por props. Sin reglas. |
-| `components/not-found/localized-not-found.tsx` | Nuevo | Cliente: elige textos por `useParams().lang` y monta la vista. |
+| `components/not-found/localized-not-found.tsx` | Nuevo | Cliente: elige textos por el primer segmento de `usePathname()` y monta la vista. |
+| `components/not-found/not-found-image.ts` | Nuevo | Ruta de la imagen. |
 | `app/fonts.ts` | Nuevo | Fuentes compartidas. |
-| `app/[lang]/[...rest]/page.tsx` | Nuevo | `notFound()`. |
-| `app/[lang]/not-found.tsx` | Nuevo | Arma textos de `locales` y monta `LocalizedNotFound`. |
-| `app/global-not-found.tsx` | Nuevo | Documento completo en `es`, metadata, monta `NotFoundView`. |
+| `app/icons.ts` | Nuevo | Íconos compartidos (layout y 404 global). |
+| `app/global-not-found.tsx` | Nuevo | Documento completo, `connection()`, metadata e íconos; arma textos de `locales` y monta `LocalizedNotFound`. |
 | `app/globals.css` | Ampliar | `@property --glow-angle`, keyframes y utilidades del botón. |
 | `next.config.mjs` | Ampliar | `experimental: { globalNotFound: true }`. |
 
@@ -61,14 +63,20 @@ Sin dependencias nuevas: la entrada usa `tw-animate-css` (ya instalado) y el bot
 - Infraestructura: `es` y `en` traen `notFound` completo.
 - `not-found-view`: `h1` con el título, `img` con `alt`, enlace con `href` recibido y nombre
   accesible del botón.
-- `localized-not-found`: con `lang = 'en'` muestra inglés y `/en`; con `lang = 'fr'` o sin
-  `lang`, español y `/es` (mock de `useParams`).
-- `[...rest]/page`: llama a `notFound()`.
+- `localized-not-found`: `/en/xyz` muestra inglés y `/en`; `/es/xyz`, `/fr`, `/xyz`, `/fr/abc`,
+  `/` o sin ruta, español y `/es` (mock de `usePathname`).
+- `global-not-found`: llama a `connection()`; por ruta, h1, `alt` y enlace del idioma.
 - `next.config`: incluye `experimental.globalNotFound`.
 - `globals.css`: la prueba existente sigue en verde con las utilidades nuevas.
 
 ## Riesgos
-- `globalNotFound` es experimental en Next 16.2: verificar con `pnpm build && pnpm start` que
-  `/fr` usa la global y `/es/xyz` la localizada, ambas con 404.
-- `dynamicParams = false` del layout podría afectar al catch-all: validar en build el código y la
-  vista de `/es/xyz`.
+- `globalNotFound` es experimental en Next 16.2: verificado en build (T11).
+- **Descartado: 404 dentro del layout `[lang]`** (`[lang]/[...rest]/page.tsx` + `[lang]/not-found.tsx`).
+  Con `dynamicParams = false`, cada `/es/xyz` registraba `NoFallbackError` y el SSR salía como
+  `<html id="__next_error__">` vacío: el contenido solo aparecía con JS. Quitar `dynamicParams` y
+  validar con `isLocale` + `notFound()` (opción A) no lo arregló: incluso un `not-found.tsx`
+  trivial sale vacío bajo el layout raíz dinámico, y además `/fr` dejaba de usar la global.
+- Con `dynamicParams = false`, Next sigue registrando `NoFallbackError` en el log para
+  `/es/xyz` antes de servir la global; la respuesta (404 y HTML) es correcta.
+- Sin `connection()` la global se prerenderiza y el SSR de `/en/xyz` sale en español (y no
+  coincide con el cliente al hidratar).

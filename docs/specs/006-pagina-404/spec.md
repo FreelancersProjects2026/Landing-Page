@@ -49,8 +49,9 @@ Marcadores hasta que el negocio los apruebe:
 
 ## Dudas abiertas
 - Aprobación de los textos de la tabla.
-- La 404 por idioma hereda `canonical` y `alternates` del layout `[lang]`; con `noindex` no
-  afecta a Google. ¿Se acepta así?
+- La 404 de `/en/xyz` muestra el contenido en inglés, pero `<html lang>` y el título de la
+  pestaña quedan en español (limitación técnica, ver plan); con `noindex` no afecta a Google.
+  ¿Se acepta así?
 
 ## Criterios de aceptación
 - `/es/xyz` y `/en/xyz` responden 404 con textos y enlace de su idioma.

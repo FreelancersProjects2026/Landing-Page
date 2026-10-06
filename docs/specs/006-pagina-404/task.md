@@ -25,9 +25,12 @@
       `motion-safe`) y uso en la vista; la prueba de `globals.css` sigue en verde.
 - [x] T08 `localized-not-found.tsx` con su prueba (`en`, `fr` y sin `lang`).
 - [x] T09 `[lang]/[...rest]/page.tsx` + `[lang]/not-found.tsx` con prueba de `notFound()`.
+      - Reemplazada (opción E): el SSR de esa 404 salía vacío (ver Riesgos del plan). Se borran;
+        la 404 global atiende todo y `LocalizedNotFound` elige por `usePathname()`.
 - [x] T10 `global-not-found.tsx` + flag en `next.config.mjs` con su prueba.
 - [ ] T11 Verificación en build (`pnpm build && pnpm start`): `/es/xyz`, `/en/xyz`, `/fr` y `/xyz`
       responden 404 con el idioma y enlace correctos; `/es` y `/en` siguen en 200.
 - [ ] T12 Revisión manual: 390×844 y 1440×900, teclado, `prefers-reduced-motion`, sin scroll
       horizontal, título en ≤ 2 líneas.
-- [ ] T13 Pendiente del negocio: aprobación de textos y de `canonical` heredado (ver spec).
+- [ ] T13 Pendiente del negocio: aprobación de textos; `<html lang>` y `<title>` en `es` también en
+      `/en/xyz` (ver spec).
