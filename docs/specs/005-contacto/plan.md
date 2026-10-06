@@ -5,8 +5,9 @@
 - Contenido vigente: `docs/specs/003-generarContenido/contenido.md`.
 
 ## Bloqueo
-Las dudas abiertas de la spec (opciones, textos, asunto del `mailto:`) deben resolverse antes de
-la fase 3. Las fases 1 y 2 no dependen de ellas.
+Resueltas el 2026-10-06: opciones y textos de WhatsApp, correo en minúsculas y `mailto:` sin
+asunto. Queda pendiente si los botones actuales (hero, header, CTA, footer) siguen con el mensaje
+genérico o también muestran opciones, y la verificación con lector de pantalla (T11).
 
 ## Enfoque
 El correo y las opciones de WhatsApp son datos de la empresa: viven en `company-profile`, se
