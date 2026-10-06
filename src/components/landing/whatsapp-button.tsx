@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { useId } from 'react'
 import { ArrowUpRight, MessageCircle, X } from 'lucide-react'
 
 import {
@@ -31,6 +32,8 @@ export function WhatsAppButton({
   greeting,
   options,
 }: WhatsAppButtonProps) {
+  const greetingId = useId()
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -53,7 +56,8 @@ export function WhatsAppButton({
         side="top"
         align="end"
         sideOffset={12}
-        className="w-80 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-foreground/10 bg-background p-0 text-foreground shadow-xl motion-reduce:animate-none"
+        aria-describedby={greetingId}
+        className="w-80 max-w-[calc(100vw-2rem)] rounded-2xl border border-foreground/10 bg-background p-0 text-foreground shadow-xl motion-reduce:data-[state=open]:animate-none motion-reduce:data-[state=closed]:animate-none"
       >
         <DropdownMenuLabel className="flex items-center gap-3 border-b border-foreground/10 px-4 py-3">
           <Image
@@ -67,20 +71,24 @@ export function WhatsAppButton({
         </DropdownMenuLabel>
 
         <div className="flex flex-col gap-2 p-4">
-          <p className="mb-2 max-w-[85%] rounded-2xl rounded-tl-sm bg-foreground/5 px-4 py-3 text-sm leading-relaxed text-foreground">
+          <p
+            id={greetingId}
+            className="mb-2 max-w-[85%] rounded-2xl rounded-tl-sm bg-foreground/5 px-4 py-3 text-sm leading-relaxed text-foreground"
+          >
             {greeting}
           </p>
           {options.map(({ label: optionLabel, url }) => (
             <DropdownMenuItem
               key={url}
               asChild
-              className="group/option self-end gap-1.5 rounded-full border border-foreground/15 px-4 py-2 text-sm text-foreground focus:bg-foreground focus:text-background data-[highlighted]:bg-foreground data-[highlighted]:text-background motion-safe:transition-colors motion-safe:duration-300"
+              className="group/option self-end cursor-pointer gap-1.5 rounded-full border border-foreground/15 px-4 py-2 text-sm text-foreground focus:bg-foreground focus:text-background motion-safe:transition-colors motion-safe:duration-300"
             >
               <a href={url} {...externalLinkProps}>
                 {optionLabel}
+                {/* text-current: la base de shadcn pinta en muted los svg sin clase text-* */}
                 <ArrowUpRight
                   aria-hidden="true"
-                  className="size-3.5 text-current motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out group-data-[highlighted]/option:translate-x-0.5 group-data-[highlighted]/option:-translate-y-0.5"
+                  className="size-3.5 text-current motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out group-focus/option:translate-x-0.5 group-focus/option:-translate-y-0.5"
                 />
               </a>
             </DropdownMenuItem>
