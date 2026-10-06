@@ -32,8 +32,8 @@
       deploy automático de Vercel. `curl` en producción: `/robots.txt` y `/sitemap.xml` `200`;
       `www` y `http` → `308` a `https://solutionspjm.com`; `/es` y `/en` con canonical,
       `hreflang`, `og:url` y `url` en JSON-LD.
-- [ ] T10 Search Console (manual): enviar `https://solutionspjm.com/sitemap.xml` hasta estado
+- [x] T10 Search Console (manual): enviar `https://solutionspjm.com/sitemap.xml` hasta estado
       «Correcto»; solicitar indexación de `/es` y `/en` con la inspección de URL sin errores de
       canonical ni `hreflang`; dar acceso a los demás integrantes.
-- [ ] T11 Cierre: marcar criterios de la spec 004, actualizar el pendiente de dominio de la spec 003
+- [x] T11 Cierre: marcar criterios de la spec 004, actualizar el pendiente de dominio de la spec 003
       (remite a la 004) y sincronizar `docs/contexto/` si cambió el despliegue.
