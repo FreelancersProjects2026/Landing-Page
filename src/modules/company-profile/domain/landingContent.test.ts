@@ -191,6 +191,31 @@ describe('validateLandingContent', () => {
     ).toThrow(/palabra rotativa/)
   })
 
+  it.each([
+    ['vacío', '  '],
+    ['marcado como [PENDIENTE]', '[PENDIENTE]'],
+  ])('rechaza una opción de WhatsApp con mensaje %s', (_, message) => {
+    const content = validContent()
+    const whatsapp = {
+      ...content.whatsapp,
+      options: [{ label: 'Otra consulta', message }],
+    }
+
+    let error: unknown
+    try {
+      validateLandingContent({ ...content, whatsapp })
+    } catch (caught) {
+      error = caught
+    }
+
+    expect(error).toBeInstanceOf(InvalidLandingContentError)
+    expect((error as InvalidLandingContentError).problems).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining('whatsapp.options.0.message'),
+      ]),
+    )
+  })
+
   it('exige al menos una opción de WhatsApp', () => {
     const content = validContent()
 
