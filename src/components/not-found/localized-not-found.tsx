@@ -26,5 +26,7 @@ export function LocalizedNotFound({
       ? (lang as Locale)
       : fallbackLocale
 
-  return <NotFoundView {...byLocale[locale]} imageSrc={imageSrc} />
+  return (
+    <NotFoundView {...byLocale[locale]} lang={locale} imageSrc={imageSrc} />
+  )
 }

@@ -42,6 +42,8 @@ describe('global-not-found', () => {
       const { notFound } = getLandingContent(lang)
       const html = await renderAt(pathname)
 
+      // <html lang> queda en es; el <main> declara el idioma de su contenido (WCAG 3.1.2).
+      expect(html).toMatch(new RegExp(`<main[^>]*lang="${lang}"`))
       expect(html).toContain(`>${notFound.title}</h1>`)
       expect(html).toContain(`alt="${notFound.imageAlt}"`)
       expect(html).toMatch(

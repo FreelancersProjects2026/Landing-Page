@@ -18,7 +18,9 @@ página llama a `await connection()`: si se prerenderiza, el SSR no ve la ruta r
 no importa el módulo `company-profile` (solo sus tipos).
 
 **Limitación conocida:** `<html lang>` y el `<title>` quedan en el idioma por defecto (`es`)
-también en `/en/xyz`; el contenido visible sí sale en inglés. Con `noindex` no afecta a Google.
+también en `/en/xyz`; el contenido visible sí sale en inglés y el `<main>` declara su `lang`
+(WCAG 3.1.2), así que los lectores de pantalla lo leen en inglés. Con `noindex` no afecta a
+Google.
 
 Las fuentes se declaran una sola vez en `app/fonts.ts` y las usan `[lang]/layout.tsx` y
 `global-not-found.tsx`.

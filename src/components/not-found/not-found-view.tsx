@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 
 type NotFoundViewProps = {
+  lang: string
   title: string
   text: string
   cta: string
@@ -12,6 +13,7 @@ type NotFoundViewProps = {
 }
 
 export function NotFoundView({
+  lang,
   title,
   text,
   cta,
@@ -20,7 +22,10 @@ export function NotFoundView({
   homeHref,
 }: NotFoundViewProps) {
   return (
-    <main className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden bg-black px-4 py-10 text-center text-white">
+    <main
+      lang={lang}
+      className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden bg-black px-4 py-10 text-center text-white"
+    >
       <Image
         src={imageSrc}
         alt={imageAlt}

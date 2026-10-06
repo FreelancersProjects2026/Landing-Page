@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { NotFoundView } from './not-found-view'
 
 const props = {
+  lang: 'es',
   title: 'Esta página se perdió entre las raíces',
   text: 'El enlace que seguiste no existe o cambió de lugar.',
   cta: 'Volver al inicio',
