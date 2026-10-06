@@ -6,6 +6,7 @@ import { ProjectsSection } from '@/components/landing/projects-section'
 import { TeamSection } from '@/components/landing/team-section'
 import { CtaSection } from '@/components/landing/cta-section'
 import { FooterSection } from '@/components/landing/footer-section'
+import { WhatsAppButton } from '@/components/landing/whatsapp-button'
 import { buildWhatsAppUrl, getLandingContent } from '@modules/company-profile'
 
 import { buildStructuredData, serializeJsonLd } from './structured-data'
@@ -20,6 +21,12 @@ export default async function Home({
   const whatsappUrl = buildWhatsAppUrl(
     content.company.phone,
     content.whatsappMessage,
+  )
+  const whatsappOptions = content.whatsapp.options.map(
+    ({ label, message }) => ({
+      label,
+      url: buildWhatsAppUrl(content.company.phone, message),
+    }),
   )
   const structuredData = serializeJsonLd(buildStructuredData(content))
 
@@ -48,6 +55,10 @@ export default async function Home({
           menu={content.menu}
           footer={content.footer}
           whatsappUrl={whatsappUrl}
+        />
+        <WhatsAppButton
+          label={content.whatsapp.label}
+          options={whatsappOptions}
         />
       </main>
     </>

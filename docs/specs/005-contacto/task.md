@@ -22,8 +22,8 @@
       vuelve al botón.
 - [x] T08 Estilo: `fixed` abajo a la izquierda, con margen `env(safe-area-inset-bottom)` y por
       encima del contenido (`z-index`).
-- [ ] T09 Página: `page.tsx` arma la URL de cada opción con `buildWhatsAppUrl` y monta el botón.
-- [ ] T10 Prueba de página: cada opción abre `https://wa.me/50664400832?text=…` con el mensaje
+- [x] T09 Página: `page.tsx` arma la URL de cada opción con `buildWhatsAppUrl` y monta el botón.
+- [x] T10 Prueba de página: cada opción abre `https://wa.me/50664400832?text=…` con el mensaje
       del idioma activo. Ajustar el conteo de enlaces en `page.test.tsx`.
 - [ ] T11 Revisión manual con `pnpm dev`: móvil y escritorio, teclado, lector de pantalla. El
       botón no tapa CTA, footer ni la barra del navegador.
