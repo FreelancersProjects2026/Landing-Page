@@ -61,6 +61,13 @@ export interface TeamMember {
   readonly links: readonly ExternalLink[]
 }
 
+export interface NotFoundContent {
+  readonly title: string
+  readonly text: string
+  readonly cta: string
+  readonly imageAlt: string
+}
+
 export interface LandingContent {
   readonly locale: Locale
   readonly company: Contact
@@ -117,6 +124,7 @@ export interface LandingContent {
     readonly text: string
     readonly rights: string
   }
+  readonly notFound: NotFoundContent
 }
 
 export const MAX_TITLE_LENGTH = 60

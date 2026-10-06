@@ -199,6 +199,12 @@ const es = validateLandingContent({
     text: 'solutionsPJM — desarrollo de software en Cartago para negocios de Costa Rica y del mundo.',
     rights,
   },
+  notFound: {
+    title: 'Esta página se perdió entre las raíces',
+    text: 'El enlace que seguiste no existe o cambió de lugar. Volvamos al camino.',
+    cta: 'Volver al inicio',
+    imageAlt: 'Error 404: la página no existe',
+  },
 })
 
 const en = validateLandingContent({
@@ -345,6 +351,12 @@ const en = validateLandingContent({
   footer: {
     text: 'solutionsPJM — software development in Cartago for businesses in Costa Rica and around the world.',
     rights,
+  },
+  notFound: {
+    title: 'This page got lost among the roots',
+    text: "The link you followed doesn't exist or has moved. Let's get you back on the path.",
+    cta: 'Back to home',
+    imageAlt: 'Error 404: page not found',
   },
 })
 

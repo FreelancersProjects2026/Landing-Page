@@ -15,6 +15,9 @@ const approvedContent = readFileSync(
   'utf8',
 ).replace(/\s+/g, ' ')
 
+// Los textos de la 404 son marcadores de la Spec 006 hasta que el negocio los apruebe (T13).
+const notFoundSpec = readFileSync('docs/specs/006-pagina-404/spec.md', 'utf8')
+
 function collectTexts(value: unknown): string[] {
   if (typeof value === 'string') return [value]
   if (typeof value !== 'object' || value === null) return []
@@ -70,6 +73,16 @@ describe('landingContentSource', () => {
     )
   })
 
+  it.each([es, en])(
+    'copia de la Spec 006 los textos de la 404 en $locale',
+    (content) => {
+      const texts = Object.values(content.notFound)
+
+      expect(texts).toHaveLength(4)
+      for (const text of texts) expect(notFoundSpec).toContain(`| ${text} |`)
+    },
+  )
+
   it.each([es, en])('el eslogan en $locale no termina en punto', (content) => {
     expect(content.hero.slogan).not.toMatch(/\.$/)
   })
@@ -85,7 +98,7 @@ describe('landingContentSource', () => {
     (content) => {
       // Datos técnicos que no se muestran: el idioma y el código ISO del país (JSON-LD).
       const technical = [content.locale, content.company.address.country]
-      const missing = collectTexts(content).filter(
+      const missing = collectTexts({ ...content, notFound: {} }).filter(
         (text) => !technical.includes(text) && !approvedContent.includes(text),
       )
 

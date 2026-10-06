@@ -76,6 +76,12 @@ function validContent(): LandingContent {
       emailLabel: 'O escríbenos al correo',
     },
     footer: { text: 'solutionsPJM — desarrollo.', rights: '© 2026 PJM' },
+    notFound: {
+      title: 'Esta página se perdió',
+      text: 'El enlace no existe.',
+      cta: 'Volver al inicio',
+      imageAlt: 'Error 404',
+    },
   }
 }
 
@@ -226,4 +232,18 @@ describe('validateLandingContent', () => {
       }),
     ).toThrow(/opción de WhatsApp/)
   })
+
+  it.each(['title', 'text', 'cta', 'imageAlt'] as const)(
+    'rechaza la 404 con %s vacío',
+    (field) => {
+      const content = validContent()
+
+      expect(() =>
+        validateLandingContent({
+          ...content,
+          notFound: { ...content.notFound, [field]: ' ' },
+        }),
+      ).toThrow(`notFound.${field} está vacío`)
+    },
+  )
 })

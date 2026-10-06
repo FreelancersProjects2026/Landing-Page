@@ -16,6 +16,7 @@ export type {
   ExternalLink,
   LandingContent,
   Locale,
+  NotFoundContent,
   PostalAddress,
   Project,
   Seo,

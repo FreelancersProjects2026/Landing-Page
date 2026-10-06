@@ -11,10 +11,14 @@
 - [x] T02 Imagen: convertir `public/404/404 entre raíces y obsidiana luminosa.png` a
       `public/404/404-raices-obsidiana.webp` (≤ 250 KB, 1672×941) con una herramienta puntual
       (`pnpm dlx sharp-cli`), sin agregar dependencias. Borrar el PNG original.
-- [ ] T03 Dominio: `NotFoundContent` en `LandingContent.notFound`; la validación rechaza campos
+- [x] T03 Dominio: `NotFoundContent` en `LandingContent.notFound`; la validación rechaza campos
       vacíos. Exportar el tipo en `index.ts`.
-- [ ] T04 Infraestructura: textos `es` y `en` de la spec (marcadores) y prueba de que ambos
+- [x] T04 Infraestructura: textos `es` y `en` de la spec (marcadores) y prueba de que ambos
       idiomas los traen.
+      - T03 y T04 van en un commit: el tipo nuevo obliga a `landingContentSource.ts` a traer los
+        textos para compilar. Mientras sean marcadores, la prueba de copia literal de
+        `contenido.md` excluye `notFound` y otra prueba los copia de la tabla de `spec.md`; al
+        aprobarse (T13) pasan a `contenido.md`.
 - [ ] T05 Fuentes en `app/fonts.ts`; `[lang]/layout.tsx` las importa (sin cambio visual).
 - [ ] T06 Componente `not-found-view.tsx` con su prueba (título, imagen con `alt`, enlace).
 - [ ] T07 Botón «obsidiana luminosa»: utilidades en `globals.css` (`@property`, keyframes,
