@@ -48,7 +48,7 @@
       dominio y vacío.
 - [x] T15 Aplicación e infraestructura: `buildMailtoUrl(email)` exportado por `index.ts`;
       `company.email` validado al cargarse; etiqueta `contact.emailLabel` en `es` y `en`.
-- [ ] T16 Componente: `cta-section.tsx` recibe `email`, `emailUrl` y `emailLabel` por props y
+- [x] T16 Componente: `cta-section.tsx` recibe `email`, `emailUrl` y `emailLabel` por props y
       muestra el correo como `<a href="mailto:…">` en la columna derecha de la tarjeta (en móvil,
       debajo del botón de WhatsApp), con estilo de la landing y sin desbordar en 390 px.
 - [ ] T17 Página y prueba: `page.tsx` arma `buildMailtoUrl`; `page.test.tsx` comprueba

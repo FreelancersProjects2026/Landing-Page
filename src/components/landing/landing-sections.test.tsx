@@ -236,15 +236,38 @@ describe('HowItWorksSection: accesibilidad', () => {
 })
 
 describe('CtaSection', () => {
+  const email = 'solutionspjm@gmail.com'
+  const emailUrl = 'mailto:solutionspjm@gmail.com'
+
+  function renderCta() {
+    render(
+      <CtaSection
+        {...content.contact}
+        whatsappUrl={whatsappUrl}
+        email={email}
+        emailUrl={emailUrl}
+      />,
+    )
+    return screen.getByRole('region', { name: content.contact.title })
+  }
+
   it('muestra el contacto con su botón de WhatsApp', () => {
-    render(<CtaSection {...content.contact} whatsappUrl={whatsappUrl} />)
-    const section = screen.getByRole('region', { name: content.contact.title })
+    const section = renderCta()
 
     expect(section).toHaveAttribute('id', 'contacto')
     expect(within(section).getByText(content.contact.text)).toBeVisible()
     expectWhatsAppLink(
       within(section).getByRole('link', { name: content.contact.cta }),
     )
+  })
+
+  it('muestra el correo con su etiqueta como enlace mailto:', () => {
+    const section = renderCta()
+    const link = within(section).getByRole('link', { name: email })
+
+    expect(within(section).getByText(content.contact.emailLabel)).toBeVisible()
+    expect(link).toHaveAttribute('href', emailUrl)
+    expect(link).not.toHaveAttribute('target')
   })
 })
 

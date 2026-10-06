@@ -7,7 +7,11 @@ import { TeamSection } from '@/components/landing/team-section'
 import { CtaSection } from '@/components/landing/cta-section'
 import { FooterSection } from '@/components/landing/footer-section'
 import { WhatsAppButton } from '@/components/landing/whatsapp-button'
-import { buildWhatsAppUrl, getLandingContent } from '@modules/company-profile'
+import {
+  buildMailtoUrl,
+  buildWhatsAppUrl,
+  getLandingContent,
+} from '@modules/company-profile'
 
 import { buildStructuredData, serializeJsonLd } from './structured-data'
 
@@ -49,7 +53,12 @@ export default async function Home({
         <HowItWorksSection label={content.menu.process} {...content.process} />
         <ProjectsSection label={content.menu.projects} {...content.projects} />
         <TeamSection label={content.menu.team} {...content.team} />
-        <CtaSection {...content.contact} whatsappUrl={whatsappUrl} />
+        <CtaSection
+          {...content.contact}
+          whatsappUrl={whatsappUrl}
+          email={content.company.email}
+          emailUrl={buildMailtoUrl(content.company.email)}
+        />
         <FooterSection
           company={content.company}
           menu={content.menu}
