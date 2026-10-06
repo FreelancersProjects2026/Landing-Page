@@ -8,7 +8,7 @@
 
 ## Tareas
 - [x] T01 Línea base: `pnpm validate` en verde antes de tocar nada.
-- [ ] T02 Imagen: convertir `public/404/404 entre raíces y obsidiana luminosa.png` a
+- [x] T02 Imagen: convertir `public/404/404 entre raíces y obsidiana luminosa.png` a
       `public/404/404-raices-obsidiana.webp` (≤ 250 KB, 1672×941) con una herramienta puntual
       (`pnpm dlx sharp-cli`), sin agregar dependencias. Borrar el PNG original.
 - [ ] T03 Dominio: `NotFoundContent` en `LandingContent.notFound`; la validación rechaza campos
