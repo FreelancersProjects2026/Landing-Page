@@ -28,8 +28,12 @@
       - Reemplazada (opción E): el SSR de esa 404 salía vacío (ver Riesgos del plan). Se borran;
         la 404 global atiende todo y `LocalizedNotFound` elige por `usePathname()`.
 - [x] T10 `global-not-found.tsx` + flag en `next.config.mjs` con su prueba.
-- [ ] T11 Verificación en build (`pnpm build && pnpm start`): `/es/xyz`, `/en/xyz`, `/fr` y `/xyz`
+- [x] T11 Verificación en build (`pnpm build && pnpm start`): `/es/xyz`, `/en/xyz`, `/fr` y `/xyz`
       responden 404 con el idioma y enlace correctos; `/es` y `/en` siguen en 200.
+      - Verificado (2026-10-06, curl sin JS sobre el SSR): `/es/xyz`, `/fr`, `/xyz` y `/fr/abc` →
+        404, h1, texto y enlace en español a `/es`; `/en/xyz` y `/en/a/b` → 404 en inglés con
+        enlace a `/en`; todas con `noindex`. `/es` y `/en` → 200 prerenderizadas (`HIT`); `/` → 307
+        a `/es`. En Chrome, `/en/xyz` carga sin errores de hidratación en la consola.
 - [ ] T12 Revisión manual: 390×844 y 1440×900, teclado, `prefers-reduced-motion`, sin scroll
       horizontal, título en ≤ 2 líneas.
 - [ ] T13 Pendiente del negocio: aprobación de textos; `<html lang>` y `<title>` en `es` también en
