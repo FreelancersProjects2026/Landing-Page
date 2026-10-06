@@ -3,7 +3,7 @@
 ## Base acordada
 - Spec: `docs/specs/005-contacto/spec.md`. Plan: `plan.md`.
 - Rama: `contact/feature`.
-- Alcance de esta lista: solo el botón flotante (el correo va aparte).
+- Alcance: botón flotante (T01–T13) y correo en la sección de contacto (T14–T17; footer aparte).
 - Posición: esquina **inferior derecha**.
 - Método: TDD y `pnpm validate` en verde tras cada tarea. Un commit por tarea.
 
@@ -41,3 +41,15 @@
         real con `safe-area-inset-bottom`.
 - [ ] T12 Contenido aprobado: reemplazar los textos marcadores por los definitivos (`es` y `en`).
 - [x] T13 Cierre: marcar criterios de la spec, sincronizar el plan y correr `pnpm validate`.
+
+## Correo en la sección de contacto
+- [x] T14 Dominio: `validateEmail` en `domain/email.ts` (formato válido y en minúsculas) y
+      `Contact.email`. Prueba: acepta `solutionspjm@gmail.com`; rechaza mayúsculas, sin `@`, sin
+      dominio y vacío.
+- [ ] T15 Aplicación e infraestructura: `buildMailtoUrl(email)` exportado por `index.ts`;
+      `company.email` validado al cargarse; etiqueta `contact.emailLabel` en `es` y `en`.
+- [ ] T16 Componente: `cta-section.tsx` recibe `email`, `emailUrl` y `emailLabel` por props y
+      muestra el correo como `<a href="mailto:…">` en la columna derecha de la tarjeta (en móvil,
+      debajo del botón de WhatsApp), con estilo de la landing y sin desbordar en 390 px.
+- [ ] T17 Página y prueba: `page.tsx` arma `buildMailtoUrl`; `page.test.tsx` comprueba
+      `mailto:solutionspjm@gmail.com` en `/es` y `/en`. `pnpm validate` y revisión en `pnpm dev`.
