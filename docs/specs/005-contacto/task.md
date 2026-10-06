@@ -93,7 +93,7 @@
 ## Resultado en Google (alcance 8)
 - [x] T26 Favicon de 192×192 px (PNG, desde `LogoPJM.jpeg`) en `public/logo/icono/`; `icons.icon`
       lo usa. Prueba primero en `layout.test.tsx`.
-- [ ] T27 Descripción SEO internacional en `es` y `en` (`contenido.md` y
-      `landingContentSource.ts`). Bloqueada hasta que el negocio apruebe el texto.
+- [x] T27 Descripción SEO internacional en `es` y `en` (`contenido.md` y
+      `landingContentSource.ts`). Aprobada por el negocio (2026-10-06).
 - [ ] T28 Usuario: merge, despliegue y pedir indexación de `/es` y `/en` en Search Console;
       confirmar el logo y la descripción en Google cuando se actualice.

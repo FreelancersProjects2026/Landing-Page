@@ -56,7 +56,8 @@ claro desde el primer contacto.
   atendemos negocios de cualquier país (textos en `contenido.md`, enmienda 2026-10-06); título y
   H1 no cambian. Aprobado por el negocio (2026-10-06).
 - La descripción SEO (`es` y `en`) también pasa a alcance internacional, conserva «Costa Rica» y
-  no supera 160 caracteres. Texto pendiente de aprobación (ver dudas).
+  no supera 160 caracteres (textos en `contenido.md`, enmienda 2026-10-06). Aprobado por el
+  negocio (2026-10-06).
 - `areaServed` del JSON-LD es `Worldwide`; la dirección sigue en Costa Rica. Aprobado por el
   negocio (2026-10-06).
 
@@ -66,11 +67,6 @@ claro desde el primer contacto.
   `apple-icon.png`)?
 - [PENDIENTE] ¿Se aprueba una versión simplificada del logo (solo "PJM") para 16–48 px? A tamaño
   de pestaña el texto pequeño no se lee.
-- [PENDIENTE] Aprobar la descripción SEO propuesta:
-  - es: «Desarrollo de software a medida desde Costa Rica para negocios de cualquier país: sistemas
-    de gestión, control y métricas. Cotiza tu proyecto por WhatsApp.» (155 caracteres)
-  - en: «Custom software development from Costa Rica for businesses anywhere: management, tracking
-    and metrics systems. Get a quote for your project on WhatsApp.» (152 caracteres)
 
 ## Criterios de aceptación
 - [x] El botón flotante aparece en `/es` y `/en` y no tapa contenido en móvil.
@@ -82,8 +78,9 @@ claro desde el primer contacto.
 - [x] Los componentes de `src/components/landing/` reciben textos por props, sin reglas de negocio.
 - [ ] La pestaña muestra `LogoPJM` en `/es` y `/en`; el HTML enlaza favicon y `apple-touch-icon`.
 - [ ] El favicon tiene un tamaño múltiplo de 48 px y Google puede descargarlo en producción.
-- [ ] La descripción SEO aprobada está en `/es` y `/en`; tras el nuevo rastreo, Google muestra el
-      logo y la descripción nueva (depende de Google).
+- [x] La descripción SEO aprobada está en `/es` y `/en` (T27).
+- [ ] Tras el nuevo rastreo, Google muestra el logo y la descripción nueva (T28, depende de
+      Google).
 - [x] Los textos aprobados indican origen Costa Rica y atención a clientes de cualquier país,
       sin perder la palabra clave principal en título, descripción y H1.
 - [x] `pnpm validate` pasa en verde.

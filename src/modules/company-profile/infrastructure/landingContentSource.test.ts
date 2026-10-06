@@ -61,6 +61,15 @@ describe('landingContentSource', () => {
     },
   )
 
+  it('la descripción SEO anuncia el alcance internacional aprobado', () => {
+    expect(es.seo.description).toBe(
+      'Desarrollo de software a medida desde Costa Rica para negocios de cualquier país: sistemas de gestión, control y métricas. Cotiza tu proyecto por WhatsApp.',
+    )
+    expect(en.seo.description).toBe(
+      'Custom software development from Costa Rica for businesses anywhere: management, tracking and metrics systems. Get a quote for your project on WhatsApp.',
+    )
+  })
+
   it.each([es, en])('el eslogan en $locale no termina en punto', (content) => {
     expect(content.hero.slogan).not.toMatch(/\.$/)
   })
