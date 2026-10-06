@@ -3,7 +3,7 @@
 ## Base acordada
 - Spec: `docs/specs/005-contacto/spec.md`. Plan: `plan.md`.
 - Rama: `contact/feature`.
-- Alcance: botón flotante (T01–T13) y correo en la sección de contacto (T14–T17; footer aparte).
+- Alcance: botón flotante (T01–T13) y correo en la sección de contacto (T14–T17) y footer (T18, pendiente).
 - Posición: esquina **inferior derecha**.
 - Método: TDD y `pnpm validate` en verde tras cada tarea. Un commit por tarea.
 
@@ -53,3 +53,5 @@
       debajo del botón de WhatsApp), con estilo de la landing y sin desbordar en 390 px.
 - [x] T17 Página y prueba: `page.tsx` arma `buildMailtoUrl`; `page.test.tsx` comprueba
       `mailto:solutionspjm@gmail.com` en `/es` y `/en`. `pnpm validate` y revisión en `pnpm dev`.
+- [ ] T18 Footer: `footer-section.tsx` muestra el mismo `mailto:` junto al teléfono (criterio de la
+      spec «contacto y footer»). Pendiente: fuera de la ronda de contacto.

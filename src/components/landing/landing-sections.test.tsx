@@ -261,13 +261,18 @@ describe('CtaSection', () => {
     )
   })
 
-  it('muestra el correo con su etiqueta como enlace mailto:', () => {
+  it('muestra el correo como una tarjeta-botón mailto: con su etiqueta', () => {
     const section = renderCta()
-    const link = within(section).getByRole('link', { name: email })
+    const link = within(section).getByRole('link', {
+      name: `${content.contact.emailLabel} ${email}`,
+    })
 
-    expect(within(section).getByText(content.contact.emailLabel)).toBeVisible()
     expect(link).toHaveAttribute('href', emailUrl)
     expect(link).not.toHaveAttribute('target')
+    // Los íconos son decorativos: no agregan nada al nombre accesible.
+    for (const icon of link.querySelectorAll('svg')) {
+      expect(icon).toHaveAttribute('aria-hidden', 'true')
+    }
   })
 })
 

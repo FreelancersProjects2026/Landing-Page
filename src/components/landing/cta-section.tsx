@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, ArrowUpRight } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Mail } from 'lucide-react'
 
 import { externalLinkProps } from './external-link'
 import { sectionIds } from './section-ids'
@@ -15,6 +15,18 @@ type CtaSectionProps = {
   emailLabel: string
   email: string
   emailUrl: string
+}
+
+// Permite cortar el correo después de la @ en pantallas angostas.
+function splitAfterAt(email: string) {
+  const at = email.indexOf('@') + 1
+  return (
+    <>
+      {email.slice(0, at)}
+      <wbr />
+      {email.slice(at)}
+    </>
+  )
 }
 
 export function CtaSection({
@@ -101,28 +113,42 @@ export function CtaSection({
                 </div>
               </div>
 
-              {/* Correo: columna derecha en escritorio, debajo de WhatsApp en móvil */}
+              {/* Correo: tarjeta-botón a la derecha en escritorio, debajo de WhatsApp en móvil */}
               <div
-                className={`w-full lg:w-auto lg:self-stretch flex flex-col justify-end lg:border-l border-foreground/10 lg:pl-12 transition-all duration-1000 delay-300 ${
+                className={`w-full lg:w-auto lg:shrink-0 transition-all duration-1000 delay-300 ${
                   isVisible
                     ? 'opacity-100 translate-y-0'
                     : 'opacity-0 translate-y-4'
                 }`}
               >
-                <p className="text-sm text-muted-foreground mb-3">
-                  {emailLabel}
-                </p>
                 <a
                   href={emailUrl}
-                  className="group inline-flex items-start gap-2 font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl tracking-tight break-all rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+                  className="group relative flex flex-col gap-10 overflow-hidden rounded-2xl border border-foreground/20 p-6 lg:p-8 text-foreground hover:text-background focus-visible:text-background motion-safe:transition-colors motion-safe:duration-700 motion-safe:ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-4 focus-visible:ring-offset-background"
                 >
-                  <span className="bg-[linear-gradient(currentColor,currentColor)] bg-no-repeat bg-[position:0_100%] bg-[length:0%_1px] group-hover:bg-[length:100%_1px] group-focus-visible:bg-[length:100%_1px] motion-safe:transition-[background-size] motion-safe:duration-700 motion-safe:ease-out">
-                    {email}
-                  </span>
-                  <ArrowUpRight
+                  {/* Relleno que sube desde abajo e invierte los colores */}
+                  <span
                     aria-hidden="true"
-                    className="size-5 md:size-6 shrink-0 mt-1 motion-safe:transition-transform motion-safe:duration-700 motion-safe:ease-out group-hover:translate-x-1 group-hover:-translate-y-1"
+                    className="absolute inset-0 origin-bottom scale-y-0 bg-foreground group-hover:scale-y-100 group-focus-visible:scale-y-100 motion-safe:transition-transform motion-safe:duration-700 motion-safe:ease-out"
                   />
+                  <span className="relative flex items-center justify-between">
+                    <span className="flex size-12 items-center justify-center rounded-full border border-current/20">
+                      <Mail aria-hidden="true" className="size-5" />
+                    </span>
+                    <span className="flex size-9 items-center justify-center rounded-full border border-current/20">
+                      <ArrowUpRight
+                        aria-hidden="true"
+                        className="size-4 motion-safe:transition-transform motion-safe:duration-700 motion-safe:ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5"
+                      />
+                    </span>
+                  </span>
+                  <span className="relative flex flex-col gap-2">
+                    <span className="text-sm text-foreground/70 group-hover:text-background/70 group-focus-visible:text-background/70 motion-safe:transition-colors motion-safe:duration-700">
+                      {emailLabel}
+                    </span>{' '}
+                    <span className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl tracking-tight break-words">
+                      {splitAfterAt(email)}
+                    </span>
+                  </span>
                 </a>
               </div>
             </div>
