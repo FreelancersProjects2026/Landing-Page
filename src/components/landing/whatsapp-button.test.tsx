@@ -1,17 +1,26 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
 
 import { WhatsAppButton } from './whatsapp-button'
 
 const label = 'Escríbenos por WhatsApp'
+const name = 'solutionsPJM'
+const greeting = 'Cuéntanos qué problema quieres resolver.'
 const options = [
   { label: 'Cotizar', url: 'https://wa.me/50664400832?text=Cotizar' },
   { label: 'Soporte', url: 'https://wa.me/50664400832?text=Soporte' },
 ]
 
 function renderButton() {
-  render(<WhatsAppButton label={label} options={options} />)
+  render(
+    <WhatsAppButton
+      label={label}
+      name={name}
+      greeting={greeting}
+      options={options}
+    />,
+  )
   return screen.getByRole('button', { name: label })
 }
 
@@ -30,6 +39,22 @@ describe('WhatsAppButton', () => {
       expect(link).toHaveAttribute('target', '_blank')
       expect(link).toHaveAttribute('rel', 'noopener noreferrer')
     }
+  })
+
+  it('al abrir se ve como una conversación: nombre, saludo y respuestas', async () => {
+    await userEvent.click(renderButton())
+    const menu = screen.getByRole('menu')
+
+    expect(within(menu).getByText(name)).toBeVisible()
+    expect(within(menu).getByText(greeting)).toBeVisible()
+    // El avatar es decorativo: no aporta nombre accesible.
+    expect(menu.querySelector('img')).toHaveAttribute('alt', '')
+    expect(within(menu).queryByRole('img')).not.toBeInTheDocument()
+    expect(
+      within(menu)
+        .getAllByRole('menuitem')
+        .map((item) => item.getAttribute('href')),
+    ).toEqual(options.map(({ url }) => url))
   })
 
   it('abre con Enter, cierra con Esc y devuelve el foco al botón', async () => {

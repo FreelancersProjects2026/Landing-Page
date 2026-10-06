@@ -69,6 +69,8 @@ export default async function Home({
         />
         <WhatsAppButton
           label={content.whatsapp.label}
+          name={content.company.name}
+          greeting={content.contact.text}
           options={whatsappOptions}
         />
       </main>

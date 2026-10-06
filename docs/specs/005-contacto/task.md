@@ -83,3 +83,9 @@
       móvil real (diferida).
 - [ ] T24 Contraste del footer: `text-white/40` (~3,7:1) y los derechos en `white/30` (~2,5:1) no
       llegan a 4,5:1; subirlos a ≥ `white/60` (deuda previa a esta rama).
+
+## Diseño conversacional del botón flotante
+- [x] T25 Al abrir, el menú se ve como una conversación minimalista acorde a la landing: cabecera con
+      el logo (`LogoPJM.jpeg`) y `company.name`, burbuja de saludo con `contact.text` y las opciones
+      como respuestas. Solo textos ya aprobados; sin dependencias nuevas; se conserva
+      `dropdown-menu` (teclado, `Esc`, foco, `aria-expanded`) y las pruebas actuales.
