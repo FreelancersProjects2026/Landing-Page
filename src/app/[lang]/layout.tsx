@@ -1,10 +1,5 @@
 import React from 'react'
 import type { Metadata } from 'next'
-import {
-  Instrument_Sans,
-  Instrument_Serif,
-  JetBrains_Mono,
-} from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import {
   buildLanguageAlternates,
@@ -14,23 +9,8 @@ import {
   siteUrl,
   type Locale,
 } from '@modules/company-profile'
+import { fontVariables } from '../fonts'
 import '../globals.css'
-
-const instrumentSans = Instrument_Sans({
-  subsets: ['latin'],
-  variable: '--font-instrument',
-})
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ['latin'],
-  weight: '400',
-  variable: '--font-instrument-serif',
-})
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-jetbrains',
-})
 
 const openGraphLocale: Record<Locale, string> = { es: 'es_CR', en: 'en_US' }
 
@@ -84,7 +64,7 @@ export default async function RootLayout({
     <html lang={lang}>
       <body
         suppressHydrationWarning
-        className={`${instrumentSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} font-sans antialiased`}
+        className={`${fontVariables} font-sans antialiased`}
       >
         {children}
         <Analytics />

@@ -19,7 +19,7 @@
         textos para compilar. Mientras sean marcadores, la prueba de copia literal de
         `contenido.md` excluye `notFound` y otra prueba los copia de la tabla de `spec.md`; al
         aprobarse (T13) pasan a `contenido.md`.
-- [ ] T05 Fuentes en `app/fonts.ts`; `[lang]/layout.tsx` las importa (sin cambio visual).
+- [x] T05 Fuentes en `app/fonts.ts`; `[lang]/layout.tsx` las importa (sin cambio visual).
 - [ ] T06 Componente `not-found-view.tsx` con su prueba (título, imagen con `alt`, enlace).
 - [ ] T07 Botón «obsidiana luminosa»: utilidades en `globals.css` (`@property`, keyframes,
       `motion-safe`) y uso en la vista; la prueba de `globals.css` sigue en verde.
