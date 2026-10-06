@@ -33,5 +33,9 @@ describe('NotFoundView', () => {
     expect(others).toEqual([])
     expect(link).toHaveAccessibleName(props.cta)
     expect(link).toHaveAttribute('href', '/es')
+    expect(link).toHaveClass(
+      'btn-obsidian',
+      'motion-safe:animate-obsidian-glow',
+    )
   })
 })

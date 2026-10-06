@@ -21,7 +21,7 @@
         aprobarse (T13) pasan a `contenido.md`.
 - [x] T05 Fuentes en `app/fonts.ts`; `[lang]/layout.tsx` las importa (sin cambio visual).
 - [x] T06 Componente `not-found-view.tsx` con su prueba (título, imagen con `alt`, enlace).
-- [ ] T07 Botón «obsidiana luminosa»: utilidades en `globals.css` (`@property`, keyframes,
+- [x] T07 Botón «obsidiana luminosa»: utilidades en `globals.css` (`@property`, keyframes,
       `motion-safe`) y uso en la vista; la prueba de `globals.css` sigue en verde.
 - [ ] T08 `localized-not-found.tsx` con su prueba (`en`, `fr` y sin `lang`).
 - [ ] T09 `[lang]/[...rest]/page.tsx` + `[lang]/not-found.tsx` con prueba de `notFound()`.

@@ -21,17 +21,12 @@ export function NotFoundView({
 }: NotFoundViewProps) {
   return (
     <main className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden bg-black px-4 py-10 text-center text-white">
-      {/* Viñeta: funde los bordes de la imagen con el fondo negro. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,black_85%)]"
-      />
       <Image
         src={imageSrc}
         alt={imageAlt}
         width={1672}
         height={941}
-        priority
+        preload
         className="relative w-full max-w-6xl max-h-[55svh] object-contain motion-safe:animate-in motion-safe:fade-in motion-safe:zoom-in-95 motion-safe:duration-700"
       />
       <div className="relative -mt-4 flex flex-col items-center gap-5 sm:-mt-8">
@@ -41,13 +36,23 @@ export function NotFoundView({
         <p className="max-w-xl text-pretty text-white/70 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:delay-300 motion-safe:duration-700 motion-safe:fill-mode-both">
           {text}
         </p>
-        <Link
-          href={homeHref}
-          className="mt-3 inline-flex h-14 items-center gap-3 rounded-full px-8 font-medium"
-        >
-          <ArrowLeft aria-hidden="true" className="size-5" />
-          {cta}
-        </Link>
+        <div className="relative mt-3 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:delay-500 motion-safe:duration-700 motion-safe:fill-mode-both">
+          {/* Halo tenue ámbar y magenta detrás del botón. */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -inset-8 rounded-full bg-[radial-gradient(closest-side,rgb(245_165_36/0.18),rgb(224_50_154/0.1),transparent)] blur-xl"
+          />
+          <Link
+            href={homeHref}
+            className="group btn-obsidian motion-safe:animate-obsidian-glow inline-flex h-14 items-center gap-3 rounded-full px-8 font-medium"
+          >
+            <ArrowLeft
+              aria-hidden="true"
+              className="size-5 motion-safe:transition-transform motion-safe:group-hover:-translate-x-1 motion-safe:group-focus-visible:-translate-x-1"
+            />
+            {cta}
+          </Link>
+        </div>
       </div>
     </main>
   )
