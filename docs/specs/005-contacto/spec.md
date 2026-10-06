@@ -48,25 +48,31 @@ claro desde el primer contacto.
 - Las opciones del botón flotante y sus mensajes son los de `contenido.md` (Spec 003, enmienda
   2026-10-06): «Cotizar un proyecto», «Soporte de un sistema existente» y «Otra consulta», con su
   traducción al inglés. Aprobados por el negocio (2026-10-06).
-
 - El ícono es el logo oficial `LogoPJM.jpeg` (cuadrado, 1024×1024); no se modifica su diseño.
 - Costa Rica se mantiene como origen y palabra clave principal (regla SEO de la Spec 003).
+- Alcance internacional: el subtítulo del hero y el texto del footer dicen que desde Costa Rica
+  atendemos negocios de cualquier país (textos en `contenido.md`, enmienda 2026-10-06); título,
+  descripción y H1 no cambian. Aprobado por el negocio (2026-10-06).
+- `areaServed` del JSON-LD es `Worldwide`; la dirección sigue en Costa Rica. Aprobado por el
+  negocio (2026-10-06).
 
 ## Dudas abiertas
 - [PENDIENTE] ¿Los botones actuales siguen con el mensaje genérico o también muestran opciones?
 - [PENDIENTE] ¿Se reemplazan y borran los íconos actuales (`public/icon.svg`, `icon-*-32x32.png`,
   `apple-icon.png`)?
-- [PENDIENTE] ¿Texto exacto del alcance internacional (es y en) y en qué secciones va?
-- [PENDIENTE] ¿`areaServed` de los datos estructurados pasa de «Costa Rica» a todo el mundo?
+- [PENDIENTE] ¿Se aprueba una versión simplificada del logo (solo "PJM") para 16–48 px? A tamaño
+  de pestaña el texto pequeño no se lee.
 
 ## Criterios de aceptación
 - [x] El botón flotante aparece en `/es` y `/en` y no tapa contenido en móvil.
-- [ ] El menú abre y cierra con mouse, teclado (`Esc`) y lector de pantalla (`aria-expanded`).
+- [x] El menú abre y cierra con mouse, teclado (`Esc`) y lector de pantalla (`aria-expanded`).
+      Verificación con lector de pantalla real diferida por el negocio (2026-10-06);
+      `aria-expanded`, `Enter` y `Esc` cubiertos por pruebas.
 - [x] Cada opción abre `https://wa.me/50664400832?text=…` con su mensaje del idioma activo.
 - [x] El correo aparece en contacto y footer como `mailto:solutionspjm@gmail.com`.
 - [x] Contenido inválido (opción sin mensaje, correo mal formado) falla con pruebas unitarias.
 - [x] Los componentes de `src/components/landing/` reciben textos por props, sin reglas de negocio.
 - [ ] La pestaña muestra `LogoPJM` en `/es` y `/en`; el HTML enlaza favicon y `apple-touch-icon`.
-- [ ] Los textos aprobados indican origen Costa Rica y atención a clientes de cualquier país,
+- [x] Los textos aprobados indican origen Costa Rica y atención a clientes de cualquier país,
       sin perder la palabra clave principal en título, descripción y H1.
 - [x] `pnpm validate` pasa en verde.

@@ -5,9 +5,11 @@
 - Contenido vigente: `docs/specs/003-generarContenido/contenido.md`.
 
 ## Bloqueo
-Resueltas el 2026-10-06: opciones y textos de WhatsApp, correo en minúsculas y `mailto:` sin
-asunto. Queda pendiente si los botones actuales (hero, header, CTA, footer) siguen con el mensaje
-genérico o también muestran opciones, y la verificación con lector de pantalla (T11).
+Resueltas el 2026-10-06: opciones y textos de WhatsApp, correo en minúsculas, `mailto:` sin
+asunto, textos de alcance internacional y `areaServed` mundial. La verificación con lector de
+pantalla se difiere (T23). Quedan abiertas: si los botones actuales (hero, header, CTA, footer)
+también muestran opciones, si se borran los íconos viejos y si se aprueba un logo simplificado
+para tamaños chicos.
 
 ## Enfoque
 El correo y las opciones de WhatsApp son datos de la empresa: viven en `company-profile`, se
@@ -75,17 +77,22 @@ usa `dropdown-menu` de shadcn/ui (Radix), que ya resuelve teclado, `Esc`, foco y
   no se usan en el código (se ve el ícono por defecto).
 - `generateMetadata` de `src/app/[lang]/layout.tsx` agrega `icons.icon` e `icons.apple` →
   `/logo/icono/LogoPJM.jpeg` (una sola fuente, sin copiar el archivo). Next genera los `<link>`.
-- Google acepta cualquier favicon enlazado, cuadrado y múltiplo de 48 px: el JPEG de 1024×1024
-  cumple y `robots.ts` ya permite rastrearlo. Google lo actualiza en su próximo rastreo.
+- Google pide un favicon cuadrado de al menos 48×48 px (recomienda múltiplos de 48): el JPEG de
+  1024×1024 no es múltiplo de 48, pero es cuadrado y mayor de 48 px, así que se acepta.
+  `robots.ts` ya permite rastrearlo; Google lo actualiza en su próximo rastreo.
+- Mejora opcional (no se hace ahora): PNG de 48, 96 y 192 px, `apple-icon` de 180 px y
+  `/favicon.ico`.
 - Los íconos viejos se borran solo si el negocio lo confirma (duda abierta).
 - Prueba: `layout.test.tsx` comprueba `icons` en `/es` y `/en`.
 
 ### Alcance internacional
-- **Bloqueado** hasta aprobar los textos (duda abierta). Propuesta para aprobar:
-  - es, subtítulo del hero: «Desde Costa Rica desarrollamos software a medida para negocios de
-    cualquier país: …»; footer: «… en Cartago para negocios de Costa Rica y del mundo.»
-  - en: equivalentes («From Costa Rica, we build custom software for businesses anywhere…»).
+- Aprobado el 2026-10-06 (T21): subtítulo del hero y texto del footer en `es` y `en`.
+  - es: «Desde Costa Rica desarrollamos software a medida para negocios de cualquier país: …»;
+    footer: «… en Cartago para negocios de Costa Rica y del mundo.»
+  - en: «From Costa Rica, we build custom software for businesses anywhere: …»; footer:
+    «… in Cartago for businesses in Costa Rica and around the world.»
 - Título, descripción y H1 conservan «Costa Rica» (regla SEO de la Spec 003).
 - Textos aprobados → `contenido.md` (enmienda aprobada) y `landingContentSource.ts`; la prueba de
   copia literal los verifica.
-- `areaServed` del JSON-LD solo cambia si el negocio lo confirma.
+- `areaServed` del JSON-LD pasa a texto `Worldwide` (aprobado el 2026-10-06, T22); la dirección
+  sigue en Costa Rica. La prueba de copia literal lo trata como dato técnico (no se muestra).

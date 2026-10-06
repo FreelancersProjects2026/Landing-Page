@@ -25,8 +25,9 @@
 - [x] T09 Página: `page.tsx` arma la URL de cada opción con `buildWhatsAppUrl` y monta el botón.
 - [x] T10 Prueba de página: cada opción abre `https://wa.me/50664400832?text=…` con el mensaje
       del idioma activo. Ajustar el conteo de enlaces en `page.test.tsx`.
-- [ ] T11 Revisión manual con `pnpm dev`: móvil y escritorio, teclado, lector de pantalla. El
-      botón no tapa CTA, footer ni la barra del navegador.
+- [x] T11 Revisión manual con `pnpm dev`: móvil y escritorio, teclado, lector de pantalla. El
+      botón no tapa CTA, footer ni la barra del navegador. Lector de pantalla: diferida
+      (2026-10-06), seguimiento en T23.
       - Verificado en Chrome con el botón a la derecha (`/es` y `/en`, escritorio 1440×900 y
         móvil 390×844): con el menú cerrado el botón se ve y recibe clics; con el menú móvil
         abierto lo tapa el CTA del menú (no se ve ni recibe toques); el dropdown queda dentro de
@@ -60,7 +61,7 @@
 - [x] T19 Ícono: `generateMetadata` en `layout.tsx` con `icons.icon` e `icons.apple` →
       `/logo/icono/LogoPJM.jpeg`. Prueba primero en `layout.test.tsx` (`/es` y `/en`). Commitear
       `LogoPJM.jpeg`.
-- [x] T20 Verificación: `pnpm dev` muestra el logo en la pestaña; el HTML tiene los `<link>` de
+- [ ] T20 Verificación: `pnpm dev` muestra el logo en la pestaña; el HTML tiene los `<link>` de
       ícono y `apple-touch-icon`. Borrar íconos viejos solo si el negocio lo confirma.
       - Verificado con `pnpm dev` (2026-10-06): el HTML de `/es` y `/en` trae
         `<link rel="icon">` y `<link rel="apple-touch-icon">` con `/logo/icono/LogoPJM.jpeg`, que
@@ -70,8 +71,12 @@
       - Sin verificar a la vista: la pestaña del navegador (la captura no incluye la barra de
         pestañas). Nota: el logo tiene texto pequeño que a 16–32 px no se lee; solo se distingue
         «PJM».
+      - Falta: ver la pestaña en `/es` y `/en` en una ventana privada (usuario).
 
 ## Alcance internacional (bloqueado: textos sin aprobar)
 - [x] T21 Textos aprobados en `contenido.md` (enmienda) y `landingContentSource.ts`, `es` y `en`,
       sin perder la palabra clave principal.
 - [x] T22 `areaServed` del JSON-LD según la decisión del negocio, con su prueba.
+
+## Seguimiento
+- [ ] T23 Probar el menú con NVDA o VoiceOver (diferida).
