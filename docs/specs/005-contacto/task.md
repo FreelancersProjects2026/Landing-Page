@@ -9,9 +9,9 @@
 
 ## Tareas
 - [x] T01 Línea base: `pnpm validate` en verde antes de tocar nada.
-- [ ] T02 Dominio: `LandingContent.whatsapp` con `label` del botón y
+- [x] T02 Dominio: `LandingContent.whatsapp` con `label` del botón y
       `options: { label, message }[]`. La validación rechaza `options` vacío.
-- [ ] T03 Infraestructura: opciones y textos en `es` y `en`. Usar la propuesta de la spec solo
+- [x] T03 Infraestructura: opciones y textos en `es` y `en`. Usar la propuesta de la spec solo
       como marcador hasta que se aprueben los textos.
 - [ ] T04 Prueba de infraestructura: `es` y `en` tienen la misma cantidad de opciones.
 - [ ] T05 Componente `whatsapp-button.tsx`: recibe `label` y `options: ExternalLink[]`. Sin reglas

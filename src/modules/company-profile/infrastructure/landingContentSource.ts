@@ -61,6 +61,25 @@ const es = validateLandingContent({
   },
   whatsappMessage:
     'Hola solutionsPJM, quiero cotizar un software a la medida para mi negocio.',
+  // Marcadores de la spec 005 hasta que se aprueben los textos (T12).
+  whatsapp: {
+    label: 'Escríbenos por WhatsApp',
+    options: [
+      {
+        label: 'Cotizar un proyecto',
+        message: 'Hola solutionsPJM, quiero cotizar un proyecto de software.',
+      },
+      {
+        label: 'Soporte de un sistema existente',
+        message:
+          'Hola solutionsPJM, necesito soporte para un sistema existente.',
+      },
+      {
+        label: 'Otra consulta',
+        message: 'Hola solutionsPJM, tengo una consulta.',
+      },
+    ],
+  },
   menu: {
     services: 'Servicios',
     process: 'Cómo trabajamos',
@@ -190,6 +209,24 @@ const en = validateLandingContent({
   },
   whatsappMessage:
     "Hi solutionsPJM, I'd like a quote for custom software for my business.",
+  // Marcadores de la spec 005 hasta que se aprueben los textos (T12).
+  whatsapp: {
+    label: 'Message us on WhatsApp',
+    options: [
+      {
+        label: 'Get a project quote',
+        message: "Hi solutionsPJM, I'd like a quote for a software project.",
+      },
+      {
+        label: 'Support for an existing system',
+        message: 'Hi solutionsPJM, I need support for an existing system.',
+      },
+      {
+        label: 'Other inquiry',
+        message: 'Hi solutionsPJM, I have a question.',
+      },
+    ],
+  },
   menu: {
     services: 'Services',
     process: 'How we work',

@@ -62,7 +62,10 @@ describe('landingContentSource', () => {
     (content) => {
       // Datos técnicos que no se muestran: el idioma y el código ISO del país (JSON-LD).
       const technical = [content.locale, content.company.address.country]
-      const missing = collectTexts(content).filter(
+      // Las opciones de WhatsApp son marcadores sin aprobar (spec 005, T12): al aprobarse
+      // se copian a contenido.md y se quita esta exclusión.
+      const whatsapp = { label: content.whatsapp.label }
+      const missing = collectTexts({ ...content, whatsapp }).filter(
         (text) => !technical.includes(text) && !approvedContent.includes(text),
       )
 

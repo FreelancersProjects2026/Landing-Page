@@ -49,6 +49,11 @@ export interface ExternalLink {
   readonly url: string
 }
 
+export interface WhatsAppOption {
+  readonly label: string
+  readonly message: string
+}
+
 export interface TeamMember {
   readonly name: string
   readonly role: string
@@ -60,6 +65,11 @@ export interface LandingContent {
   readonly company: Contact
   readonly seo: Seo
   readonly whatsappMessage: string
+  /** Botón flotante: cada opción abre WhatsApp con su mensaje predefinido. */
+  readonly whatsapp: {
+    readonly label: string
+    readonly options: readonly WhatsAppOption[]
+  }
   readonly menu: {
     readonly services: string
     readonly process: string
@@ -165,6 +175,9 @@ export function validateLandingContent(
   const [firstWord] = hero.sloganWords
   if (!firstWord || !hero.slogan.includes(firstWord)) {
     problems.push('el eslogan no contiene la primera palabra rotativa')
+  }
+  if (content.whatsapp.options.length === 0) {
+    problems.push('falta al menos una opción de WhatsApp')
   }
   for (const [path, text] of collectTexts(content, '')) {
     if (text.trim().length === 0) problems.push(`${path} está vacío`)

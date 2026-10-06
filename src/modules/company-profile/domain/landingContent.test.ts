@@ -21,6 +21,12 @@ function validContent(): LandingContent {
       description: 'Desarrollo de software a medida en Costa Rica.',
     },
     whatsappMessage: 'Hola solutionsPJM',
+    whatsapp: {
+      label: 'Escríbenos por WhatsApp',
+      options: [
+        { label: 'Otra consulta', message: 'Hola, tengo una consulta.' },
+      ],
+    },
     menu: {
       services: 'Servicios',
       process: 'Cómo trabajamos',
@@ -181,5 +187,16 @@ describe('validateLandingContent', () => {
         hero: { ...content.hero, sloganWords: ['empresa', 'negocio'] },
       }),
     ).toThrow(/palabra rotativa/)
+  })
+
+  it('exige al menos una opción de WhatsApp', () => {
+    const content = validContent()
+
+    expect(() =>
+      validateLandingContent({
+        ...content,
+        whatsapp: { ...content.whatsapp, options: [] },
+      }),
+    ).toThrow(/opción de WhatsApp/)
   })
 })
