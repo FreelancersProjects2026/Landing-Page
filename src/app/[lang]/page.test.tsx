@@ -101,6 +101,15 @@ describe.each(['es', 'en'])('Home (%s)', (lang) => {
     }
   })
 
+  it('la sección de contacto publica el correo como mailto:', async () => {
+    const { container } = render(await renderPage(lang))
+    const mailto = container.querySelectorAll('#contacto a[href^="mailto:"]')
+
+    expect(mailto).toHaveLength(1)
+    expect(mailto[0]).toHaveAttribute('href', 'mailto:solutionspjm@gmail.com')
+    expect(mailto[0]).toHaveTextContent('solutionspjm@gmail.com')
+  })
+
   it('publica el JSON-LD del idioma', async () => {
     const { container } = render(await renderPage(lang))
     const script = container.querySelector('script[type="application/ld+json"]')
