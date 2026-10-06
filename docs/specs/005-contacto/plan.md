@@ -36,7 +36,7 @@ usa `dropdown-menu` de shadcn/ui (Radix), que ya resuelve teclado, `Esc`, foco y
 - **Correo en minúsculas:** se valida en dominio, así una escritura con mayúsculas no compila.
 - **Enlaces actuales:** hero, navegación, CTA y footer conservan `whatsappMessage` hasta que se
   resuelva la duda correspondiente.
-- **Posición:** esquina inferior izquierda, `fixed`, con margen seguro en móvil
+- **Posición:** esquina inferior derecha, `fixed`, con margen seguro en móvil
   (`env(safe-area-inset-bottom)`) para no tapar el contenido ni la barra del navegador.
 - **Textos marcadores:** mientras no se aprueben (tarea T12), las opciones de WhatsApp no están
   en `contenido.md`; la prueba de copia literal las excluye y la exclusión se quita al aprobarlas.

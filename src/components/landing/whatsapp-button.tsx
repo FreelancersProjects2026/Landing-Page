@@ -25,12 +25,12 @@ export function WhatsAppButton({ label, options }: WhatsAppButtonProps) {
         <button
           type="button"
           aria-label={label}
-          className="fixed left-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-50 flex size-14 items-center justify-center rounded-full bg-foreground text-background shadow-lg transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
+          className="fixed right-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-30 flex size-14 items-center justify-center rounded-full bg-foreground text-background shadow-lg transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
         >
           <MessageCircle className="size-7" aria-hidden="true" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent side="top" align="start">
+      <DropdownMenuContent side="top" align="end">
         {options.map(({ label: optionLabel, url }) => (
           <DropdownMenuItem key={url} asChild>
             <a href={url} {...externalLinkProps}>

@@ -4,7 +4,7 @@
 - Spec: `docs/specs/005-contacto/spec.md`. Plan: `plan.md`.
 - Rama: `contact/feature`.
 - Alcance de esta lista: solo el botón flotante (el correo va aparte).
-- Posición: esquina **inferior izquierda**.
+- Posición: esquina **inferior derecha**.
 - Método: TDD y `pnpm validate` en verde tras cada tarea. Un commit por tarea.
 
 ## Tareas
@@ -20,7 +20,7 @@
       `externalLinkProps`. El botón tiene `aria-label` y `aria-expanded`.
 - [x] T07 Menú con `dropdown-menu` de shadcn: abre con clic y `Enter`, cierra con `Esc`, el foco
       vuelve al botón.
-- [x] T08 Estilo: `fixed` abajo a la izquierda, con margen `env(safe-area-inset-bottom)` y por
+- [x] T08 Estilo: `fixed` abajo a la derecha, con margen `env(safe-area-inset-bottom)` y por
       encima del contenido (`z-index`).
 - [x] T09 Página: `page.tsx` arma la URL de cada opción con `buildWhatsAppUrl` y monta el botón.
 - [x] T10 Prueba de página: cada opción abre `https://wa.me/50664400832?text=…` con el mensaje

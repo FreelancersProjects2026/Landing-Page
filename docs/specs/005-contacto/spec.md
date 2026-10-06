@@ -14,7 +14,7 @@ Que los clientes nos contacten de forma confiable, por el canal que prefieran y 
 claro desde el primer contacto.
 
 ## Alcance
-1. **Botón flotante de WhatsApp** abajo a la izquierda, visible en toda la landing (`/es` y `/en`).
+1. **Botón flotante de WhatsApp** abajo a la derecha, visible en toda la landing (`/es` y `/en`).
 2. **Menú de opciones:** al abrirlo, el cliente elige un motivo; cada opción abre WhatsApp con su
    mensaje predefinido en el idioma de la página.
 3. **Correo** `Solutionspjm@gmail.com` como enlace `mailto:` en la sección de contacto y en el
