@@ -35,4 +35,4 @@
         real con `safe-area-inset-bottom`. En `pnpm dev` el indicador de Next.js queda encima del
         botón (solo desarrollo, no aparece en producción).
 - [ ] T12 Contenido aprobado: reemplazar los textos marcadores por los definitivos (`es` y `en`).
-- [ ] T13 Cierre: marcar criterios de la spec, sincronizar el plan y correr `pnpm validate`.
+- [x] T13 Cierre: marcar criterios de la spec, sincronizar el plan y correr `pnpm validate`.

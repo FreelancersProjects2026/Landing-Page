@@ -45,10 +45,10 @@ claro desde el primer contacto.
 - [PENDIENTE] ¿Se confirma publicar el correo en minúsculas?
 
 ## Criterios de aceptación
-- [ ] El botón flotante aparece en `/es` y `/en` y no tapa contenido en móvil.
+- [x] El botón flotante aparece en `/es` y `/en` y no tapa contenido en móvil.
 - [ ] El menú abre y cierra con mouse, teclado (`Esc`) y lector de pantalla (`aria-expanded`).
-- [ ] Cada opción abre `https://wa.me/50664400832?text=…` con su mensaje del idioma activo.
+- [x] Cada opción abre `https://wa.me/50664400832?text=…` con su mensaje del idioma activo.
 - [ ] El correo aparece en contacto y footer como `mailto:solutionspjm@gmail.com`.
 - [ ] Contenido inválido (opción sin mensaje, correo mal formado) falla con pruebas unitarias.
-- [ ] Los componentes de `src/components/landing/` reciben textos por props, sin reglas de negocio.
-- [ ] `pnpm validate` pasa en verde.
+- [x] Los componentes de `src/components/landing/` reciben textos por props, sin reglas de negocio.
+- [x] `pnpm validate` pasa en verde.
