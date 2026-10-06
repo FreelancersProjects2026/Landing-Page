@@ -1,13 +1,16 @@
-# Spec 005: Contacto por WhatsApp y correo
+# Spec 005: Contacto, ícono del sitio y alcance internacional
 
 ## Problema
 Hoy los 5 enlaces de contacto abren WhatsApp con un único mensaje genérico
 (`whatsappMessage`). No hay botón de WhatsApp siempre visible, el cliente no puede elegir el motivo
 de su mensaje y el correo `solutionspjm@gmail.com` no aparece en la web.
+El ícono de la pestaña y de Google no es el logo de la marca, y los textos solo hablan de
+clientes en Costa Rica: no dejan claro que también trabajamos para clientes de otros países.
 
 ## Solución
 Agregar un botón flotante de WhatsApp con varias opciones de mensaje predefinido según el motivo
-de contacto, y publicar el correo como canal alternativo.
+de contacto, y publicar el correo como canal alternativo. Usar el logo como ícono del sitio y
+explicar que somos de Costa Rica y desarrollamos software para clientes de cualquier país.
 
 ## Objetivo
 Que los clientes nos contacten de forma confiable, por el canal que prefieran y con un mensaje
@@ -21,12 +24,18 @@ claro desde el primer contacto.
    footer.
 4. **Contenido** (opciones, mensajes y correo) en el módulo `company-profile`, en `es` y `en`.
 5. **Validación** en el límite de infraestructura: teléfono, correo y opciones bien formados.
+6. **Ícono del sitio:** `public/logo/icono/LogoPJM.jpeg` como ícono de pestaña (favicon), ícono de
+   Apple y el que muestra Google en los resultados, en `/es` y `/en`.
+7. **Alcance internacional:** textos `es` y `en` (hero, SEO, footer y datos estructurados) que
+   muestren que somos de Costa Rica y atendemos clientes de cualquier país.
 
 ## Fuera de alcance
 - Formulario de contacto, backend o envío de correos desde la web.
 - WhatsApp Business API, chatbots o respuestas automáticas.
 - Analítica de clics por opción.
 - Correo con dominio propio (`@solutionspjm.com`).
+- Rediseñar el logo o crear otras versiones de marca.
+- Controlar cuándo Google actualiza el ícono en sus resultados (depende de su rastreo).
 
 ## Reglas del negocio
 - Un solo número de WhatsApp (`+506 6440-0832`) y un solo correo para todo el sitio.
@@ -40,8 +49,15 @@ claro desde el primer contacto.
   2026-10-06): «Cotizar un proyecto», «Soporte de un sistema existente» y «Otra consulta», con su
   traducción al inglés. Aprobados por el negocio (2026-10-06).
 
+- El ícono es el logo oficial `LogoPJM.jpeg` (cuadrado, 1024×1024); no se modifica su diseño.
+- Costa Rica se mantiene como origen y palabra clave principal (regla SEO de la Spec 003).
+
 ## Dudas abiertas
 - [PENDIENTE] ¿Los botones actuales siguen con el mensaje genérico o también muestran opciones?
+- [PENDIENTE] ¿Se reemplazan y borran los íconos actuales (`public/icon.svg`, `icon-*-32x32.png`,
+  `apple-icon.png`)?
+- [PENDIENTE] ¿Texto exacto del alcance internacional (es y en) y en qué secciones va?
+- [PENDIENTE] ¿`areaServed` de los datos estructurados pasa de «Costa Rica» a todo el mundo?
 
 ## Criterios de aceptación
 - [x] El botón flotante aparece en `/es` y `/en` y no tapa contenido en móvil.
@@ -50,4 +66,7 @@ claro desde el primer contacto.
 - [x] El correo aparece en contacto y footer como `mailto:solutionspjm@gmail.com`.
 - [x] Contenido inválido (opción sin mensaje, correo mal formado) falla con pruebas unitarias.
 - [x] Los componentes de `src/components/landing/` reciben textos por props, sin reglas de negocio.
+- [ ] La pestaña muestra `LogoPJM` en `/es` y `/en`; el HTML enlaza favicon y `apple-touch-icon`.
+- [ ] Los textos aprobados indican origen Costa Rica y atención a clientes de cualquier país,
+      sin perder la palabra clave principal en título, descripción y H1.
 - [x] `pnpm validate` pasa en verde.

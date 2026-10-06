@@ -3,7 +3,7 @@
 ## Base acordada
 - Spec: `docs/specs/005-contacto/spec.md`. Plan: `plan.md`.
 - Rama: `contact/feature`.
-- Alcance: botón flotante (T01–T13) y correo en la sección de contacto (T14–T17) y footer (T18).
+- Alcance: botón flotante (T01–T13) y correo en la sección de contacto (T14–T17), footer (T18), ícono (T19–T20) e internacional (T21–T22).
 - Posición: esquina **inferior derecha**.
 - Método: TDD y `pnpm validate` en verde tras cada tarea. Un commit por tarea.
 
@@ -55,3 +55,15 @@
       `mailto:solutionspjm@gmail.com` en `/es` y `/en`. `pnpm validate` y revisión en `pnpm dev`.
 - [x] T18 Footer: `footer-section.tsx` muestra el mismo `mailto:` junto al teléfono (criterio de la
       spec «contacto y footer»).
+
+## Ícono del sitio
+- [x] T19 Ícono: `generateMetadata` en `layout.tsx` con `icons.icon` e `icons.apple` →
+      `/logo/icono/LogoPJM.jpeg`. Prueba primero en `layout.test.tsx` (`/es` y `/en`). Commitear
+      `LogoPJM.jpeg`.
+- [ ] T20 Verificación: `pnpm dev` muestra el logo en la pestaña; el HTML tiene los `<link>` de
+      ícono y `apple-touch-icon`. Borrar íconos viejos solo si el negocio lo confirma.
+
+## Alcance internacional (bloqueado: textos sin aprobar)
+- [ ] T21 Textos aprobados en `contenido.md` (enmienda) y `landingContentSource.ts`, `es` y `en`,
+      sin perder la palabra clave principal.
+- [ ] T22 `areaServed` del JSON-LD según la decisión del negocio, con su prueba.

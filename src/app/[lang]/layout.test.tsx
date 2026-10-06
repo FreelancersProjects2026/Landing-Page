@@ -66,6 +66,10 @@ describe('RootLayout', () => {
         siteName: company.name,
         type: 'website',
       },
+      icons: {
+        icon: '/logo/icono/LogoPJM.jpeg',
+        apple: '/logo/icono/LogoPJM.jpeg',
+      },
     })
   })
 

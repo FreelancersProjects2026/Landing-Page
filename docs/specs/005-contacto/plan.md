@@ -67,3 +67,25 @@ usa `dropdown-menu` de shadcn/ui (Radix), que ya resuelve teclado, `Esc`, foco y
 - **Spam al correo publicado:** riesgo conocido al publicar un correo; si crece, un formulario (fuera de
   alcance) lo mitiga.
 - **Superposición en móvil:** el botón flotante puede tapar CTA o footer; se revisa en la fase 4.
+
+## Ícono del sitio y alcance internacional (alcance 6 y 7)
+
+### Ícono
+- Hoy el sitio no enlaza ningún ícono: `public/icon.svg`, `icon-*-32x32.png` y `apple-icon.png`
+  no se usan en el código (se ve el ícono por defecto).
+- `generateMetadata` de `src/app/[lang]/layout.tsx` agrega `icons.icon` e `icons.apple` →
+  `/logo/icono/LogoPJM.jpeg` (una sola fuente, sin copiar el archivo). Next genera los `<link>`.
+- Google acepta cualquier favicon enlazado, cuadrado y múltiplo de 48 px: el JPEG de 1024×1024
+  cumple y `robots.ts` ya permite rastrearlo. Google lo actualiza en su próximo rastreo.
+- Los íconos viejos se borran solo si el negocio lo confirma (duda abierta).
+- Prueba: `layout.test.tsx` comprueba `icons` en `/es` y `/en`.
+
+### Alcance internacional
+- **Bloqueado** hasta aprobar los textos (duda abierta). Propuesta para aprobar:
+  - es, subtítulo del hero: «Desde Costa Rica desarrollamos software a medida para negocios de
+    cualquier país: …»; footer: «… en Cartago para negocios de Costa Rica y del mundo.»
+  - en: equivalentes («From Costa Rica, we build custom software for businesses anywhere…»).
+- Título, descripción y H1 conservan «Costa Rica» (regla SEO de la Spec 003).
+- Textos aprobados → `contenido.md` (enmienda aprobada) y `landingContentSource.ts`; la prueba de
+  copia literal los verifica.
+- `areaServed` del JSON-LD solo cambia si el negocio lo confirma.
