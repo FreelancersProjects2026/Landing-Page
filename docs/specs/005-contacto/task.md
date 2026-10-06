@@ -3,7 +3,7 @@
 ## Base acordada
 - Spec: `docs/specs/005-contacto/spec.md`. Plan: `plan.md`.
 - Rama: `contact/feature`.
-- Alcance: botón flotante (T01–T13) y correo en la sección de contacto (T14–T17), footer (T18), ícono (T19–T20) e internacional (T21–T22).
+- Alcance: botón flotante (T01–T13) y correo en la sección de contacto (T14–T17), footer (T18), ícono (T19–T20), internacional (T21–T22) y resultado en Google (T26–T28).
 - Posición: esquina **inferior derecha**.
 - Método: TDD y `pnpm validate` en verde tras cada tarea. Un commit por tarea.
 
@@ -89,3 +89,11 @@
       el logo (`LogoPJM.jpeg`) y `company.name`, burbuja de saludo con `contact.text` y las opciones
       como respuestas. Solo textos ya aprobados; sin dependencias nuevas; se conserva
       `dropdown-menu` (teclado, `Esc`, foco, `aria-expanded`) y las pruebas actuales.
+
+## Resultado en Google (alcance 8)
+- [x] T26 Favicon de 192×192 px (PNG, desde `LogoPJM.jpeg`) en `public/logo/icono/`; `icons.icon`
+      lo usa. Prueba primero en `layout.test.tsx`.
+- [ ] T27 Descripción SEO internacional en `es` y `en` (`contenido.md` y
+      `landingContentSource.ts`). Bloqueada hasta que el negocio apruebe el texto.
+- [ ] T28 Usuario: merge, despliegue y pedir indexación de `/es` y `/en` en Search Console;
+      confirmar el logo y la descripción en Google cuando se actualice.

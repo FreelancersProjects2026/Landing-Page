@@ -37,6 +37,8 @@ const openGraphLocale: Record<Locale, string> = { es: 'es_CR', en: 'en_US' }
 type LayoutParams = { params: Promise<{ lang: string }> }
 
 const siteIcon = '/logo/icono/LogoPJM.jpeg'
+// Google pide favicons cuadrados en múltiplos de 48 px; el JPEG mide 1024.
+const favicon = '/logo/icono/LogoPJM-192.png'
 
 export async function generateMetadata({
   params,
@@ -61,8 +63,8 @@ export async function generateMetadata({
       siteName: company.name,
       type: 'website',
     },
-    // Una sola fuente para la pestaña y el ícono de iOS; Next genera los <link>.
-    icons: { icon: siteIcon, apple: siteIcon },
+    // Next genera los <link> de la pestaña y del ícono de iOS.
+    icons: { icon: favicon, apple: siteIcon },
   }
 }
 
