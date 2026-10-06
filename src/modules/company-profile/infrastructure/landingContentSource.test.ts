@@ -74,13 +74,8 @@ describe('landingContentSource', () => {
   it.each([es, en])(
     'copia literalmente de contenido.md los textos en $locale',
     (content) => {
-      // Datos técnicos que no se muestran: el idioma, el código ISO del país y el área
-      // atendida (JSON-LD).
-      const technical = [
-        content.locale,
-        content.company.address.country,
-        content.company.areaServed,
-      ]
+      // Datos técnicos que no se muestran: el idioma y el código ISO del país (JSON-LD).
+      const technical = [content.locale, content.company.address.country]
       const missing = collectTexts(content).filter(
         (text) => !technical.includes(text) && !approvedContent.includes(text),
       )

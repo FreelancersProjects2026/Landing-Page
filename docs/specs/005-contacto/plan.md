@@ -95,4 +95,5 @@ usa `dropdown-menu` de shadcn/ui (Radix), que ya resuelve teclado, `Esc`, foco y
 - Textos aprobados → `contenido.md` (enmienda aprobada) y `landingContentSource.ts`; la prueba de
   copia literal los verifica.
 - `areaServed` del JSON-LD pasa a texto `Worldwide` (aprobado el 2026-10-06, T22); la dirección
-  sigue en Costa Rica. La prueba de copia literal lo trata como dato técnico (no se muestra).
+  sigue en Costa Rica. Figura en `contenido.md` (datos comunes) y la prueba de copia literal lo
+  verifica.

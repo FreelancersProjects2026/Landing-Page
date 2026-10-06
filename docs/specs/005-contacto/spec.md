@@ -65,9 +65,8 @@ claro desde el primer contacto.
 
 ## Criterios de aceptación
 - [x] El botón flotante aparece en `/es` y `/en` y no tapa contenido en móvil.
-- [x] El menú abre y cierra con mouse, teclado (`Esc`) y lector de pantalla (`aria-expanded`).
-      Verificación con lector de pantalla real diferida por el negocio (2026-10-06);
-      `aria-expanded`, `Enter` y `Esc` cubiertos por pruebas.
+- [x] El menú abre y cierra con mouse y teclado (`Esc`), con `aria-expanded`; la prueba con lector
+      de pantalla real queda diferida (2026-10-06, T23).
 - [x] Cada opción abre `https://wa.me/50664400832?text=…` con su mensaje del idioma activo.
 - [x] El correo aparece en contacto y footer como `mailto:solutionspjm@gmail.com`.
 - [x] Contenido inválido (opción sin mensaje, correo mal formado) falla con pruebas unitarias.

@@ -73,10 +73,13 @@
         «PJM».
       - Falta: ver la pestaña en `/es` y `/en` en una ventana privada (usuario).
 
-## Alcance internacional (bloqueado: textos sin aprobar)
+## Alcance internacional (aprobado 2026-10-06)
 - [x] T21 Textos aprobados en `contenido.md` (enmienda) y `landingContentSource.ts`, `es` y `en`,
       sin perder la palabra clave principal.
 - [x] T22 `areaServed` del JSON-LD según la decisión del negocio, con su prueba.
 
 ## Seguimiento
-- [ ] T23 Probar el menú con NVDA o VoiceOver (diferida).
+- [ ] T23 Probar el menú con NVDA o VoiceOver y verificar `safe-area-inset-bottom` en un navegador
+      móvil real (diferida).
+- [ ] T24 Contraste del footer: `text-white/40` (~3,7:1) y los derechos en `white/30` (~2,5:1) no
+      llegan a 4,5:1; subirlos a ≥ `white/60` (deuda previa a esta rama).

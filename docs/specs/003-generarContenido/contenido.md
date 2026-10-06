@@ -4,7 +4,7 @@ Estado: aprobado por el equipo (Spec 003, 2026-10-02). Fuente de verdad del cód
 Enmienda aprobada 2026-10-02: etiqueta del menú móvil (Menú/Menu) y mayúscula inicial en las descripciones.
 Enmienda aprobada 2026-10-06 (Spec 005): correo y su etiqueta en la sección de contacto.
 Enmienda aprobada 2026-10-06 (Spec 005): opciones y mensajes del botón flotante de WhatsApp.
-Enmienda aprobada 2026-10-06 (Spec 005): alcance internacional (subtítulo del hero y texto del footer).
+Enmienda aprobada 2026-10-06 (Spec 005): alcance internacional (subtítulo del hero, texto del footer y área atendida).
 
 Datos comunes a ambos idiomas:
 
@@ -12,6 +12,7 @@ Datos comunes a ambos idiomas:
 - Ubicación: Paraíso de Cartago, Costa Rica
 - WhatsApp: +506 6440-0832 → `https://wa.me/50664400832?text=<mensaje del idioma>`
 - Correo: solutionspjm@gmail.com → `mailto:solutionspjm@gmail.com`
+- Área atendida (JSON-LD): Worldwide
 - Dominio y redes: [PENDIENTE]
 
 ---
