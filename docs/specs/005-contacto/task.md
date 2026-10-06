@@ -61,7 +61,7 @@
 - [x] T19 Ícono: `generateMetadata` en `layout.tsx` con `icons.icon` e `icons.apple` →
       `/logo/icono/LogoPJM.jpeg`. Prueba primero en `layout.test.tsx` (`/es` y `/en`). Commitear
       `LogoPJM.jpeg`.
-- [ ] T20 Verificación: `pnpm dev` muestra el logo en la pestaña; el HTML tiene los `<link>` de
+- [x] T20 Verificación: `pnpm dev` muestra el logo en la pestaña; el HTML tiene los `<link>` de
       ícono y `apple-touch-icon`. Borrar íconos viejos solo si el negocio lo confirma.
       - Verificado con `pnpm dev` (2026-10-06): el HTML de `/es` y `/en` trae
         `<link rel="icon">` y `<link rel="apple-touch-icon">` con `/logo/icono/LogoPJM.jpeg`, que
@@ -71,7 +71,7 @@
       - Sin verificar a la vista: la pestaña del navegador (la captura no incluye la barra de
         pestañas). Nota: el logo tiene texto pequeño que a 16–32 px no se lee; solo se distingue
         «PJM».
-      - Falta: ver la pestaña en `/es` y `/en` en una ventana privada (usuario).
+      - Confirmado por el usuario en producción (2026-10-06).
 
 ## Alcance internacional (aprobado 2026-10-06)
 - [x] T21 Textos aprobados en `contenido.md` (enmienda) y `landingContentSource.ts`, `es` y `en`,
@@ -97,3 +97,5 @@
       `landingContentSource.ts`). Aprobada por el negocio (2026-10-06).
 - [ ] T28 Usuario: merge, despliegue y pedir indexación de `/es` y `/en` en Search Console;
       confirmar el logo y la descripción en Google cuando se actualice.
+      - Google todavía no tiene favicon del dominio: `google.com/s2/favicons` responde 404
+        (2026-10-06). Falta el rastreo.
