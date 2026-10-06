@@ -27,12 +27,17 @@
       del idioma activo. Ajustar el conteo de enlaces en `page.test.tsx`.
 - [ ] T11 Revisión manual con `pnpm dev`: móvil y escritorio, teclado, lector de pantalla. El
       botón no tapa CTA, footer ni la barra del navegador.
-      - Verificado en Chrome (escritorio 1920 px y móvil 390×844): `/es` y `/en`, mouse, `Enter`
-        abre, `Esc` cierra y el foco vuelve al botón, `aria-expanded`, enlaces `wa.me` correctos.
-        Al final de la página el botón no tapa el footer; al desplazarse pasa sobre el contenido
-        (incluido el CTA), que queda accesible al seguir desplazando.
+      - Verificado en Chrome con el botón a la derecha (`/es` y `/en`, escritorio 1440×900 y
+        móvil 390×844): con el menú cerrado el botón se ve y recibe clics; con el menú móvil
+        abierto lo tapa el CTA del menú (no se ve ni recibe toques); el dropdown queda dentro de
+        la pantalla con 3 opciones; al final de la página no hay nada debajo del botón y la
+        columna derecha del footer termina por encima de él.
+      - Al desplazarse en móvil, el botón pasa por encima del contenido; entre los controles, solo
+        los botones de los pasos de «Cómo trabajamos» quedan debajo en 1 o 2 posiciones de
+        desplazamiento, y se pueden tocar al seguir desplazando.
+      - Teclado (`Enter` abre, `Esc` cierra, el foco vuelve) verificado con teclas reales con el
+        botón a la izquierda; no depende de la posición y lo cubren las pruebas del componente.
       - Sin verificar: lector de pantalla real (NVDA/VoiceOver) y la barra de un navegador móvil
-        real con `safe-area-inset-bottom`. En `pnpm dev` el indicador de Next.js queda encima del
-        botón (solo desarrollo, no aparece en producción).
+        real con `safe-area-inset-bottom`.
 - [ ] T12 Contenido aprobado: reemplazar los textos marcadores por los definitivos (`es` y `en`).
 - [x] T13 Cierre: marcar criterios de la spec, sincronizar el plan y correr `pnpm validate`.

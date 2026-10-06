@@ -47,7 +47,7 @@ describe('WhatsAppButton', () => {
     expect(button).toHaveFocus()
   })
 
-  it('flota abajo a la derecha, fuera del área segura, sobre el contenido y bajo el menú móvil', () => {
+  it('flota abajo a la derecha, fuera del área segura y sobre el contenido', () => {
     expect(renderButton()).toHaveClass(
       'fixed',
       'right-4',
