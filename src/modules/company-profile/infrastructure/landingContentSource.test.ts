@@ -47,6 +47,11 @@ describe('landingContentSource', () => {
     expect(es.projects.items).toHaveLength(3)
   })
 
+  it('ofrece las mismas opciones de WhatsApp en ambos idiomas', () => {
+    expect(es.whatsapp.options.length).toBeGreaterThan(0)
+    expect(en.whatsapp.options).toHaveLength(es.whatsapp.options.length)
+  })
+
   it.each([es, en])('el eslogan en $locale no termina en punto', (content) => {
     expect(content.hero.slogan).not.toMatch(/\.$/)
   })

@@ -13,7 +13,7 @@
       `options: { label, message }[]`. La validación rechaza `options` vacío.
 - [x] T03 Infraestructura: opciones y textos en `es` y `en`. Usar la propuesta de la spec solo
       como marcador hasta que se aprueben los textos.
-- [ ] T04 Prueba de infraestructura: `es` y `en` tienen la misma cantidad de opciones.
+- [x] T04 Prueba de infraestructura: `es` y `en` tienen la misma cantidad de opciones.
 - [ ] T05 Componente `whatsapp-button.tsx`: recibe `label` y `options: ExternalLink[]`. Sin reglas
       de negocio.
 - [ ] T06 Prueba del componente: al abrir, cada opción es un `<a>` con su `href` y
