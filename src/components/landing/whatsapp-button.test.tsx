@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import { WhatsAppButton } from './whatsapp-button'
 
@@ -59,11 +59,31 @@ describe('WhatsAppButton', () => {
   })
 
   it('al abrir no bloquea el scroll ni los clics de la página', async () => {
-    await userEvent.click(renderButton())
+    const user = userEvent.setup()
+    const onPageClick = vi.fn()
+    render(
+      <>
+        <WhatsAppButton
+          label={label}
+          name={name}
+          greeting={greeting}
+          options={options}
+        />
+        <button type="button" onClick={onPageClick}>
+          Otro botón de la página
+        </button>
+      </>,
+    )
 
+    await user.click(screen.getByRole('button', { name: label }))
     expect(screen.getByRole('menu')).toBeVisible()
+    // Protege contra el bloqueo de scroll de Radix modal; detalle de react-remove-scroll.
     expect(document.body).not.toHaveAttribute('data-scroll-locked')
-    expect(document.body.style.pointerEvents).not.toBe('none')
+
+    await user.click(
+      screen.getByRole('button', { name: 'Otro botón de la página' }),
+    )
+    expect(onPageClick).toHaveBeenCalledOnce()
   })
 
   it('el botón abre y cierra el menú como un interruptor', async () => {
