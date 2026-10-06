@@ -34,15 +34,14 @@ claro desde el primer contacto.
 - Toda URL de WhatsApp se genera con `buildWhatsAppUrl` (sin URLs escritas a mano).
 - Los enlaces de WhatsApp actuales (hero, header, CTA, footer) siguen funcionando.
 - El correo se publica en minúsculas (`solutionspjm@gmail.com`): el correo no distingue
-  mayúsculas y así se evita duplicarlo con otra escritura.
+  mayúsculas y así se evita duplicarlo con otra escritura. Confirmado por el negocio (2026-10-06).
+- El `mailto:` no lleva asunto predefinido. Confirmado por el negocio (2026-10-06).
 
 ## Dudas abiertas
 - [PENDIENTE] ¿Qué opciones de mensaje? Propuesta: «Cotizar un proyecto», «Soporte de un
   sistema existente», «Otra consulta».
 - [PENDIENTE] ¿Texto exacto de cada mensaje?
 - [PENDIENTE] ¿Los botones actuales siguen con el mensaje genérico o también muestran opciones?
-- [PENDIENTE] ¿El correo lleva asunto predefinido en el `mailto:`?
-- [PENDIENTE] ¿Se confirma publicar el correo en minúsculas?
 
 ## Criterios de aceptación
 - [x] El botón flotante aparece en `/es` y `/en` y no tapa contenido en móvil.

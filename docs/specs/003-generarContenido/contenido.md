@@ -2,7 +2,7 @@
 
 Estado: aprobado por el equipo (Spec 003, 2026-10-02). Fuente de verdad del código.
 Enmienda aprobada 2026-10-02: etiqueta del menú móvil (Menú/Menu) y mayúscula inicial en las descripciones.
-Enmienda 2026-10-06 (Spec 005): correo y su etiqueta en la sección de contacto.
+Enmienda aprobada 2026-10-06 (Spec 005): correo y su etiqueta en la sección de contacto.
 
 Datos comunes a ambos idiomas:
 
