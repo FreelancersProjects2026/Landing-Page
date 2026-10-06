@@ -38,9 +38,8 @@ usa `dropdown-menu` de shadcn/ui (Radix), que ya resuelve teclado, `Esc`, foco y
   resuelva la duda correspondiente.
 - **Posición:** esquina inferior derecha, `fixed`, con margen seguro en móvil
   (`env(safe-area-inset-bottom)`) para no tapar el contenido ni la barra del navegador.
-- **Textos marcadores:** mientras no se aprueben (tarea T12), las opciones de WhatsApp no están
-  en `contenido.md`; la prueba de copia literal las excluye y la exclusión se quita al aprobarlas.
-  El botón ya se monta en la página con estos marcadores.
+- **Textos de las opciones:** aprobados el 2026-10-06 (T12) y copiados a `contenido.md`; la
+  prueba de copia literal los verifica como al resto del contenido.
 - **Colores:** el botón usa `bg-foreground`/`text-background` como los CTA; el verde de WhatsApp
   con icono blanco no alcanza el contraste 3:1 de WCAG.
 - **Accesibilidad:** el botón lleva `aria-label` traducido; las opciones son enlaces reales

@@ -36,11 +36,11 @@ claro desde el primer contacto.
 - El correo se publica en minúsculas (`solutionspjm@gmail.com`): el correo no distingue
   mayúsculas y así se evita duplicarlo con otra escritura. Confirmado por el negocio (2026-10-06).
 - El `mailto:` no lleva asunto predefinido. Confirmado por el negocio (2026-10-06).
+- Las opciones del botón flotante y sus mensajes son los de `contenido.md` (Spec 003, enmienda
+  2026-10-06): «Cotizar un proyecto», «Soporte de un sistema existente» y «Otra consulta», con su
+  traducción al inglés. Aprobados por el negocio (2026-10-06).
 
 ## Dudas abiertas
-- [PENDIENTE] ¿Qué opciones de mensaje? Propuesta: «Cotizar un proyecto», «Soporte de un
-  sistema existente», «Otra consulta».
-- [PENDIENTE] ¿Texto exacto de cada mensaje?
 - [PENDIENTE] ¿Los botones actuales siguen con el mensaje genérico o también muestran opciones?
 
 ## Criterios de aceptación

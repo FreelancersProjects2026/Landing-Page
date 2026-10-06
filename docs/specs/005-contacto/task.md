@@ -39,7 +39,7 @@
         botón a la izquierda; no depende de la posición y lo cubren las pruebas del componente.
       - Sin verificar: lector de pantalla real (NVDA/VoiceOver) y la barra de un navegador móvil
         real con `safe-area-inset-bottom`.
-- [ ] T12 Contenido aprobado: reemplazar los textos marcadores por los definitivos (`es` y `en`).
+- [x] T12 Contenido aprobado: reemplazar los textos marcadores por los definitivos (`es` y `en`).
 - [x] T13 Cierre: marcar criterios de la spec, sincronizar el plan y correr `pnpm validate`.
 
 ## Correo en la sección de contacto

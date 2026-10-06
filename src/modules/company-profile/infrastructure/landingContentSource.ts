@@ -63,7 +63,6 @@ const es = validateLandingContent({
   },
   whatsappMessage:
     'Hola solutionsPJM, quiero cotizar un software a la medida para mi negocio.',
-  // Marcadores de la spec 005 hasta que se aprueben los textos (T12).
   whatsapp: {
     label: 'Escríbenos por WhatsApp',
     options: [
@@ -212,7 +211,6 @@ const en = validateLandingContent({
   },
   whatsappMessage:
     "Hi solutionsPJM, I'd like a quote for custom software for my business.",
-  // Marcadores de la spec 005 hasta que se aprueben los textos (T12).
   whatsapp: {
     label: 'Message us on WhatsApp',
     options: [

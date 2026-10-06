@@ -3,6 +3,7 @@
 Estado: aprobado por el equipo (Spec 003, 2026-10-02). Fuente de verdad del código.
 Enmienda aprobada 2026-10-02: etiqueta del menú móvil (Menú/Menu) y mayúscula inicial en las descripciones.
 Enmienda aprobada 2026-10-06 (Spec 005): correo y su etiqueta en la sección de contacto.
+Enmienda aprobada 2026-10-06 (Spec 005): opciones y mensajes del botón flotante de WhatsApp.
 
 Datos comunes a ambos idiomas:
 
@@ -93,6 +94,16 @@ Servicios · Cómo trabajamos · Proyectos · Equipo · Contacto
 - **Botón:** Escríbenos por WhatsApp
 - **Correo:** O escríbenos al correo
 
+### Botón flotante de WhatsApp
+
+- **Botón:** Escríbenos por WhatsApp
+- **Opción:** Cotizar un proyecto
+  - **Mensaje:** Hola solutionsPJM, quiero cotizar un proyecto de software.
+- **Opción:** Soporte de un sistema existente
+  - **Mensaje:** Hola solutionsPJM, necesito soporte para un sistema existente.
+- **Opción:** Otra consulta
+  - **Mensaje:** Hola solutionsPJM, tengo una consulta.
+
 ### 7. Footer
 
 - **Texto:** solutionsPJM — desarrollo de software en Cartago para negocios de todo Costa Rica.
@@ -180,6 +191,16 @@ Services · How we work · Projects · Team · Contact
   attached.
 - **Button:** Message us on WhatsApp
 - **Email:** Or email us
+
+### Floating WhatsApp button
+
+- **Button:** Message us on WhatsApp
+- **Option:** Get a project quote
+  - **Message:** Hi solutionsPJM, I'd like a quote for a software project.
+- **Option:** Support for an existing system
+  - **Message:** Hi solutionsPJM, I need support for an existing system.
+- **Option:** Other inquiry
+  - **Message:** Hi solutionsPJM, I have a question.
 
 ### 7. Footer
 
