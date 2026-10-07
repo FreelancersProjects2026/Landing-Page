@@ -11,7 +11,9 @@ y los mismos datos publicados como `FAQPage` en los datos estructurados para Goo
 
 ## Objetivo
 Que el visitante resuelva sus objeciones principales en la página y llegue al contacto con menos
-dudas; ganar visibilidad en resultados de búsqueda.
+dudas; publicar un marcado `FAQPage` válido. Desde agosto de 2023, Google solo muestra los rich
+results de FAQ en sitios gubernamentales y de salud: el marcado sirve a otros buscadores y a
+asistentes de IA, pero no garantiza un rich result en Google.
 
 ## Alcance
 1. **Sección FAQ** entre «Equipo» y «Contacto», desplegables nativos `<details>` (teclado sin JS; respuestas presentes en el HTML para Google).
