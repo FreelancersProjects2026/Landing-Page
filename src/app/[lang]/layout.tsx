@@ -7,13 +7,11 @@ import {
   getLandingContent,
   locales,
   siteUrl,
-  type Locale,
 } from '@modules/company-profile'
 import { fontVariables } from '../fonts'
 import { siteIcons } from '../icons'
+import { openGraphLocale } from './open-graph'
 import '../globals.css'
-
-const openGraphLocale: Record<Locale, string> = { es: 'es_CR', en: 'en_US' }
 
 type LayoutParams = { params: Promise<{ lang: string }> }
 

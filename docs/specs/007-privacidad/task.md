@@ -14,7 +14,7 @@
 - [x] T04 Aplicación: `privacyPaths`, `buildPrivacyUrl`, `buildPrivacyAlternates` y
       `getPrivacyPolicy`; exportarlos en `index.ts`.
 - [x] T05 Vista `components/legal/privacy-policy.tsx` con su prueba.
-- [ ] T06 Rutas `/es/privacidad` y `/en/privacy` con metadata (canonical, alternates cruzados,
+- [x] T06 Rutas `/es/privacidad` y `/en/privacy` con metadata (canonical, alternates cruzados,
       title y description) y sus pruebas.
 - [ ] T07 Footer: enlace «Privacidad» / «Privacy» del idioma activo, con su prueba; la landing lo
       pasa por props.
