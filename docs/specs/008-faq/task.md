@@ -48,15 +48,23 @@
         La columna (865 px) es más alta que el espacio visible bajo el menú (788 px): mientras
         está fija, los ~77 px inferiores de la tarjeta quedan fuera de pantalla. Consola de `/es`
         y `/en` sin avisos de hidratación. Falta que el negocio vea la imagen.
-- [x] T12 `FaqSection` sin `imageSrc` ni `next/image`: la tarjeta conserva marco y medidas
+- [x] T12 *(Reemplazada por T15–T16: el negocio descartó también las partículas el 2026-10-07.)* `FaqSection` sin `imageSrc` ni `next/image`: la tarjeta conserva marco y medidas
       (`aspect-[16/10] lg:aspect-square`, `bg-black`) con `ParticleVisualization` dentro, en un
       contenedor `aria-hidden`. Sticky condicionado sin cambios. Movimiento reducido: se oculta la
       tarjeta entera (`motion-reduce:hidden`), porque negra y vacía parecería un hueco roto.
-- [x] T13 Borrados `public/preguntas/preguntas-frecuentes.webp` y su prueba de peso. El PNG
+- [x] T13 *(Reemplazada por T15–T16: el negocio descartó también las partículas el 2026-10-07; el borrado del WebP sigue vigente.)* Borrados `public/preguntas/preguntas-frecuentes.webp` y su prueba de peso. El PNG
       original del usuario sigue sin versionar.
-- [x] T14 Alcance 5 en `spec.md` y estas tareas.
+- [x] T14 *(Reemplazada por T15–T16: el negocio descartó también las partículas el 2026-10-07.)* Alcance 5 en `spec.md` y estas tareas.
       - Medido (2026-10-07, `pnpm build && pnpm start`, iframes, respuestas abiertas): a 1440×900
         la columna sigue fija (736 px, fija a 112 px, la tarjeta de 515×515 termina en 848 px) y
         entra completa. A 1366×768 se desplaza normal (716 px). A 390×844, tarjeta de 327×204.
         Sin `<img>` en la sección y sin scroll horizontal a 1440 (`scrollWidth` 1425 con barra)
         ni a 390 (375).
+- [x] T15 `FaqSection` solo con preguntas: sin tarjeta, sin `ParticleVisualization` (lo siguen
+      usando hero y services). La columna del título, ahora corta, usa `lg:sticky lg:top-28
+      lg:self-start` sin condición de alto. Prueba: la sección no contiene `<img>` ni `<canvas>`.
+- [x] T16 Alcance 5 en `spec.md` y estas tareas.
+      - Medido (2026-10-07, `pnpm build && pnpm start`, iframes): a 1440×900, con las preguntas
+        cerradas, la columna del título mide 181 px y queda fija a 112 px mientras bajan las
+        preguntas, hasta que termina la sección. Sin `<img>` ni `<canvas>` en la sección. Sin
+        scroll horizontal a 1440 (`scrollWidth` 1425 con barra) ni a 390 (375; columna `static`).
