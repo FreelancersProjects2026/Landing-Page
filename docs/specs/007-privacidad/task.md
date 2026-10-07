@@ -38,4 +38,4 @@
         «Volver al inicio» muestra el anillo blanco; «Privacidad» del footer, el contorno de
         `globals.css`, visible sobre el fondo negro; a 390 px queda centrado bajo los derechos.
         Consola sin errores ni avisos de hidratación en ambas páginas.
-- [x] T11 Pendiente del negocio: aprobación final de `contenido.md`.
+- [ ] T11 Pendiente del negocio: aprobación final de `contenido.md`.
