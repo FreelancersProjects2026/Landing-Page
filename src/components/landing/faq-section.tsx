@@ -1,19 +1,18 @@
-import Image from 'next/image'
 import { Plus } from 'lucide-react'
 import type { FaqItem } from '@modules/company-profile'
 
+import { ParticleVisualization } from './particle-visualization'
 import { sectionIds } from './section-ids'
 
 type FaqSectionProps = {
   label: string
   title: string
   items: readonly FaqItem[]
-  imageSrc: string
 }
 
 // <details> nativo: las respuestas quedan en el HTML del servidor (Google las exige visibles en la
 // página para FAQPage) y el desplegable funciona con teclado sin JS.
-export function FaqSection({ label, title, items, imageSrc }: FaqSectionProps) {
+export function FaqSection({ label, title, items }: FaqSectionProps) {
   return (
     <section
       id={sectionIds.faq}
@@ -34,15 +33,12 @@ export function FaqSection({ label, title, items, imageSrc }: FaqSectionProps) {
           >
             {title}
           </h2>
-          <div className="group/imagen relative mt-10 aspect-[16/10] overflow-hidden rounded-2xl border border-foreground/10 lg:aspect-square">
-            <Image
-              src={imageSrc}
-              alt=""
-              fill
-              sizes="(min-width: 1400px) 520px, (min-width: 1024px) 40vw, 100vw"
-              className="object-cover object-[85%_center] motion-safe:transition-transform motion-safe:duration-700 motion-safe:ease-out motion-safe:group-hover/imagen:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+          {/* Con movimiento reducido se oculta la tarjeta entera: vacía parecería un hueco roto. */}
+          <div
+            aria-hidden="true"
+            className="relative mt-10 aspect-[16/10] overflow-hidden rounded-2xl border border-foreground/10 bg-black lg:aspect-square motion-reduce:hidden"
+          >
+            <ParticleVisualization />
           </div>
         </div>
 

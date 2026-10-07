@@ -372,16 +372,8 @@ describe('TeamSection', () => {
 })
 
 describe('FaqSection', () => {
-  const imageSrc = '/preguntas/preguntas-frecuentes.webp'
-
   it('muestra cada pregunta como desplegable con su respuesta en el HTML', () => {
-    render(
-      <FaqSection
-        label={content.menu.faq}
-        {...content.faq}
-        imageSrc={imageSrc}
-      />,
-    )
+    render(<FaqSection label={content.menu.faq} {...content.faq} />)
     const section = screen.getByRole('region', { name: content.faq.title })
 
     expect(section).toHaveAttribute('id', 'preguntas-frecuentes')
@@ -394,22 +386,11 @@ describe('FaqSection', () => {
     })
   })
 
-  it('muestra una imagen decorativa con el src recibido', () => {
-    render(
-      <FaqSection
-        label={content.menu.faq}
-        {...content.faq}
-        imageSrc={imageSrc}
-      />,
-    )
+  it('muestra partículas decorativas en lugar de una imagen', () => {
+    render(<FaqSection label={content.menu.faq} {...content.faq} />)
     const section = screen.getByRole('region', { name: content.faq.title })
-    const image = section.querySelector('img')
 
-    expect(image).toHaveAttribute('alt', '')
-    expect(image).toHaveAttribute(
-      'src',
-      expect.stringContaining('preguntas-frecuentes.webp'),
-    )
-    expect(within(section).queryByRole('img')).toBeNull()
+    expect(section.querySelector('img')).toBeNull()
+    expect(section.querySelector('[aria-hidden="true"] canvas')).not.toBeNull()
   })
 })

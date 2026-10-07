@@ -72,11 +72,7 @@ export default async function Home({
         <HowItWorksSection label={content.menu.process} {...content.process} />
         <ProjectsSection label={content.menu.projects} {...content.projects} />
         <TeamSection label={content.menu.team} {...content.team} />
-        <FaqSection
-          label={content.menu.faq}
-          {...content.faq}
-          imageSrc="/preguntas/preguntas-frecuentes.webp"
-        />
+        <FaqSection label={content.menu.faq} {...content.faq} />
         <CtaSection
           {...content.contact}
           whatsappUrl={whatsappUrl}
