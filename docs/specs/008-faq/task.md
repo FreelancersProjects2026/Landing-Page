@@ -6,9 +6,9 @@
 
 ## Tareas
 - [x] T01 Negocio aprueba respuestas en `contenido.md` (2026-10-07).
-- [ ] T02 Dominio: `LandingContent.faq` (`title`, `items: { question, answer }[]`, mínimo 1) y
+- [x] T02 Dominio: `LandingContent.faq` (`title`, `items: { question, answer }[]`, mínimo 1) y
       `menu.faq`, con pruebas.
-- [ ] T03 Infraestructura: textos `es` y `en` copiados de `contenido.md`.
+- [x] T03 Infraestructura: textos `es` y `en` copiados de `contenido.md`.
 - [ ] T04 Vista `components/landing/faq-section.tsx` (`<details>` nativo: respuestas en el HTML del servidor, sin JS), id en `section-ids.ts`,
       montada entre Equipo y Contacto; prueba en `landing-sections.test.tsx`.
 - [ ] T05 `FAQPage` en `structured-data.ts` con su prueba.

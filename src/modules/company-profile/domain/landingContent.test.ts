@@ -33,6 +33,7 @@ function validContent(): LandingContent {
       process: 'Cómo trabajamos',
       projects: 'Proyectos',
       team: 'Equipo',
+      faq: 'Preguntas',
       contact: 'Contacto',
       toggleLabel: 'Menú',
     },
@@ -68,6 +69,10 @@ function validContent(): LandingContent {
           links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/x/' }],
         },
       ],
+    },
+    faq: {
+      title: 'Preguntas frecuentes',
+      items: [{ question: '¿Cuánto cuesta?', answer: 'Depende del alcance.' }],
     },
     contact: {
       title: '¿Listo?',
@@ -184,6 +189,17 @@ describe('validateLandingContent', () => {
         footer: { ...content.footer, text: '[PENDIENTE]' },
       }),
     ).toThrow(/PENDIENTE/)
+  })
+
+  it('exige al menos una pregunta frecuente', () => {
+    const content = validContent()
+
+    expect(() =>
+      validateLandingContent({
+        ...content,
+        faq: { ...content.faq, items: [] },
+      }),
+    ).toThrow(/pregunta frecuente/)
   })
 
   it('exige que el eslogan contenga la primera palabra rotativa', () => {

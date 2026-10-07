@@ -61,6 +61,11 @@ export interface TeamMember {
   readonly links: readonly ExternalLink[]
 }
 
+export interface FaqItem {
+  readonly question: string
+  readonly answer: string
+}
+
 export interface NotFoundContent {
   readonly title: string
   readonly text: string
@@ -83,6 +88,7 @@ export interface LandingContent {
     readonly process: string
     readonly projects: string
     readonly team: string
+    readonly faq: string
     readonly contact: string
     readonly toggleLabel: string
   }
@@ -113,6 +119,10 @@ export interface LandingContent {
     readonly title: string
     readonly intro: string
     readonly members: readonly TeamMember[]
+  }
+  readonly faq: {
+    readonly title: string
+    readonly items: readonly FaqItem[]
   }
   readonly contact: {
     readonly title: string
@@ -188,6 +198,9 @@ export function validateLandingContent(
   }
   if (content.whatsapp.options.length === 0) {
     problems.push('falta al menos una opción de WhatsApp')
+  }
+  if (content.faq.items.length === 0) {
+    problems.push('falta al menos una pregunta frecuente')
   }
   for (const [path, text] of collectTexts(content, '')) {
     if (text.trim().length === 0) problems.push(`${path} está vacío`)

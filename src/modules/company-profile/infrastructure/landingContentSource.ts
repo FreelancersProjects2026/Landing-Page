@@ -8,6 +8,7 @@ import { validateEmail } from '../domain/email.ts'
 import { validateSiteUrl } from '../domain/siteUrl.ts'
 
 // Textos copiados literalmente de docs/specs/003-generarContenido/contenido.md (aprobado).
+// Preguntas frecuentes: docs/specs/008-faq/contenido.md (aprobado).
 
 const company: Contact = {
   name: 'solutionsPJM',
@@ -86,6 +87,7 @@ const es = validateLandingContent({
     process: 'Cómo trabajamos',
     projects: 'Proyectos',
     team: 'Equipo',
+    faq: 'Preguntas',
     contact: 'Contacto',
     toggleLabel: 'Menú',
   },
@@ -189,6 +191,46 @@ const es = validateLandingContent({
       { ...team.michael, role: 'Desarrollador full-stack.' },
     ],
   },
+  faq: {
+    title: 'Preguntas frecuentes',
+    items: [
+      {
+        question: '¿Cuánto cuesta un software a medida?',
+        answer:
+          'Depende del alcance de tu sistema. Cuéntanos qué necesitas y te enviamos una cotización sin compromiso.',
+      },
+      {
+        question: '¿Cuánto tiempo tarda el desarrollo?',
+        answer:
+          'Depende del tamaño del proyecto: puede tomar desde unos días hasta varios meses.',
+      },
+      {
+        question: '¿De quién es el código fuente?',
+        answer:
+          'El código fuente es de solutionsPJM. Tú usas el sistema y nosotros nos encargamos de mantenerlo.',
+      },
+      {
+        question: '¿Qué pasa después de la entrega?',
+        answer:
+          'Te entregamos el sistema con garantía y le damos mantenimiento.',
+      },
+      {
+        question: '¿Trabajan con clientes fuera de Costa Rica?',
+        answer:
+          'Sí. Atendemos clientes de todos los países y nuestro equipo de desarrollo trabaja 24/7.',
+      },
+      {
+        question: '¿Cómo se paga?',
+        answer:
+          'Como mejor te venga: al contado, a pagos o con una suscripción mensual, por SINPE o transferencia bancaria.',
+      },
+      {
+        question: '¿Necesito saber de tecnología?',
+        answer:
+          'No. Tú nos cuentas cómo funciona tu negocio y nosotros nos encargamos de la parte técnica.',
+      },
+    ],
+  },
   contact: {
     title: '¿Listo para crear software a la medida?',
     text: 'Cuéntanos qué problema quieres resolver y cotiza tu proyecto sin compromiso.',
@@ -239,6 +281,7 @@ const en = validateLandingContent({
     process: 'How we work',
     projects: 'Projects',
     team: 'Team',
+    faq: 'FAQ',
     contact: 'Contact',
     toggleLabel: 'Menu',
   },
@@ -340,6 +383,46 @@ const en = validateLandingContent({
         role: 'Full-stack developer focused on artificial intelligence, agents and large language models (LLMs).',
       },
       { ...team.michael, role: 'Full-stack developer.' },
+    ],
+  },
+  faq: {
+    title: 'Frequently asked questions',
+    items: [
+      {
+        question: 'How much does custom software cost?',
+        answer:
+          "It depends on the scope of your system. Tell us what you need and we'll send you a quote, no strings attached.",
+      },
+      {
+        question: 'How long does development take?',
+        answer:
+          'It depends on the size of the project: anywhere from a few days to several months.',
+      },
+      {
+        question: 'Who owns the source code?',
+        answer:
+          'The source code belongs to solutionsPJM. You use the system and we take care of maintaining it.',
+      },
+      {
+        question: 'What happens after delivery?',
+        answer:
+          'We deliver your system with a warranty and provide maintenance.',
+      },
+      {
+        question: 'Do you work with clients outside Costa Rica?',
+        answer:
+          'Yes. We serve clients in every country, and our development team works 24/7.',
+      },
+      {
+        question: 'How do I pay?',
+        answer:
+          'Whatever works best for you: upfront, in installments or with a monthly subscription, via SINPE or bank transfer.',
+      },
+      {
+        question: 'Do I need to know about technology?',
+        answer:
+          'No. You tell us how your business works and we handle the technical side.',
+      },
     ],
   },
   contact: {

@@ -15,6 +15,12 @@ const approvedContent = readFileSync(
   'utf8',
 ).replace(/\s+/g, ' ')
 
+// Preguntas frecuentes aprobadas por el negocio (Spec 008).
+const faqContent = readFileSync(
+  'docs/specs/008-faq/contenido.md',
+  'utf8',
+).replace(/\s+/g, ' ')
+
 // Los textos de la 404 son marcadores de la Spec 006 hasta que el negocio los apruebe (T13).
 const notFoundSpec = readFileSync('docs/specs/006-pagina-404/spec.md', 'utf8')
 
@@ -94,6 +100,11 @@ describe('landingContentSource', () => {
     expect(content.hero.slogan).not.toMatch(/\.$/)
   })
 
+  it('publica las mismas siete preguntas frecuentes en ambos idiomas', () => {
+    expect(es.faq.items).toHaveLength(7)
+    expect(en.faq.items).toHaveLength(es.faq.items.length)
+  })
+
   it('no publica enlaces en los proyectos', () => {
     const projects = JSON.stringify([es.projects, en.projects])
 
@@ -106,7 +117,10 @@ describe('landingContentSource', () => {
       // Datos técnicos que no se muestran: el idioma y el código ISO del país (JSON-LD).
       const technical = [content.locale, content.company.address.country]
       const missing = collectTexts({ ...content, notFound: {} }).filter(
-        (text) => !technical.includes(text) && !approvedContent.includes(text),
+        (text) =>
+          !technical.includes(text) &&
+          !approvedContent.includes(text) &&
+          !faqContent.includes(text),
       )
 
       expect(missing).toEqual([])

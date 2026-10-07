@@ -25,6 +25,7 @@ export type {
   Service,
   Step,
   TeamMember,
+  FaqItem,
 } from './domain/landingContent.ts'
 export {
   buildPrivacyAlternates,
