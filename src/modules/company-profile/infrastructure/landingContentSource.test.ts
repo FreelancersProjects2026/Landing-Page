@@ -116,11 +116,27 @@ describe('landingContentSource', () => {
     (content) => {
       // Datos técnicos que no se muestran: el idioma y el código ISO del país (JSON-LD).
       const technical = [content.locale, content.company.address.country]
-      const missing = collectTexts({ ...content, notFound: {} }).filter(
+      const missing = collectTexts({
+        ...content,
+        notFound: {},
+        faq: {},
+        menu: { ...content.menu, faq: '' },
+      }).filter(
         (text) =>
+          text !== '' &&
           !technical.includes(text) &&
-          !approvedContent.includes(text) &&
-          !faqContent.includes(text),
+          !approvedContent.includes(text),
+      )
+
+      expect(missing).toEqual([])
+    },
+  )
+
+  it.each([es, en])(
+    'copia literalmente de la Spec 008 las preguntas frecuentes en $locale',
+    (content) => {
+      const missing = collectTexts([content.faq, content.menu.faq]).filter(
+        (text) => !faqContent.includes(text),
       )
 
       expect(missing).toEqual([])
