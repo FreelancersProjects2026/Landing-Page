@@ -26,7 +26,7 @@ export type {
   Service,
   Step,
   TeamMember,
-}from './domain/landingContent.ts'
+} from './domain/landingContent.ts'
 export {
   buildPrivacyAlternates,
   buildPrivacyPath,
