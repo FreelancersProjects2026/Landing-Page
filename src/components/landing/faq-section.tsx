@@ -39,7 +39,7 @@ export function FaqSection({ label, title, items, imageSrc }: FaqSectionProps) {
               src={imageSrc}
               alt=""
               fill
-              sizes="(min-width: 1024px) 40vw, 100vw"
+              sizes="(min-width: 1400px) 520px, (min-width: 1024px) 40vw, 100vw"
               className="object-cover object-[85%_center] motion-safe:transition-transform motion-safe:duration-700 motion-safe:ease-out motion-safe:group-hover/imagen:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
