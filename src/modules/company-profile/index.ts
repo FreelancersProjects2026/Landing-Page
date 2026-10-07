@@ -16,6 +16,7 @@ export { defaultLocale, isLocale, locales } from './domain/landingContent.ts'
 export type {
   Contact,
   ExternalLink,
+  FaqItem,
   LandingContent,
   Locale,
   NotFoundContent,
@@ -25,8 +26,7 @@ export type {
   Service,
   Step,
   TeamMember,
-  FaqItem,
-} from './domain/landingContent.ts'
+}from './domain/landingContent.ts'
 export {
   buildPrivacyAlternates,
   buildPrivacyPath,
