@@ -8,7 +8,7 @@
 
 ## Tareas
 - [x] T01 Línea base: `pnpm validate` en verde antes de tocar nada.
-- [ ] T02 Dominio: `PrivacyPolicy` y `validatePrivacyPolicy` con sus pruebas.
+- [x] T02 Dominio: `PrivacyPolicy` y `validatePrivacyPolicy` con sus pruebas.
 - [ ] T03 Infraestructura: textos `es` y `en` de `contenido.md`, con la prueba de copia literal y
       de igual cantidad de secciones.
 - [ ] T04 Aplicación: `privacyPaths`, `buildPrivacyUrl`, `buildPrivacyAlternates` y

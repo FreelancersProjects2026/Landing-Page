@@ -148,7 +148,7 @@ export class InvalidLandingContentError extends Error {
   }
 }
 
-function collectTexts(value: unknown, path: string): [string, string][] {
+export function collectTexts(value: unknown, path: string): [string, string][] {
   if (typeof value === 'string') return [[path, value]]
   if (typeof value !== 'object' || value === null) return []
   return Object.entries(value).flatMap(([key, child]) =>
