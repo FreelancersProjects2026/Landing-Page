@@ -15,11 +15,16 @@ export function ParticleVisualization() {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
+    // Tamaño cacheado: medir en cada frame fuerza layout.
+    let w = 0
+    let h = 0
     const resize = () => {
       const rect = canvas.getBoundingClientRect()
       const dpr = Math.min(window.devicePixelRatio || 1, 2)
-      canvas.width = rect.width * dpr
-      canvas.height = rect.height * dpr
+      w = rect.width
+      h = rect.height
+      canvas.width = w * dpr
+      canvas.height = h * dpr
       ctx.scale(dpr, dpr)
     }
     resize()
@@ -48,11 +53,7 @@ export function ParticleVisualization() {
     })
 
     let time = 0
-    const render = () => {
-      const rect = canvas.getBoundingClientRect()
-      const w = rect.width
-      const h = rect.height
-
+    const draw = () => {
       ctx.clearRect(0, 0, w, h)
 
       const mx = mouseRef.current.x
@@ -80,16 +81,37 @@ export function ParticleVisualization() {
         ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`
         ctx.fill()
       })
-
-      time += 0.016
-      frameRef.current = requestAnimationFrame(render)
     }
-    render()
+    draw()
+
+    const loop = () => {
+      time += 0.016
+      draw()
+      frameRef.current = requestAnimationFrame(loop)
+    }
+    const stop = () => {
+      cancelAnimationFrame(frameRef.current)
+      frameRef.current = 0
+    }
+
+    // Con movimiento reducido queda el primer frame estático. Si no, solo anima en pantalla.
+    const reducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches
+    const observer = reducedMotion
+      ? null
+      : new IntersectionObserver(([entry]) => {
+          if (!entry?.isIntersecting) stop()
+          else if (!frameRef.current)
+            frameRef.current = requestAnimationFrame(loop)
+        })
+    observer?.observe(canvas)
 
     return () => {
       window.removeEventListener('resize', resize)
       window.removeEventListener('mousemove', handleMouseMove)
-      cancelAnimationFrame(frameRef.current)
+      observer?.disconnect()
+      stop()
     }
   }, [])
 
