@@ -38,7 +38,8 @@
         la columna queda fija (736 px, fija a 112 px, la tarjeta termina en 848 px). A 1366×768 la
         columna se desplaza normal (`static`, 716 px, tarjeta de 495 px) y nunca queda cortada.
         Sin scroll horizontal en ninguno de los dos.
-- [x] T11 Alcance 5 en `spec.md` y estas tareas.
+- [x] T11 *(Reemplazada por T14: el negocio descartó la imagen el 2026-10-07.)* Alcance 5 en
+      `spec.md` y estas tareas.
       - Medido (2026-10-07, `pnpm build && pnpm start`, iframes de 1440×900 y 390×844): sin scroll
         horizontal (`scrollWidth` 1425 con barra / 375). Escritorio: la columna fija se detiene a
         112 px, bajo el menú (termina en 74–80 px), y no tapa las preguntas, que empiezan en
