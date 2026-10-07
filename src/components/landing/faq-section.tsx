@@ -1,7 +1,6 @@
 import { Plus } from 'lucide-react'
 import type { FaqItem } from '@modules/company-profile'
 
-import { ParticleVisualization } from './particle-visualization'
 import { sectionIds } from './section-ids'
 
 type FaqSectionProps = {
@@ -20,9 +19,8 @@ export function FaqSection({ label, title, items }: FaqSectionProps) {
       className="relative py-24 lg:py-32"
     >
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 grid lg:grid-cols-12 gap-12">
-        {/* En escritorio la columna queda fija mientras las preguntas se desplazan (sin JS), solo si
-            cabe entera bajo el menú: 112 px de top + 736 px de columna ≈ 860 px de alto. */}
-        <div className="lg:col-span-5 lg:self-start lg:top-28 [@media(min-height:860px)]:lg:sticky">
+        {/* En escritorio el título queda fijo mientras las preguntas se desplazan (sin JS). */}
+        <div className="lg:col-span-5 lg:sticky lg:top-28 lg:self-start">
           <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-6">
             <span className="w-12 h-px bg-foreground/30" />
             {label}
@@ -33,13 +31,6 @@ export function FaqSection({ label, title, items }: FaqSectionProps) {
           >
             {title}
           </h2>
-          {/* Con movimiento reducido se oculta la tarjeta entera: vacía parecería un hueco roto. */}
-          <div
-            aria-hidden="true"
-            className="relative mt-10 aspect-[16/10] overflow-hidden rounded-2xl border border-foreground/10 bg-black lg:aspect-square motion-reduce:hidden"
-          >
-            <ParticleVisualization />
-          </div>
         </div>
 
         <div className="lg:col-span-7 border-t border-foreground/10">

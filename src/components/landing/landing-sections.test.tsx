@@ -386,11 +386,10 @@ describe('FaqSection', () => {
     })
   })
 
-  it('muestra partículas decorativas en lugar de una imagen', () => {
+  it('muestra solo las preguntas, sin imagen ni partículas', () => {
     render(<FaqSection label={content.menu.faq} {...content.faq} />)
     const section = screen.getByRole('region', { name: content.faq.title })
 
-    expect(section.querySelector('img')).toBeNull()
-    expect(section.querySelector('[aria-hidden="true"] canvas')).not.toBeNull()
+    expect(section.querySelector('img, canvas')).toBeNull()
   })
 })
