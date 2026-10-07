@@ -33,6 +33,10 @@
         el recorte cuadrado cortaba la burbuja del check en el borde derecho; con 85 % las tres
         burbujas quedan centradas. A 1440×900 la tarjeta mide 515×515 y la columna 736 px. Fija a
         112 px, la tarjeta termina en 848 px y entra completa.
+      - Sticky solo con alto ≥ 860 px (`[@media(min-height:860px)]:lg:sticky`). Medido: a 1440×900
+        la columna queda fija (736 px, fija a 112 px, la tarjeta termina en 848 px). A 1366×768 la
+        columna se desplaza normal (`static`, 716 px, tarjeta de 495 px) y nunca queda cortada.
+        Sin scroll horizontal en ninguno de los dos.
 - [x] T11 Alcance 5 en `spec.md` y estas tareas.
       - Medido (2026-10-07, `pnpm build && pnpm start`, iframes de 1440×900 y 390×844): sin scroll
         horizontal (`scrollWidth` 1425 con barra / 375). Escritorio: la columna fija se detiene a

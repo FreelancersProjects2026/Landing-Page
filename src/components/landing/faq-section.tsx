@@ -21,8 +21,9 @@ export function FaqSection({ label, title, items, imageSrc }: FaqSectionProps) {
       className="relative py-24 lg:py-32"
     >
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 grid lg:grid-cols-12 gap-12">
-        {/* En escritorio la columna queda fija mientras las preguntas se desplazan (sin JS). */}
-        <div className="lg:col-span-5 lg:sticky lg:top-28 lg:self-start">
+        {/* En escritorio la columna queda fija mientras las preguntas se desplazan (sin JS), solo si
+            cabe entera bajo el menú: 112 px de top + 736 px de columna ≈ 860 px de alto. */}
+        <div className="lg:col-span-5 lg:self-start lg:top-28 [@media(min-height:860px)]:lg:sticky">
           <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-6">
             <span className="w-12 h-px bg-foreground/30" />
             {label}
