@@ -35,5 +35,6 @@ export function privacyPageProps(locale: Locale) {
     policy: getPrivacyPolicy(locale),
     homeHref: `/${locale}`,
     homeLabel: getLandingContent(locale).notFound.cta,
+    headerImageSrc: '/privacidad/escudo-privacidad.webp',
   }
 }

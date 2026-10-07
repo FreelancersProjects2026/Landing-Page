@@ -13,6 +13,7 @@ function renderView() {
       policy={policy}
       homeHref="/es"
       homeLabel="Volver al inicio"
+      headerImageSrc="/privacidad/escudo-privacidad.webp"
     />,
   )
 }
@@ -59,5 +60,24 @@ describe('PrivacyPolicyView', () => {
     expect(
       screen.getByRole('link', { name: 'Volver al inicio' }),
     ).toHaveAttribute('href', '/es')
+  })
+
+  it('muestra la imagen de cabecera como decorativa, después del enlace y antes del h1', () => {
+    const { container } = renderView()
+    const image = container.querySelector('header img')
+
+    expect(image).toHaveAttribute('alt', '')
+    expect(image).toHaveAttribute(
+      'src',
+      expect.stringContaining('escudo-privacidad.webp'),
+    )
+    const link = screen.getByRole('link', { name: 'Volver al inicio' })
+    const h1 = screen.getByRole('heading', { level: 1 })
+    expect(
+      link.compareDocumentPosition(image!) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy()
+    expect(
+      image!.compareDocumentPosition(h1) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy()
   })
 })

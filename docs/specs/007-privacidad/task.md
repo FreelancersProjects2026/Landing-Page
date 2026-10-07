@@ -41,9 +41,15 @@
 - [ ] T11 Pendiente del negocio: aprobación final de `contenido.md`.
 - [x] T12 Quitar nombre de persona y cédula de §1 (`contenido.md` ya actualizado): fuente y prueba
       de copia literal.
-- [ ] T13 Imagen de cabecera, a prueba: convertir
+- [x] T13 Imagen de cabecera, a prueba: convertir
       `public/privacidad/Escudo de privacidad sobre raíces luminosas.png` a
       `public/privacidad/escudo-privacidad.webp` (≤ 250 KB, 1672×941, `pnpm dlx sharp-cli`), sin
       borrar el PNG hasta que el negocio la apruebe. Cabecera con la imagen decorativa (`alt=""`)
       detrás del `h1`: escudo a la derecha, título sobre la zona negra de la izquierda en
       escritorio; en móvil, imagen arriba y título debajo. Degradado al fondo para fundirla.
+      - Hecho (2026-10-07): WebP de 92 KB a 1673×942 (tamaño original). Medido en Chrome sobre
+        `pnpm start`: 390×844 y 1440×900 sin scroll horizontal; «Volver al inicio» no queda tapado
+        (`elementFromPoint`). Contraste mínimo calculado píxel a píxel con el degradado: a 1440,
+        `h1` 16,8:1 y fecha 6,6:1; a 390 el título va bajo la imagen, sobre el fondo. La cabecera
+        mide `clamp(34rem,40vw,44rem)` en escritorio para que el escudo no se corte en pantallas
+        anchas. El PNG sigue sin versionar hasta que el negocio apruebe la imagen.

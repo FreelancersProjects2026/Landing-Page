@@ -1,3 +1,5 @@
+import { statSync } from 'node:fs'
+
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
@@ -51,5 +53,16 @@ describe.each([
         name: getLandingContent(lang).notFound.cta,
       }),
     ).toHaveAttribute('href', `/${lang}`)
+    expect(document.querySelector('header img')).toHaveAttribute(
+      'src',
+      expect.stringContaining('escudo-privacidad.webp'),
+    )
   })
+})
+
+// Vitest se ejecuta desde la raíz del repositorio.
+it('la imagen de cabecera existe en WebP y pesa como máximo 250 KB', () => {
+  const { size } = statSync('public/privacidad/escudo-privacidad.webp')
+
+  expect(size).toBeLessThanOrEqual(250 * 1024)
 })
