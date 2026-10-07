@@ -30,6 +30,12 @@
         texto en el SSR (igual que `/en/xyz`: contenido según la ruta, `<html lang="es">`).
         `sitemap.xml`: 4 `<url>` con sus hreflang. Footer: `/es` → `/es/privacidad` «Privacidad»,
         `/en` → `/en/privacy` «Privacy».
-- [ ] T10 Revisión manual: 390×844 y 1440×900, sin scroll horizontal, encabezados en orden,
+- [x] T10 Revisión manual: 390×844 y 1440×900, sin scroll horizontal, encabezados en orden,
       foco visible en los enlaces.
+      - Verificado (2026-10-07, Chrome sobre `pnpm start`, iframes de 390×844 y 1440×900):
+        `/es/privacidad` y `/en/privacy` sin scroll horizontal (scrollWidth ≤ ancho visible) y
+        ningún elemento sale del viewport; encabezados `h1` → 9 `h2` en orden. Foco con Tab:
+        «Volver al inicio» muestra el anillo blanco; «Privacidad» del footer, el contorno de
+        `globals.css`, visible sobre el fondo negro; a 390 px queda centrado bajo los derechos.
+        Consola sin errores ni avisos de hidratación en ambas páginas.
 - [x] T11 Pendiente del negocio: aprobación final de `contenido.md`.
