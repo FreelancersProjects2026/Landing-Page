@@ -57,7 +57,8 @@ export default async function Home({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: faqStructuredData }}
       />
-      <main className="relative min-h-screen overflow-x-hidden">
+      {/* clip, no hidden: hidden convierte <main> en contenedor de scroll y anula los sticky. */}
+      <main className="relative min-h-screen overflow-x-clip">
         <Navigation
           brand={content.company.name}
           menu={content.menu}
@@ -70,7 +71,11 @@ export default async function Home({
         <HowItWorksSection label={content.menu.process} {...content.process} />
         <ProjectsSection label={content.menu.projects} {...content.projects} />
         <TeamSection label={content.menu.team} {...content.team} />
-        <FaqSection label={content.menu.faq} {...content.faq} />
+        <FaqSection
+          label={content.menu.faq}
+          {...content.faq}
+          imageSrc="/preguntas/preguntas-frecuentes.webp"
+        />
         <CtaSection
           {...content.contact}
           whatsappUrl={whatsappUrl}

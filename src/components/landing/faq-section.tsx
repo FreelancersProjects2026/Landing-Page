@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Plus } from 'lucide-react'
 import type { FaqItem } from '@modules/company-profile'
 
@@ -7,11 +8,12 @@ type FaqSectionProps = {
   label: string
   title: string
   items: readonly FaqItem[]
+  imageSrc: string
 }
 
 // <details> nativo: las respuestas quedan en el HTML del servidor (Google las exige visibles en la
 // página para FAQPage) y el desplegable funciona con teclado sin JS.
-export function FaqSection({ label, title, items }: FaqSectionProps) {
+export function FaqSection({ label, title, items, imageSrc }: FaqSectionProps) {
   return (
     <section
       id={sectionIds.faq}
@@ -19,7 +21,8 @@ export function FaqSection({ label, title, items }: FaqSectionProps) {
       className="relative py-24 lg:py-32"
     >
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 grid lg:grid-cols-12 gap-12">
-        <div className="lg:col-span-5">
+        {/* En escritorio la columna queda fija mientras las preguntas se desplazan (sin JS). */}
+        <div className="lg:col-span-5 lg:sticky lg:top-28 lg:self-start">
           <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-6">
             <span className="w-12 h-px bg-foreground/30" />
             {label}
@@ -30,6 +33,16 @@ export function FaqSection({ label, title, items }: FaqSectionProps) {
           >
             {title}
           </h2>
+          <div className="group/imagen relative mt-10 aspect-[16/10] overflow-hidden rounded-2xl border border-foreground/10 lg:aspect-[4/5]">
+            <Image
+              src={imageSrc}
+              alt=""
+              fill
+              sizes="(min-width: 1024px) 40vw, 100vw"
+              className="object-cover object-[75%_center] motion-safe:transition-transform motion-safe:duration-700 motion-safe:ease-out motion-safe:group-hover/imagen:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+          </div>
         </div>
 
         <div className="lg:col-span-7 border-t border-foreground/10">

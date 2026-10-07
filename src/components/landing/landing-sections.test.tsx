@@ -372,8 +372,16 @@ describe('TeamSection', () => {
 })
 
 describe('FaqSection', () => {
+  const imageSrc = '/preguntas/preguntas-frecuentes.webp'
+
   it('muestra cada pregunta como desplegable con su respuesta en el HTML', () => {
-    render(<FaqSection label={content.menu.faq} {...content.faq} />)
+    render(
+      <FaqSection
+        label={content.menu.faq}
+        {...content.faq}
+        imageSrc={imageSrc}
+      />,
+    )
     const section = screen.getByRole('region', { name: content.faq.title })
 
     expect(section).toHaveAttribute('id', 'preguntas-frecuentes')
@@ -384,5 +392,24 @@ describe('FaqSection', () => {
       expect(item.querySelector('summary')).toHaveTextContent(question)
       expect(within(item).getByText(answer)).toBeInTheDocument()
     })
+  })
+
+  it('muestra una imagen decorativa con el src recibido', () => {
+    render(
+      <FaqSection
+        label={content.menu.faq}
+        {...content.faq}
+        imageSrc={imageSrc}
+      />,
+    )
+    const section = screen.getByRole('region', { name: content.faq.title })
+    const image = section.querySelector('img')
+
+    expect(image).toHaveAttribute('alt', '')
+    expect(image).toHaveAttribute(
+      'src',
+      expect.stringContaining('preguntas-frecuentes.webp'),
+    )
+    expect(within(section).queryByRole('img')).toBeNull()
   })
 })
