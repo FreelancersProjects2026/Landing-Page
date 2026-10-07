@@ -43,15 +43,6 @@ beforeEach(() => {
 afterEach(() => {
   vi.restoreAllMocks()
   vi.unstubAllGlobals()
-  // Vuelve a los simulacros globales de src/test/setup.ts.
-  vi.stubGlobal(
-    'IntersectionObserver',
-    class {
-      observe() {}
-      disconnect() {}
-    },
-  )
-  HTMLCanvasElement.prototype.getContext = () => null
   requestFrame.mockClear()
   cancelFrame.mockClear()
   disconnect.mockClear()
