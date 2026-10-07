@@ -21,3 +21,20 @@
 - [x] T07 Correcciones de revisión: preguntas frecuentes únicas en el dominio, ícono con
       `motion-safe:`, `FaqItem` en orden alfabético y comparación con `contenido.md` acotada a la FAQ.
 - [x] T08 Expectativa de rich results ajustada en `spec.md` y en el criterio de T06.
+- [x] T09 Asset `public/preguntas/preguntas-frecuentes.webp` (1672×941, 126 KB, calidad 80) con
+      `sharp-cli`; prueba de existencia y peso ≤ 250 KB en `page.test.tsx`. El PNG original no se
+      versiona.
+- [x] T10 `FaqSection` recibe `imageSrc` desde `page.tsx`: imagen decorativa (`alt=""`, carga
+      diferida) bajo el título, en tarjeta 16:10 (móvil) / 4:5 (escritorio) con degradado y zoom
+      `motion-safe` al pasar el mouse; columna izquierda `lg:sticky`. `<main>` pasa de
+      `overflow-x-hidden` a `overflow-x-clip`, porque `hidden` lo volvía contenedor de scroll y
+      anulaba el sticky.
+- [x] T11 Alcance 5 en `spec.md` y estas tareas.
+      - Medido (2026-10-07, `pnpm build && pnpm start`, iframes de 1440×900 y 390×844): sin scroll
+        horizontal (`scrollWidth` 1425 con barra / 375). Escritorio: la columna fija se detiene a
+        112 px, bajo el menú (termina en 74–80 px), y no tapa las preguntas, que empiezan en
+        x = 624 px y la columna termina en 576 px. Con las 7 preguntas cerradas, ambas columnas
+        miden lo mismo (865 px) y no hay nada que fijar; el efecto se nota al abrir respuestas.
+        La columna (865 px) es más alta que el espacio visible bajo el menú (788 px): mientras
+        está fija, los ~77 px inferiores de la tarjeta quedan fuera de pantalla. Consola de `/es`
+        y `/en` sin avisos de hidratación. Falta que el negocio vea la imagen.
