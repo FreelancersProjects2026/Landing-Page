@@ -8,6 +8,7 @@ let onIntersect: (entries: { isIntersecting: boolean }[]) => void
 const disconnect = vi.fn()
 const requestFrame = vi.fn(() => 1)
 const cancelFrame = vi.fn()
+const arc = vi.fn()
 
 function setVisible(isIntersecting: boolean) {
   act(() => onIntersect([{ isIntersecting }]))
@@ -19,7 +20,7 @@ beforeEach(() => {
     scale: vi.fn(),
     clearRect: vi.fn(),
     beginPath: vi.fn(),
-    arc: vi.fn(),
+    arc,
     fill: vi.fn(),
   } as unknown as CanvasRenderingContext2D)
   vi.stubGlobal('matchMedia', (query: string) => ({
@@ -54,6 +55,7 @@ afterEach(() => {
   requestFrame.mockClear()
   cancelFrame.mockClear()
   disconnect.mockClear()
+  arc.mockClear()
 })
 
 describe('ParticleVisualization', () => {
@@ -63,6 +65,18 @@ describe('ParticleVisualization', () => {
     render(<ParticleVisualization />)
 
     expect(requestFrame).not.toHaveBeenCalled()
+  })
+
+  it('con movimiento reducido redibuja el frame estático al redimensionar', () => {
+    reducedMotion = true
+    render(<ParticleVisualization />)
+    arc.mockClear()
+
+    act(() => {
+      window.dispatchEvent(new Event('resize'))
+    })
+
+    expect(arc).toHaveBeenCalled()
   })
 
   it('pausa la animación fuera de pantalla y la reanuda al volver', () => {

@@ -26,9 +26,9 @@ export function ParticleVisualization() {
       canvas.width = w * dpr
       canvas.height = h * dpr
       ctx.scale(dpr, dpr)
+      // Asignar width limpia el canvas; sin bucle (movimiento reducido) nada más lo redibujaría.
+      draw()
     }
-    resize()
-    window.addEventListener('resize', resize)
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect()
@@ -82,7 +82,8 @@ export function ParticleVisualization() {
         ctx.fill()
       })
     }
-    draw()
+    resize()
+    window.addEventListener('resize', resize)
 
     const loop = () => {
       time += 0.016
