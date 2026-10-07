@@ -24,6 +24,8 @@ y que el sitio cumpla lo básico de la Ley 8968.
 5. **Fecha de última actualización** visible en la página.
 6. **Alternates cruzados:** `/es/privacidad` ↔ `/en/privacy` (hreflang y selector de idioma, si
    existe en la página).
+7. **Imagen de cabecera** `public/privacidad/` (escudo con candado sobre raíces), decorativa, a
+   prueba: el negocio decide si queda tras verla (2026-10-07).
 
 ## Fuera de alcance
 - Términos y condiciones (no hay ventas, cuentas ni pagos en la web; las condiciones van en cada
@@ -62,8 +64,8 @@ Secciones, en este orden (el texto final está pendiente):
 
 ## Reglas del negocio
 Confirmadas por el negocio (2026-10-07):
-- **Responsable:** persona física Jason Moya Brenes, cédula 3-0549-0443, nombre comercial
-  solutionsPJM, Paraíso de Cartago, Costa Rica. Nombre y cédula se publican en la página.
+- **Responsable:** se publica solo el nombre comercial solutionsPJM, Paraíso de Cartago, Costa
+  Rica. Sin nombre de persona ni cédula (cambio del negocio, 2026-10-07).
 - **Conservación:** 12 meses desde el último contacto para quien no contrata; luego se borran.
 - **Solicitudes de derechos:** al correo `solutionspjm@gmail.com`; respuesta en un máximo de
   5 días hábiles (compromiso propio).

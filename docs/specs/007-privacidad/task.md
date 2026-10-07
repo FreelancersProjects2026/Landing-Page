@@ -39,3 +39,11 @@
         `globals.css`, visible sobre el fondo negro; a 390 px queda centrado bajo los derechos.
         Consola sin errores ni avisos de hidratación en ambas páginas.
 - [ ] T11 Pendiente del negocio: aprobación final de `contenido.md`.
+- [x] T12 Quitar nombre de persona y cédula de §1 (`contenido.md` ya actualizado): fuente y prueba
+      de copia literal.
+- [ ] T13 Imagen de cabecera, a prueba: convertir
+      `public/privacidad/Escudo de privacidad sobre raíces luminosas.png` a
+      `public/privacidad/escudo-privacidad.webp` (≤ 250 KB, 1672×941, `pnpm dlx sharp-cli`), sin
+      borrar el PNG hasta que el negocio la apruebe. Cabecera con la imagen decorativa (`alt=""`)
+      detrás del `h1`: escudo a la derecha, título sobre la zona negra de la izquierda en
+      escritorio; en móvil, imagen arriba y título debajo. Degradado al fondo para fundirla.

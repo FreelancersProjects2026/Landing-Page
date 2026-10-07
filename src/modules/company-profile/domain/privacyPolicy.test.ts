@@ -18,7 +18,7 @@ function validPolicy(): PrivacyPolicy {
     updated: 'Última actualización: 7 de octubre de 2026',
     intro: 'Esta política explica qué datos tratamos.',
     sections: [
-      { heading: '1. Responsable', paragraphs: ['Jason Moya Brenes.'] },
+      { heading: '1. Responsable', paragraphs: ['solutionsPJM.'] },
       {
         heading: '2. Qué datos tratamos',
         items: ['Los que nos envías.'],

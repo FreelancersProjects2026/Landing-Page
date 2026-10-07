@@ -19,7 +19,7 @@ const es = validatePrivacyPolicy({
     {
       heading: '1. Responsable',
       paragraphs: [
-        'El responsable del tratamiento es Jason Moya Brenes, cédula 3-0549-0443, bajo el nombre comercial solutionsPJM, con domicilio en Paraíso de Cartago, Costa Rica. Contacto: solutionspjm@gmail.com.',
+        'El responsable del tratamiento es solutionsPJM, con domicilio en Paraíso de Cartago, Costa Rica. Contacto: solutionspjm@gmail.com.',
       ],
     },
     {
@@ -92,7 +92,7 @@ const en = validatePrivacyPolicy({
     {
       heading: '1. Data controller',
       paragraphs: [
-        'The data controller is Jason Moya Brenes, ID 3-0549-0443, trading as solutionsPJM, based in Paraíso de Cartago, Costa Rica. Contact: solutionspjm@gmail.com.',
+        'The data controller is solutionsPJM, based in Paraíso de Cartago, Costa Rica. Contact: solutionspjm@gmail.com.',
       ],
     },
     {
