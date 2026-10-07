@@ -16,7 +16,11 @@ import {
   getPrivacyPolicy,
 } from '@modules/company-profile'
 
-import { buildStructuredData, serializeJsonLd } from './structured-data'
+import {
+  buildFaqStructuredData,
+  buildStructuredData,
+  serializeJsonLd,
+} from './structured-data'
 
 export default async function Home({
   params,
@@ -41,12 +45,17 @@ export default async function Home({
     href: buildPrivacyPath(content.locale),
   }
   const structuredData = serializeJsonLd(buildStructuredData(content))
+  const faqStructuredData = serializeJsonLd(buildFaqStructuredData(content))
 
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: structuredData }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: faqStructuredData }}
       />
       <main className="relative min-h-screen overflow-x-hidden">
         <Navigation

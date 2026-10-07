@@ -11,7 +11,7 @@ import {
 } from '@modules/company-profile'
 
 import Home from './page'
-import { buildStructuredData } from './structured-data'
+import { buildFaqStructuredData, buildStructuredData } from './structured-data'
 
 function renderPage(lang: string) {
   return Home({ params: Promise.resolve({ lang }) })
@@ -133,11 +133,13 @@ describe.each(['es', 'en'])('Home (%s)', (lang) => {
 
   it('publica el JSON-LD del idioma', async () => {
     const { container } = render(await renderPage(lang))
-    const script = container.querySelector('script[type="application/ld+json"]')
-
-    expect(JSON.parse(script?.textContent ?? '')).toEqual(
-      buildStructuredData(content),
+    const scripts = container.querySelectorAll(
+      'script[type="application/ld+json"]',
     )
+
+    expect(
+      Array.from(scripts, (script) => JSON.parse(script.textContent ?? '')),
+    ).toEqual([buildStructuredData(content), buildFaqStructuredData(content)])
   })
 
   it('se hidrata sin errores a partir del HTML del servidor', async () => {
