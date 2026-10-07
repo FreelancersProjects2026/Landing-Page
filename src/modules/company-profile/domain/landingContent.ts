@@ -202,6 +202,12 @@ export function validateLandingContent(
   if (content.faq.items.length === 0) {
     problems.push('falta al menos una pregunta frecuente')
   }
+  const questions = content.faq.items.map(({ question }) => question)
+  for (const question of new Set(questions)) {
+    if (questions.indexOf(question) !== questions.lastIndexOf(question)) {
+      problems.push(`la pregunta frecuente «${question}» está repetida`)
+    }
+  }
   for (const [path, text] of collectTexts(content, '')) {
     if (text.trim().length === 0) problems.push(`${path} está vacío`)
     if (text.includes(PENDING_MARK)) {

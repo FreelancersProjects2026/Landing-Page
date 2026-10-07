@@ -202,6 +202,18 @@ describe('validateLandingContent', () => {
     ).toThrow(/pregunta frecuente/)
   })
 
+  it('rechaza preguntas frecuentes repetidas', () => {
+    const content = validContent()
+    const [item] = content.faq.items
+
+    expect(() =>
+      validateLandingContent({
+        ...content,
+        faq: { ...content.faq, items: [item, item] },
+      }),
+    ).toThrow(/pregunta frecuente.*repetida/)
+  })
+
   it('exige que el eslogan contenga la primera palabra rotativa', () => {
     const content = validContent()
 
