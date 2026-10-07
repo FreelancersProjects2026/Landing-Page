@@ -13,3 +13,6 @@
       montada entre Equipo y Contacto; prueba en `landing-sections.test.tsx`.
 - [x] T05 `FAQPage` en `structured-data.ts` con su prueba.
 - [ ] T06 Verificación: `pnpm validate`, `/es` y `/en` en dev, Rich Results Test de Google.
+      - Hecho (2026-10-07): `pnpm validate` en verde (167 pruebas). HTML prerenderizado de `/es` y
+        `/en`: 7 `<details>` con respuestas en el HTML, 1 `FAQPage`, 2 anclas `#preguntas-frecuentes`.
+      - Pendiente: revisión visual en `pnpm dev` y Rich Results Test tras el deploy.
