@@ -12,7 +12,7 @@ export type PrivacyPolicySource = Readonly<Record<Locale, PrivacyPolicy>>
 
 export type GetPrivacyPolicy = (locale: string) => PrivacyPolicy
 
-// Slug por idioma (spec 007): /en/privacidad y /es/privacy no existen.
+// Slug por idioma (spec 007): /en/privacy y /es/privacidad no existen.
 export const privacyPaths: Readonly<Record<Locale, string>> = {
   es: 'privacidad',
   en: 'privacy',
