@@ -33,13 +33,13 @@ export function FaqSection({ label, title, items, imageSrc }: FaqSectionProps) {
           >
             {title}
           </h2>
-          <div className="group/imagen relative mt-10 aspect-[16/10] overflow-hidden rounded-2xl border border-foreground/10 lg:aspect-[4/5]">
+          <div className="group/imagen relative mt-10 aspect-[16/10] overflow-hidden rounded-2xl border border-foreground/10 lg:aspect-square">
             <Image
               src={imageSrc}
               alt=""
               fill
               sizes="(min-width: 1024px) 40vw, 100vw"
-              className="object-cover object-[75%_center] motion-safe:transition-transform motion-safe:duration-700 motion-safe:ease-out motion-safe:group-hover/imagen:scale-105"
+              className="object-cover object-[85%_center] motion-safe:transition-transform motion-safe:duration-700 motion-safe:ease-out motion-safe:group-hover/imagen:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
           </div>

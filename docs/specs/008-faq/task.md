@@ -29,6 +29,10 @@
       `motion-safe` al pasar el mouse; columna izquierda `lg:sticky`. `<main>` pasa de
       `overflow-x-hidden` a `overflow-x-clip`, porque `hidden` lo volvía contenedor de scroll y
       anulaba el sticky.
+      - Ajuste (2026-10-07): tarjeta `lg:aspect-square` y recorte `object-[85%_center]`. Con 75 %
+        el recorte cuadrado cortaba la burbuja del check en el borde derecho; con 85 % las tres
+        burbujas quedan centradas. A 1440×900 la tarjeta mide 515×515 y la columna 736 px. Fija a
+        112 px, la tarjeta termina en 848 px y entra completa.
 - [x] T11 Alcance 5 en `spec.md` y estas tareas.
       - Medido (2026-10-07, `pnpm build && pnpm start`, iframes de 1440×900 y 390×844): sin scroll
         horizontal (`scrollWidth` 1425 con barra / 375). Escritorio: la columna fija se detiene a
