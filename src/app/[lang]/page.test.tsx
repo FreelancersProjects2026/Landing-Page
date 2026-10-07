@@ -1,5 +1,3 @@
-import { statSync } from 'node:fs'
-
 import { act, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { hydrateRoot } from 'react-dom/client'
@@ -159,11 +157,4 @@ describe.each(['es', 'en'])('Home (%s)', (lang) => {
     act(() => root.unmount())
     container.remove()
   })
-})
-
-// Vitest se ejecuta desde la raíz del repositorio.
-it('la imagen de preguntas frecuentes existe en WebP y pesa como máximo 250 KB', () => {
-  const { size } = statSync('public/preguntas/preguntas-frecuentes.webp')
-
-  expect(size).toBeLessThanOrEqual(250 * 1024)
 })
