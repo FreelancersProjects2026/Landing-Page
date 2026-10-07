@@ -4,6 +4,7 @@ import { ServicesSection } from '@/components/landing/services-section'
 import { HowItWorksSection } from '@/components/landing/how-it-works-section'
 import { ProjectsSection } from '@/components/landing/projects-section'
 import { TeamSection } from '@/components/landing/team-section'
+import { FaqSection } from '@/components/landing/faq-section'
 import { CtaSection } from '@/components/landing/cta-section'
 import { FooterSection } from '@/components/landing/footer-section'
 import { WhatsAppButton } from '@/components/landing/whatsapp-button'
@@ -60,6 +61,7 @@ export default async function Home({
         <HowItWorksSection label={content.menu.process} {...content.process} />
         <ProjectsSection label={content.menu.projects} {...content.projects} />
         <TeamSection label={content.menu.team} {...content.team} />
+        <FaqSection label={content.menu.faq} {...content.faq} />
         <CtaSection
           {...content.contact}
           whatsappUrl={whatsappUrl}

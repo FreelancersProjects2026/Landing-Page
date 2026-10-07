@@ -20,7 +20,7 @@ function renderPage(lang: string) {
 describe.each(['es', 'en'])('Home (%s)', (lang) => {
   const content = getLandingContent(lang)
 
-  it('renderiza el menú, las 7 secciones, el footer y el botón flotante en orden', async () => {
+  it('renderiza el menú, las 8 secciones, el footer y el botón flotante en orden', async () => {
     const { container } = render(await renderPage(lang))
     const children = Array.from(container.querySelector('main')?.children ?? [])
     const floatingButton = children.pop()
@@ -38,6 +38,7 @@ describe.each(['es', 'en'])('Home (%s)', (lang) => {
       { id: 'como-trabajamos', title: content.process.title },
       { id: 'proyectos', title: content.projects.title },
       { id: 'equipo', title: content.team.title },
+      { id: 'preguntas-frecuentes', title: content.faq.title },
       { id: 'contacto', title: content.contact.title },
       { id: 'footer', title: undefined },
     ])

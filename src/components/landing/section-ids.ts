@@ -5,5 +5,6 @@ export const sectionIds = {
   process: 'como-trabajamos',
   projects: 'proyectos',
   team: 'equipo',
+  faq: 'preguntas-frecuentes',
   contact: 'contacto',
 } as const

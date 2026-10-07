@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { getLandingContent } from '@modules/company-profile'
 
 import { CtaSection } from './cta-section'
+import { FaqSection } from './faq-section'
 import { FooterSection } from './footer-section'
 import { HeroSection } from './hero-section'
 import { HowItWorksSection } from './how-it-works-section'
@@ -44,6 +45,7 @@ describe('Navigation', () => {
       ['Cómo trabajamos', '#como-trabajamos'],
       ['Proyectos', '#proyectos'],
       ['Equipo', '#equipo'],
+      ['Preguntas', '#preguntas-frecuentes'],
       ['Contacto', '#contacto'],
     ]) {
       expect(screen.getAllByRole('link', { name: label })[0]).toHaveAttribute(
@@ -366,5 +368,21 @@ describe('TeamSection', () => {
         ]),
       )
     }
+  })
+})
+
+describe('FaqSection', () => {
+  it('muestra cada pregunta como desplegable con su respuesta en el HTML', () => {
+    render(<FaqSection label={content.menu.faq} {...content.faq} />)
+    const section = screen.getByRole('region', { name: content.faq.title })
+
+    expect(section).toHaveAttribute('id', 'preguntas-frecuentes')
+    const items = section.querySelectorAll('details')
+    expect(items).toHaveLength(content.faq.items.length)
+    content.faq.items.forEach(({ question, answer }, index) => {
+      const item = items[index] as HTMLElement
+      expect(item.querySelector('summary')).toHaveTextContent(question)
+      expect(within(item).getByText(answer)).toBeInTheDocument()
+    })
   })
 })
