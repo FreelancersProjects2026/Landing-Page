@@ -33,6 +33,7 @@ function validContent(): LandingContent {
       process: 'Cómo trabajamos',
       projects: 'Proyectos',
       team: 'Equipo',
+      faq: 'Preguntas',
       contact: 'Contacto',
       toggleLabel: 'Menú',
     },
@@ -69,6 +70,10 @@ function validContent(): LandingContent {
         },
       ],
     },
+    faq: {
+      title: 'Preguntas frecuentes',
+      items: [{ question: '¿Cuánto cuesta?', answer: 'Depende del alcance.' }],
+    },
     contact: {
       title: '¿Listo?',
       text: 'Cuéntanos.',
@@ -76,6 +81,12 @@ function validContent(): LandingContent {
       emailLabel: 'O escríbenos al correo',
     },
     footer: { text: 'solutionsPJM — desarrollo.', rights: '© 2026 PJM' },
+    notFound: {
+      title: 'Esta página se perdió',
+      text: 'El enlace no existe.',
+      cta: 'Volver al inicio',
+      imageAlt: 'Error 404',
+    },
   }
 }
 
@@ -180,6 +191,29 @@ describe('validateLandingContent', () => {
     ).toThrow(/PENDIENTE/)
   })
 
+  it('exige al menos una pregunta frecuente', () => {
+    const content = validContent()
+
+    expect(() =>
+      validateLandingContent({
+        ...content,
+        faq: { ...content.faq, items: [] },
+      }),
+    ).toThrow(/pregunta frecuente/)
+  })
+
+  it('rechaza preguntas frecuentes repetidas', () => {
+    const content = validContent()
+    const [item] = content.faq.items
+
+    expect(() =>
+      validateLandingContent({
+        ...content,
+        faq: { ...content.faq, items: [item, item] },
+      }),
+    ).toThrow(/pregunta frecuente.*repetida/)
+  })
+
   it('exige que el eslogan contenga la primera palabra rotativa', () => {
     const content = validContent()
 
@@ -226,4 +260,18 @@ describe('validateLandingContent', () => {
       }),
     ).toThrow(/opción de WhatsApp/)
   })
+
+  it.each(['title', 'text', 'cta', 'imageAlt'] as const)(
+    'rechaza la 404 con %s vacío',
+    (field) => {
+      const content = validContent()
+
+      expect(() =>
+        validateLandingContent({
+          ...content,
+          notFound: { ...content.notFound, [field]: ' ' },
+        }),
+      ).toThrow(`notFound.${field} está vacío`)
+    },
+  )
 })

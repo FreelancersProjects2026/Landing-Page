@@ -17,9 +17,9 @@ describe('globals.css', () => {
   it('declara con @utility cada animación propia usada con una variante', () => {
     const variantAnimations = new Set(
       componentSources().flatMap((source) =>
-        [...source.matchAll(/[a-z-]+:(animate-hero-[a-z-]+)/g)].map(
-          (match) => match[1],
-        ),
+        [
+          ...source.matchAll(/[a-z-]+:(animate-(?:hero|obsidian)-[a-z-]+)/g),
+        ].map((match) => match[1]),
       ),
     )
 
@@ -27,5 +27,12 @@ describe('globals.css', () => {
     for (const name of variantAnimations) {
       expect(css).toContain(`@utility ${name} {`)
     }
+  })
+
+  it('declara --glow-angle como ángulo para que el borde del botón pueda girar', () => {
+    expect(css).toMatch(
+      /@property --glow-angle \{\s*syntax: '<angle>';\s*inherits: false;\s*initial-value: 0deg;\s*\}/,
+    )
+    expect(css).toContain('@utility btn-obsidian {')
   })
 })

@@ -2,7 +2,11 @@ import { describe, expect, it } from 'vitest'
 
 import { getLandingContent } from '@modules/company-profile'
 
-import { buildStructuredData, serializeJsonLd } from './structured-data'
+import {
+  buildFaqStructuredData,
+  buildStructuredData,
+  serializeJsonLd,
+} from './structured-data'
 
 describe('buildStructuredData', () => {
   it.each(['es', 'en'])(
@@ -24,6 +28,26 @@ describe('buildStructuredData', () => {
           addressCountry: 'CR',
         },
         areaServed: 'Worldwide',
+      })
+    },
+  )
+})
+
+describe('buildFaqStructuredData', () => {
+  it.each(['es', 'en'])(
+    'publica las preguntas frecuentes en %s como FAQPage',
+    (lang) => {
+      const content = getLandingContent(lang)
+
+      expect(buildFaqStructuredData(content)).toEqual({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        inLanguage: lang,
+        mainEntity: content.faq.items.map(({ question, answer }) => ({
+          '@type': 'Question',
+          name: question,
+          acceptedAnswer: { '@type': 'Answer', text: answer },
+        })),
       })
     },
   )

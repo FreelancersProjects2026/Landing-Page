@@ -4,16 +4,23 @@ import { ServicesSection } from '@/components/landing/services-section'
 import { HowItWorksSection } from '@/components/landing/how-it-works-section'
 import { ProjectsSection } from '@/components/landing/projects-section'
 import { TeamSection } from '@/components/landing/team-section'
+import { FaqSection } from '@/components/landing/faq-section'
 import { CtaSection } from '@/components/landing/cta-section'
 import { FooterSection } from '@/components/landing/footer-section'
 import { WhatsAppButton } from '@/components/landing/whatsapp-button'
 import {
   buildMailtoUrl,
+  buildPrivacyPath,
   buildWhatsAppUrl,
   getLandingContent,
+  getPrivacyPolicy,
 } from '@modules/company-profile'
 
-import { buildStructuredData, serializeJsonLd } from './structured-data'
+import {
+  buildFaqStructuredData,
+  buildStructuredData,
+  serializeJsonLd,
+} from './structured-data'
 
 export default async function Home({
   params,
@@ -33,7 +40,12 @@ export default async function Home({
     }),
   )
   const emailUrl = buildMailtoUrl(content.company.email)
+  const privacy = {
+    label: getPrivacyPolicy(content.locale).footerLink,
+    href: buildPrivacyPath(content.locale),
+  }
   const structuredData = serializeJsonLd(buildStructuredData(content))
+  const faqStructuredData = serializeJsonLd(buildFaqStructuredData(content))
 
   return (
     <>
@@ -41,7 +53,13 @@ export default async function Home({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: structuredData }}
       />
-      <main className="relative min-h-screen overflow-x-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: faqStructuredData }}
+      />
+      {/* clip, no hidden: hidden convierte <main> en contenedor de scroll y anula los sticky.
+          hidden queda solo de respaldo para navegadores sin clip (Safari ≤ 15). */}
+      <main className="relative min-h-screen overflow-x-hidden supports-[overflow:clip]:overflow-x-clip">
         <Navigation
           brand={content.company.name}
           menu={content.menu}
@@ -54,6 +72,7 @@ export default async function Home({
         <HowItWorksSection label={content.menu.process} {...content.process} />
         <ProjectsSection label={content.menu.projects} {...content.projects} />
         <TeamSection label={content.menu.team} {...content.team} />
+        <FaqSection label={content.menu.faq} {...content.faq} />
         <CtaSection
           {...content.contact}
           whatsappUrl={whatsappUrl}
@@ -66,6 +85,7 @@ export default async function Home({
           footer={content.footer}
           whatsappUrl={whatsappUrl}
           emailUrl={emailUrl}
+          privacy={privacy}
         />
         <WhatsAppButton
           label={content.whatsapp.label}

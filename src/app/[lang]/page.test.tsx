@@ -4,10 +4,14 @@ import { hydrateRoot } from 'react-dom/client'
 import { renderToString } from 'react-dom/server'
 import { describe, expect, it, vi } from 'vitest'
 
-import { buildWhatsAppUrl, getLandingContent } from '@modules/company-profile'
+import {
+  buildWhatsAppUrl,
+  getLandingContent,
+  getPrivacyPolicy,
+} from '@modules/company-profile'
 
 import Home from './page'
-import { buildStructuredData } from './structured-data'
+import { buildFaqStructuredData, buildStructuredData } from './structured-data'
 
 function renderPage(lang: string) {
   return Home({ params: Promise.resolve({ lang }) })
@@ -16,7 +20,7 @@ function renderPage(lang: string) {
 describe.each(['es', 'en'])('Home (%s)', (lang) => {
   const content = getLandingContent(lang)
 
-  it('renderiza el menú, las 7 secciones, el footer y el botón flotante en orden', async () => {
+  it('renderiza el menú, las 8 secciones, el footer y el botón flotante en orden', async () => {
     const { container } = render(await renderPage(lang))
     const children = Array.from(container.querySelector('main')?.children ?? [])
     const floatingButton = children.pop()
@@ -34,6 +38,7 @@ describe.each(['es', 'en'])('Home (%s)', (lang) => {
       { id: 'como-trabajamos', title: content.process.title },
       { id: 'proyectos', title: content.projects.title },
       { id: 'equipo', title: content.team.title },
+      { id: 'preguntas-frecuentes', title: content.faq.title },
       { id: 'contacto', title: content.contact.title },
       { id: 'footer', title: undefined },
     ])
@@ -118,13 +123,23 @@ describe.each(['es', 'en'])('Home (%s)', (lang) => {
     expect(mailto[0]).toHaveAttribute('href', 'mailto:solutionspjm@gmail.com')
   })
 
+  it('el footer enlaza a la política de privacidad del idioma', async () => {
+    render(await renderPage(lang))
+
+    expect(
+      screen.getByRole('link', { name: getPrivacyPolicy(lang).footerLink }),
+    ).toHaveAttribute('href', lang === 'es' ? '/es/privacidad' : '/en/privacy')
+  })
+
   it('publica el JSON-LD del idioma', async () => {
     const { container } = render(await renderPage(lang))
-    const script = container.querySelector('script[type="application/ld+json"]')
-
-    expect(JSON.parse(script?.textContent ?? '')).toEqual(
-      buildStructuredData(content),
+    const scripts = container.querySelectorAll(
+      'script[type="application/ld+json"]',
     )
+
+    expect(
+      Array.from(scripts, (script) => JSON.parse(script.textContent ?? '')),
+    ).toEqual([buildStructuredData(content), buildFaqStructuredData(content)])
   })
 
   it('se hidrata sin errores a partir del HTML del servidor', async () => {

@@ -22,6 +22,20 @@ export function buildStructuredData({ company, seo, locale }: LandingContent) {
   }
 }
 
+// Mismas preguntas que la sección visible: Google exige que el FAQPage coincida con la página.
+export function buildFaqStructuredData({ faq, locale }: LandingContent) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    inLanguage: locale,
+    mainEntity: faq.items.map(({ question, answer }) => ({
+      '@type': 'Question',
+      name: question,
+      acceptedAnswer: { '@type': 'Answer', text: answer },
+    })),
+  }
+}
+
 export function serializeJsonLd(data: unknown): string {
   return JSON.stringify(data).replace(/</g, '\\u003c')
 }

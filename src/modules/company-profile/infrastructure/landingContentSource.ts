@@ -8,6 +8,7 @@ import { validateEmail } from '../domain/email.ts'
 import { validateSiteUrl } from '../domain/siteUrl.ts'
 
 // Textos copiados literalmente de docs/specs/003-generarContenido/contenido.md (aprobado).
+// Preguntas frecuentes: docs/specs/008-faq/contenido.md (aprobado).
 
 const company: Contact = {
   name: 'solutionsPJM',
@@ -59,7 +60,7 @@ const es = validateLandingContent({
   seo: {
     title: 'Desarrollo de software a medida Costa Rica | solutionsPJM',
     description:
-      'Desarrollo de software a medida en Costa Rica. Creamos sistemas de gestión, control y métricas para tu negocio. Escríbenos por WhatsApp y cotiza tu proyecto.',
+      'Desarrollo de software a medida desde Costa Rica para negocios de cualquier país: sistemas de gestión, control y métricas. Cotiza tu proyecto por WhatsApp.',
   },
   whatsappMessage:
     'Hola solutionsPJM, quiero cotizar un software a la medida para mi negocio.',
@@ -86,6 +87,7 @@ const es = validateLandingContent({
     process: 'Cómo trabajamos',
     projects: 'Proyectos',
     team: 'Equipo',
+    faq: 'Preguntas',
     contact: 'Contacto',
     toggleLabel: 'Menú',
   },
@@ -189,6 +191,46 @@ const es = validateLandingContent({
       { ...team.michael, role: 'Desarrollador full-stack.' },
     ],
   },
+  faq: {
+    title: 'Preguntas frecuentes',
+    items: [
+      {
+        question: '¿Cuánto cuesta un software a medida?',
+        answer:
+          'Depende del alcance de tu sistema. Cuéntanos qué necesitas y te enviamos una cotización sin compromiso.',
+      },
+      {
+        question: '¿Cuánto tiempo tarda el desarrollo?',
+        answer:
+          'Depende del tamaño del proyecto: puede tomar desde unos días hasta varios meses.',
+      },
+      {
+        question: '¿De quién es el código fuente?',
+        answer:
+          'El código fuente es de solutionsPJM. Tú usas el sistema y nosotros nos encargamos de mantenerlo.',
+      },
+      {
+        question: '¿Qué pasa después de la entrega?',
+        answer:
+          'Te entregamos el sistema con garantía y le damos mantenimiento.',
+      },
+      {
+        question: '¿Trabajan con clientes fuera de Costa Rica?',
+        answer:
+          'Sí. Atendemos clientes de todos los países y nuestro equipo de desarrollo trabaja 24/7.',
+      },
+      {
+        question: '¿Cómo se paga?',
+        answer:
+          'Como mejor te venga: al contado, a pagos o con una suscripción mensual, por SINPE o transferencia bancaria.',
+      },
+      {
+        question: '¿Necesito saber de tecnología?',
+        answer:
+          'No. Tú nos cuentas cómo funciona tu negocio y nosotros nos encargamos de la parte técnica.',
+      },
+    ],
+  },
   contact: {
     title: '¿Listo para crear software a la medida?',
     text: 'Cuéntanos qué problema quieres resolver y cotiza tu proyecto sin compromiso.',
@@ -199,6 +241,12 @@ const es = validateLandingContent({
     text: 'solutionsPJM — desarrollo de software en Cartago para negocios de Costa Rica y del mundo.',
     rights,
   },
+  notFound: {
+    title: 'Esta página se perdió entre las raíces',
+    text: 'El enlace que seguiste no existe o cambió de lugar. Volvamos al camino.',
+    cta: 'Volver al inicio',
+    imageAlt: 'Error 404: la página no existe',
+  },
 })
 
 const en = validateLandingContent({
@@ -207,7 +255,7 @@ const en = validateLandingContent({
   seo: {
     title: 'Custom Software Development Costa Rica | solutionsPJM',
     description:
-      'Custom software development in Costa Rica. We build management, tracking and metrics systems for your business. Message us on WhatsApp for a quote.',
+      'Custom software development from Costa Rica for businesses anywhere: management, tracking and metrics systems. Get a quote for your project on WhatsApp.',
   },
   whatsappMessage:
     "Hi solutionsPJM, I'd like a quote for custom software for my business.",
@@ -233,6 +281,7 @@ const en = validateLandingContent({
     process: 'How we work',
     projects: 'Projects',
     team: 'Team',
+    faq: 'FAQ',
     contact: 'Contact',
     toggleLabel: 'Menu',
   },
@@ -336,6 +385,46 @@ const en = validateLandingContent({
       { ...team.michael, role: 'Full-stack developer.' },
     ],
   },
+  faq: {
+    title: 'Frequently asked questions',
+    items: [
+      {
+        question: 'How much does custom software cost?',
+        answer:
+          "It depends on the scope of your system. Tell us what you need and we'll send you a quote, no strings attached.",
+      },
+      {
+        question: 'How long does development take?',
+        answer:
+          'It depends on the size of the project: anywhere from a few days to several months.',
+      },
+      {
+        question: 'Who owns the source code?',
+        answer:
+          'The source code belongs to solutionsPJM. You use the system and we take care of maintaining it.',
+      },
+      {
+        question: 'What happens after delivery?',
+        answer:
+          'We deliver your system with a warranty and provide maintenance.',
+      },
+      {
+        question: 'Do you work with clients outside Costa Rica?',
+        answer:
+          'Yes. We serve clients in every country, and our development team works 24/7.',
+      },
+      {
+        question: 'How do I pay?',
+        answer:
+          'Whatever works best for you: upfront, in installments or with a monthly subscription, via SINPE or bank transfer.',
+      },
+      {
+        question: 'Do I need to know about technology?',
+        answer:
+          'No. You tell us how your business works and we handle the technical side.',
+      },
+    ],
+  },
   contact: {
     title: 'Ready to build custom software?',
     text: 'Tell us what problem you want to solve and get a custom software quote, no strings attached.',
@@ -345,6 +434,12 @@ const en = validateLandingContent({
   footer: {
     text: 'solutionsPJM — software development in Cartago for businesses in Costa Rica and around the world.',
     rights,
+  },
+  notFound: {
+    title: 'This page got lost among the roots',
+    text: "The link you followed doesn't exist or has moved. Let's get you back on the path.",
+    cta: 'Back to home',
+    imageAlt: 'Error 404: page not found',
   },
 })
 

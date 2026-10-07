@@ -1,0 +1,70 @@
+# Tareas: Preguntas frecuentes
+
+## Base acordada
+- Spec: `docs/specs/008-faq/spec.md`. Textos: `contenido.md`.
+- Método: TDD y `pnpm validate` en verde tras cada tarea. Un commit por tarea.
+
+## Tareas
+- [x] T01 Negocio aprueba respuestas en `contenido.md` (2026-10-07).
+- [x] T02 Dominio: `LandingContent.faq` (`title`, `items: { question, answer }[]`, mínimo 1) y
+      `menu.faq`, con pruebas.
+- [x] T03 Infraestructura: textos `es` y `en` copiados de `contenido.md`.
+- [x] T04 Vista `components/landing/faq-section.tsx` (`<details>` nativo: respuestas en el HTML del servidor, sin JS), id en `section-ids.ts`,
+      montada entre Equipo y Contacto; prueba en `landing-sections.test.tsx`.
+- [x] T05 `FAQPage` en `structured-data.ts` con su prueba.
+- [ ] T06 Verificación: `pnpm validate`, `/es` y `/en` en dev, Rich Results Test de Google:
+      marcado válido sin errores (Google no muestra rich results de FAQ fuera de sitios
+      gubernamentales y de salud desde agosto de 2023).
+      - Hecho (2026-10-07): `pnpm validate` en verde (167 pruebas). HTML prerenderizado de `/es` y
+        `/en`: 7 `<details>` con respuestas en el HTML, 1 `FAQPage`, 2 anclas `#preguntas-frecuentes`.
+      - Pendiente: revisión visual en `pnpm dev` y Rich Results Test tras el deploy.
+- [x] T07 Correcciones de revisión: preguntas frecuentes únicas en el dominio, ícono con
+      `motion-safe:`, `FaqItem` en orden alfabético y comparación con `contenido.md` acotada a la FAQ.
+- [x] T08 Expectativa de rich results ajustada en `spec.md` y en el criterio de T06.
+- [x] T09 *(Reemplazada por T12–T13: el negocio descartó la imagen el 2026-10-07.)* Asset `public/preguntas/preguntas-frecuentes.webp` (1672×941, 126 KB, calidad 80) con
+      `sharp-cli`; prueba de existencia y peso ≤ 250 KB en `page.test.tsx`. El PNG original no se
+      versiona.
+- [x] T10 *(Reemplazada por T12: el negocio descartó la imagen el 2026-10-07.)* `FaqSection` recibe `imageSrc` desde `page.tsx`: imagen decorativa (`alt=""`, carga
+      diferida) bajo el título, en tarjeta 16:10 (móvil) / cuadrada (escritorio) con recorte
+      `object-[85%_center]`, degradado y zoom `motion-safe` al pasar el mouse; columna izquierda
+      `lg:sticky`. `<main>` pasa de
+      `overflow-x-hidden` a `overflow-x-clip`, porque `hidden` lo volvía contenedor de scroll y
+      anulaba el sticky.
+      - Ajuste (2026-10-07): tarjeta `lg:aspect-square` y recorte `object-[85%_center]`. Con 75 %
+        el recorte cuadrado cortaba la burbuja del check en el borde derecho; con 85 % las tres
+        burbujas quedan centradas. A 1440×900 la tarjeta mide 515×515 y la columna 736 px. Fija a
+        112 px, la tarjeta termina en 848 px y entra completa.
+      - Sticky solo con alto ≥ 860 px (`[@media(min-height:860px)]:lg:sticky`). Medido: a 1440×900
+        la columna queda fija (736 px, fija a 112 px, la tarjeta termina en 848 px). A 1366×768 la
+        columna se desplaza normal (`static`, 716 px, tarjeta de 495 px) y nunca queda cortada.
+        Sin scroll horizontal en ninguno de los dos.
+- [x] T11 *(Reemplazada por T14: el negocio descartó la imagen el 2026-10-07.)* Alcance 5 en
+      `spec.md` y estas tareas.
+      - Medido (2026-10-07, `pnpm build && pnpm start`, iframes de 1440×900 y 390×844): sin scroll
+        horizontal (`scrollWidth` 1425 con barra / 375). Escritorio: la columna fija se detiene a
+        112 px, bajo el menú (termina en 74–80 px), y no tapa las preguntas, que empiezan en
+        x = 624 px y la columna termina en 576 px. Con las 7 preguntas cerradas, ambas columnas
+        miden lo mismo (865 px) y no hay nada que fijar; el efecto se nota al abrir respuestas.
+        La columna (865 px) es más alta que el espacio visible bajo el menú (788 px): mientras
+        está fija, los ~77 px inferiores de la tarjeta quedan fuera de pantalla. Consola de `/es`
+        y `/en` sin avisos de hidratación. Falta que el negocio vea la imagen.
+- [x] T12 *(Reemplazada por T15–T16: el negocio descartó también las partículas el 2026-10-07.)* `FaqSection` sin `imageSrc` ni `next/image`: la tarjeta conserva marco y medidas
+      (`aspect-[16/10] lg:aspect-square`, `bg-black`) con `ParticleVisualization` dentro, en un
+      contenedor `aria-hidden`. Sticky condicionado sin cambios. Movimiento reducido: se oculta la
+      tarjeta entera (`motion-reduce:hidden`), porque negra y vacía parecería un hueco roto.
+- [x] T13 *(Reemplazada por T15–T16: el negocio descartó también las partículas el 2026-10-07; el borrado del WebP sigue vigente.)* Borrados `public/preguntas/preguntas-frecuentes.webp` y su prueba de peso. El PNG
+      original del usuario sigue sin versionar.
+- [x] T14 *(Reemplazada por T15–T16: el negocio descartó también las partículas el 2026-10-07.)* Alcance 5 en `spec.md` y estas tareas.
+      - Medido (2026-10-07, `pnpm build && pnpm start`, iframes, respuestas abiertas): a 1440×900
+        la columna sigue fija (736 px, fija a 112 px, la tarjeta de 515×515 termina en 848 px) y
+        entra completa. A 1366×768 se desplaza normal (716 px). A 390×844, tarjeta de 327×204.
+        Sin `<img>` en la sección y sin scroll horizontal a 1440 (`scrollWidth` 1425 con barra)
+        ni a 390 (375).
+- [x] T15 `FaqSection` solo con preguntas: sin tarjeta, sin `ParticleVisualization` (lo siguen
+      usando hero y services). La columna del título, ahora corta, usa `lg:sticky lg:top-28
+      lg:self-start` sin condición de alto. Prueba: la sección no contiene `<img>` ni `<canvas>`.
+- [x] T16 Alcance 5 en `spec.md` y estas tareas.
+      - Medido (2026-10-07, `pnpm build && pnpm start`, iframes): a 1440×900, con las preguntas
+        cerradas, la columna del título mide 181 px y queda fija a 112 px mientras bajan las
+        preguntas, hasta que termina la sección. Sin `<img>` ni `<canvas>` en la sección. Sin
+        scroll horizontal a 1440 (`scrollWidth` 1425 con barra) ni a 390 (375; columna `static`).

@@ -8,4 +8,8 @@ describe('next.config', () => {
       { source: '/', destination: '/es', permanent: false },
     ])
   })
+
+  it('activa la 404 global para las URL sin idioma', () => {
+    expect(nextConfig.experimental?.globalNotFound).toBe(true)
+  })
 })

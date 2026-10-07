@@ -15,6 +15,15 @@ const approvedContent = readFileSync(
   'utf8',
 ).replace(/\s+/g, ' ')
 
+// Preguntas frecuentes aprobadas por el negocio (Spec 008).
+const faqContent = readFileSync(
+  'docs/specs/008-faq/contenido.md',
+  'utf8',
+).replace(/\s+/g, ' ')
+
+// Los textos de la 404 son marcadores de la Spec 006 hasta que el negocio los apruebe (T13).
+const notFoundSpec = readFileSync('docs/specs/006-pagina-404/spec.md', 'utf8')
+
 function collectTexts(value: unknown): string[] {
   if (typeof value === 'string') return [value]
   if (typeof value !== 'object' || value === null) return []
@@ -61,8 +70,39 @@ describe('landingContentSource', () => {
     },
   )
 
+  it('la descripción SEO anuncia el alcance internacional aprobado', () => {
+    expect(es.seo.description).toBe(
+      'Desarrollo de software a medida desde Costa Rica para negocios de cualquier país: sistemas de gestión, control y métricas. Cotiza tu proyecto por WhatsApp.',
+    )
+    expect(en.seo.description).toBe(
+      'Custom software development from Costa Rica for businesses anywhere: management, tracking and metrics systems. Get a quote for your project on WhatsApp.',
+    )
+  })
+
+  it('copia de la tabla de la Spec 006 los textos de la 404 por idioma', () => {
+    const rows = {
+      title: 'Título',
+      text: 'Texto',
+      cta: 'Botón',
+      imageAlt: '`alt` imagen',
+    } as const
+
+    expect(Object.keys(es.notFound)).toEqual(Object.keys(rows))
+    for (const [field, label] of Object.entries(rows)) {
+      const key = field as keyof typeof rows
+      expect(notFoundSpec).toContain(
+        `| ${label} | ${es.notFound[key]} | ${en.notFound[key]} |`,
+      )
+    }
+  })
+
   it.each([es, en])('el eslogan en $locale no termina en punto', (content) => {
     expect(content.hero.slogan).not.toMatch(/\.$/)
+  })
+
+  it('publica las mismas siete preguntas frecuentes en ambos idiomas', () => {
+    expect(es.faq.items).toHaveLength(7)
+    expect(en.faq.items).toHaveLength(es.faq.items.length)
   })
 
   it('no publica enlaces en los proyectos', () => {
@@ -76,8 +116,27 @@ describe('landingContentSource', () => {
     (content) => {
       // Datos técnicos que no se muestran: el idioma y el código ISO del país (JSON-LD).
       const technical = [content.locale, content.company.address.country]
-      const missing = collectTexts(content).filter(
-        (text) => !technical.includes(text) && !approvedContent.includes(text),
+      const missing = collectTexts({
+        ...content,
+        notFound: {},
+        faq: {},
+        menu: { ...content.menu, faq: '' },
+      }).filter(
+        (text) =>
+          text !== '' &&
+          !technical.includes(text) &&
+          !approvedContent.includes(text),
+      )
+
+      expect(missing).toEqual([])
+    },
+  )
+
+  it.each([es, en])(
+    'copia literalmente de la Spec 008 las preguntas frecuentes en $locale',
+    (content) => {
+      const missing = collectTexts([content.faq, content.menu.faq]).filter(
+        (text) => !faqContent.includes(text),
       )
 
       expect(missing).toEqual([])

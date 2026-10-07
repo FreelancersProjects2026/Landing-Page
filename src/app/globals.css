@@ -290,3 +290,86 @@
     color: white;
   }
 }
+
+/* Botón «obsidiana luminosa» de la 404: borde degradado ámbar → magenta → rosa
+   flor que gira, interior obsidiana y destello diagonal al pasar o enfocar.
+   Con movimiento reducido el borde queda quieto y no hay destello. */
+@property --glow-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@utility btn-obsidian {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: #fde7c4;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(180deg, #1a1013, #0b0708) padding-box,
+    conic-gradient(from var(--glow-angle), #f5a524, #e0329a, #f9a8c9, #f5a524)
+      border-box;
+  box-shadow:
+    0 0 18px -4px rgb(245 165 36 / 0.45),
+    0 0 36px -8px rgb(224 50 154 / 0.4);
+  transition: box-shadow 300ms ease;
+
+  &:hover,
+  &:focus-visible {
+    box-shadow:
+      0 0 26px -2px rgb(245 165 36 / 0.65),
+      0 0 52px -6px rgb(224 50 154 / 0.6);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #f5a524;
+    outline-offset: 4px;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      115deg,
+      transparent 35%,
+      rgb(253 231 196 / 0.22) 50%,
+      transparent 65%
+    );
+    translate: -120% 0;
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition:
+      box-shadow 300ms ease,
+      translate 300ms ease;
+
+    &:hover,
+    &:focus-visible {
+      translate: 0 -2px;
+    }
+
+    &::after {
+      opacity: 1;
+      transition: translate 700ms ease;
+    }
+
+    &:hover::after,
+    &:focus-visible::after {
+      translate: 120% 0;
+    }
+  }
+}
+
+@utility animate-obsidian-glow {
+  animation: obsidian-glow 8s linear infinite;
+}
+
+@keyframes obsidian-glow {
+  to {
+    --glow-angle: 360deg;
+  }
+}

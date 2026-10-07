@@ -61,6 +61,18 @@ export interface TeamMember {
   readonly links: readonly ExternalLink[]
 }
 
+export interface FaqItem {
+  readonly question: string
+  readonly answer: string
+}
+
+export interface NotFoundContent {
+  readonly title: string
+  readonly text: string
+  readonly cta: string
+  readonly imageAlt: string
+}
+
 export interface LandingContent {
   readonly locale: Locale
   readonly company: Contact
@@ -76,6 +88,7 @@ export interface LandingContent {
     readonly process: string
     readonly projects: string
     readonly team: string
+    readonly faq: string
     readonly contact: string
     readonly toggleLabel: string
   }
@@ -107,6 +120,10 @@ export interface LandingContent {
     readonly intro: string
     readonly members: readonly TeamMember[]
   }
+  readonly faq: {
+    readonly title: string
+    readonly items: readonly FaqItem[]
+  }
   readonly contact: {
     readonly title: string
     readonly text: string
@@ -117,6 +134,7 @@ export interface LandingContent {
     readonly text: string
     readonly rights: string
   }
+  readonly notFound: NotFoundContent
 }
 
 export const MAX_TITLE_LENGTH = 60
@@ -140,7 +158,7 @@ export class InvalidLandingContentError extends Error {
   }
 }
 
-function collectTexts(value: unknown, path: string): [string, string][] {
+export function collectTexts(value: unknown, path: string): [string, string][] {
   if (typeof value === 'string') return [[path, value]]
   if (typeof value !== 'object' || value === null) return []
   return Object.entries(value).flatMap(([key, child]) =>
@@ -180,6 +198,15 @@ export function validateLandingContent(
   }
   if (content.whatsapp.options.length === 0) {
     problems.push('falta al menos una opción de WhatsApp')
+  }
+  if (content.faq.items.length === 0) {
+    problems.push('falta al menos una pregunta frecuente')
+  }
+  const questions = content.faq.items.map(({ question }) => question)
+  for (const question of new Set(questions)) {
+    if (questions.indexOf(question) !== questions.lastIndexOf(question)) {
+      problems.push(`la pregunta frecuente «${question}» está repetida`)
+    }
   }
   for (const [path, text] of collectTexts(content, '')) {
     if (text.trim().length === 0) problems.push(`${path} está vacío`)

@@ -1,10 +1,5 @@
 import React from 'react'
 import type { Metadata } from 'next'
-import {
-  Instrument_Sans,
-  Instrument_Serif,
-  JetBrains_Mono,
-} from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import {
   buildLanguageAlternates,
@@ -12,33 +7,13 @@ import {
   getLandingContent,
   locales,
   siteUrl,
-  type Locale,
 } from '@modules/company-profile'
+import { fontVariables } from '../fonts'
+import { siteIcons } from '../icons'
+import { openGraphLocale } from './open-graph'
 import '../globals.css'
 
-const instrumentSans = Instrument_Sans({
-  subsets: ['latin'],
-  variable: '--font-instrument',
-})
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ['latin'],
-  weight: '400',
-  variable: '--font-instrument-serif',
-})
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-jetbrains',
-})
-
-const openGraphLocale: Record<Locale, string> = { es: 'es_CR', en: 'en_US' }
-
 type LayoutParams = { params: Promise<{ lang: string }> }
-
-const siteIcon = '/logo/icono/LogoPJM.jpeg'
-// Google pide favicons cuadrados en múltiplos de 48 px; el JPEG mide 1024.
-const favicon = '/logo/icono/LogoPJM-192.png'
 
 export async function generateMetadata({
   params,
@@ -63,8 +38,7 @@ export async function generateMetadata({
       siteName: company.name,
       type: 'website',
     },
-    // Next genera los <link> de la pestaña y del ícono de iOS.
-    icons: { icon: favicon, apple: siteIcon },
+    icons: siteIcons,
   }
 }
 
@@ -84,7 +58,7 @@ export default async function RootLayout({
     <html lang={lang}>
       <body
         suppressHydrationWarning
-        className={`${instrumentSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} font-sans antialiased`}
+        className={`${fontVariables} font-sans antialiased`}
       >
         {children}
         <Analytics />

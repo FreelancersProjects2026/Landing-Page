@@ -5,6 +5,7 @@ Enmienda aprobada 2026-10-02: etiqueta del menú móvil (Menú/Menu) y mayúscul
 Enmienda aprobada 2026-10-06 (Spec 005): correo y su etiqueta en la sección de contacto.
 Enmienda aprobada 2026-10-06 (Spec 005): opciones y mensajes del botón flotante de WhatsApp.
 Enmienda aprobada 2026-10-06 (Spec 005): alcance internacional (subtítulo del hero, texto del footer y área atendida).
+Enmienda aprobada 2026-10-06 (Spec 005): descripción SEO con alcance internacional.
 
 Datos comunes a ambos idiomas:
 
@@ -22,8 +23,8 @@ Datos comunes a ambos idiomas:
 ### SEO
 
 - **Título (57):** Desarrollo de software a medida Costa Rica | solutionsPJM
-- **Meta description (157):** Desarrollo de software a medida en Costa Rica. Creamos sistemas de
-  gestión, control y métricas para tu negocio. Escríbenos por WhatsApp y cotiza tu proyecto.
+- **Meta description (155):** Desarrollo de software a medida desde Costa Rica para negocios de
+  cualquier país: sistemas de gestión, control y métricas. Cotiza tu proyecto por WhatsApp.
 - **Mensaje de WhatsApp:** Hola solutionsPJM, quiero cotizar un software a la medida para mi
   negocio.
 
@@ -120,8 +121,8 @@ Servicios · Cómo trabajamos · Proyectos · Equipo · Contacto
 ### SEO
 
 - **Title (53):** Custom Software Development Costa Rica | solutionsPJM
-- **Meta description (147):** Custom software development in Costa Rica. We build management,
-  tracking and metrics systems for your business. Message us on WhatsApp for a quote.
+- **Meta description (152):** Custom software development from Costa Rica for businesses
+  anywhere: management, tracking and metrics systems. Get a quote for your project on WhatsApp.
 - **WhatsApp message:** Hi solutionsPJM, I'd like a quote for custom software for my business.
 
 ### Menu

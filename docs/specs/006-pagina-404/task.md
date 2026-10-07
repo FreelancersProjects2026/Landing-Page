@@ -1,0 +1,53 @@
+# Tareas: Página 404
+
+## Base acordada
+- Spec: `docs/specs/006-pagina-404/spec.md`. Plan: `plan.md`.
+- Rama: `contact/feature` (actual).
+- Método: TDD y `pnpm validate` en verde tras cada tarea. Un commit por tarea.
+- Flujo: `coder` implementa; `reviwer` revisa cada commit y reporta.
+
+## Tareas
+- [x] T01 Línea base: `pnpm validate` en verde antes de tocar nada.
+- [x] T02 Imagen: convertir `public/404/404 entre raíces y obsidiana luminosa.png` a
+      `public/404/404-raices-obsidiana.webp` (≤ 250 KB, 1672×941) con una herramienta puntual
+      (`pnpm dlx sharp-cli`), sin agregar dependencias. Borrar el PNG original.
+- [x] T03 Dominio: `NotFoundContent` en `LandingContent.notFound`; la validación rechaza campos
+      vacíos. Exportar el tipo en `index.ts`.
+- [x] T04 Infraestructura: textos `es` y `en` de la spec (marcadores) y prueba de que ambos
+      idiomas los traen.
+      - T03 y T04 van en un commit: el tipo nuevo obliga a `landingContentSource.ts` a traer los
+        textos para compilar. Mientras sean marcadores, la prueba de copia literal de
+        `contenido.md` excluye `notFound` y otra prueba los copia de la tabla de `spec.md`; al
+        aprobarse (T13) pasan a `contenido.md`.
+- [x] T05 Fuentes en `app/fonts.ts`; `[lang]/layout.tsx` las importa (sin cambio visual).
+- [x] T06 Componente `not-found-view.tsx` con su prueba (título, imagen con `alt`, enlace).
+- [x] T07 Botón «obsidiana luminosa»: utilidades en `globals.css` (`@property`, keyframes,
+      `motion-safe`) y uso en la vista; la prueba de `globals.css` sigue en verde.
+- [x] T08 `localized-not-found.tsx` con su prueba (`en`, `fr` y sin `lang`).
+- [x] T09 `[lang]/[...rest]/page.tsx` + `[lang]/not-found.tsx` con prueba de `notFound()`.
+      - Reemplazada (opción E): el SSR de esa 404 salía vacío (ver Riesgos del plan). Se borran;
+        la 404 global atiende todo y `LocalizedNotFound` elige por `usePathname()`.
+- [x] T10 `global-not-found.tsx` + flag en `next.config.mjs` con su prueba.
+- [x] T11 Verificación en build (`pnpm build && pnpm start`): `/es/xyz`, `/en/xyz`, `/fr` y `/xyz`
+      responden 404 con el idioma y enlace correctos; `/es` y `/en` siguen en 200.
+      - Verificado (2026-10-06, curl sin JS sobre el SSR): `/es/xyz`, `/fr`, `/xyz` y `/fr/abc` →
+        404, h1, texto y enlace en español a `/es`; `/en/xyz` y `/en/a/b` → 404 en inglés con
+        enlace a `/en`; todas con `noindex`. `/es` y `/en` → 200 prerenderizadas (`HIT`); `/` → 307
+        a `/es`. En Chrome, `/en/xyz` carga sin errores de hidratación en la consola.
+- [x] T12 Revisión manual: 390×844 y 1440×900, teclado, `prefers-reduced-motion`, sin scroll
+      horizontal, título en ≤ 2 líneas.
+      - Revisado en Chrome (2026-10-06), `/es/xyz` y `/en/xyz` en iframes del tamaño exacto:
+        390×844 → título en 2 líneas (32 px), sin scroll horizontal ni vertical, botón visible
+        (borde inferior a 649 px); 1440×900 → título en 1 línea (en) y 2 (es) a 56 px, imagen y
+        botón visibles sin desplazarse (borde inferior a 811/834 px).
+      - Teclado: el botón es el único elemento enfocable; con `:focus-visible` muestra el anillo
+        ámbar de 2 px con offset de 4 px, sube 2 px y cruza el destello.
+      - `prefers-reduced-motion`: no se pudo emular en el navegador. Verificado en la CSS
+        generada: el giro del borde, el `translate` y el destello solo existen bajo
+        `prefers-reduced-motion: no-preference`; con `reduce` solo queda la transición de la
+        sombra en hover/focus (no continua).
+      - Hallazgo previo, fuera de esta spec: `.font-display` usa `var(--font-display)`, que
+        `@theme inline` no emite; el título (y los `font-display` de la landing) salen en
+        Instrument Sans y no en Serif.
+- [ ] T13 Pendiente del negocio: aprobación de textos; `<html lang>` y `<title>` en `es` también en
+      `/en/xyz` (ver spec).
