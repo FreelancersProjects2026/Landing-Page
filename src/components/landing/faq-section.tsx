@@ -42,7 +42,7 @@ export function FaqSection({ label, title, items }: FaqSectionProps) {
                 {question}
                 <Plus
                   aria-hidden="true"
-                  className="w-5 h-5 shrink-0 text-muted-foreground transition-transform group-open:rotate-45"
+                  className="w-5 h-5 shrink-0 text-muted-foreground motion-safe:transition-transform group-open:rotate-45"
                 />
               </summary>
               <p className="pb-6 text-lg text-muted-foreground leading-relaxed">
