@@ -83,6 +83,15 @@ describe('ParticleVisualization', () => {
     expect(requestFrame).toHaveBeenCalledTimes(2)
   })
 
+  it('no arranca dos bucles si entra en pantalla dos veces seguidas', () => {
+    render(<ParticleVisualization />)
+
+    setVisible(true)
+    setVisible(true)
+
+    expect(requestFrame).toHaveBeenCalledTimes(1)
+  })
+
   it('al desmontar desconecta el observer y cancela el frame', () => {
     const { unmount } = render(<ParticleVisualization />)
     setVisible(true)
