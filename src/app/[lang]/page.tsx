@@ -9,8 +9,10 @@ import { FooterSection } from '@/components/landing/footer-section'
 import { WhatsAppButton } from '@/components/landing/whatsapp-button'
 import {
   buildMailtoUrl,
+  buildPrivacyPath,
   buildWhatsAppUrl,
   getLandingContent,
+  getPrivacyPolicy,
 } from '@modules/company-profile'
 
 import { buildStructuredData, serializeJsonLd } from './structured-data'
@@ -33,6 +35,10 @@ export default async function Home({
     }),
   )
   const emailUrl = buildMailtoUrl(content.company.email)
+  const privacy = {
+    label: getPrivacyPolicy(content.locale).footerLink,
+    href: buildPrivacyPath(content.locale),
+  }
   const structuredData = serializeJsonLd(buildStructuredData(content))
 
   return (
@@ -66,6 +72,7 @@ export default async function Home({
           footer={content.footer}
           whatsappUrl={whatsappUrl}
           emailUrl={emailUrl}
+          privacy={privacy}
         />
         <WhatsAppButton
           label={content.whatsapp.label}

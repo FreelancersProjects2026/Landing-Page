@@ -16,7 +16,7 @@
 - [x] T05 Vista `components/legal/privacy-policy.tsx` con su prueba.
 - [x] T06 Rutas `/es/privacidad` y `/en/privacy` con metadata (canonical, alternates cruzados,
       title y description) y sus pruebas.
-- [ ] T07 Footer: enlace «Privacidad» / «Privacy» del idioma activo, con su prueba; la landing lo
+- [x] T07 Footer: enlace «Privacidad» / «Privacy» del idioma activo, con su prueba; la landing lo
       pasa por props.
 - [ ] T08 Sitemap con las dos URLs nuevas y sus alternates.
 - [ ] T09 Verificación en build (`pnpm build && pnpm start`, curl sin JS): `/es/privacidad` y

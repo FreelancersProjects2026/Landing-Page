@@ -4,7 +4,11 @@ import { hydrateRoot } from 'react-dom/client'
 import { renderToString } from 'react-dom/server'
 import { describe, expect, it, vi } from 'vitest'
 
-import { buildWhatsAppUrl, getLandingContent } from '@modules/company-profile'
+import {
+  buildWhatsAppUrl,
+  getLandingContent,
+  getPrivacyPolicy,
+} from '@modules/company-profile'
 
 import Home from './page'
 import { buildStructuredData } from './structured-data'
@@ -116,6 +120,14 @@ describe.each(['es', 'en'])('Home (%s)', (lang) => {
 
     expect(mailto).toHaveLength(1)
     expect(mailto[0]).toHaveAttribute('href', 'mailto:solutionspjm@gmail.com')
+  })
+
+  it('el footer enlaza a la política de privacidad del idioma', async () => {
+    render(await renderPage(lang))
+
+    expect(
+      screen.getByRole('link', { name: getPrivacyPolicy(lang).footerLink }),
+    ).toHaveAttribute('href', lang === 'es' ? '/es/privacidad' : '/en/privacy')
   })
 
   it('publica el JSON-LD del idioma', async () => {

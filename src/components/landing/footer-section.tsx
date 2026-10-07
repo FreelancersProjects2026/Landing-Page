@@ -11,6 +11,7 @@ type FooterSectionProps = {
   footer: LandingContent['footer']
   whatsappUrl: string
   emailUrl: string
+  privacy: { label: string; href: string }
 }
 
 export function FooterSection({
@@ -19,6 +20,7 @@ export function FooterSection({
   footer,
   whatsappUrl,
   emailUrl,
+  privacy,
 }: FooterSectionProps) {
   const links = [
     { name: menu.services, href: `#${sectionIds.services}` },
@@ -115,6 +117,12 @@ export function FooterSection({
         {/* Bottom Bar */}
         <div className="py-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-white/30">{footer.rights}</p>
+          <a
+            href={privacy.href}
+            className="text-sm text-white/40 hover:text-white transition-colors"
+          >
+            {privacy.label}
+          </a>
         </div>
       </div>
     </footer>

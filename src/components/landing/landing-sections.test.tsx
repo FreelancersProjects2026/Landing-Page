@@ -287,10 +287,14 @@ describe('FooterSection', () => {
         footer={content.footer}
         whatsappUrl={whatsappUrl}
         emailUrl="mailto:solutionspjm@gmail.com"
+        privacy={{ label: 'Privacidad', href: '/es/privacidad' }}
       />,
     )
     const footer = screen.getByRole('contentinfo')
 
+    expect(
+      within(footer).getByRole('link', { name: 'Privacidad' }),
+    ).toHaveAttribute('href', '/es/privacidad')
     expect(within(footer).getByText('solutionsPJM')).toBeVisible()
     expect(within(footer).getByText(content.footer.text)).toBeVisible()
     expect(
