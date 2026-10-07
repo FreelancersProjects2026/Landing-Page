@@ -18,7 +18,7 @@
       title y description) y sus pruebas.
 - [x] T07 Footer: enlace «Privacidad» / «Privacy» del idioma activo, con su prueba; la landing lo
       pasa por props.
-- [ ] T08 Sitemap con las dos URLs nuevas y sus alternates.
+- [x] T08 Sitemap con las dos URLs nuevas y sus alternates.
 - [ ] T09 Verificación en build (`pnpm build && pnpm start`, curl sin JS): `/es/privacidad` y
       `/en/privacy` → 200 prerenderizadas con `h1` y secciones; `/en/privacidad` y `/es/privacy`
       → 404 global con contenido; `sitemap.xml` con 4 URLs; el enlace del footer lleva a la
