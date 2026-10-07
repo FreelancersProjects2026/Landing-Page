@@ -1,5 +1,7 @@
 import { createGetLandingContent } from './application/landingContent.ts'
+import { createGetPrivacyPolicy } from './application/privacyPolicy.ts'
 import { landingContentSource } from './infrastructure/landingContentSource.ts'
+import { privacyPolicySource } from './infrastructure/privacyPolicySource.ts'
 
 export {
   buildMailtoUrl,
@@ -24,6 +26,14 @@ export type {
   Step,
   TeamMember,
 } from './domain/landingContent.ts'
+export {
+  buildPrivacyAlternates,
+  buildPrivacyPath,
+  buildPrivacyUrl,
+  privacyPaths,
+} from './application/privacyPolicy.ts'
+export type { PrivacyPolicy, PrivacySection } from './domain/privacyPolicy.ts'
 export { siteUrl } from './infrastructure/landingContentSource.ts'
 
 export const getLandingContent = createGetLandingContent(landingContentSource)
+export const getPrivacyPolicy = createGetPrivacyPolicy(privacyPolicySource)

@@ -11,7 +11,7 @@
 - [x] T02 Dominio: `PrivacyPolicy` y `validatePrivacyPolicy` con sus pruebas.
 - [x] T03 Infraestructura: textos `es` y `en` de `contenido.md`, con la prueba de copia literal y
       de igual cantidad de secciones.
-- [ ] T04 Aplicación: `privacyPaths`, `buildPrivacyUrl`, `buildPrivacyAlternates` y
+- [x] T04 Aplicación: `privacyPaths`, `buildPrivacyUrl`, `buildPrivacyAlternates` y
       `getPrivacyPolicy`; exportarlos en `index.ts`.
 - [ ] T05 Vista `components/legal/privacy-policy.tsx` con su prueba.
 - [ ] T06 Rutas `/es/privacidad` y `/en/privacy` con metadata (canonical, alternates cruzados,
