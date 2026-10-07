@@ -25,8 +25,9 @@
       `sharp-cli`; prueba de existencia y peso ≤ 250 KB en `page.test.tsx`. El PNG original no se
       versiona.
 - [x] T10 `FaqSection` recibe `imageSrc` desde `page.tsx`: imagen decorativa (`alt=""`, carga
-      diferida) bajo el título, en tarjeta 16:10 (móvil) / 4:5 (escritorio) con degradado y zoom
-      `motion-safe` al pasar el mouse; columna izquierda `lg:sticky`. `<main>` pasa de
+      diferida) bajo el título, en tarjeta 16:10 (móvil) / cuadrada (escritorio) con recorte
+      `object-[85%_center]`, degradado y zoom `motion-safe` al pasar el mouse; columna izquierda
+      `lg:sticky`. `<main>` pasa de
       `overflow-x-hidden` a `overflow-x-clip`, porque `hidden` lo volvía contenedor de scroll y
       anulaba el sticky.
       - Ajuste (2026-10-07): tarjeta `lg:aspect-square` y recorte `object-[85%_center]`. Con 75 %
