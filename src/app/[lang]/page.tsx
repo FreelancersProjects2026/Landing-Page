@@ -57,8 +57,9 @@ export default async function Home({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: faqStructuredData }}
       />
-      {/* clip, no hidden: hidden convierte <main> en contenedor de scroll y anula los sticky. */}
-      <main className="relative min-h-screen overflow-x-clip">
+      {/* clip, no hidden: hidden convierte <main> en contenedor de scroll y anula los sticky.
+          hidden queda solo de respaldo para navegadores sin clip (Safari ≤ 15). */}
+      <main className="relative min-h-screen overflow-x-hidden supports-[overflow:clip]:overflow-x-clip">
         <Navigation
           brand={content.company.name}
           menu={content.menu}
