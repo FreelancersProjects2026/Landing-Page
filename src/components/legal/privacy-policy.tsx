@@ -16,8 +16,8 @@ export function PrivacyPolicyView({
   homeLabel,
 }: PrivacyPolicyViewProps) {
   return (
-    <main className="min-h-svh overflow-x-hidden bg-background px-6 py-16 text-white lg:py-24">
-      <article className="mx-auto max-w-3xl">
+    <main className="min-h-svh bg-background px-6 py-16 text-white lg:py-24">
+      <article className="mx-auto max-w-3xl break-words">
         <a
           href={homeHref}
           className={`group inline-flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-white ${focusRing}`}
