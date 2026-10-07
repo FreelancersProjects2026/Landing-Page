@@ -21,10 +21,10 @@
 - [x] T07 Correcciones de revisión: preguntas frecuentes únicas en el dominio, ícono con
       `motion-safe:`, `FaqItem` en orden alfabético y comparación con `contenido.md` acotada a la FAQ.
 - [x] T08 Expectativa de rich results ajustada en `spec.md` y en el criterio de T06.
-- [x] T09 Asset `public/preguntas/preguntas-frecuentes.webp` (1672×941, 126 KB, calidad 80) con
+- [x] T09 *(Reemplazada por T12–T13: el negocio descartó la imagen el 2026-10-07.)* Asset `public/preguntas/preguntas-frecuentes.webp` (1672×941, 126 KB, calidad 80) con
       `sharp-cli`; prueba de existencia y peso ≤ 250 KB en `page.test.tsx`. El PNG original no se
       versiona.
-- [x] T10 `FaqSection` recibe `imageSrc` desde `page.tsx`: imagen decorativa (`alt=""`, carga
+- [x] T10 *(Reemplazada por T12: el negocio descartó la imagen el 2026-10-07.)* `FaqSection` recibe `imageSrc` desde `page.tsx`: imagen decorativa (`alt=""`, carga
       diferida) bajo el título, en tarjeta 16:10 (móvil) / cuadrada (escritorio) con recorte
       `object-[85%_center]`, degradado y zoom `motion-safe` al pasar el mouse; columna izquierda
       `lg:sticky`. `<main>` pasa de
@@ -47,3 +47,15 @@
         La columna (865 px) es más alta que el espacio visible bajo el menú (788 px): mientras
         está fija, los ~77 px inferiores de la tarjeta quedan fuera de pantalla. Consola de `/es`
         y `/en` sin avisos de hidratación. Falta que el negocio vea la imagen.
+- [x] T12 `FaqSection` sin `imageSrc` ni `next/image`: la tarjeta conserva marco y medidas
+      (`aspect-[16/10] lg:aspect-square`, `bg-black`) con `ParticleVisualization` dentro, en un
+      contenedor `aria-hidden`. Sticky condicionado sin cambios. Movimiento reducido: se oculta la
+      tarjeta entera (`motion-reduce:hidden`), porque negra y vacía parecería un hueco roto.
+- [x] T13 Borrados `public/preguntas/preguntas-frecuentes.webp` y su prueba de peso. El PNG
+      original del usuario sigue sin versionar.
+- [x] T14 Alcance 5 en `spec.md` y estas tareas.
+      - Medido (2026-10-07, `pnpm build && pnpm start`, iframes, respuestas abiertas): a 1440×900
+        la columna sigue fija (736 px, fija a 112 px, la tarjeta de 515×515 termina en 848 px) y
+        entra completa. A 1366×768 se desplaza normal (716 px). A 390×844, tarjeta de 327×204.
+        Sin `<img>` en la sección y sin scroll horizontal a 1440 (`scrollWidth` 1425 con barra)
+        ni a 390 (375).

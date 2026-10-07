@@ -21,7 +21,7 @@ asistentes de IA, pero no garantiza un rich result en Google.
 3. **Contenido** en `company-profile` (`es` y `en`), validado al cargarse: mínimo una pregunta,
    sin textos vacíos ni `[PENDIENTE]`.
 4. **Datos estructurados:** `FAQPage` en el JSON-LD de la landing con las mismas preguntas.
-5. Imagen decorativa `public/preguntas/` junto al título; el negocio decide si queda tras verla.
+5. Partículas decorativas (`ParticleVisualization`) junto al título; la imagen se descartó el 2026-10-07.
 
 ## Fuera de alcance
 - Buscador de preguntas, categorías o página aparte de FAQ.
