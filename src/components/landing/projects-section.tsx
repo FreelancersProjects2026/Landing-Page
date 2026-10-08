@@ -1,7 +1,10 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import { ArrowUpRight } from 'lucide-react'
 import type { Project } from '@modules/company-profile'
+
+import { externalLinkProps } from './external-link'
 import { sectionIds } from './section-ids'
 
 type ProjectsSectionProps = {
@@ -76,6 +79,16 @@ export function ProjectsSection({ label, title, items }: ProjectsSectionProps) {
               <p className="text-lg text-muted-foreground leading-relaxed">
                 {project.description}
               </p>
+              {project.link && (
+                <a
+                  href={project.link.url}
+                  {...externalLinkProps}
+                  className="mt-3 text-sm text-foreground/70 hover:text-foreground transition-colors inline-flex items-center gap-1 group"
+                >
+                  {project.link.label}
+                  <ArrowUpRight className="w-3 h-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </a>
+              )}
             </article>
           ))}
         </div>

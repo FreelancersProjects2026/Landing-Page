@@ -49,6 +49,11 @@ const projectNames = {
   payments: 'Seguimiento de Cuentas mediante Lectura de Correos Electrónicos',
 }
 
+const organicoCr = {
+  name: 'Orgánico CR',
+  link: { label: 'organicocr.store', url: 'https://organicocr.store' },
+}
+
 const rights = '© 2026 solutionsPJM'
 
 const es = validateLandingContent({
@@ -169,6 +174,11 @@ const es = validateLandingContent({
         name: projectNames.payments,
         description:
           'Plataforma que registra automáticamente cada pago recibido: lee únicamente los correos de los bancos autorizados y los presenta en un dashboard claro y siempre actualizado.',
+      },
+      {
+        ...organicoCr,
+        description:
+          'Tienda en línea de productos orgánicos de productores locales de Costa Rica: catálogo, carrito, cuenta de usuario y pedidos por WhatsApp con entrega a domicilio.',
       },
     ],
   },
@@ -363,6 +373,11 @@ const en = validateLandingContent({
         nameTranslation: 'Account Tracking through Email Reading',
         description:
           'A platform that automatically records every payment received: it reads only emails from authorized bank senders and presents them in a clear, always up-to-date dashboard.',
+      },
+      {
+        ...organicoCr,
+        description:
+          'Online store for organic produce from local Costa Rican growers: catalog, shopping cart, user accounts and WhatsApp ordering with home delivery.',
       },
     ],
   },

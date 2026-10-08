@@ -43,6 +43,8 @@ export interface Project {
   /** Traducción del nombre cuando este se conserva en otro idioma. */
   readonly nameTranslation?: string
   readonly description: string
+  /** Sitio público del proyecto, si se puede visitar. */
+  readonly link?: ExternalLink
 }
 
 export interface ExternalLink {
@@ -208,6 +210,14 @@ export function validateLandingContent(
       problems.push(`la pregunta frecuente «${question}» está repetida`)
     }
   }
+  content.projects.items.forEach(({ link }, index) => {
+    if (
+      link &&
+      !(URL.canParse(link.url) && new URL(link.url).protocol === 'https:')
+    ) {
+      problems.push(`projects.items.${index}.link.url no usa https`)
+    }
+  })
   for (const [path, text] of collectTexts(content, '')) {
     if (text.trim().length === 0) problems.push(`${path} está vacío`)
     if (text.includes(PENDING_MARK)) {

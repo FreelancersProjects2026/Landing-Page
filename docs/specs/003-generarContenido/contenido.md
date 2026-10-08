@@ -78,6 +78,9 @@ Servicios · Cómo trabajamos · Proyectos · Equipo · Contacto
 - **Seguimiento de Cuentas mediante Lectura de Correos Electrónicos:** Plataforma que registra
   automáticamente cada pago recibido: lee únicamente los correos de los bancos autorizados y los
   presenta en un dashboard claro y siempre actualizado.
+- **Orgánico CR:** Tienda en línea de productos orgánicos de productores locales de Costa Rica:
+  catálogo, carrito, cuenta de usuario y pedidos por WhatsApp con entrega a domicilio.
+  Enlace: organicocr.store → https://organicocr.store (Spec 010).
 
 ### 5. Equipo
 
@@ -175,6 +178,9 @@ Services · How we work · Projects · Team · Contact
 - **Seguimiento de Cuentas mediante Lectura de Correos Electrónicos** (Account Tracking through
   Email Reading): A platform that automatically records every payment received: it reads only
   emails from authorized bank senders and presents them in a clear, always up-to-date dashboard.
+- **Orgánico CR:** Online store for organic produce from local Costa Rican growers: catalog,
+  shopping cart, user accounts and WhatsApp ordering with home delivery.
+  Link: organicocr.store → https://organicocr.store (Spec 010).
 
 ### 5. Team
 

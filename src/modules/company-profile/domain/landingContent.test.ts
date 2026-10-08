@@ -250,6 +250,52 @@ describe('validateLandingContent', () => {
     )
   })
 
+  it.each(['http://organicocr.store', 'organicocr.store'])(
+    'rechaza el enlace de un proyecto que no usa https: %s',
+    (url) => {
+      const content = validContent()
+
+      expect(() =>
+        validateLandingContent({
+          ...content,
+          projects: {
+            ...content.projects,
+            items: [
+              {
+                name: 'Orgánico CR',
+                description: 'Tienda en línea.',
+                link: { label: 'organicocr.store', url },
+              },
+            ],
+          },
+        }),
+      ).toThrow('projects.items.0.link.url no usa https')
+    },
+  )
+
+  it('acepta un proyecto con enlace https', () => {
+    const content = validContent()
+    const withLink = {
+      ...content,
+      projects: {
+        ...content.projects,
+        items: [
+          ...content.projects.items,
+          {
+            name: 'Orgánico CR',
+            description: 'Tienda en línea.',
+            link: {
+              label: 'organicocr.store',
+              url: 'https://organicocr.store',
+            },
+          },
+        ],
+      },
+    }
+
+    expect(validateLandingContent(withLink)).toBe(withLink)
+  })
+
   it('exige al menos una opción de WhatsApp', () => {
     const content = validContent()
 
