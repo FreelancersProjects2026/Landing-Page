@@ -17,3 +17,5 @@
         `noopener noreferrer`). Pendiente: revisión visual en navegador.
 - [x] T05 Revisión: en `003-generarContenido/spec.md`, junto a «sin enlaces a las aplicaciones»,
       anotar la enmienda de esta spec.
+- [x] T06 Revisión: el problema de `link.url` dice «no es una URL https válida» (cubre también
+      URLs mal formadas). Primero la prueba en `landingContent.test.ts`.

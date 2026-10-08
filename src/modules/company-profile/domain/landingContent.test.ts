@@ -269,7 +269,7 @@ describe('validateLandingContent', () => {
             ],
           },
         }),
-      ).toThrow('projects.items.0.link.url no usa https')
+      ).toThrow('projects.items.0.link.url no es una URL https válida')
     },
   )
 

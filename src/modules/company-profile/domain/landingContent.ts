@@ -215,7 +215,9 @@ export function validateLandingContent(
       link &&
       !(URL.canParse(link.url) && new URL(link.url).protocol === 'https:')
     ) {
-      problems.push(`projects.items.${index}.link.url no usa https`)
+      problems.push(
+        `projects.items.${index}.link.url no es una URL https válida`,
+      )
     }
   })
   for (const [path, text] of collectTexts(content, '')) {
