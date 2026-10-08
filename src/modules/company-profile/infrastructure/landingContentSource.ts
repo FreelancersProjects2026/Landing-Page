@@ -28,10 +28,7 @@ const gitHub = (url: string): ExternalLink => ({ label: 'GitHub', url })
 const team = {
   patrick: {
     name: 'Patrick Jackson Gómez',
-    links: [
-      linkedIn('https://www.linkedin.com/in/patrickjacksongomez/'),
-      gitHub('https://github.com/Jackson11p'),
-    ],
+    links: [gitHub('https://github.com/Jackson11p')],
   },
   jason: {
     name: 'Jason Moya Brenes',

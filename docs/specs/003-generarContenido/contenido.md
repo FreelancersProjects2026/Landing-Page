@@ -217,6 +217,6 @@ Services · How we work · Projects · Team · Contact
 
 ## Enlaces del equipo
 
-- Patrick Jackson Gómez: https://www.linkedin.com/in/patrickjacksongomez/ · https://github.com/Jackson11p
+- Patrick Jackson Gómez: https://github.com/Jackson11p
 - Jason Moya Brenes: https://www.linkedin.com/in/jason-moya-brns/ · https://github.com/jasonmoyaB
 - Michael Brenes Chaves: https://www.linkedin.com/in/michaelbreneschaves/

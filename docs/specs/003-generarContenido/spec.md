@@ -48,7 +48,7 @@ de todo Costa Rica encontrarnos y contactarnos, publicado en la landing en `/es`
 ### Equipo
 | Integrante | Rol | Enlaces |
 |---|---|---|
-| Patrick Jackson Gómez | Full-stack y análisis de datos; enlace con los clientes: entiende el negocio y lo traduce en tareas para el equipo | [LinkedIn](https://www.linkedin.com/in/patrickjacksongomez/), [GitHub](https://github.com/Jackson11p) |
+| Patrick Jackson Gómez | Full-stack y análisis de datos; enlace con los clientes: entiende el negocio y lo traduce en tareas para el equipo | [GitHub](https://github.com/Jackson11p) |
 | Jason Moya Brenes | Full-stack; enfocado en IA, agentes y LLM | [LinkedIn](https://www.linkedin.com/in/jason-moya-brns/), [GitHub](https://github.com/jasonmoyaB) |
 | Michael Brenes Chaves | Full-stack | [LinkedIn](https://www.linkedin.com/in/michaelbreneschaves/) |
 

@@ -33,7 +33,7 @@ export function HeroSection({ hero, whatsappUrl }: HeroSectionProps) {
       <div className="absolute inset-0 z-0">
         <img
           src="/hero/hero.webp"
-          srcSet="/hero/hero-960.webp 960w, /hero/hero.webp 1920w"
+          srcSet="/hero/hero-960.webp 960w, /hero/hero.webp 1672w"
           sizes="100vw"
           alt=""
           aria-hidden="true"

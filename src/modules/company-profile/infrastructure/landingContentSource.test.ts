@@ -111,6 +111,14 @@ describe('landingContentSource', () => {
     expect(projects).not.toMatch(/https?:|www\./)
   })
 
+  it('Patrick conserva su GitHub y no publica LinkedIn', () => {
+    const patrick = es.team.members.find(
+      ({ name }) => name === 'Patrick Jackson Gómez',
+    )
+
+    expect(patrick?.links.map(({ label }) => label)).toEqual(['GitHub'])
+  })
+
   it.each([es, en])(
     'copia literalmente de contenido.md los textos en $locale',
     (content) => {
