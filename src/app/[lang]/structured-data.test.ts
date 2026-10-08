@@ -18,6 +18,7 @@ describe('buildStructuredData', () => {
         '@context': 'https://schema.org',
         '@type': 'ProfessionalService',
         name: 'solutionsPJM',
+        alternateName: 'solutions PJM',
         url: `https://solutionspjm.com/${lang}`,
         description: content.seo.description,
         telephone: '+506 6440-0832',

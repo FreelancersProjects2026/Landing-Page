@@ -21,6 +21,8 @@ export interface PostalAddress {
 
 export interface Contact {
   readonly name: string
+  /** Misma marca escrita con espacio, para búsquedas (spec 011). */
+  readonly alternateName: string
   readonly location: string
   readonly address: PostalAddress
   readonly areaServed: string

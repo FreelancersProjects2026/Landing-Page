@@ -11,6 +11,7 @@ function validContent(): LandingContent {
     locale: 'es',
     company: {
       name: 'solutionsPJM',
+      alternateName: 'solutions PJM',
       location: 'Paraíso de Cartago, Costa Rica',
       address: { locality: 'Paraíso', region: 'Cartago', country: 'CR' },
       areaServed: 'Costa Rica',
