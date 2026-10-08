@@ -1,7 +1,7 @@
 # Tareas: Cambio de logo
 
 ## Base acordada
-- Spec: `docs/specs/009-cambio-logo/spec.md`.
+- Spec: `docs/specs/009-cambio-logo/spec.md`. Plan: `plan.md`.
 - Método: TDD y `pnpm validate` en verde tras cada tarea. Un commit por tarea.
 
 ## Tareas
