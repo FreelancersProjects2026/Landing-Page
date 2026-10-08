@@ -15,3 +15,5 @@
       - 2026-10-08: `pnpm validate` en verde (181 pruebas). En `pnpm start`, `/es` y `/en` muestran
         Orgánico CR con su descripción y el enlace a `https://organicocr.store` (`_blank`,
         `noopener noreferrer`). Pendiente: revisión visual en navegador.
+- [x] T05 Revisión: en `003-generarContenido/spec.md`, junto a «sin enlaces a las aplicaciones»,
+      anotar la enmienda de esta spec.
