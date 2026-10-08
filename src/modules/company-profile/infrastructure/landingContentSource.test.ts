@@ -48,14 +48,14 @@ describe('landingContentSource', () => {
   })
 
   it('comparte proyectos e integrantes con sus enlaces entre idiomas', () => {
-    expect(en.projects.items.map(({ name }) => name)).toEqual(
-      es.projects.items.map(({ name }) => name),
+    expect(en.projects.items.map(({ name, link }) => ({ name, link }))).toEqual(
+      es.projects.items.map(({ name, link }) => ({ name, link })),
     )
     expect(en.team.members.map(({ name, links }) => ({ name, links }))).toEqual(
       es.team.members.map(({ name, links }) => ({ name, links })),
     )
     expect(es.team.members).toHaveLength(3)
-    expect(es.projects.items).toHaveLength(3)
+    expect(es.projects.items).toHaveLength(4)
   })
 
   it('ofrece las mismas opciones de WhatsApp en ambos idiomas', () => {
@@ -105,10 +105,27 @@ describe('landingContentSource', () => {
     expect(en.faq.items).toHaveLength(es.faq.items.length)
   })
 
-  it('no publica enlaces en los proyectos', () => {
-    const projects = JSON.stringify([es.projects, en.projects])
+  it('solo Orgánico CR enlaza a su sitio y ninguna descripción lleva URLs', () => {
+    for (const { projects } of [es, en]) {
+      expect(projects.items.filter(({ link }) => link)).toEqual([
+        expect.objectContaining({
+          name: 'Orgánico CR',
+          link: { label: 'organicocr.store', url: 'https://organicocr.store' },
+        }),
+      ])
+      expect(
+        JSON.stringify(projects.items.map(({ description }) => description)),
+      ).not.toMatch(/https?:|www\./)
+    }
+  })
 
-    expect(projects).not.toMatch(/https?:|www\./)
+  it('describe Orgánico CR al final de los proyectos en cada idioma', () => {
+    expect(es.projects.items.at(-1)?.description).toBe(
+      'Tienda en línea de productos orgánicos de productores locales de Costa Rica: catálogo, carrito, cuenta de usuario y pedidos por WhatsApp con entrega a domicilio.',
+    )
+    expect(en.projects.items.at(-1)?.description).toBe(
+      'Online store for organic produce from local Costa Rican growers: catalog, shopping cart, user accounts and WhatsApp ordering with home delivery.',
+    )
   })
 
   it('Patrick conserva su GitHub y no publica LinkedIn', () => {

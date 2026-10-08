@@ -33,6 +33,8 @@ externo al sitio.
   WhatsApp con entrega.
 - **Enmienda a 003** (`spec.md:99`, «sin enlaces a las aplicaciones»): un proyecto público puede
   llevar enlace. Solo Orgánico CR lo tiene.
+- Textos agregados a la sección 4 de `003-generarContenido/contenido.md`, fuente literal que exige
+  `landingContentSource.test.ts`.
 
 ## Criterios de aceptación
 - [ ] `/es` y `/en` muestran Orgánico CR con su descripción en el idioma de la página.
