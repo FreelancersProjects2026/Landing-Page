@@ -315,7 +315,7 @@ describe('FooterSection', () => {
 })
 
 describe('ProjectsSection', () => {
-  it('muestra cada proyecto con su nombre y lo logrado, sin enlaces', () => {
+  it('muestra cada proyecto con su nombre y lo logrado; solo Orgánico CR enlaza', () => {
     const { projects } = getLandingContent('en')
     render(<ProjectsSection label="Projects" {...projects} />)
     const section = screen.getByRole('region', { name: projects.title })
@@ -332,7 +332,16 @@ describe('ProjectsSection', () => {
         'Centralized Tourism Control and Management System',
       ),
     ).toBeVisible()
-    expect(within(section).queryAllByRole('link')).toHaveLength(0)
+    const link = within(section).getByRole('link', { name: 'organicocr.store' })
+    expect(link).toHaveAttribute('href', 'https://organicocr.store')
+    expect(link).toHaveAttribute('target', '_blank')
+    expect(link).toHaveAttribute('rel', 'noopener noreferrer')
+    expect(link.closest('article')).toHaveTextContent('Orgánico CR')
+    for (const article of within(section).getAllByRole('article')) {
+      expect(within(article).queryAllByRole('link')).toHaveLength(
+        article === link.closest('article') ? 1 : 0,
+      )
+    }
   })
 })
 
