@@ -14,6 +14,6 @@
 - [x] T04 Navbar: prueba en `landing-sections.test.tsx` (imagen decorativa del logo dentro del
       enlace de inicio); luego `next/image` en `navigation.tsx` junto a `{brand}`, tamaño acorde a
       `isScrolled` (sin lógica de negocio nueva).
-- [ ] T05 Limpieza: borrar `LogoPJM.jpeg` y `LogoPJM-192.png`; `grep LogoPJM src` sin resultados.
+- [x] T05 Limpieza: borrar `LogoPJM.jpeg` y `LogoPJM-192.png`; `grep LogoPJM src` sin resultados.
 - [ ] T06 Verificación: `pnpm validate`; revisar `/es` en `pnpm dev` (pestaña, navbar con y sin
       scroll, avatar de WhatsApp).
