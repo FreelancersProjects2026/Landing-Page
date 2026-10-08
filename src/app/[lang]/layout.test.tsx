@@ -67,8 +67,8 @@ describe('RootLayout', () => {
         type: 'website',
       },
       icons: {
-        icon: '/logo/icono/LogoPJM-192.png',
-        apple: '/logo/icono/LogoPJM.jpeg',
+        icon: '/logo/icono/LOGOsolutionsPJM-192.png',
+        apple: '/logo/icono/LOGOsolutionsPJM.jpeg',
       },
     })
   })

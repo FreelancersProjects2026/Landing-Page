@@ -62,7 +62,7 @@ export function WhatsAppButton({
       >
         <DropdownMenuLabel className="flex items-center gap-3 border-b border-foreground/10 px-4 py-3">
           <Image
-            src="/logo/icono/LogoPJM.jpeg"
+            src="/logo/icono/LOGOsolutionsPJM.jpeg"
             alt=""
             width={36}
             height={36}

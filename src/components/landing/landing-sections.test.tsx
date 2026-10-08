@@ -36,6 +36,14 @@ describe('Navigation', () => {
     const nav = screen.getByRole('navigation')
 
     expect(within(nav).getByText('solutionsPJM')).toBeInTheDocument()
+    // El logo es decorativo: el texto de la marca ya nombra el enlace de inicio.
+    const home = within(nav).getByRole('link', { name: 'solutionsPJM' })
+    expect(home).toHaveAttribute('href', '#inicio')
+    const logo = home.querySelector('img')
+    expect(logo).toHaveAttribute('alt', '')
+    expect(decodeURIComponent(logo?.getAttribute('src') ?? '')).toContain(
+      '/logo/icono/LOGOsolutionsPJM.jpeg',
+    )
     expect(
       within(nav)
         .getAllByRole('link', { name: 'Servicios' })
