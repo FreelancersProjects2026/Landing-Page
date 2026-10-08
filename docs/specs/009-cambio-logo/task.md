@@ -17,3 +17,6 @@
 - [x] T05 Limpieza: borrar `LogoPJM.jpeg` y `LogoPJM-192.png`; `grep LogoPJM src` sin resultados.
 - [ ] T06 Verificación: `pnpm validate`; revisar `/es` en `pnpm dev` (pestaña, navbar con y sin
       scroll, avatar de WhatsApp).
+      - 2026-10-08: `pnpm validate` en verde (177 pruebas). En `pnpm start`, `/es` enlaza el icon
+        192 y el apple JPEG nuevos, la navbar sirve el logo (`alt=""`) y `LogoPJM.jpeg` da 404.
+        Pendiente: revisión visual en navegador (pestaña, scroll, avatar de WhatsApp).
