@@ -24,6 +24,6 @@ como `alternateName`, para que Google relacione ambas escrituras con el mismo ne
   búsquedas.
 
 ## Criterios de aceptación
-- [ ] El JSON-LD de `/es` y `/en` incluye `"alternateName": "solutions PJM"` y mantiene
+- [x] El JSON-LD de `/es` y `/en` incluye `"alternateName": "solutions PJM"` y mantiene
       `"name": "solutionsPJM"`.
-- [ ] `pnpm validate` en verde.
+- [x] `pnpm validate` en verde.

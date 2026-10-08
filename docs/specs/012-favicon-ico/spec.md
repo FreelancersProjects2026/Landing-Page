@@ -19,5 +19,5 @@ Publicar `/favicon.ico` generado desde el logo actual (`LOGOsolutionsPJM.jpeg`).
   reindexación en Search Console.
 
 ## Criterios de aceptación
-- [ ] `/favicon.ico` responde 200 con un ICO válido que incluye 48×48.
-- [ ] `pnpm validate` en verde.
+- [x] `/favicon.ico` responde 200 con un ICO válido que incluye 48×48.
+- [x] `pnpm validate` en verde.
