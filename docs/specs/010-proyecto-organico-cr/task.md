@@ -12,3 +12,6 @@
 - [x] T03 Vista: enlace externo opcional en `projects-section.tsx` (`externalLinkProps` y
       `ArrowUpRight`). Primero la prueba en `landing-sections.test.tsx`.
 - [ ] T04 Verificación: `pnpm validate`; revisar `/es` y `/en` en `pnpm dev` (tarjeta y enlace).
+      - 2026-10-08: `pnpm validate` en verde (181 pruebas). En `pnpm start`, `/es` y `/en` muestran
+        Orgánico CR con su descripción y el enlace a `https://organicocr.store` (`_blank`,
+        `noopener noreferrer`). Pendiente: revisión visual en navegador.
