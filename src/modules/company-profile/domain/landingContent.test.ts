@@ -11,6 +11,7 @@ function validContent(): LandingContent {
     locale: 'es',
     company: {
       name: 'solutionsPJM',
+      alternateName: 'solutions PJM',
       location: 'Paraíso de Cartago, Costa Rica',
       address: { locality: 'Paraíso', region: 'Cartago', country: 'CR' },
       areaServed: 'Costa Rica',
@@ -250,8 +251,13 @@ describe('validateLandingContent', () => {
     )
   })
 
-  it.each(['http://organicocr.store', 'organicocr.store'])(
-    'rechaza el enlace de un proyecto que no usa https: %s',
+  it.each([
+    'http://organicocr.store',
+    'organicocr.store',
+    'javascript:alert(1)',
+    'https:',
+  ])(
+    'rechaza el enlace de un proyecto que no es una URL https válida: %s',
     (url) => {
       const content = validContent()
 
@@ -269,7 +275,7 @@ describe('validateLandingContent', () => {
             ],
           },
         }),
-      ).toThrow('projects.items.0.link.url no usa https')
+      ).toThrow('projects.items.0.link.url no es una URL https válida')
     },
   )
 

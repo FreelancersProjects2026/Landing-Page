@@ -90,6 +90,7 @@ export function Navigation({
               alt=""
               width={40}
               height={40}
+              preload
               className={`rounded-lg object-cover transition-all duration-500 ${isScrolled ? 'size-8' : 'size-10'}`}
             />
             <span

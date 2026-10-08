@@ -38,6 +38,7 @@ describe('landingContentSource', () => {
   it('comparte nombre, ubicación y WhatsApp entre idiomas', () => {
     expect(es.company).toEqual({
       name: 'solutionsPJM',
+      alternateName: 'solutions PJM',
       location: 'Paraíso de Cartago, Costa Rica',
       address: { locality: 'Paraíso', region: 'Cartago', country: 'CR' },
       areaServed: 'Worldwide',
@@ -139,8 +140,13 @@ describe('landingContentSource', () => {
   it.each([es, en])(
     'copia literalmente de contenido.md los textos en $locale',
     (content) => {
-      // Datos técnicos que no se muestran: el idioma y el código ISO del país (JSON-LD).
-      const technical = [content.locale, content.company.address.country]
+      // Datos técnicos que no se muestran: el idioma, el código ISO del país y la variante de
+      // la marca (JSON-LD, spec 011).
+      const technical = [
+        content.locale,
+        content.company.address.country,
+        content.company.alternateName,
+      ]
       const missing = collectTexts({
         ...content,
         notFound: {},

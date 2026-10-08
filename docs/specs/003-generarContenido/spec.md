@@ -96,7 +96,8 @@ de todo Costa Rica encontrarnos y contactarnos, publicado en la landing en `/es`
 
 ## Reglas del negocio
 - Todo el contenido es verídico: no se inventan testimonios, métricas, clientes ni precios.
-- De cada proyecto se publican solo su nombre y lo que se logró: sin enlaces a las aplicaciones,
+- De cada proyecto se publican solo su nombre y lo que se logró: sin enlaces a las aplicaciones
+  (enmendado por Spec 010: un proyecto público puede llevar enlace),
   sin datos de clientes y sin capturas con información real.
 - El software a medida se cotiza por proyecto; la landing no muestra precios.
 - El contacto principal es WhatsApp; el formulario queda para cuando haya backend.

@@ -20,3 +20,5 @@
       - 2026-10-08: `pnpm validate` en verde (177 pruebas). En `pnpm start`, `/es` enlaza el icon
         192 y el apple JPEG nuevos, la navbar sirve el logo (`alt=""`) y `LogoPJM.jpeg` da 404.
         Pendiente: revisión visual en navegador (pestaña, scroll, avatar de WhatsApp).
+- [x] T07 Revisión: el logo de la navbar va arriba del pliegue; `preload` en `navigation.tsx`
+      (Next 16 reemplaza `priority`). Primero la prueba: la imagen no lleva `loading="lazy"`.

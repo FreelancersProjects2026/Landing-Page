@@ -41,6 +41,8 @@ describe('Navigation', () => {
     expect(home).toHaveAttribute('href', '#inicio')
     const logo = home.querySelector('img')
     expect(logo).toHaveAttribute('alt', '')
+    // Siempre está arriba del pliegue: se precarga en vez de cargarse en diferido.
+    expect(logo).not.toHaveAttribute('loading', 'lazy')
     expect(decodeURIComponent(logo?.getAttribute('src') ?? '')).toContain(
       '/logo/icono/LOGOsolutionsPJM.jpeg',
     )

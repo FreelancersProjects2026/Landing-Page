@@ -9,6 +9,7 @@ export function buildStructuredData({ company, seo, locale }: LandingContent) {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
     name: company.name,
+    alternateName: company.alternateName,
     url: buildLocaleUrl(siteUrl, locale),
     description: seo.description,
     telephone: company.phone,
