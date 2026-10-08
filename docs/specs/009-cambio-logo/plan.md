@@ -52,6 +52,6 @@ sola vez con `pnpm dlx sharp-cli`, como en 008-T09.
 - La caché de Google tarda días o semanas en mostrar el ícono nuevo; no se puede forzar.
 - Revisión de 2026-10-08: el logo de la navbar se carga en diferido aunque está siempre arriba
   del pliegue. Se puede agregar `preload`, que en Next 16 reemplaza a `priority` (mejora menor,
-  pendiente de aprobar).
+  aplicado en T07).
 - Fuera de alcance: `icon.svg`, `icon-*-32x32.png` y `apple-icon.png` en `public/` no se usan.
   Es una duda que sigue pendiente en 005.
