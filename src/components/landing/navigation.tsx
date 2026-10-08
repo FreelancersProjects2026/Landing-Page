@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Menu, X } from 'lucide-react'
@@ -84,6 +85,13 @@ export function Navigation({
             href={`#${sectionIds.home}`}
             className="flex items-center gap-2 group"
           >
+            <Image
+              src="/logo/icono/LOGOsolutionsPJM.jpeg"
+              alt=""
+              width={40}
+              height={40}
+              className={`rounded-lg object-cover transition-all duration-500 ${isScrolled ? 'size-8' : 'size-10'}`}
+            />
             <span
               className={`font-display tracking-tight transition-all duration-500 ${isScrolled ? 'text-xl text-foreground' : 'text-2xl text-white'}`}
             >
