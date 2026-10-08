@@ -19,3 +19,5 @@
       anotar la enmienda de esta spec.
 - [x] T06 Revisión: el problema de `link.url` dice «no es una URL https válida» (cubre también
       URLs mal formadas). Primero la prueba en `landingContent.test.ts`.
+- [x] T07 Revisión: `javascript:alert(1)` y `https:` en las URLs rechazadas de
+      `landingContent.test.ts` (la validación ya los rechaza: pruebas de regresión).

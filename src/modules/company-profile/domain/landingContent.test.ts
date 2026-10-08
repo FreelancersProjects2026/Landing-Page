@@ -250,8 +250,13 @@ describe('validateLandingContent', () => {
     )
   })
 
-  it.each(['http://organicocr.store', 'organicocr.store'])(
-    'rechaza el enlace de un proyecto que no usa https: %s',
+  it.each([
+    'http://organicocr.store',
+    'organicocr.store',
+    'javascript:alert(1)',
+    'https:',
+  ])(
+    'rechaza el enlace de un proyecto que no es una URL https válida: %s',
     (url) => {
       const content = validContent()
 
