@@ -50,6 +50,9 @@ describe('WhatsAppButton', () => {
     expect(menu).toHaveAccessibleDescription(greeting)
     // El avatar es decorativo: no aporta nombre accesible.
     expect(menu.querySelector('img')).toHaveAttribute('alt', '')
+    expect(
+      decodeURIComponent(menu.querySelector('img')?.getAttribute('src') ?? ''),
+    ).toContain('/logo/icono/LOGOsolutionsPJM.jpeg')
     expect(within(menu).queryByRole('img')).not.toBeInTheDocument()
     expect(
       within(menu)
