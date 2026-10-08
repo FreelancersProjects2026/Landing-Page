@@ -7,7 +7,7 @@
 ## Tareas
 - [x] T01 Favicon: generar `public/logo/icono/LOGOsolutionsPJM-192.png` (192×192 PNG) desde
       `LOGOsolutionsPJM.jpeg` (sin agregar dependencias; `pnpm dlx sharp-cli` como en 008-T09).
-- [ ] T02 Íconos del sitio: primero actualizar las pruebas `src/app/[lang]/layout.test.tsx` y
+- [x] T02 Íconos del sitio: primero actualizar las pruebas `src/app/[lang]/layout.test.tsx` y
       `src/app/global-not-found.test.tsx` a las rutas nuevas (fallan), luego `src/app/icons.ts`.
 - [ ] T03 WhatsApp: prueba en `whatsapp-button.test.tsx` que el avatar usa
       `/logo/icono/LOGOsolutionsPJM.jpeg`; luego cambiar `whatsapp-button.tsx`.

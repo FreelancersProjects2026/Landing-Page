@@ -55,8 +55,8 @@ describe('global-not-found', () => {
   it('titula la pestaña con el título de la 404 y usa los íconos del sitio', () => {
     expect(metadata.title).toBe(getLandingContent('es').notFound.title)
     expect(metadata.icons).toEqual({
-      icon: '/logo/icono/LogoPJM-192.png',
-      apple: '/logo/icono/LogoPJM.jpeg',
+      icon: '/logo/icono/LOGOsolutionsPJM-192.png',
+      apple: '/logo/icono/LOGOsolutionsPJM.jpeg',
     })
   })
 })
