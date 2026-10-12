@@ -16,11 +16,12 @@ perder acceso a ninguna sección.
 - **CTA:** botón «Cotiza por WhatsApp» / «Get a quote on WhatsApp».
 
 ## Alcance
-1. Escritorio (≥ 768 px) muestra solo los enlaces primarios: **Servicios, Cómo trabajamos,
+1. Escritorio (≥ 1024 px, ver T07) muestra solo los enlaces primarios: **Servicios, Cómo trabajamos,
    Proyectos, Contacto** (ver Decisiones).
 2. Escritorio muestra solo el enlace al **otro** idioma (en `/es` se ve «EN»; en `/en`, «ES»).
 3. El CTA sigue siendo el único botón relleno del header.
-4. El menú móvil no cambia: sigue con las 6 secciones, ES/EN y el CTA.
+4. El menú móvil no cambia: sigue con las 6 secciones, ES/EN y el CTA. Se usa por debajo de
+   1024 px (móvil y tablet).
 5. El footer agrega «Preguntas» (`#preguntas-frecuentes`) para que toda sección secundaria tenga un
    enlace fuera del header en escritorio (Equipo ya está).
 
@@ -37,8 +38,8 @@ perder acceso a ninguna sección.
 - [ ] En `/es` el `<nav>` tiene «EN» → `/en` y no tiene «ES»; en `/en`, al revés. El menú móvil
       mantiene ambos.
 - [ ] El footer enlaza «Preguntas» a `#preguntas-frecuentes`.
-- [ ] Verificación visual en 1280 px y 768 px: logo, 4 enlaces, idioma y CTA en una línea sin
-      saltos.
+- [ ] Verificación visual en 1024 px y 1280 px: logo, 4 enlaces, idioma y CTA en una línea sin
+      solaparse. En 768 px y 375 px se ve la hamburguesa.
 - [ ] `pnpm validate` en verde.
 
 ## Decisiones (confirmadas por el usuario)
