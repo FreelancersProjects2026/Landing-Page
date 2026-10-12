@@ -78,5 +78,5 @@
     'sharp-x'», «Tests no tests». Ahora `sharp` se carga con `loadSharp()` dentro de la prueba de
     ancho; con `'sharp-x'` solo fallan los 4 casos «mide como máximo 1600 px de ancho» y pasan los
     otros 9. Revertido a `'sharp'`: 13/13 en verde; `pnpm test` 218 pruebas; `pnpm validate` exit 0.
-- [ ] T05 Verificación: `pnpm validate` y revisión visual en 1280 y 375 px de Servicios, Cómo
+- [x] T05 Verificación: `pnpm validate` y revisión visual en 1280 y 375 px de Servicios, Cómo
   trabajamos, Proyectos y footer (comparar con la versión anterior). (depende de T03, T04, T06, T07, T08)
