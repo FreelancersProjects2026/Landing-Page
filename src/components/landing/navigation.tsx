@@ -88,7 +88,7 @@ export function Navigation({
           </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-8">
             {navLinks
               .filter((link) => link.primary)
               .map((link) => (
@@ -106,7 +106,7 @@ export function Navigation({
           </div>
 
           {/* Desktop CTA */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-4">
             <div
               className={`flex items-center gap-3 transition-all duration-500 ${isScrolled ? 'text-xs text-foreground' : 'text-sm text-white'}`}
             >

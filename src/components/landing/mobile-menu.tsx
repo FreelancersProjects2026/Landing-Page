@@ -37,7 +37,7 @@ export function MobileMenu({
 
   return (
     <div
-      className={`md:hidden fixed inset-0 bg-background z-40 transition-all duration-500 ${
+      className={`lg:hidden fixed inset-0 bg-background z-40 transition-all duration-500 ${
         open
           ? 'opacity-100 pointer-events-auto'
           : 'opacity-0 pointer-events-none'
@@ -96,7 +96,7 @@ export function MobileMenuToggle({
   return (
     <button
       onClick={onToggle}
-      className={`md:hidden p-2 transition-colors duration-500 ${scrolled || open ? 'text-foreground' : 'text-white'}`}
+      className={`lg:hidden p-2 transition-colors duration-500 ${scrolled || open ? 'text-foreground' : 'text-white'}`}
       aria-label={label}
       aria-expanded={open}
     >

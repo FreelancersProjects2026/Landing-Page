@@ -130,6 +130,29 @@ describe('Navigation', () => {
     }
   })
 
+  it('el header de escritorio aparece desde lg y el menú móvil por debajo', () => {
+    renderNavigation()
+    const nav = screen.getByRole('navigation')
+    // jsdom no aplica media queries: las clases protegen contra la regresión.
+    const desktopBlocks = [
+      within(nav).getByRole('link', { name: 'Servicios' }).parentElement,
+      within(nav).getByRole('link', { name: 'EN' }).closest('.hidden'),
+    ]
+    const mobileOnly = [
+      screen.getByRole('button', { name: 'Menú' }),
+      screen.getByRole('link', { name: 'ES' }).closest('.fixed'),
+    ]
+
+    for (const block of desktopBlocks) {
+      expect(block).toHaveClass('hidden', 'lg:flex')
+      expect(block).not.toHaveClass('md:flex')
+    }
+    for (const element of mobileOnly) {
+      expect(element).toHaveClass('lg:hidden')
+      expect(element).not.toHaveClass('md:hidden')
+    }
+  })
+
   it.each([
     ['es', 'EN', 'ES'],
     ['en', 'ES', 'EN'],

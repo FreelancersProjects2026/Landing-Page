@@ -50,12 +50,16 @@
   - Evidencia: rojo, «en escritorio el nav solo muestra los enlaces primarios» falló en
     `within(nav).getByRole('link', { name: 'Contacto' })` (Contacto no estaba en el `<nav>`).
     Verde: 199/199 pruebas y `pnpm validate` exit 0. `navigation.tsx` sigue en 148 líneas.
-- [ ] T07 Corrección (bloqueante, resultado de T04): con 4 enlaces el header de escritorio no cabe
+- [x] T07 Corrección (bloqueante, resultado de T04): con 4 enlaces el header de escritorio no cabe
   entre 768 y ~950 px y se solapa → subir el breakpoint de escritorio de `md` a `lg`.
   Prueba (falla): los 2 bloques de escritorio del `<nav>` (enlaces primarios; idioma + CTA) tienen
   `lg:flex` y no `md:flex`; el botón «Menú» y el overlay móvil tienen `lg:hidden` y no
   `md:hidden` → cambiar las 4 clases. Sin cambios de textos ni de enlaces.
   Archivos: `navigation.tsx`, `mobile-menu.tsx`, `landing-sections.test.tsx`.
+  - Evidencia: rojo, «el header de escritorio aparece desde lg y el menú móvil por debajo» falló
+    en `toHaveClass('hidden', 'lg:flex')` (recibido `hidden md:flex items-center gap-8`). Verde:
+    200/200 pruebas y `pnpm validate` exit 0. No quedan otros `md:` en `navigation.tsx` ni
+    `mobile-menu.tsx` (el padding ya era `px-6 lg:px-8`). `navigation.tsx` sigue en 148 líneas.
 - [ ] T04 Verificación: `pnpm validate` y revisión visual en 1280, 1024, 768 y 375 px. En 1024 y
   1280 (es y en, arriba y con scroll), logo, 4 enlaces, idioma y CTA en una línea sin solaparse;
   en 768 y 375, hamburguesa con el menú completo. Si algo se solapa, reportar a planner.
