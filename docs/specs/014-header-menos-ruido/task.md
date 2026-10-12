@@ -63,7 +63,21 @@
 - [ ] T04 Verificación: `pnpm validate` y revisión visual en 1280, 1024, 768 y 375 px. En 1024 y
   1280 (es y en, arriba y con scroll), logo, 4 enlaces, idioma y CTA en una línea sin solaparse;
   en 768 y 375, hamburguesa con el menú completo. Si algo se solapa, reportar a planner.
-  (depende de T03, T05, T06, T07)
+  (depende de T03, T05, T06, T07, T08)
   - Intento 1 (falló, revisión del usuario en 1280/768/375 px): «el logo solutionsPJM se monta
     sobre "Servicios" y "Contacto" se monta sobre "EN"». Causa: con 4 enlaces el contenido mide
     ~850–880 px y el header de escritorio aparece desde 768 px. Se crea T07.
+  - Intento 2 (parcial, revisión del usuario en 1280 y 1024 px): no se solapa, pero «se ve muy
+    muy pequeño, la letra se ve muy pequeña». Pide agrandar las opciones. Falta revisar 768 y
+    375 px. Se crea T08; T04 depende ahora también de T08.
+- [ ] T08 Corrección (bloqueante, resultado de T04): la letra del header de escritorio se ve muy
+  pequeña → subir un escalón de tamaño los enlaces, el idioma y el CTA, sin cambiar el
+  breakpoint (`lg`):
+  - Enlaces primarios: `text-sm` → `text-base` (arriba y con scroll).
+  - Idioma: arriba `text-sm` → `text-base`; con scroll `text-xs` → `text-sm`.
+  - CTA: arriba `text-base h-10` (antes `text-sm` con el `h-8` de `size="sm"`); con scroll
+    `text-xs` → `text-sm`, conserva `h-8 px-4`. Sigue siendo el único botón relleno.
+  Prueba (falla), sin scroll: los 4 enlaces primarios del `<nav>` tienen `text-base` y no
+  `text-sm`; el CTA del `<nav>` tiene `text-base`. No se prueba el estado con scroll (exige
+  simular `scroll`; se cubre en T04). `navigation.tsx` no debe pasar de 150 líneas.
+  Archivos: `navigation.tsx`, `landing-sections.test.tsx`.
