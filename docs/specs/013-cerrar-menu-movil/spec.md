@@ -25,6 +25,6 @@ también cierra el menú.
 
 ## Criterios de aceptación
 - [ ] En móvil (<768 px), con el menú abierto, la X se ve arriba a la derecha y al tocarla se cierra.
-- [ ] Escape cierra el menú.
-- [ ] Desktop sin cambios.
-- [ ] `pnpm validate` en verde.
+- [x] Escape cierra el menú.
+- [x] Desktop sin cambios.
+- [x] `pnpm validate` en verde.
