@@ -32,12 +32,12 @@ export function Navigation({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const navLinks = [
-    { name: menu.services, href: `#${sectionIds.services}` },
-    { name: menu.process, href: `#${sectionIds.process}` },
-    { name: menu.projects, href: `#${sectionIds.projects}` },
-    { name: menu.team, href: `#${sectionIds.team}` },
-    { name: menu.faq, href: `#${sectionIds.faq}` },
-    { name: menu.contact, href: `#${sectionIds.contact}` },
+    { name: menu.services, href: `#${sectionIds.services}`, primary: true },
+    { name: menu.process, href: `#${sectionIds.process}`, primary: true },
+    { name: menu.projects, href: `#${sectionIds.projects}`, primary: true },
+    { name: menu.team, href: `#${sectionIds.team}`, primary: false },
+    { name: menu.faq, href: `#${sectionIds.faq}`, primary: false },
+    { name: menu.contact, href: `#${sectionIds.contact}`, primary: false },
   ]
 
   useEffect(() => {
@@ -110,19 +110,21 @@ export function Navigation({
           </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-12">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className={`text-sm transition-colors duration-300 relative group ${isScrolled ? 'text-foreground/70 hover:text-foreground' : 'text-white/70 hover:text-white'}`}
-              >
-                {link.name}
-                <span
-                  className={`absolute -bottom-1 left-0 w-0 h-px transition-all duration-300 group-hover:w-full ${isScrolled ? 'bg-foreground' : 'bg-white'}`}
-                />
-              </a>
-            ))}
+          <div className="hidden md:flex items-center gap-8">
+            {navLinks
+              .filter((link) => link.primary)
+              .map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={`text-sm transition-colors duration-300 relative group ${isScrolled ? 'text-foreground/70 hover:text-foreground' : 'text-white/70 hover:text-white'}`}
+                >
+                  {link.name}
+                  <span
+                    className={`absolute -bottom-1 left-0 w-0 h-px transition-all duration-300 group-hover:w-full ${isScrolled ? 'bg-foreground' : 'bg-white'}`}
+                  />
+                </a>
+              ))}
           </div>
 
           {/* Desktop CTA */}

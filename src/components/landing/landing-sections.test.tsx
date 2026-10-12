@@ -111,6 +111,20 @@ describe('Navigation', () => {
     fireEvent.keyDown(document, { key: 'Escape' })
     expect(button).toHaveAttribute('aria-expanded', 'false')
   })
+
+  it('en escritorio el nav solo muestra los enlaces primarios', () => {
+    renderNavigation()
+    const nav = screen.getByRole('navigation')
+
+    for (const label of ['Servicios', 'Cómo trabajamos', 'Proyectos']) {
+      expect(within(nav).getByRole('link', { name: label })).toBeInTheDocument()
+    }
+    for (const label of ['Equipo', 'Preguntas', 'Contacto']) {
+      expect(
+        within(nav).queryByRole('link', { name: label }),
+      ).not.toBeInTheDocument()
+    }
+  })
 })
 
 describe('HeroSection', () => {
