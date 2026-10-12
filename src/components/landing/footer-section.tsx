@@ -36,6 +36,8 @@ export function FooterSection({
       <div className="relative w-full h-[340px] md:h-[420px] overflow-hidden">
         <img
           src="/footer/footer.webp"
+          width={1600}
+          height={533}
           alt=""
           aria-hidden="true"
           className="w-full h-full object-cover object-center"

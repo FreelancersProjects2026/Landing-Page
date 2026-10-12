@@ -45,6 +45,8 @@ export function FeaturedServiceCard({
       <div className="hidden lg:block relative w-[42%] shrink-0 overflow-hidden">
         <img
           src="/Servicios/servicios.webp"
+          width={1600}
+          height={903}
           alt=""
           aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover object-center"

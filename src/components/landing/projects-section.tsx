@@ -83,6 +83,8 @@ export function ProjectsSection({ label, title, items }: ProjectsSectionProps) {
       >
         <img
           src="/Proyectos/proyectos.webp"
+          width={1600}
+          height={903}
           alt=""
           aria-hidden="true"
           className="w-full h-full object-contain"

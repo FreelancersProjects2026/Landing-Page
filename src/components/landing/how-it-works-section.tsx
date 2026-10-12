@@ -66,6 +66,8 @@ export function HowItWorksSection({
           >
             <img
               src="/ComoTrabajamos/como-trabajamos.webp"
+              width={1212}
+              height={1298}
               alt=""
               aria-hidden="true"
               className="absolute bottom-0 left-0 w-full h-full object-contain object-bottom"

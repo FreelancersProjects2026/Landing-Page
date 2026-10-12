@@ -542,3 +542,58 @@ describe('FaqSection', () => {
     expect(section.querySelector('img, canvas')).toBeNull()
   })
 })
+
+describe('Imágenes WebP de la landing', () => {
+  it.each([
+    [
+      <HowItWorksSection key="how" label="Proceso" {...content.process} />,
+      '/ComoTrabajamos/como-trabajamos.webp',
+      '1212',
+      '1298',
+    ],
+    [
+      <ProjectsSection
+        key="projects"
+        label="Proyectos"
+        {...content.projects}
+      />,
+      '/Proyectos/proyectos.webp',
+      '1600',
+      '903',
+    ],
+    [
+      <ServicesSection
+        key="services"
+        label="Servicios"
+        {...content.services}
+      />,
+      '/Servicios/servicios.webp',
+      '1600',
+      '903',
+    ],
+    [
+      <FooterSection
+        key="footer"
+        company={content.company}
+        menu={content.menu}
+        footer={content.footer}
+        whatsappUrl={whatsappUrl}
+        emailUrl="mailto:solutionspjm@gmail.com"
+        privacy={{ label: 'Privacidad', href: '/es/privacidad' }}
+      />,
+      '/footer/footer.webp',
+      '1600',
+      '533',
+    ],
+  ])(
+    '%#: declara width/height del WebP y el CSS manda el tamaño',
+    (section, src, width, height) => {
+      const { container } = render(section)
+      const image = container.querySelector(`img[src="${src}"]`)
+
+      expect(image).toHaveAttribute('width', width)
+      expect(image).toHaveAttribute('height', height)
+      expect(image).toHaveClass('w-full', 'h-full')
+    },
+  )
+})
