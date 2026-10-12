@@ -12,11 +12,12 @@ type ReadImageMetadata = (path: string) => {
 }
 
 const requireFromHere = createRequire(import.meta.url)
-const sharp = requireFromHere(
-  requireFromHere.resolve('sharp', {
-    paths: [requireFromHere.resolve('next')],
-  }),
-) as ReadImageMetadata
+const loadSharp = () =>
+  requireFromHere(
+    requireFromHere.resolve('sharp', {
+      paths: [requireFromHere.resolve('next')],
+    }),
+  ) as ReadImageMetadata
 
 const LANDING_DIR = 'src/components/landing'
 
@@ -49,7 +50,7 @@ describe('imágenes de sección de la landing', () => {
   it.each(SECTION_WEBPS)(
     '%s mide como máximo 1600 px de ancho',
     async (path) => {
-      const { width } = await sharp(path).metadata()
+      const { width } = await loadSharp()(path).metadata()
 
       expect(width).toBeLessThanOrEqual(MAX_WIDTH_PX)
     },

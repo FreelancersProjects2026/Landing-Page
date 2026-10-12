@@ -66,7 +66,7 @@
     lleva el nombre como primer valor y el título usa `%s`: «Cómo trabajamos:», «Proyectos:»,
     «Servicios:», «Footer:» (4 casos en verde). `pnpm validate` OK (el build se repitió aparte por
     choque con otro `next build` en curso).
-- [ ] T08 Corrección (mejora, hallazgo de reviwer en T06): `landing-images.test.ts:14-19` carga
+- [x] T08 Corrección (mejora, hallazgo de reviwer en T06): `landing-images.test.ts:14-19` carga
   `sharp` a nivel de módulo; si no resuelve o falla su binario, cae todo el archivo (peso y
   formato, «sin .png», «PNG borrados») y el error no apunta al criterio de ancho → cargar `sharp`
   de forma perezosa solo dentro de la prueba de ancho (o en su `beforeAll`). Refactor de prueba:
@@ -74,5 +74,9 @@
   `'sharp-x'`) y ver que solo falla la prueba de ancho; revertir y anotarlo en la evidencia.
   (independiente de T07)
   Archivos: `src/components/landing/landing-images.test.ts`.
+  - Evidencia: antes, con `'sharp-x'` caía el archivo entero: «Error: Cannot find module
+    'sharp-x'», «Tests no tests». Ahora `sharp` se carga con `loadSharp()` dentro de la prueba de
+    ancho; con `'sharp-x'` solo fallan los 4 casos «mide como máximo 1600 px de ancho» y pasan los
+    otros 9. Revertido a `'sharp'`: 13/13 en verde; `pnpm test` 218 pruebas; `pnpm validate` exit 0.
 - [ ] T05 Verificación: `pnpm validate` y revisión visual en 1280 y 375 px de Servicios, Cómo
   trabajamos, Proyectos y footer (comparar con la versión anterior). (depende de T03, T04, T06, T07, T08)
