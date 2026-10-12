@@ -45,12 +45,16 @@
     Verde: 214 pruebas, lint, typecheck, architecture y build OK; Prettier solo falló en
     `landing-sections.test.tsx` por T03 a medio hacer en paralelo (en verde tras 4709bf7). Grep:
     ningún archivo fuera de los docs de la 015 referencia los PNG.
-- [ ] T06 Corrección (mejora, hallazgo de reviwer en T01): ninguna prueba cubre el criterio «ancho
+- [x] T06 Corrección (mejora, hallazgo de reviwer en T01): ninguna prueba cubre el criterio «ancho
   ≤ 1600 px» de `spec.md` → prueba en `landing-images.test.ts` que lee el ancho de cada WebP con
   `sharp` resuelto desde `next` (`createRequire` + `require.resolve('sharp', { paths:
   [require.resolve('next')] })`, sin agregarlo a `package.json`) y comprueba `width ≤ 1600`. Hoy
   se cumple (1212, 1600, 1600, 1600): para ver el rojo, bajar el límite de forma temporal a 1599
   y anotarlo en la evidencia. Solo prueba, sin cambio de assets.
   Archivos: `src/components/landing/landing-images.test.ts`.
+  - Evidencia: `sharp` 0.34.5 se resuelve desde `next` y carga en vitest sin problemas. Rojo con
+    el límite temporal en 1599: 3 fallos «expected 1600 to be less than or equal to 1599»
+    (`proyectos`, `servicios`, `footer`); `como-trabajamos` (1212) pasa. Verde con 1600:
+    `pnpm validate` exit 0, 218 pruebas (5 avisos `no-img-element` previos).
 - [ ] T05 Verificación: `pnpm validate` y revisión visual en 1280 y 375 px de Servicios, Cómo
   trabajamos, Proyectos y footer (comparar con la versión anterior). (depende de T03, T04, T06)

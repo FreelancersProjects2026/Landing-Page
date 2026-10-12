@@ -1,8 +1,22 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
+import { createRequire } from 'node:module'
 
 import { describe, expect, it } from 'vitest'
 
 const MAX_BYTES = 250 * 1024
+
+const MAX_WIDTH_PX = 1600
+
+type ReadImageMetadata = (path: string) => {
+  metadata: () => Promise<{ width?: number }>
+}
+
+const requireFromHere = createRequire(import.meta.url)
+const sharp = requireFromHere(
+  requireFromHere.resolve('sharp', {
+    paths: [requireFromHere.resolve('next')],
+  }),
+) as ReadImageMetadata
 
 const LANDING_DIR = 'src/components/landing'
 
@@ -29,6 +43,15 @@ describe('imágenes de sección de la landing', () => {
       expect(bytes.length).toBeLessThanOrEqual(MAX_BYTES)
       expect(bytes.toString('ascii', 0, 4)).toBe('RIFF')
       expect(bytes.toString('ascii', 8, 12)).toBe('WEBP')
+    },
+  )
+
+  it.each(SECTION_WEBPS)(
+    '%s mide como máximo 1600 px de ancho',
+    async (path) => {
+      const { width } = await sharp(path).metadata()
+
+      expect(width).toBeLessThanOrEqual(MAX_WIDTH_PX)
     },
   )
 
