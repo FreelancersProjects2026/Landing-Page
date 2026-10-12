@@ -70,14 +70,14 @@ Total ≈ 580 KB frente a ≈ 7,2 MB. Si al generarlos las cifras difieren, code
 | `src/components/landing/projects-section.tsx` | Modificado | Ruta WebP + `width`/`height`. |
 | `src/components/landing/service-cards.tsx` | Modificado | Ruta WebP + `width`/`height`. |
 | `src/components/landing/footer-section.tsx` | Modificado | Ruta WebP + `width`/`height`. |
-| `src/components/landing/section-reveal.test.tsx` | Modificado | Espera las rutas WebP; `width`/`height`. |
-| `src/components/landing/services-section.test.tsx` | Modificado | `width`/`height` de la imagen destacada. |
-| `src/components/landing/landing-sections.test.tsx` | Modificado | `width`/`height` del banner del footer. |
+| `src/components/landing/section-reveal.test.tsx` | Modificado | Espera las rutas WebP. |
+| `src/components/landing/landing-sections.test.tsx` | Modificado | `width`/`height` de los 4 `<img>` (T03: ya renderiza las 4 secciones). |
 
 ## Pruebas
 - `landing-images.test.ts` (sistema de archivos, como `privacy-route.test.tsx`; Vitest corre desde
   la raíz):
   - Cada WebP existe, pesa ≤ 250 KB y empieza con `RIFF`…`WEBP` (bytes 0–3 y 8–11).
+  - Cada WebP mide ≤ 1600 px de ancho (T06; `sharp` resuelto desde `next`).
   - Ningún `.tsx` de `src/components/landing/` que no sea prueba contiene `.png`.
   - Los 4 PNG no existen.
 - Render (pruebas existentes de cada sección): el `<img>` tiene `src` WebP y `width`/`height`

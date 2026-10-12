@@ -25,15 +25,32 @@
     `how-it-works-section.tsx`, `projects-section.tsx`, `service-cards.tsx`. Verde tras cambiar
     las 4 rutas y las 2 esperadas en `section-reveal.test.tsx`. `pnpm validate` OK (206 pruebas;
     5 avisos `no-img-element` previos, fuera de alcance).
-- [ ] T03 Prueba: cada uno de los 4 `<img>` tiene `width`/`height` con las dimensiones de su WebP
+- [x] T03 Prueba: cada uno de los 4 `<img>` tiene `width`/`height` con las dimensiones de su WebP
   (Cómo trabajamos 1212×1298, Proyectos 1600×903, Servicios 1600×903, footer 1600×533; o las
   reales de T01) (falla) → agregar los atributos. (depende de T02; paralela a T04)
   Archivos: `how-it-works-section.tsx`, `projects-section.tsx`, `service-cards.tsx`,
   `footer-section.tsx`, `section-reveal.test.tsx`, `services-section.test.tsx`,
   `landing-sections.test.tsx`.
-- [ ] T04 Prueba en `landing-images.test.ts`: los 4 PNG no existen (falla) → `git rm` de los 4 PNG.
+  - Evidencia (4709bf7, en revisión de reviwer): rojo 4/4 «Expected width=... Received: null».
+    Verde: `pnpm validate` exit 0, 214 pruebas. La prueba también comprueba que se mantienen
+    `w-full h-full`.
+  - Desvío de archivos (aceptado): la prueba quedó solo en `landing-sections.test.tsx`, que ya
+    renderiza las 4 secciones; no se tocaron `section-reveal.test.tsx` ni
+    `services-section.test.tsx`.
+- [x] T04 Prueba en `landing-images.test.ts`: los 4 PNG no existen (falla) → `git rm` de los 4 PNG.
   (depende de T02; paralela a T03)
   Archivos: `landing-images.test.ts`, `public/ComoTrabajamos/ComoTrabajamos.png`,
   `public/Proyectos/Proyectos.png`, `public/Servicios/Servicios.png`, `public/footer/Footer.png`.
+  - Evidencia (d616e16, aprobada): rojo 4 fallos «expected true to be false» (los PNG existían).
+    Verde: 214 pruebas, lint, typecheck, architecture y build OK; Prettier solo falló en
+    `landing-sections.test.tsx` por T03 a medio hacer en paralelo (en verde tras 4709bf7). Grep:
+    ningún archivo fuera de los docs de la 015 referencia los PNG.
+- [ ] T06 Corrección (mejora, hallazgo de reviwer en T01): ninguna prueba cubre el criterio «ancho
+  ≤ 1600 px» de `spec.md` → prueba en `landing-images.test.ts` que lee el ancho de cada WebP con
+  `sharp` resuelto desde `next` (`createRequire` + `require.resolve('sharp', { paths:
+  [require.resolve('next')] })`, sin agregarlo a `package.json`) y comprueba `width ≤ 1600`. Hoy
+  se cumple (1212, 1600, 1600, 1600): para ver el rojo, bajar el límite de forma temporal a 1599
+  y anotarlo en la evidencia. Solo prueba, sin cambio de assets.
+  Archivos: `src/components/landing/landing-images.test.ts`.
 - [ ] T05 Verificación: `pnpm validate` y revisión visual en 1280 y 375 px de Servicios, Cómo
-  trabajamos, Proyectos y footer (comparar con la versión anterior). (depende de T03, T04)
+  trabajamos, Proyectos y footer (comparar con la versión anterior). (depende de T03, T04, T06)
