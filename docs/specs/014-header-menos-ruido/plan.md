@@ -33,6 +33,8 @@ Alternativas descartadas:
 | Ruta | Cambio | Responsabilidad |
 |------|--------|-----------------|
 | `src/components/landing/navigation.tsx` | Modificado | Escritorio: solo primarios y el otro idioma. Móvil igual. |
+| `src/components/landing/mobile-menu.tsx` | Nuevo (T05) | Overlay móvil y cierre con Escape, extraído sin cambio de comportamiento. |
+| `src/components/landing/language-links.tsx` | Nuevo (T05) | Enlaces de idioma compartidos por escritorio y móvil. |
 | `src/components/landing/footer-section.tsx` | Modificado | Enlace a Preguntas. |
 | `src/components/landing/landing-sections.test.tsx` | Modificado | Pruebas de nav y footer. |
 

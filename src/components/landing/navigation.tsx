@@ -1,9 +1,8 @@
 'use client'
 
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
+import { useCallback, useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
-import { Menu, X } from 'lucide-react'
 import {
   locales,
   type LandingContent,
@@ -11,6 +10,8 @@ import {
 } from '@modules/company-profile'
 
 import { externalLinkProps } from './external-link'
+import { LanguageLinks } from './language-links'
+import { MobileMenu, MobileMenuToggle } from './mobile-menu'
 import { sectionIds } from './section-ids'
 
 type NavigationProps = {
@@ -41,35 +42,12 @@ export function Navigation({
   ]
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-    }
+    const handleScroll = () => setIsScrolled(window.scrollY > 20)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  useEffect(() => {
-    if (!isMobileMenuOpen) return
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setIsMobileMenuOpen(false)
-    }
-    document.addEventListener('keydown', handleKeyDown)
-    return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [isMobileMenuOpen])
-
-  const languageLinks = (langs: readonly Locale[]) =>
-    langs.map((lang) => (
-      <a
-        key={lang}
-        href={`/${lang}`}
-        hrefLang={lang}
-        lang={lang}
-        aria-current={lang === locale ? 'page' : undefined}
-        className={`transition-opacity ${lang === locale ? 'font-medium' : 'opacity-60 hover:opacity-100'}`}
-      >
-        {lang.toUpperCase()}
-      </a>
-    ))
+  const closeMobileMenu = useCallback(() => setIsMobileMenuOpen(false), [])
 
   return (
     <header
@@ -132,7 +110,10 @@ export function Navigation({
             <div
               className={`flex items-center gap-3 transition-all duration-500 ${isScrolled ? 'text-xs text-foreground' : 'text-sm text-white'}`}
             >
-              {languageLinks(locales.filter((lang) => lang !== locale))}
+              <LanguageLinks
+                langs={locales.filter((lang) => lang !== locale)}
+                current={locale}
+              />
             </div>
             <Button
               asChild
@@ -146,79 +127,22 @@ export function Navigation({
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`md:hidden p-2 transition-colors duration-500 ${isScrolled || isMobileMenuOpen ? 'text-foreground' : 'text-white'}`}
-            aria-label={menu.toggleLabel}
-            aria-expanded={isMobileMenuOpen}
-          >
-            {isMobileMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
-          </button>
+          <MobileMenuToggle
+            open={isMobileMenuOpen}
+            scrolled={isScrolled}
+            label={menu.toggleLabel}
+            onToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          />
         </div>
       </nav>
 
-      {/* Mobile Menu - Full Screen Overlay */}
-      <div
-        className={`md:hidden fixed inset-0 bg-background z-40 transition-all duration-500 ${
-          isMobileMenuOpen
-            ? 'opacity-100 pointer-events-auto'
-            : 'opacity-0 pointer-events-none'
-        }`}
-        style={{ top: 0 }}
-      >
-        <div className="flex flex-col h-full px-8 pt-28 pb-8">
-          {/* Navigation Links */}
-          <div className="flex-1 flex flex-col justify-center gap-8">
-            {navLinks.map((link, i) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`text-5xl font-display text-foreground hover:text-muted-foreground transition-all duration-500 ${
-                  isMobileMenuOpen
-                    ? 'opacity-100 translate-y-0'
-                    : 'opacity-0 translate-y-4'
-                }`}
-                style={{
-                  transitionDelay: isMobileMenuOpen ? `${i * 75}ms` : '0ms',
-                }}
-              >
-                {link.name}
-              </a>
-            ))}
-          </div>
-
-          {/* Bottom CTAs */}
-          <div
-            className={`flex items-center gap-4 pt-8 border-t border-foreground/10 transition-all duration-500 ${
-              isMobileMenuOpen
-                ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-4'
-            }`}
-            style={{ transitionDelay: isMobileMenuOpen ? '300ms' : '0ms' }}
-          >
-            <div className="flex items-center gap-4 text-base text-foreground">
-              {languageLinks(locales)}
-            </div>
-            <Button
-              asChild
-              className="flex-1 bg-foreground text-background rounded-full h-14 text-base"
-            >
-              <a
-                href={whatsappUrl}
-                {...externalLinkProps}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {cta}
-              </a>
-            </Button>
-          </div>
-        </div>
-      </div>
+      <MobileMenu
+        open={isMobileMenuOpen}
+        onClose={closeMobileMenu}
+        links={navLinks}
+        locale={locale}
+        cta={{ label: cta, href: whatsappUrl }}
+      />
     </header>
   )
 }
