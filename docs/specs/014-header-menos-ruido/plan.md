@@ -39,7 +39,7 @@ Alternativas descartadas:
 | `src/components/landing/landing-sections.test.tsx` | Modificado | Pruebas de nav y footer. |
 
 ## Pruebas
-- `within(nav)`: hay Servicios, Cómo trabajamos y Proyectos; no hay Equipo, Preguntas ni Contacto.
+- `within(nav)`: hay Servicios, Cómo trabajamos, Proyectos y Contacto; no hay Equipo ni Preguntas.
   El overlay móvil está fuera del `<nav>` (hermano en el `<header>`), así que `screen` aún los
   encuentra: la prueba existente de las 6 anclas sigue en verde y garantiza el móvil.
 - `locale="es"`: `within(nav)` tiene «EN» → `/en` y no «ES»; `locale="en"`: al revés. `screen`
@@ -48,5 +48,6 @@ Alternativas descartadas:
 - Manual: 1280 px y 768 px, header en una línea; 375 px, menú móvil intacto.
 
 ## Riesgos
-- Primarios confirmados por el usuario (Servicios, Cómo trabajamos, Proyectos). Si cambian en el
-  futuro, solo se tocan los `primary: true` y la prueba de T01.
+- Primarios confirmados por el usuario (Servicios, Cómo trabajamos, Proyectos, Contacto). Si
+  cambian, solo se tocan los `primary: true` y la prueba de primarios.
+- Con 4 enlaces, a 768 px el header puede no caber en una línea; se verifica en T04.

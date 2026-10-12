@@ -119,7 +119,11 @@ describe('Navigation', () => {
     for (const label of ['Servicios', 'Cómo trabajamos', 'Proyectos']) {
       expect(within(nav).getByRole('link', { name: label })).toBeInTheDocument()
     }
-    for (const label of ['Equipo', 'Preguntas', 'Contacto']) {
+    expect(within(nav).getByRole('link', { name: 'Contacto' })).toHaveAttribute(
+      'href',
+      '#contacto',
+    )
+    for (const label of ['Equipo', 'Preguntas']) {
       expect(
         within(nav).queryByRole('link', { name: label }),
       ).not.toBeInTheDocument()

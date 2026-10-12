@@ -4,7 +4,7 @@
 - Spec: `docs/specs/014-header-menos-ruido/spec.md`. Plan: `plan.md`.
 - Método: TDD, un commit por tarea, `pnpm validate` en verde.
 - Decisiones confirmadas por el usuario (ver `spec.md`): primarios = Servicios, Cómo trabajamos,
-  Proyectos; en escritorio solo el otro idioma; Preguntas en el footer. Sin bloqueos.
+  Proyectos, Contacto (Contacto agregado en T06); en escritorio solo el otro idioma; Preguntas en el footer. Sin bloqueos.
 - Todas las tareas tocan `src/components/landing/landing-sections.test.tsx`: van en serie.
 
 ## Tareas
@@ -43,4 +43,13 @@
     verde sin tocarlo. Líneas: `navigation.tsx` 148, `mobile-menu.tsx` 106 (overlay, Escape y el
     botón `MobileMenuToggle`, movido para bajar de 150), `language-links.tsx` 21. `pnpm validate`
     exit 0 (199/199 pruebas).
-- [ ] T04 Verificación: `pnpm validate` y revisión visual en 1280, 768 y 375 px. (depende de T03, T05)
+- [x] T06 Prueba (pedido nuevo del usuario: Contacto pasa a ser primario): la prueba de primarios
+  espera «Contacto» → `#contacto` dentro del `<nav>` y sigue sin Equipo ni Preguntas (falla) →
+  `primary: true` en el enlace de `menu.contact` de `navLinks`. No suma líneas (148).
+  Archivos: `navigation.tsx`, `landing-sections.test.tsx`.
+  - Evidencia: rojo, «en escritorio el nav solo muestra los enlaces primarios» falló en
+    `within(nav).getByRole('link', { name: 'Contacto' })` (Contacto no estaba en el `<nav>`).
+    Verde: 199/199 pruebas y `pnpm validate` exit 0. `navigation.tsx` sigue en 148 líneas.
+- [ ] T04 Verificación: `pnpm validate` y revisión visual en 1280, 768 y 375 px; a 768 px confirmar
+  que logo, 4 enlaces, idioma y CTA caben en una línea. Si no caben, reportar a planner (no
+  improvisar el ajuste). (depende de T03, T05, T06)

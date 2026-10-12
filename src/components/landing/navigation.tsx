@@ -38,7 +38,7 @@ export function Navigation({
     { name: menu.projects, href: `#${sectionIds.projects}`, primary: true },
     { name: menu.team, href: `#${sectionIds.team}`, primary: false },
     { name: menu.faq, href: `#${sectionIds.faq}`, primary: false },
-    { name: menu.contact, href: `#${sectionIds.contact}`, primary: false },
+    { name: menu.contact, href: `#${sectionIds.contact}`, primary: true },
   ]
 
   useEffect(() => {
