@@ -31,12 +31,12 @@
   Archivos: `how-it-works-section.tsx`, `projects-section.tsx`, `service-cards.tsx`,
   `footer-section.tsx`, `section-reveal.test.tsx`, `services-section.test.tsx`,
   `landing-sections.test.tsx`.
-  - Evidencia (4709bf7, en revisión de reviwer): rojo 4/4 «Expected width=... Received: null».
+  - Evidencia (4709bf7, aprobada): rojo 4/4 «Expected width=... Received: null».
     Verde: `pnpm validate` exit 0, 214 pruebas. La prueba también comprueba que se mantienen
     `w-full h-full`.
-  - Desvío de archivos (aceptado): la prueba quedó solo en `landing-sections.test.tsx`, que ya
-    renderiza las 4 secciones; no se tocaron `section-reveal.test.tsx` ni
-    `services-section.test.tsx`.
+  - Archivos: la prueba quedó solo en `landing-sections.test.tsx` (estaba en la lista de la
+    tarea; ya renderiza las 4 secciones), así que no hizo falta tocar `section-reveal.test.tsx`
+    ni `services-section.test.tsx`. No es un desvío.
 - [x] T04 Prueba en `landing-images.test.ts`: los 4 PNG no existen (falla) → `git rm` de los 4 PNG.
   (depende de T02; paralela a T03)
   Archivos: `landing-images.test.ts`, `public/ComoTrabajamos/ComoTrabajamos.png`,
@@ -56,5 +56,11 @@
     el límite temporal en 1599: 3 fallos «expected 1600 to be less than or equal to 1599»
     (`proyectos`, `servicios`, `footer`); `como-trabajamos` (1212) pasa. Verde con 1600:
     `pnpm validate` exit 0, 218 pruebas (5 avisos `no-img-element` previos).
+- [ ] T07 Corrección (mejora, hallazgo de reviwer en T03): el `it.each` de
+  `landing-sections.test.tsx` (~línea 589) usa `%#` en el título y, si falla, no dice de qué
+  sección es → poner el nombre de la sección en el título (p. ej. agregar el nombre como primer
+  valor de cada fila o usar filas objeto con `$name`). Solo prueba; sigue en verde antes y
+  después. (independiente de T06)
+  Archivos: `src/components/landing/landing-sections.test.tsx`.
 - [ ] T05 Verificación: `pnpm validate` y revisión visual en 1280 y 375 px de Servicios, Cómo
-  trabajamos, Proyectos y footer (comparar con la versión anterior). (depende de T03, T04, T06)
+  trabajamos, Proyectos y footer (comparar con la versión anterior). (depende de T03, T04, T06, T07)

@@ -85,5 +85,8 @@ Total ≈ 580 KB frente a ≈ 7,2 MB. Si al generarlos las cifras difieren, code
 - Manual: 1280 y 375 px, cada sección comparada con la versión anterior.
 
 ## Riesgos
+- La prueba de ancho (T06) carga `sharp` resuelto desde `next`, que es una dependencia
+  transitiva. Si una versión futura de `next` deja de traerlo, la prueba falla al cargar. Plan B:
+  leer el ancho de la cabecera WebP (chunk `VP8X`/`VP8`/`VP8L`) sin dependencias.
 - La calidad 80 podría verse peor en degradados oscuros; se revisa en T05. Si se nota, subir a 85
   respetando ≤ 250 KB.
