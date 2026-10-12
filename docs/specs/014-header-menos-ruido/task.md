@@ -70,7 +70,7 @@
   - Intento 2 (parcial, revisión del usuario en 1280 y 1024 px): no se solapa, pero «se ve muy
     muy pequeño, la letra se ve muy pequeña». Pide agrandar las opciones. Falta revisar 768 y
     375 px. Se crea T08; T04 depende ahora también de T08.
-- [ ] T08 Corrección (bloqueante, resultado de T04): la letra del header de escritorio se ve muy
+- [x] T08 Corrección (bloqueante, resultado de T04): la letra del header de escritorio se ve muy
   pequeña → subir un escalón de tamaño los enlaces, el idioma y el CTA, sin cambiar el
   breakpoint (`lg`):
   - Enlaces primarios: `text-sm` → `text-base` (arriba y con scroll).
@@ -81,3 +81,8 @@
   `text-sm`; el CTA del `<nav>` tiene `text-base`. No se prueba el estado con scroll (exige
   simular `scroll`; se cubre en T04). `navigation.tsx` no debe pasar de 150 líneas.
   Archivos: `navigation.tsx`, `landing-sections.test.tsx`.
+  - Evidencia: rojo, «sin scroll, los enlaces primarios y el CTA del nav usan text-base» falló en
+    `toHaveClass('text-base')` (recibido `text-sm transition-colors ...`). Verde: 201/201 pruebas
+    y `pnpm validate` exit 0. El tamaño del idioma está en el contenedor de escritorio de
+    `navigation.tsx`, no en `language-links.tsx`: el menú móvil no cambia. `navigation.tsx` sigue
+    en 148 líneas.

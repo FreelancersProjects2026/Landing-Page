@@ -153,6 +153,25 @@ describe('Navigation', () => {
     }
   })
 
+  it('sin scroll, los enlaces primarios y el CTA del nav usan text-base', () => {
+    renderNavigation()
+    const nav = screen.getByRole('navigation')
+
+    for (const label of [
+      'Servicios',
+      'Cómo trabajamos',
+      'Proyectos',
+      'Contacto',
+    ]) {
+      const link = within(nav).getByRole('link', { name: label })
+      expect(link).toHaveClass('text-base')
+      expect(link).not.toHaveClass('text-sm')
+    }
+    expect(nav.querySelector(`a[href="${whatsappUrl}"]`)).toHaveClass(
+      'text-base',
+    )
+  })
+
   it.each([
     ['es', 'EN', 'ES'],
     ['en', 'ES', 'EN'],

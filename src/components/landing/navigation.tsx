@@ -95,7 +95,7 @@ export function Navigation({
                 <a
                   key={link.href}
                   href={link.href}
-                  className={`text-sm transition-colors duration-300 relative group ${isScrolled ? 'text-foreground/70 hover:text-foreground' : 'text-white/70 hover:text-white'}`}
+                  className={`text-base transition-colors duration-300 relative group ${isScrolled ? 'text-foreground/70 hover:text-foreground' : 'text-white/70 hover:text-white'}`}
                 >
                   {link.name}
                   <span
@@ -108,7 +108,7 @@ export function Navigation({
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-4">
             <div
-              className={`flex items-center gap-3 transition-all duration-500 ${isScrolled ? 'text-xs text-foreground' : 'text-sm text-white'}`}
+              className={`flex items-center gap-3 transition-all duration-500 ${isScrolled ? 'text-sm text-foreground' : 'text-base text-white'}`}
             >
               <LanguageLinks
                 langs={locales.filter((lang) => lang !== locale)}
@@ -118,7 +118,7 @@ export function Navigation({
             <Button
               asChild
               size="sm"
-              className={`rounded-full transition-all duration-500 ${isScrolled ? 'bg-foreground hover:bg-foreground/90 text-background px-4 h-8 text-xs' : 'bg-white hover:bg-white/90 text-black px-6'}`}
+              className={`rounded-full transition-all duration-500 ${isScrolled ? 'bg-foreground hover:bg-foreground/90 text-background px-4 h-8 text-sm' : 'bg-white hover:bg-white/90 text-black px-6 h-10 text-base'}`}
             >
               <a href={whatsappUrl} {...externalLinkProps}>
                 {cta}
