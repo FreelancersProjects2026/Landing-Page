@@ -7,5 +7,5 @@
 ## Tareas
 - [x] T01 Prueba: el `<nav>` tiene `relative z-50` (falla) → agregar las clases en `navigation.tsx`.
 - [x] T02 Prueba: el botón abre y cierra (`aria-expanded`) el menú.
-- [ ] T03 Prueba: Escape cierra el menú abierto (falla) → `useEffect` con listener `keydown`.
+- [x] T03 Prueba: Escape cierra el menú abierto (falla) → `useEffect` con listener `keydown`.
 - [ ] T04 Verificación: `pnpm validate` y prueba manual en viewport de 375 px.

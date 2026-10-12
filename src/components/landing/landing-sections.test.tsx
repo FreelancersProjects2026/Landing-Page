@@ -102,6 +102,15 @@ describe('Navigation', () => {
     fireEvent.click(button)
     expect(button).toHaveAttribute('aria-expanded', 'false')
   })
+
+  it('Escape cierra el menú móvil abierto', () => {
+    renderNavigation()
+    const button = screen.getByRole('button', { name: 'Menú' })
+
+    fireEvent.click(button)
+    fireEvent.keyDown(document, { key: 'Escape' })
+    expect(button).toHaveAttribute('aria-expanded', 'false')
+  })
 })
 
 describe('HeroSection', () => {
