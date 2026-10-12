@@ -1,11 +1,11 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import type { TeamMember } from '@modules/company-profile'
 
 import { externalLinkProps } from './external-link'
 import { sectionIds } from './section-ids'
+import { revealClass, useInView } from './use-in-view'
 
 type TeamSectionProps = {
   label: string
@@ -20,20 +20,7 @@ export function TeamSection({
   intro,
   members,
 }: TeamSectionProps) {
-  const [isVisible, setIsVisible] = useState(false)
-  const sectionRef = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true)
-      },
-      { threshold: 0.1 },
-    )
-
-    if (sectionRef.current) observer.observe(sectionRef.current)
-    return () => observer.disconnect()
-  }, [])
+  const { ref: sectionRef, isVisible } = useInView<HTMLElement>(0.1)
 
   return (
     <section
@@ -51,11 +38,7 @@ export function TeamSection({
             </span>
             <h2
               id={`${sectionIds.team}-titulo`}
-              className={`text-5xl md:text-6xl lg:text-[88px] font-display tracking-tight leading-[0.9] transition-all duration-1000 ${
-                isVisible
-                  ? 'opacity-100 translate-y-0'
-                  : 'opacity-0 translate-y-8'
-              }`}
+              className={`text-5xl md:text-6xl lg:text-[88px] font-display tracking-tight leading-[0.9] transition-all duration-1000 ${revealClass(isVisible, 'translate-y-8')}`}
             >
               {title}
             </h2>
@@ -69,11 +52,7 @@ export function TeamSection({
           {members.map((member, index) => (
             <article
               key={member.name}
-              className={`relative border border-foreground/10 p-8 lg:p-10 flex flex-col transition-all duration-700 ${
-                isVisible
-                  ? 'opacity-100 translate-y-0'
-                  : 'opacity-0 translate-y-12'
-              }`}
+              className={`relative border border-foreground/10 p-8 lg:p-10 flex flex-col transition-all duration-700 ${revealClass(isVisible, 'translate-y-12')}`}
               style={{ transitionDelay: `${index * 100}ms` }}
             >
               <span className="font-mono text-sm text-muted-foreground">

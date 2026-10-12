@@ -1,11 +1,11 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import type { Project } from '@modules/company-profile'
 
 import { externalLinkProps } from './external-link'
 import { sectionIds } from './section-ids'
+import { revealClass, useInView } from './use-in-view'
 
 type ProjectsSectionProps = {
   label: string
@@ -14,20 +14,7 @@ type ProjectsSectionProps = {
 }
 
 export function ProjectsSection({ label, title, items }: ProjectsSectionProps) {
-  const [isVisible, setIsVisible] = useState(false)
-  const sectionRef = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true)
-      },
-      { threshold: 0.1 },
-    )
-
-    if (sectionRef.current) observer.observe(sectionRef.current)
-    return () => observer.disconnect()
-  }, [])
+  const { ref: sectionRef, isVisible } = useInView<HTMLElement>(0.1)
 
   return (
     <section
@@ -40,9 +27,7 @@ export function ProjectsSection({ label, title, items }: ProjectsSectionProps) {
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12">
         {/* Header — Full width */}
         <div
-          className={`mb-16 transition-all duration-700 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}
+          className={`mb-16 transition-all duration-700 ${revealClass(isVisible, 'translate-y-8')}`}
         >
           <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-6">
             <span className="w-8 h-px bg-foreground/30" />
@@ -61,11 +46,7 @@ export function ProjectsSection({ label, title, items }: ProjectsSectionProps) {
           {items.map((project, index) => (
             <article
               key={project.name}
-              className={`transition-all duration-500 ${
-                isVisible
-                  ? 'opacity-100 translate-y-0'
-                  : 'opacity-0 translate-y-4'
-              }`}
+              className={`transition-all duration-500 ${revealClass(isVisible, 'translate-y-4')}`}
               style={{ transitionDelay: `${index * 50 + 200}ms` }}
             >
               <h3 className="text-2xl lg:text-3xl font-display mb-1">
