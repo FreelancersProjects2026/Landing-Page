@@ -65,7 +65,7 @@ export function HowItWorksSection({
             }`}
           >
             <img
-              src="/ComoTrabajamos/ComoTrabajamos.png"
+              src="/ComoTrabajamos/como-trabajamos.webp"
               alt=""
               aria-hidden="true"
               className="absolute bottom-0 left-0 w-full h-full object-contain object-bottom"

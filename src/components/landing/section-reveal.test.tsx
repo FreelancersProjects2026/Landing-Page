@@ -73,7 +73,7 @@ const cases: [string, ReactElement, number, Reveal[]][] = [
         shown: ['translate-x-0', 'opacity-100'],
       },
       { element: title(content.process.title), ...upIn('translate-y-16') },
-      { element: image('/ComoTrabajamos/ComoTrabajamos.png'), ...fadeIn },
+      { element: image('/ComoTrabajamos/como-trabajamos.webp'), ...fadeIn },
     ],
   ],
   [
@@ -89,7 +89,7 @@ const cases: [string, ReactElement, number, Reveal[]][] = [
         element: () => screen.getAllByRole('article')[0],
         ...upIn('translate-y-4'),
       },
-      { element: image('/Proyectos/Proyectos.png'), ...fadeIn },
+      { element: image('/Proyectos/proyectos.webp'), ...fadeIn },
     ],
   ],
   [

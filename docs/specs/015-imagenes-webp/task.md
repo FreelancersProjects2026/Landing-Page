@@ -16,11 +16,15 @@
     `plan.md`. Real (igual al plan): `como-trabajamos.webp` 1212×1298, 186 KB;
     `proyectos.webp` 1600×903, 193 KB; `servicios.webp` 1600×903, 96 KB; `footer.webp` 1600×533,
     104 KB. `pnpm validate` OK (205 pruebas).
-- [ ] T02 Prueba en `landing-images.test.ts`: ningún `.tsx` de `src/components/landing/` (sin
+- [x] T02 Prueba en `landing-images.test.ts`: ningún `.tsx` de `src/components/landing/` (sin
   contar pruebas) contiene `.png` (falla) → cambiar las 4 rutas a WebP; actualizar las rutas
   esperadas en `section-reveal.test.tsx` (líneas 76 y 92). (depende de T01)
   Archivos: `landing-images.test.ts`, `how-it-works-section.tsx`, `projects-section.tsx`,
   `service-cards.tsx`, `footer-section.tsx`, `section-reveal.test.tsx`.
+  - Evidencia: rojo, la prueba nueva falla con `withPng` = `footer-section.tsx`,
+    `how-it-works-section.tsx`, `projects-section.tsx`, `service-cards.tsx`. Verde tras cambiar
+    las 4 rutas y las 2 esperadas en `section-reveal.test.tsx`. `pnpm validate` OK (206 pruebas;
+    5 avisos `no-img-element` previos, fuera de alcance).
 - [ ] T03 Prueba: cada uno de los 4 `<img>` tiene `width`/`height` con las dimensiones de su WebP
   (Cómo trabajamos 1212×1298, Proyectos 1600×903, Servicios 1600×903, footer 1600×533; o las
   reales de T01) (falla) → agregar los atributos. (depende de T02; paralela a T04)

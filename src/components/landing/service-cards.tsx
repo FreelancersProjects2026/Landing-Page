@@ -44,7 +44,7 @@ export function FeaturedServiceCard({
       {/* Right: mirrored image, full height */}
       <div className="hidden lg:block relative w-[42%] shrink-0 overflow-hidden">
         <img
-          src="/Servicios/Servicios.png"
+          src="/Servicios/servicios.webp"
           alt=""
           aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover object-center"

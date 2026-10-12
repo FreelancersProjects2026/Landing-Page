@@ -35,7 +35,7 @@ export function FooterSection({
       {/* Panoramic banner image */}
       <div className="relative w-full h-[340px] md:h-[420px] overflow-hidden">
         <img
-          src="/footer/Footer.png"
+          src="/footer/footer.webp"
           alt=""
           aria-hidden="true"
           className="w-full h-full object-cover object-center"

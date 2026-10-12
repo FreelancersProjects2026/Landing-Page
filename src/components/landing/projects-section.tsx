@@ -82,7 +82,7 @@ export function ProjectsSection({ label, title, items }: ProjectsSectionProps) {
         }`}
       >
         <img
-          src="/Proyectos/Proyectos.png"
+          src="/Proyectos/proyectos.webp"
           alt=""
           aria-hidden="true"
           className="w-full h-full object-contain"

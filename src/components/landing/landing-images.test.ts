@@ -1,8 +1,10 @@
-import { readFileSync } from 'node:fs'
+import { readdirSync, readFileSync } from 'node:fs'
 
 import { describe, expect, it } from 'vitest'
 
 const MAX_BYTES = 250 * 1024
+
+const LANDING_DIR = 'src/components/landing'
 
 const SECTION_WEBPS = [
   'public/ComoTrabajamos/como-trabajamos.webp',
@@ -22,4 +24,15 @@ describe('imágenes de sección de la landing', () => {
       expect(bytes.toString('ascii', 8, 12)).toBe('WEBP')
     },
   )
+
+  it('ningún componente de la landing referencia .png', () => {
+    const components = readdirSync(LANDING_DIR).filter(
+      (file) => file.endsWith('.tsx') && !file.endsWith('.test.tsx'),
+    )
+    const withPng = components.filter((file) =>
+      readFileSync(`${LANDING_DIR}/${file}`, 'utf8').includes('.png'),
+    )
+
+    expect(withPng).toEqual([])
+  })
 })
