@@ -60,7 +60,7 @@
     en `toHaveClass('hidden', 'lg:flex')` (recibido `hidden md:flex items-center gap-8`). Verde:
     200/200 pruebas y `pnpm validate` exit 0. No quedan otros `md:` en `navigation.tsx` ni
     `mobile-menu.tsx` (el padding ya era `px-6 lg:px-8`). `navigation.tsx` sigue en 148 líneas.
-- [ ] T04 Verificación: `pnpm validate` y revisión visual en 1280, 1024, 768 y 375 px. En 1024 y
+- [x] T04 Verificación: `pnpm validate` y revisión visual en 1280, 1024, 768 y 375 px. En 1024 y
   1280 (es y en, arriba y con scroll), logo, 4 enlaces, idioma y CTA en una línea sin solaparse;
   en 768 y 375, hamburguesa con el menú completo. Si algo se solapa, reportar a planner.
   (depende de T03, T05, T06, T07, T08)
@@ -70,6 +70,9 @@
   - Intento 2 (parcial, revisión del usuario en 1280 y 1024 px): no se solapa, pero «se ve muy
     muy pequeño, la letra se ve muy pequeña». Pide agrandar las opciones. Falta revisar 768 y
     375 px. Se crea T08; T04 depende ahora también de T08.
+  - Intento 3 (OK, tras T08 9958302): el usuario confirma «T04 probada y exitosa» en 1280, 1024,
+    768 y 375 px, es y en, arriba y con scroll. `pnpm validate` en verde con 201/201 pruebas
+    (según reviwer).
 - [x] T08 Corrección (bloqueante, resultado de T04): la letra del header de escritorio se ve muy
   pequeña → subir un escalón de tamaño los enlaces, el idioma y el CTA, sin cambiar el
   breakpoint (`lg`):

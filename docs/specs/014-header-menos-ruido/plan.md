@@ -29,7 +29,8 @@ Alternativas descartadas:
   `text-sm`). El logo (`text-2xl`/`text-xl`) no cambia y el CTA sigue siendo el único botón
   relleno, así se mantiene la jerarquía. Cálculo a 1024 px (`text-base` es 16/14 ≈ +14 %):
   enlaces +35–41 px, idioma +3 px, CTA +20–25 px → ~+60–70 px. Sin scroll el contenido pasa de
-  ~845 a ~910 px (en) frente a ~943 px útiles: sobran ~30 px. Con scroll el logo se achica y el
+  ~850 a ~915 px en español (el caso más ajustado; en inglés ~845 → ~905 px) frente a ~943 px
+  útiles: sobran ~30 px. Con scroll el logo se achica y el
   CTA queda en `text-sm`, así que hay más margen (~150 px). Cabe sin subir el breakpoint.
   Descartadas: subir el breakpoint a `xl` (1024 px pasaría a hamburguesa, cambiaría lo que el
   usuario aprobó, y no hace falta); agrandar también el `gap` o el logo (gasta el margen
@@ -51,7 +52,7 @@ Alternativas descartadas:
 ## Estructura objetivo
 | Ruta | Cambio | Responsabilidad |
 |------|--------|-----------------|
-| `src/components/landing/navigation.tsx` | Modificado | Escritorio: solo primarios y el otro idioma. Móvil igual. |
+| `src/components/landing/navigation.tsx` | Modificado | Escritorio (desde `lg`): solo primarios y el otro idioma, letra `text-base`. Móvil igual. |
 | `src/components/landing/mobile-menu.tsx` | Nuevo (T05), modificado (T07) | Overlay móvil y cierre con Escape; visible por debajo de `lg`. |
 | `src/components/landing/language-links.tsx` | Nuevo (T05) | Enlaces de idioma compartidos por escritorio y móvil. |
 | `src/components/landing/footer-section.tsx` | Modificado | Enlace a Preguntas. |

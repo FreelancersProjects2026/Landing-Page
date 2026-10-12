@@ -32,15 +32,15 @@ perder acceso a ninguna sección.
 - Quitar el CTA del header o el botón flotante de WhatsApp.
 
 ## Criterios de aceptación
-- [ ] Dentro del `<nav>` están Servicios, Cómo trabajamos, Proyectos y Contacto
+- [x] Dentro del `<nav>` están Servicios, Cómo trabajamos, Proyectos y Contacto
       (`#contacto`); Equipo y Preguntas no aparecen en él.
-- [ ] El menú móvil conserva las 6 secciones.
-- [ ] En `/es` el `<nav>` tiene «EN» → `/en` y no tiene «ES»; en `/en`, al revés. El menú móvil
+- [x] El menú móvil conserva las 6 secciones.
+- [x] En `/es` el `<nav>` tiene «EN» → `/en` y no tiene «ES»; en `/en`, al revés. El menú móvil
       mantiene ambos.
-- [ ] El footer enlaza «Preguntas» a `#preguntas-frecuentes`.
-- [ ] Verificación visual en 1024 px y 1280 px: logo, 4 enlaces, idioma y CTA en una línea sin
+- [x] El footer enlaza «Preguntas» a `#preguntas-frecuentes`.
+- [x] Verificación visual en 1024 px y 1280 px: logo, 4 enlaces, idioma y CTA en una línea sin
       solaparse. En 768 px y 375 px se ve la hamburguesa.
-- [ ] `pnpm validate` en verde.
+- [x] `pnpm validate` en verde.
 
 ## Decisiones (confirmadas por el usuario)
 1. Enlaces primarios: **Servicios, Cómo trabajamos, Proyectos, Contacto**. Contacto se agregó
