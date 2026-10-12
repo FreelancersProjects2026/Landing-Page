@@ -6,12 +6,16 @@
 - Orden: T01 → T02 → (T03 ∥ T04) → T05. T03 y T04 no comparten archivos.
 
 ## Tareas
-- [ ] T01 Prueba en `landing-images.test.ts`: los 4 WebP existen, pesan ≤ 250 KB y su cabecera es
+- [x] T01 Prueba en `landing-images.test.ts`: los 4 WebP existen, pesan ≤ 250 KB y su cabecera es
   `RIFF`…`WEBP` (falla) → generar los WebP con el comando de `plan.md`. Anotar dimensiones y pesos
   reales en la evidencia.
   Archivos: `src/components/landing/landing-images.test.ts` (nuevo),
   `public/ComoTrabajamos/como-trabajamos.webp`, `public/Proyectos/proyectos.webp`,
   `public/Servicios/servicios.webp`, `public/footer/footer.webp` (nuevos).
+  - Evidencia: rojo, 4/4 fallan con `ENOENT` (no existen los WebP). Verde, 4/4 tras el comando de
+    `plan.md`. Real (igual al plan): `como-trabajamos.webp` 1212×1298, 186 KB;
+    `proyectos.webp` 1600×903, 193 KB; `servicios.webp` 1600×903, 96 KB; `footer.webp` 1600×533,
+    104 KB. `pnpm validate` OK (205 pruebas).
 - [ ] T02 Prueba en `landing-images.test.ts`: ningún `.tsx` de `src/components/landing/` (sin
   contar pruebas) contiene `.png` (falla) → cambiar las 4 rutas a WebP; actualizar las rutas
   esperadas en `section-reveal.test.tsx` (líneas 76 y 92). (depende de T01)
