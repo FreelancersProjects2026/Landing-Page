@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 
 import { describe, expect, it } from 'vitest'
 
@@ -11,6 +11,13 @@ const SECTION_WEBPS = [
   'public/Proyectos/proyectos.webp',
   'public/Servicios/servicios.webp',
   'public/footer/footer.webp',
+]
+
+const SECTION_PNGS = [
+  'public/ComoTrabajamos/ComoTrabajamos.png',
+  'public/Proyectos/Proyectos.png',
+  'public/Servicios/Servicios.png',
+  'public/footer/Footer.png',
 ]
 
 describe('imágenes de sección de la landing', () => {
@@ -34,5 +41,9 @@ describe('imágenes de sección de la landing', () => {
     )
 
     expect(withPng).toEqual([])
+  })
+
+  it.each(SECTION_PNGS)('%s ya no existe', (path) => {
+    expect(existsSync(path)).toBe(false)
   })
 })
