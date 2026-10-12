@@ -27,6 +27,7 @@ export function FooterSection({
     { name: menu.process, href: `#${sectionIds.process}` },
     { name: menu.projects, href: `#${sectionIds.projects}` },
     { name: menu.team, href: `#${sectionIds.team}` },
+    { name: menu.faq, href: `#${sectionIds.faq}` },
   ]
 
   return (

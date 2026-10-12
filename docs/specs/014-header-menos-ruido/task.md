@@ -21,7 +21,10 @@
   - Evidencia: rojo, «con locale=es/en el nav solo enlaza al otro idioma» fallaron en
     `expect(element).not.toBeInTheDocument()` (el idioma actual seguía en el `<nav>`). Verde:
     198/198 pruebas y `pnpm validate` exit 0.
-- [ ] T03 Prueba: el footer enlaza «Preguntas» a `#preguntas-frecuentes` (falla) → agregar
+- [x] T03 Prueba: el footer enlaza «Preguntas» a `#preguntas-frecuentes` (falla) → agregar
   `menu.faq` a `links`. (depende de T01 por el archivo de pruebas; código independiente)
   Archivos: `footer-section.tsx`, `landing-sections.test.tsx`.
+  - Evidencia: rojo, «enlaza Preguntas a la sección de preguntas frecuentes» falló en
+    `getByRole('link', { name: 'Preguntas' })` (el footer no tenía ese enlace). Verde: 199/199
+    pruebas y `pnpm validate` exit 0.
 - [ ] T04 Verificación: `pnpm validate` y revisión visual en 1280, 768 y 375 px. (depende de T02, T03)

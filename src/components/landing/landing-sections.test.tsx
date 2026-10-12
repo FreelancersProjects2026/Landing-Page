@@ -363,7 +363,7 @@ describe('CtaSection', () => {
 })
 
 describe('FooterSection', () => {
-  it('muestra nombre, texto, ubicación, WhatsApp, correo y derechos', () => {
+  function renderFooter() {
     render(
       <FooterSection
         company={content.company}
@@ -374,7 +374,19 @@ describe('FooterSection', () => {
         privacy={{ label: 'Privacidad', href: '/es/privacidad' }}
       />,
     )
-    const footer = screen.getByRole('contentinfo')
+    return screen.getByRole('contentinfo')
+  }
+
+  it('enlaza Preguntas a la sección de preguntas frecuentes', () => {
+    const footer = renderFooter()
+
+    expect(
+      within(footer).getByRole('link', { name: 'Preguntas' }),
+    ).toHaveAttribute('href', '#preguntas-frecuentes')
+  })
+
+  it('muestra nombre, texto, ubicación, WhatsApp, correo y derechos', () => {
+    const footer = renderFooter()
 
     expect(
       within(footer).getByRole('link', { name: 'Privacidad' }),
