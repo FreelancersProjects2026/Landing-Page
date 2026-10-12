@@ -23,7 +23,7 @@ Alternativas descartadas:
   presentación, vive en `navigation.tsx`.
 - `navLinks` gana `primary: boolean`. Escritorio filtra `primary`; el overlay móvil usa la lista
   completa.
-- Desktop: `gap-12` → `gap-8` entre enlaces (con 3 enlaces basta).
+- Desktop: `gap-12` → `gap-8` entre enlaces (4 enlaces; que quepan a 768 px se confirma en T04).
 - Idioma: `languageLinks` recibe la lista de idiomas a mostrar. Escritorio pasa
   `locales.filter((l) => l !== locale)`; móvil, `locales`. El enlace conserva `hrefLang`/`lang`.
 - CTA sin cambios: sigue siendo el único botón relleno.
