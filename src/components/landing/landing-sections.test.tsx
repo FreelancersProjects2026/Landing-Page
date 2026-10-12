@@ -546,12 +546,14 @@ describe('FaqSection', () => {
 describe('Imágenes WebP de la landing', () => {
   it.each([
     [
+      'Cómo trabajamos',
       <HowItWorksSection key="how" label="Proceso" {...content.process} />,
       '/ComoTrabajamos/como-trabajamos.webp',
       '1212',
       '1298',
     ],
     [
+      'Proyectos',
       <ProjectsSection
         key="projects"
         label="Proyectos"
@@ -562,6 +564,7 @@ describe('Imágenes WebP de la landing', () => {
       '903',
     ],
     [
+      'Servicios',
       <ServicesSection
         key="services"
         label="Servicios"
@@ -572,6 +575,7 @@ describe('Imágenes WebP de la landing', () => {
       '903',
     ],
     [
+      'Footer',
       <FooterSection
         key="footer"
         company={content.company}
@@ -586,8 +590,8 @@ describe('Imágenes WebP de la landing', () => {
       '533',
     ],
   ])(
-    '%#: declara width/height del WebP y el CSS manda el tamaño',
-    (section, src, width, height) => {
+    '%s: declara width/height del WebP y el CSS manda el tamaño',
+    (_name, section, src, width, height) => {
       const { container } = render(section)
       const image = container.querySelector(`img[src="${src}"]`)
 

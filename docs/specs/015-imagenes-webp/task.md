@@ -56,11 +56,15 @@
     el límite temporal en 1599: 3 fallos «expected 1600 to be less than or equal to 1599»
     (`proyectos`, `servicios`, `footer`); `como-trabajamos` (1212) pasa. Verde con 1600:
     `pnpm validate` exit 0, 218 pruebas (5 avisos `no-img-element` previos).
-- [ ] T07 Corrección (mejora, hallazgo de reviwer en T03): el `it.each` de
+- [x] T07 Corrección (mejora, hallazgo de reviwer en T03): el `it.each` de
   `landing-sections.test.tsx` (~línea 589) usa `%#` en el título y, si falla, no dice de qué
   sección es → poner el nombre de la sección en el título (p. ej. agregar el nombre como primer
   valor de cada fila o usar filas objeto con `$name`). Solo prueba; sigue en verde antes y
   después. (independiente de T06)
   Archivos: `src/components/landing/landing-sections.test.tsx`.
+  - Evidencia: antes, los casos salían como «0: declara width/height…» … «3: …»; ahora cada fila
+    lleva el nombre como primer valor y el título usa `%s`: «Cómo trabajamos:», «Proyectos:»,
+    «Servicios:», «Footer:» (4 casos en verde). `pnpm validate` OK (el build se repitió aparte por
+    choque con otro `next build` en curso).
 - [ ] T05 Verificación: `pnpm validate` y revisión visual en 1280 y 375 px de Servicios, Cómo
   trabajamos, Proyectos y footer (comparar con la versión anterior). (depende de T03, T04, T06, T07)
