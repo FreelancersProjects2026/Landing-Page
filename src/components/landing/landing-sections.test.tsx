@@ -92,6 +92,16 @@ describe('Navigation', () => {
     // jsdom no calcula apilamiento: las clases protegen contra la regresión.
     expect(screen.getByRole('navigation')).toHaveClass('relative', 'z-50')
   })
+
+  it('el botón abre y cierra el menú móvil', () => {
+    renderNavigation()
+    const button = screen.getByRole('button', { name: 'Menú' })
+
+    fireEvent.click(button)
+    expect(button).toHaveAttribute('aria-expanded', 'true')
+    fireEvent.click(button)
+    expect(button).toHaveAttribute('aria-expanded', 'false')
+  })
 })
 
 describe('HeroSection', () => {
