@@ -75,14 +75,14 @@ describe('Navigation', () => {
     expect(screen.getByRole('button', { name: 'Menú' })).toBeInTheDocument()
   })
 
-  function renderNavigation() {
+  function renderNavigation(locale: 'es' | 'en' = 'es') {
     render(
       <Navigation
         brand={content.company.name}
         menu={content.menu}
         cta={content.hero.cta}
         whatsappUrl={whatsappUrl}
-        locale="es"
+        locale={locale}
       />,
     )
   }
@@ -125,6 +125,27 @@ describe('Navigation', () => {
       ).not.toBeInTheDocument()
     }
   })
+
+  it.each([
+    ['es', 'EN', 'ES'],
+    ['en', 'ES', 'EN'],
+  ] as const)(
+    'con locale=%s el nav solo enlaza al otro idioma (%s)',
+    (locale, other, current) => {
+      renderNavigation(locale)
+      const nav = screen.getByRole('navigation')
+
+      expect(within(nav).getByRole('link', { name: other })).toHaveAttribute(
+        'href',
+        `/${other.toLowerCase()}`,
+      )
+      expect(
+        within(nav).queryByRole('link', { name: current }),
+      ).not.toBeInTheDocument()
+      // El menú móvil (fuera del nav) conserva ambos idiomas.
+      expect(screen.getByRole('link', { name: current })).toBeInTheDocument()
+    },
+  )
 })
 
 describe('HeroSection', () => {

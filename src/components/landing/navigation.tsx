@@ -57,15 +57,15 @@ export function Navigation({
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [isMobileMenuOpen])
 
-  const languageLinks = (className: string) =>
-    locales.map((lang) => (
+  const languageLinks = (langs: readonly Locale[]) =>
+    langs.map((lang) => (
       <a
         key={lang}
         href={`/${lang}`}
         hrefLang={lang}
         lang={lang}
         aria-current={lang === locale ? 'page' : undefined}
-        className={`${className} ${lang === locale ? 'font-medium' : 'opacity-60 hover:opacity-100'}`}
+        className={`transition-opacity ${lang === locale ? 'font-medium' : 'opacity-60 hover:opacity-100'}`}
       >
         {lang.toUpperCase()}
       </a>
@@ -132,7 +132,7 @@ export function Navigation({
             <div
               className={`flex items-center gap-3 transition-all duration-500 ${isScrolled ? 'text-xs text-foreground' : 'text-sm text-white'}`}
             >
-              {languageLinks('transition-opacity')}
+              {languageLinks(locales.filter((lang) => lang !== locale))}
             </div>
             <Button
               asChild
@@ -202,7 +202,7 @@ export function Navigation({
             style={{ transitionDelay: isMobileMenuOpen ? '300ms' : '0ms' }}
           >
             <div className="flex items-center gap-4 text-base text-foreground">
-              {languageLinks('transition-opacity')}
+              {languageLinks(locales)}
             </div>
             <Button
               asChild
