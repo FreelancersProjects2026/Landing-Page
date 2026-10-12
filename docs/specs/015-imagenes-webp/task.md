@@ -66,5 +66,13 @@
     lleva el nombre como primer valor y el título usa `%s`: «Cómo trabajamos:», «Proyectos:»,
     «Servicios:», «Footer:» (4 casos en verde). `pnpm validate` OK (el build se repitió aparte por
     choque con otro `next build` en curso).
+- [ ] T08 Corrección (mejora, hallazgo de reviwer en T06): `landing-images.test.ts:14-19` carga
+  `sharp` a nivel de módulo; si no resuelve o falla su binario, cae todo el archivo (peso y
+  formato, «sin .png», «PNG borrados») y el error no apunta al criterio de ancho → cargar `sharp`
+  de forma perezosa solo dentro de la prueba de ancho (o en su `beforeAll`). Refactor de prueba:
+  verde antes y después. Comprobación: resolver de forma temporal un nombre inexistente (p. ej.
+  `'sharp-x'`) y ver que solo falla la prueba de ancho; revertir y anotarlo en la evidencia.
+  (independiente de T07)
+  Archivos: `src/components/landing/landing-images.test.ts`.
 - [ ] T05 Verificación: `pnpm validate` y revisión visual en 1280 y 375 px de Servicios, Cómo
-  trabajamos, Proyectos y footer (comparar con la versión anterior). (depende de T03, T04, T06, T07)
+  trabajamos, Proyectos y footer (comparar con la versión anterior). (depende de T03, T04, T06, T07, T08)
