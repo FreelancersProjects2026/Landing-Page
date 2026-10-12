@@ -74,6 +74,24 @@ describe('Navigation', () => {
     }
     expect(screen.getByRole('button', { name: 'Menú' })).toBeInTheDocument()
   })
+
+  function renderNavigation() {
+    render(
+      <Navigation
+        brand={content.company.name}
+        menu={content.menu}
+        cta={content.hero.cta}
+        whatsappUrl={whatsappUrl}
+        locale="es"
+      />,
+    )
+  }
+
+  it('pinta el nav (con el botón) por encima del overlay móvil', () => {
+    renderNavigation()
+    // jsdom no calcula apilamiento: las clases protegen contra la regresión.
+    expect(screen.getByRole('navigation')).toHaveClass('relative', 'z-50')
+  })
 })
 
 describe('HeroSection', () => {
