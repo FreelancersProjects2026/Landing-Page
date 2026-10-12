@@ -1,9 +1,8 @@
 'use client'
 
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
+import { useCallback, useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
-import { Menu, X } from 'lucide-react'
 import {
   locales,
   type LandingContent,
@@ -11,6 +10,8 @@ import {
 } from '@modules/company-profile'
 
 import { externalLinkProps } from './external-link'
+import { LanguageLinks } from './language-links'
+import { MobileMenu, MobileMenuToggle } from './mobile-menu'
 import { sectionIds } from './section-ids'
 
 type NavigationProps = {
@@ -32,35 +33,21 @@ export function Navigation({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const navLinks = [
-    { name: menu.services, href: `#${sectionIds.services}` },
-    { name: menu.process, href: `#${sectionIds.process}` },
-    { name: menu.projects, href: `#${sectionIds.projects}` },
-    { name: menu.team, href: `#${sectionIds.team}` },
-    { name: menu.faq, href: `#${sectionIds.faq}` },
-    { name: menu.contact, href: `#${sectionIds.contact}` },
+    { name: menu.services, href: `#${sectionIds.services}`, primary: true },
+    { name: menu.process, href: `#${sectionIds.process}`, primary: true },
+    { name: menu.projects, href: `#${sectionIds.projects}`, primary: true },
+    { name: menu.team, href: `#${sectionIds.team}`, primary: false },
+    { name: menu.faq, href: `#${sectionIds.faq}`, primary: false },
+    { name: menu.contact, href: `#${sectionIds.contact}`, primary: true },
   ]
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-    }
+    const handleScroll = () => setIsScrolled(window.scrollY > 20)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const languageLinks = (className: string) =>
-    locales.map((lang) => (
-      <a
-        key={lang}
-        href={`/${lang}`}
-        hrefLang={lang}
-        lang={lang}
-        aria-current={lang === locale ? 'page' : undefined}
-        className={`${className} ${lang === locale ? 'font-medium' : 'opacity-60 hover:opacity-100'}`}
-      >
-        {lang.toUpperCase()}
-      </a>
-    ))
+  const closeMobileMenu = useCallback(() => setIsMobileMenuOpen(false), [])
 
   return (
     <header
@@ -69,7 +56,7 @@ export function Navigation({
       }`}
     >
       <nav
-        className={`mx-auto transition-all duration-500 ${
+        className={`relative z-50 mx-auto transition-all duration-500 ${
           isScrolled || isMobileMenuOpen
             ? 'bg-background/80 backdrop-blur-xl border border-foreground/10 rounded-2xl shadow-lg max-w-[1200px]'
             : 'bg-transparent max-w-[1400px]'
@@ -101,32 +88,37 @@ export function Navigation({
           </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-12">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className={`text-sm transition-colors duration-300 relative group ${isScrolled ? 'text-foreground/70 hover:text-foreground' : 'text-white/70 hover:text-white'}`}
-              >
-                {link.name}
-                <span
-                  className={`absolute -bottom-1 left-0 w-0 h-px transition-all duration-300 group-hover:w-full ${isScrolled ? 'bg-foreground' : 'bg-white'}`}
-                />
-              </a>
-            ))}
+          <div className="hidden lg:flex items-center gap-8">
+            {navLinks
+              .filter((link) => link.primary)
+              .map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={`text-base transition-colors duration-300 relative group ${isScrolled ? 'text-foreground/70 hover:text-foreground' : 'text-white/70 hover:text-white'}`}
+                >
+                  {link.name}
+                  <span
+                    className={`absolute -bottom-1 left-0 w-0 h-px transition-all duration-300 group-hover:w-full ${isScrolled ? 'bg-foreground' : 'bg-white'}`}
+                  />
+                </a>
+              ))}
           </div>
 
           {/* Desktop CTA */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-4">
             <div
-              className={`flex items-center gap-3 transition-all duration-500 ${isScrolled ? 'text-xs text-foreground' : 'text-sm text-white'}`}
+              className={`flex items-center gap-3 transition-all duration-500 ${isScrolled ? 'text-sm text-foreground' : 'text-base text-white'}`}
             >
-              {languageLinks('transition-opacity')}
+              <LanguageLinks
+                langs={locales.filter((lang) => lang !== locale)}
+                current={locale}
+              />
             </div>
             <Button
               asChild
               size="sm"
-              className={`rounded-full transition-all duration-500 ${isScrolled ? 'bg-foreground hover:bg-foreground/90 text-background px-4 h-8 text-xs' : 'bg-white hover:bg-white/90 text-black px-6'}`}
+              className={`rounded-full transition-all duration-500 ${isScrolled ? 'bg-foreground hover:bg-foreground/90 text-background px-4 h-8 text-sm' : 'bg-white hover:bg-white/90 text-black px-6 h-10 text-base'}`}
             >
               <a href={whatsappUrl} {...externalLinkProps}>
                 {cta}
@@ -135,79 +127,22 @@ export function Navigation({
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`md:hidden p-2 transition-colors duration-500 ${isScrolled || isMobileMenuOpen ? 'text-foreground' : 'text-white'}`}
-            aria-label={menu.toggleLabel}
-            aria-expanded={isMobileMenuOpen}
-          >
-            {isMobileMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
-          </button>
+          <MobileMenuToggle
+            open={isMobileMenuOpen}
+            scrolled={isScrolled}
+            label={menu.toggleLabel}
+            onToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          />
         </div>
       </nav>
 
-      {/* Mobile Menu - Full Screen Overlay */}
-      <div
-        className={`md:hidden fixed inset-0 bg-background z-40 transition-all duration-500 ${
-          isMobileMenuOpen
-            ? 'opacity-100 pointer-events-auto'
-            : 'opacity-0 pointer-events-none'
-        }`}
-        style={{ top: 0 }}
-      >
-        <div className="flex flex-col h-full px-8 pt-28 pb-8">
-          {/* Navigation Links */}
-          <div className="flex-1 flex flex-col justify-center gap-8">
-            {navLinks.map((link, i) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`text-5xl font-display text-foreground hover:text-muted-foreground transition-all duration-500 ${
-                  isMobileMenuOpen
-                    ? 'opacity-100 translate-y-0'
-                    : 'opacity-0 translate-y-4'
-                }`}
-                style={{
-                  transitionDelay: isMobileMenuOpen ? `${i * 75}ms` : '0ms',
-                }}
-              >
-                {link.name}
-              </a>
-            ))}
-          </div>
-
-          {/* Bottom CTAs */}
-          <div
-            className={`flex items-center gap-4 pt-8 border-t border-foreground/10 transition-all duration-500 ${
-              isMobileMenuOpen
-                ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-4'
-            }`}
-            style={{ transitionDelay: isMobileMenuOpen ? '300ms' : '0ms' }}
-          >
-            <div className="flex items-center gap-4 text-base text-foreground">
-              {languageLinks('transition-opacity')}
-            </div>
-            <Button
-              asChild
-              className="flex-1 bg-foreground text-background rounded-full h-14 text-base"
-            >
-              <a
-                href={whatsappUrl}
-                {...externalLinkProps}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {cta}
-              </a>
-            </Button>
-          </div>
-        </div>
-      </div>
+      <MobileMenu
+        open={isMobileMenuOpen}
+        onClose={closeMobileMenu}
+        links={navLinks}
+        locale={locale}
+        cta={{ label: cta, href: whatsappUrl }}
+      />
     </header>
   )
 }

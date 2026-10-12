@@ -74,6 +74,124 @@ describe('Navigation', () => {
     }
     expect(screen.getByRole('button', { name: 'Menú' })).toBeInTheDocument()
   })
+
+  function renderNavigation(locale: 'es' | 'en' = 'es') {
+    render(
+      <Navigation
+        brand={content.company.name}
+        menu={content.menu}
+        cta={content.hero.cta}
+        whatsappUrl={whatsappUrl}
+        locale={locale}
+      />,
+    )
+  }
+
+  it('pinta el nav (con el botón) por encima del overlay móvil', () => {
+    renderNavigation()
+    // jsdom no calcula apilamiento: las clases protegen contra la regresión.
+    expect(screen.getByRole('navigation')).toHaveClass('relative', 'z-50')
+  })
+
+  it('el botón abre y cierra el menú móvil', () => {
+    renderNavigation()
+    const button = screen.getByRole('button', { name: 'Menú' })
+
+    fireEvent.click(button)
+    expect(button).toHaveAttribute('aria-expanded', 'true')
+    fireEvent.click(button)
+    expect(button).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  it('Escape cierra el menú móvil abierto', () => {
+    renderNavigation()
+    const button = screen.getByRole('button', { name: 'Menú' })
+
+    fireEvent.click(button)
+    fireEvent.keyDown(document, { key: 'Escape' })
+    expect(button).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  it('en escritorio el nav solo muestra los enlaces primarios', () => {
+    renderNavigation()
+    const nav = screen.getByRole('navigation')
+
+    for (const label of ['Servicios', 'Cómo trabajamos', 'Proyectos']) {
+      expect(within(nav).getByRole('link', { name: label })).toBeInTheDocument()
+    }
+    expect(within(nav).getByRole('link', { name: 'Contacto' })).toHaveAttribute(
+      'href',
+      '#contacto',
+    )
+    for (const label of ['Equipo', 'Preguntas']) {
+      expect(
+        within(nav).queryByRole('link', { name: label }),
+      ).not.toBeInTheDocument()
+    }
+  })
+
+  it('el header de escritorio aparece desde lg y el menú móvil por debajo', () => {
+    renderNavigation()
+    const nav = screen.getByRole('navigation')
+    // jsdom no aplica media queries: las clases protegen contra la regresión.
+    const desktopBlocks = [
+      within(nav).getByRole('link', { name: 'Servicios' }).parentElement,
+      within(nav).getByRole('link', { name: 'EN' }).closest('.hidden'),
+    ]
+    const mobileOnly = [
+      screen.getByRole('button', { name: 'Menú' }),
+      screen.getByRole('link', { name: 'ES' }).closest('.fixed'),
+    ]
+
+    for (const block of desktopBlocks) {
+      expect(block).toHaveClass('hidden', 'lg:flex')
+      expect(block).not.toHaveClass('md:flex')
+    }
+    for (const element of mobileOnly) {
+      expect(element).toHaveClass('lg:hidden')
+      expect(element).not.toHaveClass('md:hidden')
+    }
+  })
+
+  it('sin scroll, los enlaces primarios y el CTA del nav usan text-base', () => {
+    renderNavigation()
+    const nav = screen.getByRole('navigation')
+
+    for (const label of [
+      'Servicios',
+      'Cómo trabajamos',
+      'Proyectos',
+      'Contacto',
+    ]) {
+      const link = within(nav).getByRole('link', { name: label })
+      expect(link).toHaveClass('text-base')
+      expect(link).not.toHaveClass('text-sm')
+    }
+    expect(nav.querySelector(`a[href="${whatsappUrl}"]`)).toHaveClass(
+      'text-base',
+    )
+  })
+
+  it.each([
+    ['es', 'EN', 'ES'],
+    ['en', 'ES', 'EN'],
+  ] as const)(
+    'con locale=%s el nav solo enlaza al otro idioma (%s)',
+    (locale, other, current) => {
+      renderNavigation(locale)
+      const nav = screen.getByRole('navigation')
+
+      expect(within(nav).getByRole('link', { name: other })).toHaveAttribute(
+        'href',
+        `/${other.toLowerCase()}`,
+      )
+      expect(
+        within(nav).queryByRole('link', { name: current }),
+      ).not.toBeInTheDocument()
+      // El menú móvil (fuera del nav) conserva ambos idiomas.
+      expect(screen.getByRole('link', { name: current })).toBeInTheDocument()
+    },
+  )
 })
 
 describe('HeroSection', () => {
@@ -291,7 +409,7 @@ describe('CtaSection', () => {
 })
 
 describe('FooterSection', () => {
-  it('muestra nombre, texto, ubicación, WhatsApp, correo y derechos', () => {
+  function renderFooter() {
     render(
       <FooterSection
         company={content.company}
@@ -302,7 +420,19 @@ describe('FooterSection', () => {
         privacy={{ label: 'Privacidad', href: '/es/privacidad' }}
       />,
     )
-    const footer = screen.getByRole('contentinfo')
+    return screen.getByRole('contentinfo')
+  }
+
+  it('enlaza Preguntas a la sección de preguntas frecuentes', () => {
+    const footer = renderFooter()
+
+    expect(
+      within(footer).getByRole('link', { name: 'Preguntas' }),
+    ).toHaveAttribute('href', '#preguntas-frecuentes')
+  })
+
+  it('muestra nombre, texto, ubicación, WhatsApp, correo y derechos', () => {
+    const footer = renderFooter()
 
     expect(
       within(footer).getByRole('link', { name: 'Privacidad' }),
@@ -411,4 +541,63 @@ describe('FaqSection', () => {
 
     expect(section.querySelector('img, canvas')).toBeNull()
   })
+})
+
+describe('Imágenes WebP de la landing', () => {
+  it.each([
+    [
+      'Cómo trabajamos',
+      <HowItWorksSection key="how" label="Proceso" {...content.process} />,
+      '/ComoTrabajamos/como-trabajamos.webp',
+      '1212',
+      '1298',
+    ],
+    [
+      'Proyectos',
+      <ProjectsSection
+        key="projects"
+        label="Proyectos"
+        {...content.projects}
+      />,
+      '/Proyectos/proyectos.webp',
+      '1600',
+      '903',
+    ],
+    [
+      'Servicios',
+      <ServicesSection
+        key="services"
+        label="Servicios"
+        {...content.services}
+      />,
+      '/Servicios/servicios.webp',
+      '1600',
+      '903',
+    ],
+    [
+      'Footer',
+      <FooterSection
+        key="footer"
+        company={content.company}
+        menu={content.menu}
+        footer={content.footer}
+        whatsappUrl={whatsappUrl}
+        emailUrl="mailto:solutionspjm@gmail.com"
+        privacy={{ label: 'Privacidad', href: '/es/privacidad' }}
+      />,
+      '/footer/footer.webp',
+      '1600',
+      '533',
+    ],
+  ])(
+    '%s: declara width/height del WebP y el CSS manda el tamaño',
+    (_name, section, src, width, height) => {
+      const { container } = render(section)
+      const image = container.querySelector(`img[src="${src}"]`)
+
+      expect(image).toHaveAttribute('width', width)
+      expect(image).toHaveAttribute('height', height)
+      expect(image).toHaveClass('w-full', 'h-full')
+    },
+  )
 })

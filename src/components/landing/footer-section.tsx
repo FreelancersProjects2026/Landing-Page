@@ -27,6 +27,7 @@ export function FooterSection({
     { name: menu.process, href: `#${sectionIds.process}` },
     { name: menu.projects, href: `#${sectionIds.projects}` },
     { name: menu.team, href: `#${sectionIds.team}` },
+    { name: menu.faq, href: `#${sectionIds.faq}` },
   ]
 
   return (
@@ -34,7 +35,9 @@ export function FooterSection({
       {/* Panoramic banner image */}
       <div className="relative w-full h-[340px] md:h-[420px] overflow-hidden">
         <img
-          src="/footer/Footer.png"
+          src="/footer/footer.webp"
+          width={1600}
+          height={533}
           alt=""
           aria-hidden="true"
           className="w-full h-full object-cover object-center"

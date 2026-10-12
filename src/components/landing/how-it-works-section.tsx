@@ -1,8 +1,10 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import type { Step } from '@modules/company-profile'
+import { ProcessStepCard } from './process-step-card'
 import { sectionIds } from './section-ids'
+import { useInView } from './use-in-view'
 
 type HowItWorksSectionProps = {
   label: string
@@ -20,20 +22,7 @@ export function HowItWorksSection({
   differentiators,
 }: HowItWorksSectionProps) {
   const [activeStep, setActiveStep] = useState(0)
-  const [isVisible, setIsVisible] = useState(false)
-  const sectionRef = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true)
-      },
-      { threshold: 0.1 },
-    )
-
-    if (sectionRef.current) observer.observe(sectionRef.current)
-    return () => observer.disconnect()
-  }, [])
+  const { ref: sectionRef, isVisible } = useInView<HTMLElement>(0.1)
 
   return (
     <section
@@ -76,7 +65,9 @@ export function HowItWorksSection({
             }`}
           >
             <img
-              src="/ComoTrabajamos/ComoTrabajamos.png"
+              src="/ComoTrabajamos/como-trabajamos.webp"
+              width={1212}
+              height={1298}
               alt=""
               aria-hidden="true"
               className="absolute bottom-0 left-0 w-full h-full object-contain object-bottom"
@@ -89,58 +80,13 @@ export function HowItWorksSection({
         {/* Horizontal Steps Layout */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           {steps.map((step, index) => (
-            <div
+            <ProcessStepCard
               key={step.title}
-              className={`relative text-left p-8 lg:p-10 border transition-all duration-500 ${
-                activeStep === index
-                  ? 'bg-[#000000] border-white/60'
-                  : 'bg-[#000000] border-white/25 hover:border-white/50'
-              }`}
-            >
-              {/* Step number with active line */}
-              <div className="flex items-center gap-4 mb-8">
-                <span
-                  className={`text-4xl font-display transition-colors duration-300 ${
-                    activeStep === index ? 'text-[#eca8d6]' : 'text-white/20'
-                  }`}
-                >
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <div className="flex-1 h-px bg-white/10 overflow-hidden">
-                  {activeStep === index && (
-                    <div className="h-full bg-[#eca8d6]/50" />
-                  )}
-                </div>
-              </div>
-
-              {/* Title: el botón cubre toda la tarjeta (after:inset-0) sin anidar el h3 en él */}
-              <h3 className="text-3xl lg:text-4xl font-display mb-6">
-                <button
-                  type="button"
-                  aria-pressed={activeStep === index}
-                  onClick={() => setActiveStep(index)}
-                  className="text-left after:absolute after:inset-0 focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-white/60"
-                >
-                  {step.title}
-                </button>
-              </h3>
-
-              {/* Description */}
-              <p
-                className={`text-white/60 leading-relaxed transition-opacity duration-300 ${
-                  activeStep === index ? 'opacity-100' : 'opacity-60'
-                }`}
-              >
-                {step.description}
-              </p>
-
-              {/* Active indicator */}
-              <div
-                className={`absolute bottom-0 left-0 right-0 h-1 bg-[#eca8d6] transition-transform duration-500 origin-left ${
-                  activeStep === index ? 'scale-x-100' : 'scale-x-0'
-                }`}
-              />
-            </div>
+              step={step}
+              index={index}
+              isActive={activeStep === index}
+              onSelect={() => setActiveStep(index)}
+            />
           ))}
         </div>
 

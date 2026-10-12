@@ -1,12 +1,13 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { ArrowRight, ArrowUpRight, Mail } from 'lucide-react'
 
 import { externalLinkProps } from './external-link'
 import { sectionIds } from './section-ids'
 import { splitAfterAt } from './split-after-at'
+import { revealClass, useInView } from './use-in-view'
 
 type CtaSectionProps = {
   title: string
@@ -27,21 +28,8 @@ export function CtaSection({
   email,
   emailUrl,
 }: CtaSectionProps) {
-  const [isVisible, setIsVisible] = useState(false)
-  const sectionRef = useRef<HTMLElement>(null)
+  const { ref: sectionRef, isVisible } = useInView<HTMLElement>(0.2)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true)
-      },
-      { threshold: 0.2 },
-    )
-
-    if (sectionRef.current) observer.observe(sectionRef.current)
-    return () => observer.disconnect()
-  }, [])
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -60,9 +48,7 @@ export function CtaSection({
     >
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         <div
-          className={`relative border border-foreground transition-all duration-1000 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}
+          className={`relative border border-foreground transition-all duration-1000 ${revealClass(isVisible, 'translate-y-8')}`}
           onMouseMove={handleMouseMove}
         >
           {/* Spotlight effect */}
@@ -104,11 +90,7 @@ export function CtaSection({
 
               {/* Correo: tarjeta-botón a la derecha en escritorio, debajo de WhatsApp en móvil */}
               <div
-                className={`w-full lg:w-auto transition-all duration-1000 delay-300 ${
-                  isVisible
-                    ? 'opacity-100 translate-y-0'
-                    : 'opacity-0 translate-y-4'
-                }`}
+                className={`w-full lg:w-auto transition-all duration-1000 delay-300 ${revealClass(isVisible, 'translate-y-4')}`}
               >
                 <a
                   href={emailUrl}
