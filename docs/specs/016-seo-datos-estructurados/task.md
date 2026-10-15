@@ -97,12 +97,14 @@
     la empresa y `dynamicParams = false`, 233/233 y `pnpm validate` OK (el build prerenderiza
     `/es/opengraph-image` y `/en/opengraph-image`). En `eslint.config.js` solo se agrega `alt`:
     `dynamicParams` ya estaba en la lista del preset `next` de `eslint-plugin-react-refresh`.
-- [ ] T09 Corrección (nit, hallazgo 4): el comentario de la prueba de textos literales dice que
+- [x] T09 Corrección (nit, hallazgo 4): el comentario de la prueba de textos literales dice que
   logo, perfiles sociales y horario «no se muestran», pero «Instagram» se muestra en el footer
   desde T03 → corregir el comentario: se excluyen porque son datos confirmados por el cliente en
   la spec 016, no textos de `contenido.md`. Solo comentario; la prueba sigue en verde antes y
   después. (paralela a T06, T07 y T08)
   Archivos: `src/modules/company-profile/infrastructure/landingContentSource.test.ts`.
+  - Evidencia: solo comentario (sin rojo, como indica la tarea); la prueba de textos literales
+    sigue en verde, 233/233 y `pnpm validate` OK.
 
 Descartados:
 - Hallazgo 4, segunda parte (la exclusión compara valores): los valores excluidos son una URL,

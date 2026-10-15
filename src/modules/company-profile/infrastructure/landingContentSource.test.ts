@@ -162,7 +162,8 @@ describe('landingContentSource', () => {
     'copia literalmente de contenido.md los textos en $locale',
     (content) => {
       // Datos técnicos que no se muestran: el idioma, el código ISO del país y la variante de
-      // la marca (JSON-LD, spec 011); logo, perfiles sociales y horario (spec 016).
+      // la marca (JSON-LD, spec 011). Logo, perfiles sociales y horario se excluyen porque son
+      // datos confirmados por el cliente en la spec 016, no textos de contenido.md.
       const { logo, socialProfiles, openingHours } = content.company
       const technical = [
         content.locale,
