@@ -37,7 +37,6 @@ describe('FooterContactLink', () => {
     const link = renderLink()
 
     expect(link).toHaveClass('group', 'inline-flex', 'items-center', 'min-h-12')
-    expect(link).not.toHaveClass('gap-3')
     expect(link.className).toContain('focus-visible:ring')
     expect(link.className).not.toMatch(/translate|rotate|scale/)
   })

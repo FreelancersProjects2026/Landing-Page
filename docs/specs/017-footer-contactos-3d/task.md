@@ -84,13 +84,14 @@
     (`received value must be a Node`) en `footer-contact-link.test.tsx`; `expected 3 to be 1`
     (cada canal en su `<li>`) en «agrupa los canales en una sola fila». Verde: `pnpm validate` OK,
     245 pruebas; las de nombre accesible de `FooterSection` sin cambios.
-- [ ] T08 Corrección (mejora, reviwer T07): sin texto visible, `hover:text-white transition-colors`
+- [x] T08 Corrección (mejora, reviwer T07): sin texto visible, `hover:text-white transition-colors`
   del enlace ya no hacen nada, y la prueba `not.toHaveClass('gap-3')` comprueba una clase, no
   comportamiento → quitar ambas clases y esa aserción (el rojo real ya lo da la prueba `sr-only`).
   Refactor sin cambio de comportamiento: pruebas en verde antes y después. (depende de T07)
   Archivos: `src/components/landing/footer-contact-link.tsx`,
   `src/components/landing/footer-contact-link.test.tsx`.
   Descartado: `text-sm text-white/40` del `<ul>` sigue aplicando a ubicación y horario.
+  - Hecho: quitadas `hover:text-white transition-colors` del `<a>` y la aserción `not.toHaveClass('gap-3')`. Antes y después: 5/5 pruebas del enlace en verde; `pnpm validate` OK, 245 pruebas.
 - T04 se repite tras T07 (cancelada a mitad por el cambio de diseño; sin evidencia previa).
 
 - Descartados: pruebas de T02 por nombres de clase (jsdom no puede medir foco ni transform; lo
