@@ -19,7 +19,8 @@ accesibles no cambian (D1).
 `FooterSection` decide ícono y acento de cada canal (presentación, no negocio): WhatsApp y correo
 directos; los perfiles sociales por su `label` con una tabla pequeña que hoy solo tiene
 «Instagram». Un perfil sin entrada usa el ícono `ArrowUpRight` y acento blanco, para no romper si
-mañana se agrega otro perfil.
+mañana se agrega otro perfil; ese respaldo vive solo en los valores por defecto de
+`FooterContactLink` (un único lugar), `FooterSection` no lo repite.
 
 El efecto va en CSS, como `btn-obsidian`: una `@utility contact-orb` en `globals.css` (Tailwind 4
 genera variantes solo para `@utility`). El acento llega por una variable CSS (`--orb-accent`) que
