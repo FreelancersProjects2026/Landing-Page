@@ -8,9 +8,9 @@
   en una tarea de corrección.
 
 ## Tareas
-- [ ] T01 Prueba: `company` (es y en) expone `logo: '/logo/icono/LOGOsolutionsPJM.jpeg'` (y el
-  archivo existe en `public/`), `socialProfiles: [{ label: 'Instagram', url:
-  'https://www.instagram.com/solutionspjm' }]` y `openingHours` lunes–domingo 00:00–23:59; y
+- [ ] T01 Prueba: `company` (es y en) expone el logo `/logo/icono/LOGOsolutionsPJM.jpeg` (y el
+  archivo existe en `public/`), un perfil social «Instagram» con URL
+  `https://www.instagram.com/solutionspjm` y horario lunes–domingo 00:00–23:59; y
   `validateLandingContent` rechaza un perfil social no https (fallan) → agregar `DayOfWeek`,
   `OpeningHours` y los 3 campos a `Contact`, la regla https, los datos en la fuente y exportar los
   tipos en `index.ts`. Actualizar el fixture de `landingContent.test.ts`.
@@ -24,15 +24,15 @@
   `sameAs` y `openingHoursSpecification` (falla) → agregarlos en `buildStructuredData`. Sin `geo`.
   (depende de T01; paralela a T03 y T04)
   Archivos: `src/app/[lang]/structured-data.ts`, `src/app/[lang]/structured-data.test.ts`.
-- [ ] T03 Prueba en `landing-sections.test.tsx` (`describe('FooterSection')`): hay un enlace
+- [ ] T03 Prueba en `landing-sections.test.tsx` (bloque del footer): hay un enlace
   «Instagram» a `https://www.instagram.com/solutionspjm` con `target="_blank"` y
   `rel="noopener noreferrer"` (falla) → renderizar `company.socialProfiles` en la lista de
-  contacto del footer con `externalLinkProps` y `ArrowUpRight aria-hidden`.
+  contacto del footer con `externalLinkProps` y la flecha decorativa oculta a lectores de pantalla.
   (depende de T01; paralela a T02 y T04)
   Archivos: `src/components/landing/footer-section.tsx`,
   `src/components/landing/landing-sections.test.tsx`.
-- [ ] T04 Prueba en `opengraph-image.test.tsx`: `size` es 1200×630, `contentType` es
-  `image/png`, y `OgImageCard` renderiza nombre, `seo.description` del idioma y un `<img>` con
+- [ ] T04 Prueba en `opengraph-image.test.tsx`: el tamaño declarado es 1200×630, el tipo es
+  PNG, y `OgImageCard` renderiza nombre, `seo.description` del idioma y una imagen con
   data URL JPEG (falla: no existen) → crear `og-image-card.tsx` y `opengraph-image.tsx` según
   `plan.md`. `pnpm build` debe listar `/es/opengraph-image` y `/en/opengraph-image`.
   (depende de T01; paralela a T02 y T03)
