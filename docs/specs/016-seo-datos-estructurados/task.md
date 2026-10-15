@@ -227,3 +227,13 @@ Descartado:
     `<li>Atención 24/7</li>` en `/es` y `<li>Available 24/7</li>` en `/en`, en la lista de
     contacto. Chrome headless a 1280 y 375 px, es y en: `scrollWidth` ≤ ancho de la ventana
     (sin desbordamiento) y el texto se ve debajo de la ubicación.
+
+Descartados (nits de reviwer en T13):
+- Falta prueba de interfaz para «Available 24/7» en inglés: el footer pinta el texto que recibe
+  por props, igual en ambos idiomas; el valor en inglés ya lo cubren el tipo y la prueba de
+  textos literales de `contenido.md`, y la evidencia de T13 lo vio en el HTML de `/en`.
+- El aviso de que horario y texto cambian juntos está solo junto a `openingHours`: cualquier
+  cambio de horario empieza por ese dato, y el texto del footer también está en `contenido.md`;
+  repetir el aviso en cada idioma no agrega protección.
+
+Estado: spec 016 cerrada de nuevo (2026-10-15); todas las tareas y criterios marcados.

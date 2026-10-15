@@ -74,8 +74,8 @@ confirmados por el cliente.
   alrededor del logo (T11).
 - [x] `pnpm validate` en verde.
 - [x] El cliente confirma D1–D3 o pide cambios (confirmadas tal cual el 2026-10-15).
-- [ ] El footer muestra «Atención 24/7» en `/es` y «Available 24/7» en `/en`, como texto (no
-  enlace) en la columna de contacto; ambos textos están en `contenido.md` (pendiente: T13).
+- [x] El footer muestra «Atención 24/7» en `/es` y «Available 24/7» en `/en`, como texto (no
+  enlace) en la columna de contacto; ambos textos están en `contenido.md` (T13).
 
 ## Dudas
 Datos de negocio: ninguna (confirmados por el cliente, tabla de arriba).
