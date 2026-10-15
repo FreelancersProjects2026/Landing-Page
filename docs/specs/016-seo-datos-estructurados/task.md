@@ -117,7 +117,7 @@ Descartados:
   extensión agregaría código sin un caso real que lo necesite.
 
 ### Correcciones de la revisión de T05
-- [ ] T10 Verificación (mejora, hallazgo 2 de T05): validar el JSON-LD de `/es` y `/en` en
+- [x] T10 Verificación (mejora, hallazgo 2 de T05): validar el JSON-LD de `/es` y `/en` en
   validator.schema.org sin URL pública. Con `pnpm build` y `pnpm start`, obtener con curl los dos
   bloques JSON-LD de cada idioma (`ProfessionalService` y `FAQPage`) y validarlos en
   https://validator.schema.org/ con la opción de pegar fragmento de código. Si se puede
@@ -126,6 +126,16 @@ Descartados:
   advertencias se anotan sin corregir. Anotar en la evidencia la fecha, el commit validado y
   errores y advertencias por bloque. Sin cambios de código. (paralela a T11)
   Archivos: ninguno de código; evidencia en este `task.md`.
+  - Evidencia (2026-10-15, sobre `f0d3947`): `pnpm build` + `pnpm start`; curl de `/es` y `/en`
+    y extracción de los `<script type="application/ld+json">`: dos bloques por idioma. Validación
+    automatizada con `POST https://validator.schema.org/validate` (campo `html` con el bloque
+    dentro de su `<script>`, la misma petición que hace la opción de pegar fragmento):
+    `/es` `ProfessionalService` 0 errores y 0 advertencias; `/es` `FAQPage` 0 y 0; `/en`
+    `ProfessionalService` 0 y 0; `/en` `FAQPage` 0 y 0. El validador reconoce todas las
+    propiedades, incluido `openingHoursSpecification` anidado con los siete `dayOfWeek`.
+    Control negativo por la misma vía (propiedad inventada y `dayOfWeek` «Lunes»): 2 errores
+    (`INVALID_PREDICATE`, `INVALID_SCHEMA_ENUM_VALUE`), así que la automatización sí detecta
+    errores. Log del servidor sin errores; servidor detenido.
 - [x] T11 Corrección (mejora, hallazgo 4 de T05 y observación de T05): el logo se ve como un
   recuadro sobre la tarjeta OG porque el fondo (`#080808`) es más oscuro que el fondo del JPEG
   → prueba en `opengraph-image.test.tsx`: el fondo de `OgImageCard` es `#0a0b10`, el color de
