@@ -73,20 +73,23 @@ name).
 | Archivo | Capa | Responsabilidad |
 |---------|------|-----------------|
 | `src/modules/company-profile/domain/landingContent.ts` | domain | `DayOfWeek`, `OpeningHours`, campos nuevos de `Contact`, regla https de perfiles sociales. |
-| `src/modules/company-profile/domain/landingContent.test.ts` | domain | Fixture con campos nuevos; rechaza perfil social no https. |
+| `src/modules/company-profile/domain/landingContent.test.ts` | domain | Fixture con campos nuevos; rechaza perfil social no https, logo sin barra inicial, horas fuera de HH:MM y horario sin días. |
 | `src/modules/company-profile/infrastructure/landingContentSource.ts` | infrastructure | Logo, Instagram y horario 24/7 confirmados. |
 | `src/modules/company-profile/infrastructure/landingContentSource.test.ts` | infrastructure | Datos exactos; el logo existe en `public/`. |
 | `src/modules/company-profile/index.ts` | API pública | Exporta `DayOfWeek` y `OpeningHours`. |
 | `src/app/[lang]/structured-data.ts` | app | Correo, logo, imagen, `sameAs` y horario en el JSON-LD. |
 | `src/app/[lang]/structured-data.test.ts` | app | Objeto esperado completo en es/en, sin `geo`. |
 | `src/components/landing/footer-section.tsx` | ui | Enlace a cada perfil social. |
+| `src/components/landing/footer-contact-link.tsx` | ui | Enlace de contacto del footer con flecha decorativa (T07, evita repetir el marcado). |
+| `eslint.config.js` | configuración | Permite exportar `alt` y `dynamicParams` en rutas de Next (T08). |
 | `src/components/landing/landing-sections.test.tsx` | ui | Enlace de Instagram en el footer. |
 | `src/app/[lang]/og-image-card.tsx` | app | Composición visual de la imagen OG. |
-| `src/app/[lang]/opengraph-image.tsx` | app | Ruta de la imagen OG por idioma. |
+| `src/app/[lang]/opengraph-image.tsx` | app | Ruta de la imagen OG por idioma; solo `es` y `en` (sin parámetros dinámicos). |
 | `src/app/[lang]/opengraph-image.test.tsx` | app | Tamaño, tipo, `alt` y contenido de la tarjeta. |
 
 ## Pruebas
-- Domain: `validateLandingContent` rechaza un perfil social con URL http o inválida y acepta el
+- Domain: `validateLandingContent` rechaza un perfil social con URL http o inválida, un logo sin
+  barra inicial, horas fuera de HH:MM y un horario sin días, y acepta el
   contenido real.
 - Infrastructure: `company` tiene exactamente el logo, Instagram y horario de la spec, y el
   archivo del logo existe en `public/`.

@@ -3,7 +3,8 @@
 ## Base acordada
 - Spec: `docs/specs/016-seo-datos-estructurados/spec.md`. Plan: `plan.md` (diseño y snippets).
 - Método: TDD, un commit por tarea, `pnpm validate` en verde.
-- Orden: T01 → (T02 ∥ T03 ∥ T04) → T05. T02, T03 y T04 no comparten archivos.
+- Orden: T01 → (T02 ∥ T03 ∥ T04) → (T06 ∥ T07 ∥ T08 ∥ T09) → T05. Las tareas de cada grupo
+  paralelo no comparten archivos.
 - Imagen OG: T04 usa la propuesta de D1–D3 de la spec; si el cliente pide otra cosa, se ajusta
   en una tarea de corrección.
 
@@ -53,7 +54,57 @@
     Desvíos: sin `export const alt` (el lint `react-refresh/only-export-components` no lo admite
     en la lista de Next y no se silencia); `generateStaticParams` propio en `opengraph-image.tsx`
     (sin él la ruta era dinámica y leía `public/` en tiempo de ejecución).
+
+### Correcciones de la revisión de T01–T04 (aprobadas, sin bloqueantes)
+- [ ] T06 Corrección (mejora, hallazgo 1): `validateLandingContent` no valida el logo ni el
+  horario; un logo sin barra inicial rompe la URL del JSON-LD → pruebas en
+  `landingContent.test.ts` que esperan error cuando el logo no empieza con «/», cuando apertura o
+  cierre no tienen formato HH:MM (00–23 y 00–59) y cuando la lista de días está vacía (fallan) →
+  agregar esas tres reglas en el límite del dominio. El contenido real sigue siendo válido.
+  (paralela a T07, T08 y T09)
+  Archivos: `src/modules/company-profile/domain/landingContent.ts`,
+  `src/modules/company-profile/domain/landingContent.test.ts`.
+- [ ] T07 Corrección (mejora, hallazgo 2): el footer repite tres veces el enlace de contacto con
+  flecha (WhatsApp, correo, perfiles sociales) y la flecha de WhatsApp no está oculta a lectores
+  de pantalla → prueba en `landing-sections.test.tsx` (bloque del footer): todas las flechas de
+  la lista de contacto están ocultas a lectores de pantalla (falla por WhatsApp) → extraer un
+  componente de enlace de contacto en un archivo propio dentro de `src/components/landing/`
+  (recibe destino, contenido y si es externo) y usarlo en los tres casos. Las pruebas existentes
+  del footer siguen en verde (nombres, `href`, `target` y `rel` sin cambio) y
+  `footer-section.tsx` baja de 148 líneas. (paralela a T06, T08 y T09)
+  Archivos: `src/components/landing/footer-section.tsx`,
+  `src/components/landing/footer-contact-link.tsx` (nuevo),
+  `src/components/landing/landing-sections.test.tsx`.
+- [ ] T08 Corrección (mejora, hallazgos 3 y 7): la imagen OG no publica `og:image:alt` y la ruta
+  no declara que solo existen `es` y `en` (un idioma desconocido llega a `getLandingContent` y da
+  error 500 en vez de 404) → prueba en `opengraph-image.test.tsx`: la ruta exporta `alt` igual al
+  nombre de la empresa y desactiva los parámetros dinámicos (falla) → permitir `alt` y
+  `dynamicParams` en la opción de nombres exportados de la regla
+  `react-refresh/only-export-components` de `eslint.config.js` (ambos son exportaciones oficiales
+  de Next) y exportarlos en `opengraph-image.tsx`. Se juntan porque tocan los mismos archivos.
+  (paralela a T06, T07 y T09)
+  Archivos: `eslint.config.js`, `src/app/[lang]/opengraph-image.tsx`,
+  `src/app/[lang]/opengraph-image.test.tsx`.
+- [ ] T09 Corrección (nit, hallazgo 4): el comentario de la prueba de textos literales dice que
+  logo, perfiles sociales y horario «no se muestran», pero «Instagram» se muestra en el footer
+  desde T03 → corregir el comentario: se excluyen porque son datos confirmados por el cliente en
+  la spec 016, no textos de `contenido.md`. Solo comentario; la prueba sigue en verde antes y
+  después. (paralela a T06, T07 y T08)
+  Archivos: `src/modules/company-profile/infrastructure/landingContentSource.test.ts`.
+
+Descartados:
+- Hallazgo 4, segunda parte (la exclusión compara valores): los valores excluidos son una URL,
+  una ruta, horas y nombres de días en inglés, y ninguno coincide con textos de la landing; el
+  falso positivo es teórico.
+- Hallazgo 5 (ayudante de horario de un solo uso): nombra la traducción a schema.org y mide
+  cinco líneas; inlinearlo no aporta valor al cliente.
+- Hallazgo 6 (`image/jpeg` escrito a mano): el formato del logo está fijado por la spec y la
+  prueba de T01; si cambia de formato, se cambia junto con la ruta. Deducir el tipo a partir de la
+  extensión agregaría código sin un caso real que lo necesite.
+
+### Cierre
 - [ ] T05 Verificación: `pnpm validate`; con `pnpm start`, `/es/opengraph-image` y
-  `/en/opengraph-image` devuelven PNG 1200×630 y el HTML de `/es` y `/en` trae `og:image`; footer
-  en 1280 y 375 px; en la preview de Vercel, prueba de resultados enriquecidos sin errores.
-  Anotar evidencia aquí. (depende de T02, T03, T04)
+  `/en/opengraph-image` devuelven PNG 1200×630, `/fr/opengraph-image` da 404, y el HTML de `/es`
+  y `/en` trae `og:image` y `og:image:alt`; footer en 1280 y 375 px; en la preview de Vercel,
+  prueba de resultados enriquecidos sin errores. Anotar evidencia aquí.
+  (depende de T02, T03, T04, T06, T07, T08 y T09)

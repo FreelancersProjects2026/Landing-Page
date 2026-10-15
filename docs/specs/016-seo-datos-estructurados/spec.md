@@ -52,7 +52,8 @@ confirmados por el cliente.
 - [ ] `company` (es y en) expone logo `/logo/icono/LOGOsolutionsPJM.jpeg` (el archivo existe en
   `public/`), perfil social Instagram `https://www.instagram.com/solutionspjm` y horario de lunes a
   domingo 00:00–23:59.
-- [ ] `validateLandingContent` rechaza un perfil social cuya URL no sea `https`.
+- [ ] `validateLandingContent` rechaza un perfil social cuya URL no sea `https`, un logo que no
+  empiece con «/», horas de apertura o cierre fuera del formato HH:MM y un horario sin días.
 - [ ] El JSON-LD `ProfessionalService` de `/es` y `/en` incluye:
   `email: "solutionspjm@gmail.com"`,
   `logo` e `image`: `"https://solutionspjm.com/logo/icono/LOGOsolutionsPJM.jpeg"`,
@@ -62,7 +63,8 @@ confirmados por el cliente.
   `rel="noopener noreferrer"`; su nombre accesible es «Instagram» y el ícono decorativo es
   `aria-hidden`.
 - [ ] `/es/opengraph-image` y `/en/opengraph-image` devuelven PNG 1200×630 con logo, nombre y la
-  descripción SEO del idioma; el HTML de cada idioma declara `og:image` hacia su imagen.
+  descripción SEO del idioma; el HTML de cada idioma declara `og:image` hacia su imagen y
+  `og:image:alt` con el nombre de la empresa; un idioma desconocido da 404.
 - [ ] La prueba de resultados enriquecidos de Google (o validator.schema.org) no reporta errores
   en el JSON-LD de la preview.
 - [ ] `pnpm validate` en verde.
