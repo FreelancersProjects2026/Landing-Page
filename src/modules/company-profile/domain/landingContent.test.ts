@@ -90,7 +90,11 @@ function validContent(): LandingContent {
       cta: 'Escríbenos por WhatsApp',
       emailLabel: 'O escríbenos al correo',
     },
-    footer: { text: 'solutionsPJM — desarrollo.', rights: '© 2026 PJM' },
+    footer: {
+      text: 'solutionsPJM — desarrollo.',
+      hours: 'Atención 24/7',
+      rights: '© 2026 PJM',
+    },
     notFound: {
       title: 'Esta página se perdió',
       text: 'El enlace no existe.',

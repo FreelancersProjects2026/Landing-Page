@@ -158,6 +158,7 @@ export interface LandingContent {
   }
   readonly footer: {
     readonly text: string
+    readonly hours: string
     readonly rights: string
   }
   readonly notFound: NotFoundContent

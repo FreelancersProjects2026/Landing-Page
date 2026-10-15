@@ -23,7 +23,7 @@ const company: Contact = {
   socialProfiles: [
     { label: 'Instagram', url: 'https://www.instagram.com/solutionspjm' },
   ],
-  // Atención 24/7 confirmada por el cliente.
+  // Atención 24/7 confirmada por el cliente. Si cambia, cambiar también footer.hours.
   openingHours: {
     days: [
       'Monday',
@@ -266,6 +266,7 @@ const es = validateLandingContent({
   },
   footer: {
     text: 'solutionsPJM — desarrollo de software en Cartago para negocios de Costa Rica y del mundo.',
+    hours: 'Atención 24/7',
     rights,
   },
   notFound: {
@@ -465,6 +466,7 @@ const en = validateLandingContent({
   },
   footer: {
     text: 'solutionsPJM — software development in Cartago for businesses in Costa Rica and around the world.',
+    hours: 'Available 24/7',
     rights,
   },
   notFound: {

@@ -89,6 +89,7 @@ export function FooterSection({
               </p>
               <ul className="space-y-4 text-sm text-white/40">
                 <li>{company.location}</li>
+                <li>{footer.hours}</li>
                 <li>
                   <FooterContactLink href={whatsappUrl} external>
                     WhatsApp {company.phone}

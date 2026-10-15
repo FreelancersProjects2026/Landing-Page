@@ -469,6 +469,17 @@ describe('FooterSection', () => {
     )
   })
 
+  it('muestra el horario como texto en la lista de contacto, sin enlace', () => {
+    const footer = renderFooter()
+
+    const hours = within(footer).getByText('Atención 24/7')
+    expect(hours).toBeVisible()
+    expect(hours.closest('a')).toBeNull()
+    expect(hours.closest('ul')).toBe(
+      within(footer).getByText('Paraíso de Cartago, Costa Rica').closest('ul'),
+    )
+  })
+
   it('oculta a lectores todas las flechas de la lista de contacto', () => {
     const footer = renderFooter()
 

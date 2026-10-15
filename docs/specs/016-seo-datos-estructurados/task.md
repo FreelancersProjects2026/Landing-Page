@@ -204,7 +204,7 @@ Descartado:
     «Privacidad» y el tamaño de `landingContent.ts` quedan en «Seguimiento» de la spec.
 
 ### Ampliación: horario visible (pedido del cliente, 2026-10-15)
-- [ ] T13 Prueba en `landing-sections.test.tsx` (bloque del footer): la lista de contacto muestra
+- [x] T13 Prueba en `landing-sections.test.tsx` (bloque del footer): la lista de contacto muestra
   el texto del horario del idioma («Atención 24/7» en es) y no es un enlace (falla) → agregar el
   texto `hours` al contenido del footer: tipo en el dominio, valores «Atención 24/7» y
   «Available 24/7» en la fuente, y un elemento de texto en la lista de contacto de
@@ -222,3 +222,8 @@ Descartado:
   `docs/specs/003-generarContenido/contenido.md`,
   `src/components/landing/footer-section.tsx`,
   `src/components/landing/landing-sections.test.tsx`.
+  - Evidencia: rojo, la prueba del footer falla (no encuentra «Atención 24/7»); verde, 234/234
+    y `pnpm validate` OK (build y arquitectura en verde). Con `pnpm start`, el HTML trae
+    `<li>Atención 24/7</li>` en `/es` y `<li>Available 24/7</li>` en `/en`, en la lista de
+    contacto. Chrome headless a 1280 y 375 px, es y en: `scrollWidth` ≤ ancho de la ventana
+    (sin desbordamiento) y el texto se ve debajo de la ubicación.
