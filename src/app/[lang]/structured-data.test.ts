@@ -22,6 +22,26 @@ describe('buildStructuredData', () => {
         url: `https://solutionspjm.com/${lang}`,
         description: content.seo.description,
         telephone: '+506 6440-0832',
+        email: 'solutionspjm@gmail.com',
+        logo: 'https://solutionspjm.com/logo/icono/LOGOsolutionsPJM.jpeg',
+        image: 'https://solutionspjm.com/logo/icono/LOGOsolutionsPJM.jpeg',
+        sameAs: ['https://www.instagram.com/solutionspjm'],
+        openingHoursSpecification: [
+          {
+            '@type': 'OpeningHoursSpecification',
+            dayOfWeek: [
+              'Monday',
+              'Tuesday',
+              'Wednesday',
+              'Thursday',
+              'Friday',
+              'Saturday',
+              'Sunday',
+            ],
+            opens: '00:00',
+            closes: '23:59',
+          },
+        ],
         address: {
           '@type': 'PostalAddress',
           addressLocality: 'Paraíso',

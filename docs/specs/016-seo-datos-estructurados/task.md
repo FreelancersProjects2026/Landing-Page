@@ -22,11 +22,14 @@
   - Evidencia: rojo, 4 pruebas fallan (perfil social http y sin esquema aceptado; `company` sin
     los campos nuevos; logo inexistente en `public/`); verde, 87/87 en `company-profile` y
     `pnpm validate` OK (221 pruebas, build y arquitectura en verde).
-- [ ] T02 Prueba en `structured-data.test.ts`: el `ProfessionalService` de es/en incluye
+- [x] T02 Prueba en `structured-data.test.ts`: el `ProfessionalService` de es/en incluye
   `email`, `logo` e `image` (`https://solutionspjm.com/logo/icono/LOGOsolutionsPJM.jpeg`),
   `sameAs` y `openingHoursSpecification` (falla) → agregarlos en `buildStructuredData`. Sin `geo`.
   (depende de T01; paralela a T03 y T04)
   Archivos: `src/app/[lang]/structured-data.ts`, `src/app/[lang]/structured-data.test.ts`.
+  - Evidencia: rojo, 2 pruebas fallan (es/en sin `email`, `logo`, `image`, `sameAs` ni
+    `openingHoursSpecification`); verde, 5/5 en `structured-data` y `pnpm validate` OK (221 pruebas,
+    build y arquitectura en verde).
 - [ ] T03 Prueba en `landing-sections.test.tsx` (bloque del footer): hay un enlace
   «Instagram» a `https://www.instagram.com/solutionspjm` con `target="_blank"` y
   `rel="noopener noreferrer"` (falla) → renderizar `company.socialProfiles` en la lista de
