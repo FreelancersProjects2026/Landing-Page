@@ -15,8 +15,8 @@ Cambio solo visual en `src/components/landing/`; no toca `company-profile`.
 componente. Recibe además el ícono del canal y su acento (color) por props, y reemplaza la flecha
 `ArrowUpRight` por el orbe. `children` sigue siendo el nombre accesible pero se oculta a la vista
 con `sr-only` (D1, pedido del usuario: solo el logo); así los nombres accesibles y sus pruebas no
-cambian. Los orbes quedan apilados en vertical porque cada canal ya es un `<li>` de la lista de
-contacto.
+cambian. Los tres orbes van en fila horizontal: comparten un solo `<li>` de la lista de contacto con
+`flex items-center gap-3` (pedido del usuario).
 
 `FooterSection` decide ícono y acento de cada canal (presentación, no negocio): WhatsApp y correo
 directos; los perfiles sociales por su `label` con una tabla pequeña que hoy solo tiene

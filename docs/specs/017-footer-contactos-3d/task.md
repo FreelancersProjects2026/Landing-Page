@@ -66,18 +66,20 @@
   el orbe; verificar el rojo cambiando un hex a mano y revertir. Sin cambio de producción.
   (depende de T03) Archivos: `src/components/landing/landing-sections.test.tsx`.
   - Rojo: con `#EA4336` en el correo → `Expected: "#EA4335" Received: "#EA4336"` (1 falla, 2 pasan); revertido. Verde: 3/3 casos comprueban `--orb-accent` en `span.contact-orb`; `pnpm validate` en verde.
-### Cambio pedido por el usuario (D1 resuelta: solo logo, en vertical)
+### Cambio pedido por el usuario (D1 resuelta: solo logo, en horizontal)
 - [ ] T07 Prueba en `footer-contact-link.test.tsx`: el texto recibido en `children` va dentro de un
   elemento `sr-only` (sigue siendo el nombre accesible exacto) y el enlace no muestra texto visible
   fuera de él (falla) → envolver `children` en `<span className="sr-only">` y quitar `gap-3`
   (sin texto al lado no hace falta). En `footer-section.tsx` el correo pasa como texto plano
-  (`company.email`, sin `splitAfterAt`, que ya no se ve) y se quita su import. Los orbes ya quedan
-  en vertical (un `<li>` por canal en la lista de contacto); no cambiar esa estructura. Las
-  pruebas de `landing-sections.test.tsx` por nombre accesible deben seguir en verde sin cambios.
+  (`company.email`, sin `splitAfterAt`, que ya no se ve) y se quita su import. Los tres canales van
+  en fila horizontal en un solo `<li>` con `flex items-center gap-3` (corrección del usuario:
+  horizontal, no vertical); prueba roja en `landing-sections.test.tsx` de que los tres enlaces
+  comparten `<li>`. Las demás pruebas por nombre accesible siguen en verde sin cambios.
   (depende de T06)
   Archivos: `src/components/landing/footer-contact-link.tsx`,
   `src/components/landing/footer-contact-link.test.tsx`,
-  `src/components/landing/footer-section.tsx`.
+  `src/components/landing/footer-section.tsx`,
+  `src/components/landing/landing-sections.test.tsx`.
 - T04 se repite tras T07 (cancelada a mitad por el cambio de diseño; sin evidencia previa).
 
 - Descartados: pruebas de T02 por nombres de clase (jsdom no puede medir foco ni transform; lo
