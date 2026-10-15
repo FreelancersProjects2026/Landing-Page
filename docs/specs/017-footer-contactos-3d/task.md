@@ -46,6 +46,21 @@
   reporta a planner): `pnpm dev`, footer de `/es` y `/en` en escritorio (hover y Tab sobre los
   tres canales), a 375 px y con `prefers-reduced-motion: reduce` emulado; anotar evidencia aquí.
   (depende de T01, T03, T05 y T07)
+  - Evidencia (2026-10-15, Chrome, `next dev` en :3000 del mismo repo con HMR; un segundo
+    `next dev` no arranca en el mismo directorio; el DOM ya trae T07 y T08): **no pasa por (3)**.
+    (1) Escritorio `/es` y `/en`: con el ratón, cada orbe se inclina (`matrix3d`), tiene sombra y
+    borde, y el ícono toma el acento `rgb(37,211,102)`/`rgb(234,67,53)`/`rgb(225,48,108)` y se
+    adelanta (`translate3d`); solo cambia el orbe bajo el cursor. Sin parpadeo: con el cursor en
+    el borde superior, `:hover` sigue activo a 1 s (el `<a>` no se transforma). (2) Tab
+    WhatsApp → correo → Instagram: `:focus-visible`, mismo estado y anillo blanco de 2+2 px
+    sobre un `<a>` de 48×48 `rounded-full`. (4) CSSOM servido: las 4 declaraciones `transform` y
+    `transition` de `contact-orb` están dentro de `(prefers-reduced-motion: no-preference)`;
+    ninguna fuera (la extensión no puede emular reduce). (3) **Defecto**, 375 px (`/en` en un
+    iframe de 375 px): sin scroll horizontal, objetivos de 48×48 con 12 px de separación, pero
+    **Instagram baja a una segunda línea** (fila 2 + 1). La columna de contacto mide ~132–140 px
+    (`grid grid-cols-2 gap-12` en `footer-section.tsx`) y la fila necesita 168 px
+    (3×48 + 2×12); el `<li>` tiene `flex flex-wrap`. Contradice «fila horizontal» (spec y plan);
+    se reporta a planner, sin corregir.
 
 ### Correcciones (revisión de T01 y T02)
 - [x] T05 Corrección (mejora, reviwer T01): la prueba de `contact-orb` solo revisa lo anterior al
