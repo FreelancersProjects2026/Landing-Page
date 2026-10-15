@@ -9,11 +9,14 @@
 - Valores por defecto D1–D3 de la spec; si el usuario pide otra cosa, se ajusta en una corrección.
 
 ## Tareas
-- [ ] T01 Prueba en `globals-css.test.ts`: `globals.css` declara `@utility contact-orb {`, con
+- [x] T01 Prueba en `globals-css.test.ts`: `globals.css` declara `@utility contact-orb {`, con
   `rotateX` y `translate3d` solo dentro de `@media (prefers-reduced-motion: no-preference)`, y el
   estado de hover comparte regla con `:focus-visible` (falla) → agregar la utilidad según
   «Diseño» del plan (orbe 48 px, acento por `--orb-accent`, ícono que se adelanta). (paralela a T02)
   Archivos: `src/app/globals.css`, `src/app/globals-css.test.ts`.
+  - Evidencia: rojo `expected -1 to be greater than or equal to 0` (no existía `@utility contact-orb`);
+    verde `globals-css.test.ts` 3/3 y `pnpm validate` OK (239 pruebas). Estado activo con
+    `:where(a:hover, a:focus-visible) > &`; `transform`/`transition` solo bajo `no-preference`.
 - [x] T02 Prueba nueva `footer-contact-link.test.tsx`: `FooterContactLink` con `icon` y `accent`
   muestra un orbe `aria-hidden` con clase `contact-orb`, el svg recibido y `--orb-accent` igual al
   acento; el nombre accesible es solo `children`; `external` añade `target`/`rel` y sin él no hay

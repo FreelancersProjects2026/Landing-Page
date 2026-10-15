@@ -35,4 +35,18 @@ describe('globals.css', () => {
     )
     expect(css).toContain('@utility btn-obsidian {')
   })
+
+  it('declara contact-orb con el 3D solo sin movimiento reducido y hover junto a foco', () => {
+    const start = css.indexOf('@utility contact-orb {')
+    expect(start).toBeGreaterThanOrEqual(0)
+    const block = css.slice(start, css.indexOf('\n}', start))
+    const [still, motion = ''] = block.split(
+      '@media (prefers-reduced-motion: no-preference) {',
+    )
+
+    expect(motion).toContain('rotateX(')
+    expect(motion).toContain('translate3d(')
+    expect(still).not.toMatch(/transform:|transition|rotateX|translate3d/)
+    expect(block).toMatch(/:hover,\s*a:focus-visible/)
+  })
 })
