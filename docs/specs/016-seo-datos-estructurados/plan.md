@@ -59,6 +59,22 @@ WhatsApp y la flecha decorativa oculta a lectores de pantalla. El nombre accesib
 visible («Instagram»); no se agrega `aria-label` porque duplicaría el texto (WCAG 2.5.3, label in
 name).
 
+### Horario visible en el footer (T13)
+- **Etiqueta de contenido por idioma**, no derivada del dominio: `footer` suma un texto `hours`
+  («Atención 24/7» / «Available 24/7»). Derivarlo de `company.openingHours` exigiría una regla
+  «7 días de 00:00 a 23:59 equivale a 24/7» más su traducción, para un único horario que no
+  cambia (YAGNI). El dato sigue teniendo una sola fuente, `company.openingHours` (JSON-LD); la
+  etiqueta es copy, como el resto de textos del footer.
+- Coherencia: la prueba de T01 ya fija el horario 24/7 en la fuente; si el cliente cambia el
+  horario, se cambian los dos en la misma tarea (se deja anotado junto al dato).
+- **`contenido.md`**: el texto se agrega a la sección «7. Footer» de cada idioma de
+  `docs/specs/003-generarContenido/contenido.md`, con una línea de enmienda aprobada (Spec 016),
+  como hizo la Spec 005. Así la prueba de textos literales de `landingContentSource.test.ts` lo
+  cubre sin excepciones nuevas.
+- **Footer**: ya recibe `footer` por props; el horario va como un elemento de texto en la lista
+  de contacto, igual que la ubicación (sin enlace ni flecha, sin `FooterContactLink`). Sin cambios
+  en `page.tsx`.
+
 ### App: imagen OpenGraph
 - `og-image-card.tsx`: componente puro `OgImageCard` que recibe nombre, texto y fuente del logo.
   Usa estilos en línea compatibles con Satori (todo contenedor con varios hijos en flexbox). Fondo
@@ -81,6 +97,7 @@ name).
 | `src/app/[lang]/structured-data.ts` | app | Correo, logo, imagen, `sameAs` y horario en el JSON-LD. |
 | `src/app/[lang]/structured-data.test.ts` | app | Objeto esperado completo en es/en, sin `geo`. |
 | `src/components/landing/footer-section.tsx` | ui | Enlace a cada perfil social. |
+| `docs/specs/003-generarContenido/contenido.md` | contenido | Texto del horario en el footer de cada idioma, con enmienda (T13). |
 | `src/components/landing/footer-contact-link.tsx` | ui | Enlace de contacto del footer con flecha decorativa (T07, evita repetir el marcado). |
 | `eslint.config.js` | configuración | Permite exportar `alt` y `dynamicParams` en rutas de Next (T08). |
 | `src/components/landing/landing-sections.test.tsx` | ui | Enlace de Instagram en el footer. |
@@ -97,7 +114,8 @@ name).
 - JSON-LD: comparación exacta del objeto completo por idioma (la prueba actual ya compara por
   igualdad, así que también garantiza que no hay `geo`).
 - Footer: existe un enlace con nombre «Instagram» hacia el perfil, que abre en otra pestaña con
-  `noopener noreferrer`.
+  `noopener noreferrer`; el texto del horario del idioma está visible en la lista de contacto y no
+  es un enlace (T13).
 - Imagen OG: el tamaño es 1200×630 y el tipo PNG; la tarjeta renderizada contiene el nombre, la
   descripción del idioma y una imagen cuya fuente es una data URL JPEG. El render real con Satori
   no se prueba en Vitest (jsdom; un render en seco en Node fuera de Next se colgó): lo cubre

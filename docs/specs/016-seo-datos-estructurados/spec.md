@@ -41,11 +41,14 @@ confirmados por el cliente.
    Se abre en otra pestaña (`target="_blank"`, `rel="noopener noreferrer"`).
 4. **Imagen OpenGraph por idioma** (`src/app/[lang]/opengraph-image.tsx`, `ImageResponse` de
    `next/og`): 1200×630, fondo oscuro como el logo, logo + nombre + descripción del idioma.
+5. **Horario visible en el footer** (pedido del cliente el 2026-10-15): en la columna de contacto,
+   junto a WhatsApp, correo e Instagram, un texto sin enlace: «Atención 24/7» en español
+   (aceptado por el cliente) y «Available 24/7» en inglés.
 
 ## Fuera de alcance
 - `geo`, `priceRange`, reseñas (`aggregateRating`) y otras redes sociales.
 - Etiquetas `twitter:*` propias (X usa las OpenGraph como respaldo).
-- Mostrar el horario 24/7 en la web (el cliente solo pidió el dato estructurado).
+- Mostrar el horario con días y horas detallados (basta el texto «24/7»).
 - Cambiar `src/app/icons.ts` o el favicon.
 
 ## Criterios de aceptación
@@ -71,6 +74,8 @@ confirmados por el cliente.
   alrededor del logo (T11).
 - [x] `pnpm validate` en verde.
 - [x] El cliente confirma D1–D3 o pide cambios (confirmadas tal cual el 2026-10-15).
+- [ ] El footer muestra «Atención 24/7» en `/es` y «Available 24/7» en `/en`, como texto (no
+  enlace) en la columna de contacto; ambos textos están en `contenido.md` (pendiente: T13).
 
 ## Dudas
 Datos de negocio: ninguna (confirmados por el cliente, tabla de arriba).

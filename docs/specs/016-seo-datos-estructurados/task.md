@@ -3,8 +3,8 @@
 ## Base acordada
 - Spec: `docs/specs/016-seo-datos-estructurados/spec.md`. Plan: `plan.md` (diseño en prosa).
 - Método: TDD, un commit por tarea, `pnpm validate` en verde.
-- Orden: T01 → (T02 ∥ T03 ∥ T04) → (T06 ∥ T07 ∥ T08 ∥ T09) → (T10 ∥ T11) → T12 → T05. Las tareas
-  de cada grupo paralelo no comparten archivos.
+- Orden: T01 → (T02 ∥ T03 ∥ T04) → (T06 ∥ T07 ∥ T08 ∥ T09) → (T10 ∥ T11) → T12 → T05 → T13.
+  Las tareas de cada grupo paralelo no comparten archivos.
 - Imagen OG: T04 usa la propuesta de D1–D3 de la spec; si el cliente pide otra cosa, se ajusta
   en una tarea de corrección.
 
@@ -202,3 +202,23 @@ Descartado:
     pública (el criterio ya se cumple con validator.schema.org).
   - Observaciones: el recuadro del logo en la imagen OG se corrigió en T11; el botón de chat que tapa
     «Privacidad» y el tamaño de `landingContent.ts` quedan en «Seguimiento» de la spec.
+
+### Ampliación: horario visible (pedido del cliente, 2026-10-15)
+- [ ] T13 Prueba en `landing-sections.test.tsx` (bloque del footer): la lista de contacto muestra
+  el texto del horario del idioma («Atención 24/7» en es) y no es un enlace (falla) → agregar el
+  texto `hours` al contenido del footer: tipo en el dominio, valores «Atención 24/7» y
+  «Available 24/7» en la fuente, y un elemento de texto en la lista de contacto de
+  `footer-section.tsx`, como la ubicación (sin `FooterContactLink`). Agregar los dos textos a la
+  sección «7. Footer» de cada idioma en `contenido.md` con una línea de enmienda aprobada
+  (Spec 016), para que la prueba de textos literales siga en verde sin excepciones. Actualizar el
+  fixture de `landingContent.test.ts`. Junto al horario en la fuente, un comentario breve: si
+  cambia, cambiar también el texto del footer.
+  Verificación ligera (en lugar de repetir T05): `pnpm validate`; con `pnpm start`, el HTML de
+  `/es` y `/en` trae su texto en el footer; vista a 1280 y 375 px sin desbordamiento. Anotar
+  evidencia aquí.
+  Archivos: `src/modules/company-profile/domain/landingContent.ts`,
+  `src/modules/company-profile/domain/landingContent.test.ts`,
+  `src/modules/company-profile/infrastructure/landingContentSource.ts`,
+  `docs/specs/003-generarContenido/contenido.md`,
+  `src/components/landing/footer-section.tsx`,
+  `src/components/landing/landing-sections.test.tsx`.
