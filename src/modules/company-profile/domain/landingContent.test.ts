@@ -17,6 +17,15 @@ function validContent(): LandingContent {
       areaServed: 'Costa Rica',
       phone: '+506 6440-0832',
       email: 'solutionspjm@gmail.com',
+      logo: '/logo/icono/LOGOsolutionsPJM.jpeg',
+      socialProfiles: [
+        { label: 'Instagram', url: 'https://www.instagram.com/solutionspjm' },
+      ],
+      openingHours: {
+        days: ['Monday', 'Sunday'],
+        opens: '00:00',
+        closes: '23:59',
+      },
     },
     seo: {
       title: 'Desarrollo de software a medida Costa Rica | solutionsPJM',
@@ -276,6 +285,23 @@ describe('validateLandingContent', () => {
           },
         }),
       ).toThrow('projects.items.0.link.url no es una URL https válida')
+    },
+  )
+
+  it.each(['http://www.instagram.com/solutionspjm', 'instagram.com/x'])(
+    'rechaza un perfil social que no es una URL https válida: %s',
+    (url) => {
+      const content = validContent()
+
+      expect(() =>
+        validateLandingContent({
+          ...content,
+          company: {
+            ...content.company,
+            socialProfiles: [{ label: 'Instagram', url }],
+          },
+        }),
+      ).toThrow('company.socialProfiles.0.url no es una URL https válida')
     },
   )
 

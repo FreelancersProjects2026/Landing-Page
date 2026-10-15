@@ -15,11 +15,13 @@ export {
 export { defaultLocale, isLocale, locales } from './domain/landingContent.ts'
 export type {
   Contact,
+  DayOfWeek,
   ExternalLink,
   FaqItem,
   LandingContent,
   Locale,
   NotFoundContent,
+  OpeningHours,
   PostalAddress,
   Project,
   Seo,

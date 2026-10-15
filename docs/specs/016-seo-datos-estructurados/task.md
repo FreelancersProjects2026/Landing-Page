@@ -8,7 +8,7 @@
   en una tarea de corrección.
 
 ## Tareas
-- [ ] T01 Prueba: `company` (es y en) expone el logo `/logo/icono/LOGOsolutionsPJM.jpeg` (y el
+- [x] T01 Prueba: `company` (es y en) expone el logo `/logo/icono/LOGOsolutionsPJM.jpeg` (y el
   archivo existe en `public/`), un perfil social «Instagram» con URL
   `https://www.instagram.com/solutionspjm` y horario lunes–domingo 00:00–23:59; y
   `validateLandingContent` rechaza un perfil social no https (fallan) → agregar `DayOfWeek`,
@@ -19,6 +19,9 @@
   `src/modules/company-profile/infrastructure/landingContentSource.ts`,
   `src/modules/company-profile/infrastructure/landingContentSource.test.ts`,
   `src/modules/company-profile/index.ts`.
+  - Evidencia: rojo, 4 pruebas fallan (perfil social http y sin esquema aceptado; `company` sin
+    los campos nuevos; logo inexistente en `public/`); verde, 87/87 en `company-profile` y
+    `pnpm validate` OK (221 pruebas, build y arquitectura en verde).
 - [ ] T02 Prueba en `structured-data.test.ts`: el `ProfessionalService` de es/en incluye
   `email`, `logo` e `image` (`https://solutionspjm.com/logo/icono/LOGOsolutionsPJM.jpeg`),
   `sameAs` y `openingHoursSpecification` (falla) → agregarlos en `buildStructuredData`. Sin `geo`.

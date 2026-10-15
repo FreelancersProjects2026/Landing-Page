@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 
 import { describe, expect, it } from 'vitest'
 
@@ -44,8 +44,29 @@ describe('landingContentSource', () => {
       areaServed: 'Worldwide',
       phone: '+506 6440-0832',
       email: 'solutionspjm@gmail.com',
+      logo: '/logo/icono/LOGOsolutionsPJM.jpeg',
+      socialProfiles: [
+        { label: 'Instagram', url: 'https://www.instagram.com/solutionspjm' },
+      ],
+      openingHours: {
+        days: [
+          'Monday',
+          'Tuesday',
+          'Wednesday',
+          'Thursday',
+          'Friday',
+          'Saturday',
+          'Sunday',
+        ],
+        opens: '00:00',
+        closes: '23:59',
+      },
     })
     expect(en.company).toEqual(es.company)
+  })
+
+  it('el logo de la empresa existe en public/', () => {
+    expect(existsSync(`public${es.company.logo}`)).toBe(true)
   })
 
   it('comparte proyectos e integrantes con sus enlaces entre idiomas', () => {
@@ -141,11 +162,13 @@ describe('landingContentSource', () => {
     'copia literalmente de contenido.md los textos en $locale',
     (content) => {
       // Datos técnicos que no se muestran: el idioma, el código ISO del país y la variante de
-      // la marca (JSON-LD, spec 011).
+      // la marca (JSON-LD, spec 011); logo, perfiles sociales y horario (spec 016).
+      const { logo, socialProfiles, openingHours } = content.company
       const technical = [
         content.locale,
         content.company.address.country,
         content.company.alternateName,
+        ...collectTexts({ logo, socialProfiles, openingHours }),
       ]
       const missing = collectTexts({
         ...content,

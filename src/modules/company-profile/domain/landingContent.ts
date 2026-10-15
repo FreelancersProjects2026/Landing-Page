@@ -19,6 +19,24 @@ export interface PostalAddress {
   readonly country: string
 }
 
+/** Nombres de schema.org, para publicarlos sin traducir. */
+export type DayOfWeek =
+  | 'Monday'
+  | 'Tuesday'
+  | 'Wednesday'
+  | 'Thursday'
+  | 'Friday'
+  | 'Saturday'
+  | 'Sunday'
+
+export interface OpeningHours {
+  readonly days: readonly DayOfWeek[]
+  /** HH:MM */
+  readonly opens: string
+  /** HH:MM */
+  readonly closes: string
+}
+
 export interface Contact {
   readonly name: string
   /** Misma marca escrita con espacio, para búsquedas (spec 011). */
@@ -28,6 +46,10 @@ export interface Contact {
   readonly areaServed: string
   readonly phone: string
   readonly email: string
+  /** Ruta pública del logo (empieza con «/»); la URL absoluta se arma con `siteUrl`. */
+  readonly logo: string
+  readonly socialProfiles: readonly ExternalLink[]
+  readonly openingHours: OpeningHours
 }
 
 export interface Service {
@@ -170,6 +192,10 @@ export function collectTexts(value: unknown, path: string): [string, string][] {
   )
 }
 
+function isHttpsUrl(url: string): boolean {
+  return URL.canParse(url) && new URL(url).protocol === 'https:'
+}
+
 function hasPrimaryKeyword(text: string, locale: Locale): boolean {
   const normalized = text.toLowerCase()
   return primaryKeyword[locale].every((part) => normalized.includes(part))
@@ -213,12 +239,16 @@ export function validateLandingContent(
     }
   }
   content.projects.items.forEach(({ link }, index) => {
-    if (
-      link &&
-      !(URL.canParse(link.url) && new URL(link.url).protocol === 'https:')
-    ) {
+    if (link && !isHttpsUrl(link.url)) {
       problems.push(
         `projects.items.${index}.link.url no es una URL https válida`,
+      )
+    }
+  })
+  content.company.socialProfiles.forEach(({ url }, index) => {
+    if (!isHttpsUrl(url)) {
+      problems.push(
+        `company.socialProfiles.${index}.url no es una URL https válida`,
       )
     }
   })
