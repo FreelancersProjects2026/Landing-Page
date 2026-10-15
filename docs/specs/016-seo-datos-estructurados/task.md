@@ -153,12 +153,16 @@ Descartados:
     `#0a0b0f`–`#0b0c11` (diferencia máxima 1 por canal).
 
 ### Corrección de la revisión de T10–T11
-- [ ] T12 Corrección (nit de reviwer en T11): el fondo `#0a0b10` de `og-image-card.tsx` es un
+- [x] T12 Corrección (nit de reviwer en T11): el fondo `#0a0b10` de `og-image-card.tsx` es un
   valor sin nombre y nada en el código dice que es el fondo del logo; alguien podría «corregirlo»
   y volver a mostrar el recuadro → nombrarlo como constante junto a la del tamaño del logo, con un
   comentario breve que diga que es el color de fondo del JPEG del logo, medido en sus bordes.
   Refactor: la prueba de T11 sigue en verde antes y después. (independiente)
   Archivos: `src/app/[lang]/og-image-card.tsx`.
+  - Evidencia: `#0a0b10` pasa a `LOGO_BACKGROUND`, junto a `LOGO_SIZE`, con comentario de que es
+    el fondo del JPEG del logo medido en sus bordes. `opengraph-image.test.tsx` 4/4 en verde antes
+    y después; `pnpm validate` OK (lint 0 errores y 6 avisos previos, 233/233 pruebas,
+    arquitectura sin violaciones, build OK).
 
 Descartado:
 - Nit de T10 (falta el comando exacto de la petición al validador): la evidencia de T10 ya nombra

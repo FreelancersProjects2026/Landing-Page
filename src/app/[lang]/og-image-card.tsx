@@ -6,6 +6,8 @@ type OgImageCardProps = {
 }
 
 const LOGO_SIZE = 320
+// Color de fondo del JPEG del logo, medido en sus bordes: así no se ve recuadro.
+const LOGO_BACKGROUND = '#0a0b10'
 
 export function OgImageCard({ name, text, logoSrc }: OgImageCardProps) {
   return (
@@ -17,7 +19,7 @@ export function OgImageCard({ name, text, logoSrc }: OgImageCardProps) {
         width: '100%',
         height: '100%',
         padding: 80,
-        background: '#0a0b10',
+        background: LOGO_BACKGROUND,
         color: '#ffffff',
       }}
     >
