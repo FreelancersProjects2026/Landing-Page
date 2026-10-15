@@ -1,30 +1,37 @@
-import type { ReactNode } from 'react'
-import { ArrowUpRight } from 'lucide-react'
+import type { CSSProperties, ReactNode } from 'react'
+import { ArrowUpRight, type LucideIcon } from 'lucide-react'
 
 import { externalLinkProps } from './external-link'
 
 type FooterContactLinkProps = {
   href: string
   external?: boolean
+  icon?: LucideIcon
+  accent?: string
   children: ReactNode
 }
 
 export function FooterContactLink({
   href,
   external = false,
+  icon: Icon = ArrowUpRight,
+  accent = '#ffffff',
   children,
 }: FooterContactLinkProps) {
   return (
     <a
       href={href}
       {...(external ? externalLinkProps : {})}
-      className="hover:text-white transition-colors inline-flex items-center gap-1 group"
+      className="group inline-flex items-center gap-3 min-h-12 rounded-full hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
     >
-      {children}
-      <ArrowUpRight
+      <span
         aria-hidden="true"
-        className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all"
-      />
+        className="contact-orb"
+        style={{ '--orb-accent': accent } as CSSProperties}
+      >
+        <Icon aria-hidden="true" className="w-5 h-5" />
+      </span>
+      {children}
     </a>
   )
 }

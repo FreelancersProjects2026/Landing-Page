@@ -14,7 +14,7 @@
   estado de hover comparte regla con `:focus-visible` (falla) → agregar la utilidad según
   «Diseño» del plan (orbe 48 px, acento por `--orb-accent`, ícono que se adelanta). (paralela a T02)
   Archivos: `src/app/globals.css`, `src/app/globals-css.test.ts`.
-- [ ] T02 Prueba nueva `footer-contact-link.test.tsx`: `FooterContactLink` con `icon` y `accent`
+- [x] T02 Prueba nueva `footer-contact-link.test.tsx`: `FooterContactLink` con `icon` y `accent`
   muestra un orbe `aria-hidden` con clase `contact-orb`, el svg recibido y `--orb-accent` igual al
   acento; el nombre accesible es solo `children`; `external` añade `target`/`rel` y sin él no hay
   `target`; ya no hay `lucide-arrow-up-right` (falla) → ampliar el componente con `icon` y
@@ -22,6 +22,10 @@
   transformar el `<a>`. (paralela a T01)
   Archivos: `src/components/landing/footer-contact-link.tsx`,
   `src/components/landing/footer-contact-link.test.tsx`.
+  - Evidencia: rojo 2/4 fallan (sin orbe `aria-hidden`; clases `gap-3 min-h-12` ausentes); verde
+    4/4. `icon?: LucideIcon` (respaldo `ArrowUpRight`) y `accent?` (respaldo `#ffffff`) para que
+    `FooterSection` siga compilando hasta T03. lint, typecheck, 239 pruebas, architecture y build
+    OK; `format:check` solo marca `globals-css.test.ts` (T01 en curso, no tocado).
 - [ ] T03 Prueba en `landing-sections.test.tsx` (bloque `FooterSection`): los enlaces «WhatsApp
   +506 6440-0832», «solutionspjm@gmail.com» e «Instagram» conservan `href`/`target` y contienen
   `lucide-message-circle`, `lucide-mail` y `lucide-instagram` respectivamente, todos
