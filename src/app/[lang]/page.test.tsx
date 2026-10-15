@@ -13,6 +13,9 @@ import {
 import Home from './page'
 import { buildFaqStructuredData, buildStructuredData } from './structured-data'
 
+const gmailUrl =
+  'https://mail.google.com/mail/?view=cm&fs=1&to=solutionspjm%40gmail.com'
+
 function renderPage(lang: string) {
   return Home({ params: Promise.resolve({ lang }) })
 }
@@ -106,21 +109,27 @@ describe.each(['es', 'en'])('Home (%s)', (lang) => {
     }
   })
 
-  it('la sección de contacto publica el correo como mailto:', async () => {
+  it('la sección de contacto abre el correo en Gmail web', async () => {
     const { container } = render(await renderPage(lang))
-    const mailto = container.querySelectorAll('#contacto a[href^="mailto:"]')
+    const email = container.querySelectorAll(`#contacto a[href="${gmailUrl}"]`)
 
-    expect(mailto).toHaveLength(1)
-    expect(mailto[0]).toHaveAttribute('href', 'mailto:solutionspjm@gmail.com')
-    expect(mailto[0]).toHaveTextContent('solutionspjm@gmail.com')
+    expect(email).toHaveLength(1)
+    expect(email[0]).toHaveAttribute('target', '_blank')
+    expect(email[0]).toHaveTextContent('solutionspjm@gmail.com')
   })
 
-  it('el footer publica el correo como mailto:', async () => {
+  it('el footer abre el correo en Gmail web', async () => {
     const { container } = render(await renderPage(lang))
-    const mailto = container.querySelectorAll('footer a[href^="mailto:"]')
+    const email = container.querySelectorAll(`footer a[href="${gmailUrl}"]`)
 
-    expect(mailto).toHaveLength(1)
-    expect(mailto[0]).toHaveAttribute('href', 'mailto:solutionspjm@gmail.com')
+    expect(email).toHaveLength(1)
+    expect(email[0]).toHaveAttribute('target', '_blank')
+  })
+
+  it('no publica enlaces mailto:', async () => {
+    const { container } = render(await renderPage(lang))
+
+    expect(container.querySelectorAll('a[href^="mailto:"]')).toHaveLength(0)
   })
 
   it('el footer enlaza a la política de privacidad del idioma', async () => {

@@ -10,7 +10,8 @@ import { ProjectsSection } from './projects-section'
 import { TeamSection } from './team-section'
 
 const content = getLandingContent('es')
-const emailUrl = 'mailto:solutionspjm@gmail.com'
+const emailUrl =
+  'https://mail.google.com/mail/?view=cm&fs=1&to=solutionspjm%40gmail.com'
 
 let notify: (entries: Partial<IntersectionObserverEntry>[]) => void
 let options: IntersectionObserverInit | undefined

@@ -9,7 +9,7 @@ import { CtaSection } from '@/components/landing/cta-section'
 import { FooterSection } from '@/components/landing/footer-section'
 import { WhatsAppButton } from '@/components/landing/whatsapp-button'
 import {
-  buildMailtoUrl,
+  buildEmailComposeUrl,
   buildPrivacyPath,
   buildWhatsAppUrl,
   getLandingContent,
@@ -39,7 +39,7 @@ export default async function Home({
       url: buildWhatsAppUrl(content.company.phone, message),
     }),
   )
-  const emailUrl = buildMailtoUrl(content.company.email)
+  const emailUrl = buildEmailComposeUrl(content.company.email)
   const privacy = {
     label: getPrivacyPolicy(content.locale).footerLink,
     href: buildPrivacyPath(content.locale),

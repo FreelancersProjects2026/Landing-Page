@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import type { LandingContent } from '../domain/landingContent.ts'
 import {
-  buildMailtoUrl,
+  buildEmailComposeUrl,
   buildWhatsAppUrl,
   createGetLandingContent,
   UnknownLocaleError,
@@ -16,10 +16,10 @@ describe('buildWhatsAppUrl', () => {
   })
 })
 
-describe('buildMailtoUrl', () => {
-  it('arma el enlace mailto: del correo', () => {
-    expect(buildMailtoUrl('solutionspjm@gmail.com')).toBe(
-      'mailto:solutionspjm@gmail.com',
+describe('buildEmailComposeUrl', () => {
+  it('arma el enlace para redactar en Gmail web con el correo codificado', () => {
+    expect(buildEmailComposeUrl('solutionspjm@gmail.com')).toBe(
+      'https://mail.google.com/mail/?view=cm&fs=1&to=solutionspjm%40gmail.com',
     )
   })
 })

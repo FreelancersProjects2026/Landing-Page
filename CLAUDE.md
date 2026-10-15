@@ -44,7 +44,7 @@ tiene prioridad ante cualquier conflicto.
   verifica junto con la ausencia de ciclos.
 - Reglas de negocio e invariantes en `domain`; validación de datos externos en `infrastructure`.
 - Datos de contacto (NAP) definidos una sola vez y compartidos entre idiomas. Enlaces de contacto con
-  `buildWhatsAppUrl` y `buildMailtoUrl`; nunca URLs escritas a mano.
+  `buildWhatsAppUrl` y `buildEmailComposeUrl`; nunca URLs escritas a mano.
 - Un cambio de contenido visible se aprueba primero en `docs/specs/003-generarContenido/contenido.md`.
 - `src/shared/` no es un depósito genérico: solo recursos técnicos usados por más de un módulo.
 - Una decisión arquitectónica nueva requiere un ADR en `docs/adr/`.

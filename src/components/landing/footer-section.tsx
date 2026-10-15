@@ -105,6 +105,7 @@ export function FooterSection({
                   </FooterContactLink>
                   <FooterContactLink
                     href={emailUrl}
+                    external
                     icon={Mail}
                     accent="#EA4335"
                   >

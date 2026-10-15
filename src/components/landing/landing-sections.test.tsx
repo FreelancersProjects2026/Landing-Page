@@ -380,7 +380,8 @@ describe('HowItWorksSection: accesibilidad', () => {
 
 describe('CtaSection', () => {
   const email = 'solutionspjm@gmail.com'
-  const emailUrl = 'mailto:solutionspjm@gmail.com'
+  const emailUrl =
+    'https://mail.google.com/mail/?view=cm&fs=1&to=solutionspjm%40gmail.com'
 
   function renderCta() {
     render(
@@ -404,14 +405,15 @@ describe('CtaSection', () => {
     )
   })
 
-  it('muestra el correo como una tarjeta-botón mailto: con su etiqueta', () => {
+  it('muestra el correo como una tarjeta-botón que abre Gmail en otra pestaña', () => {
     const section = renderCta()
     const link = within(section).getByRole('link', {
       name: `${content.contact.emailLabel} ${email}`,
     })
 
     expect(link).toHaveAttribute('href', emailUrl)
-    expect(link).not.toHaveAttribute('target')
+    expect(link).toHaveAttribute('target', '_blank')
+    expect(link).toHaveAttribute('rel', 'noopener noreferrer')
     // Los íconos (correo y flecha) son decorativos: no agregan nada al nombre accesible.
     const icons = link.querySelectorAll('svg')
     expect(icons).toHaveLength(2)
@@ -429,7 +431,7 @@ describe('FooterSection', () => {
         menu={content.menu}
         footer={content.footer}
         whatsappUrl={whatsappUrl}
-        emailUrl="mailto:solutionspjm@gmail.com"
+        emailUrl="https://mail.google.com/mail/?view=cm&fs=1&to=solutionspjm%40gmail.com"
         privacy={{ label: 'Privacidad', href: '/es/privacidad' }}
       />,
     )
@@ -461,8 +463,12 @@ describe('FooterSection', () => {
     const email = within(footer).getByRole('link', {
       name: 'solutionspjm@gmail.com',
     })
-    expect(email).toHaveAttribute('href', 'mailto:solutionspjm@gmail.com')
-    expect(email).not.toHaveAttribute('target')
+    expect(email).toHaveAttribute(
+      'href',
+      'https://mail.google.com/mail/?view=cm&fs=1&to=solutionspjm%40gmail.com',
+    )
+    expect(email).toHaveAttribute('target', '_blank')
+    expect(email).toHaveAttribute('rel', 'noopener noreferrer')
     expect(within(footer).getByText('© 2026 solutionsPJM')).toBeVisible()
   })
 
@@ -672,7 +678,7 @@ describe('Imágenes WebP de la landing', () => {
         menu={content.menu}
         footer={content.footer}
         whatsappUrl={whatsappUrl}
-        emailUrl="mailto:solutionspjm@gmail.com"
+        emailUrl="https://mail.google.com/mail/?view=cm&fs=1&to=solutionspjm%40gmail.com"
         privacy={{ label: 'Privacidad', href: '/es/privacidad' }}
       />,
       '/footer/footer.webp',

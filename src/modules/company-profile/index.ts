@@ -4,7 +4,7 @@ import { landingContentSource } from './infrastructure/landingContentSource.ts'
 import { privacyPolicySource } from './infrastructure/privacyPolicySource.ts'
 
 export {
-  buildMailtoUrl,
+  buildEmailComposeUrl,
   buildWhatsAppUrl,
 } from './application/landingContent.ts'
 export {
