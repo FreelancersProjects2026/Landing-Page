@@ -39,13 +39,20 @@
   `src/components/landing/landing-sections.test.tsx`.
   - Evidencia: rojo, la prueba del footer falla (no hay enlace con nombre «Instagram»); verde,
     222/222 y `pnpm validate` OK (build y arquitectura en verde; `footer-section.tsx` 148 líneas).
-- [ ] T04 Prueba en `opengraph-image.test.tsx`: el tamaño declarado es 1200×630, el tipo es
+- [x] T04 Prueba en `opengraph-image.test.tsx`: el tamaño declarado es 1200×630, el tipo es
   PNG, y `OgImageCard` renderiza nombre, `seo.description` del idioma y una imagen con
   data URL JPEG (falla: no existen) → crear `og-image-card.tsx` y `opengraph-image.tsx` según
   `plan.md`. `pnpm build` debe listar `/es/opengraph-image` y `/en/opengraph-image`.
   (depende de T01; paralela a T02 y T03)
   Archivos: `src/app/[lang]/og-image-card.tsx`, `src/app/[lang]/opengraph-image.tsx`,
   `src/app/[lang]/opengraph-image.test.tsx` (nuevos).
+  - Evidencia: rojo, la suite falla al no poder resolver `./opengraph-image`; verde, 3/3 (tamaño y
+    tipo; tarjeta es/en con nombre, `seo.description` y logo `data:image/jpeg;base64`, con
+    `ImageResponse` simulado) y `pnpm validate` OK (225 pruebas). El build prerenderiza
+    `/es/opengraph-image` y `/en/opengraph-image` (PNG 1200×630, revisados a ojo).
+    Desvíos: sin `export const alt` (el lint `react-refresh/only-export-components` no lo admite
+    en la lista de Next y no se silencia); `generateStaticParams` propio en `opengraph-image.tsx`
+    (sin él la ruta era dinámica y leía `public/` en tiempo de ejecución).
 - [ ] T05 Verificación: `pnpm validate`; con `pnpm start`, `/es/opengraph-image` y
   `/en/opengraph-image` devuelven PNG 1200×630 y el HTML de `/es` y `/en` trae `og:image`; footer
   en 1280 y 375 px; en la preview de Vercel, prueba de resultados enriquecidos sin errores.
