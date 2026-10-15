@@ -65,10 +65,10 @@ confirmados por el cliente.
 - [x] `/es/opengraph-image` y `/en/opengraph-image` devuelven PNG 1200×630 con logo, nombre y la
   descripción SEO del idioma; el HTML de cada idioma declara `og:image` hacia su imagen y
   `og:image:alt` con el nombre de la empresa; un idioma desconocido da 404.
-- [ ] validator.schema.org (o la prueba de resultados enriquecidos de Google) no reporta errores
-  en el JSON-LD de `/es` y `/en` (pendiente: T10).
-- [ ] El fondo de la imagen OG es el mismo color oscuro del fondo del logo, sin recuadro visible
-  alrededor del logo (pendiente: T11).
+- [x] validator.schema.org (o la prueba de resultados enriquecidos de Google) no reporta errores
+  en el JSON-LD de `/es` y `/en` (T10).
+- [x] El fondo de la imagen OG es el mismo color oscuro del fondo del logo, sin recuadro visible
+  alrededor del logo (T11).
 - [x] `pnpm validate` en verde.
 - [ ] El cliente confirma D1–D3 o pide cambios (pendiente del cliente; condición para mergear).
 

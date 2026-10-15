@@ -3,7 +3,7 @@
 ## Base acordada
 - Spec: `docs/specs/016-seo-datos-estructurados/spec.md`. Plan: `plan.md` (diseño en prosa).
 - Método: TDD, un commit por tarea, `pnpm validate` en verde.
-- Orden: T01 → (T02 ∥ T03 ∥ T04) → (T06 ∥ T07 ∥ T08 ∥ T09) → (T10 ∥ T11) → T05. Las tareas
+- Orden: T01 → (T02 ∥ T03 ∥ T04) → (T06 ∥ T07 ∥ T08 ∥ T09) → (T10 ∥ T11) → T12 → T05. Las tareas
   de cada grupo paralelo no comparten archivos.
 - Imagen OG: T04 usa la propuesta de D1–D3 de la spec; si el cliente pide otra cosa, se ajusta
   en una tarea de corrección.
@@ -152,13 +152,26 @@ Descartados:
     revisados a ojo (sin recuadro) y medidos: fondo `#0a0b10`, borde interior del logo
     `#0a0b0f`–`#0b0c11` (diferencia máxima 1 por canal).
 
+### Corrección de la revisión de T10–T11
+- [ ] T12 Corrección (nit de reviwer en T11): el fondo `#0a0b10` de `og-image-card.tsx` es un
+  valor sin nombre y nada en el código dice que es el fondo del logo; alguien podría «corregirlo»
+  y volver a mostrar el recuadro → nombrarlo como constante junto a la del tamaño del logo, con un
+  comentario breve que diga que es el color de fondo del JPEG del logo, medido en sus bordes.
+  Refactor: la prueba de T11 sigue en verde antes y después. (independiente)
+  Archivos: `src/app/[lang]/og-image-card.tsx`.
+
+Descartado:
+- Nit de T10 (falta el comando exacto de la petición al validador): la evidencia de T10 ya nombra
+  el endpoint y el campo que se envía, suficiente para repetirla; un comando literal sería código
+  en `task.md`, que el usuario excluyó.
+
 ### Cierre
 - [ ] T05 Verificación: `pnpm validate`; con `pnpm start`, `/es/opengraph-image` y
   `/en/opengraph-image` devuelven PNG 1200×630, `/fr/opengraph-image` da 404, y el HTML de `/es`
   y `/en` trae `og:image` y `og:image:alt`; footer en 1280 y 375 px; JSON-LD sin errores en
-  validator.schema.org (T10). Anotar evidencia aquí. Queda abierta hasta que se cumplan T10, T11
-  y la confirmación de D1–D3 por el cliente (spec, `## Dudas`).
-  (depende de T02, T03, T04, T06, T07, T08, T09, T10 y T11)
+  validator.schema.org (T10). Anotar evidencia aquí. Queda abierta hasta que se cumplan T12 y
+  la confirmación de D1–D3 por el cliente (spec, `## Dudas`).
+  (depende de T02, T03, T04, T06, T07, T08, T09, T10, T11 y T12)
   - Evidencia (2026-10-15, sobre `dd1e1d5`): `pnpm validate` OK (lint 0 errores y 6 avisos
     `no-img-element`, uno en `og-image-card.tsx`, donde `ImageResponse` no admite `next/image`;
     233/233 pruebas; arquitectura sin violaciones; build prerenderiza `/es/opengraph-image` y
@@ -173,11 +186,12 @@ Descartados:
     `/fr/opengraph-image`: 404. Footer con Chrome headless (CDP) a 1280 y 375 px: «Instagram»
     debajo del correo en la columna de contacto y sin desbordamiento horizontal. Log del servidor
     sin errores; servidor detenido.
-  - Pendiente: validación del JSON-LD (T10; validator.schema.org acepta un fragmento pegado y
-    no necesita URL pública). La prueba de resultados enriquecidos de Google sí necesita la
-    preview de Vercel: es opcional, porque el criterio de la spec se cumple con cualquiera de las
-    dos.
-  - Pendiente: color de fondo de la tarjeta OG (T11).
-  - Pendiente del cliente: confirmar D1–D3 antes de mergear.
-  - Observaciones: el recuadro del logo en la imagen OG pasa a T11; el botón de chat que tapa
+  - Actualización (2026-10-15): T10 cerrada (`d61ea4e`): los cuatro bloques JSON-LD de `/es` y
+    `/en` con 0 errores y 0 advertencias en validator.schema.org. T11 cerrada (`f0d3947`): fondo de
+    la tarjeta OG `#0a0b10`, sin recuadro. `pnpm validate` OK tras ambas (aprobadas por reviwer).
+    La prueba de resultados enriquecidos de Google sobre la preview es opcional y no se ejecutó.
+  - Pendiente para marcar T05: T12 (refactor sin cambio de comportamiento) y la confirmación de
+    D1–D3 por el cliente (spec, `## Dudas`). Si el cliente pide cambios, se planifican como
+    corrección y se repite esta verificación.
+  - Observaciones: el recuadro del logo en la imagen OG se corrigió en T11; el botón de chat que tapa
     «Privacidad» y el tamaño de `landingContent.ts` quedan en «Seguimiento» de la spec.
