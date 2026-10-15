@@ -7,6 +7,9 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
+const refreshRule = 'react-refresh/only-export-components'
+const [, nextRefreshOptions] = reactRefresh.configs.next.rules[refreshRule]
+
 export default defineConfig([
   globalIgnores([
     'dist',
@@ -31,6 +34,16 @@ export default defineConfig([
         ...globals.browser,
         ...globals.node,
       },
+    },
+    rules: {
+      // `alt` de las imágenes de metadata (opengraph-image), que el preset de Next no incluye.
+      [refreshRule]: [
+        'error',
+        {
+          ...nextRefreshOptions,
+          allowExportNames: [...nextRefreshOptions.allowExportNames, 'alt'],
+        },
+      ],
     },
   },
 ])

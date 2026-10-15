@@ -83,7 +83,7 @@
     `aria-hidden`); verde, `FooterContactLink` (destino, contenido y `external`) en los tres
     enlaces, 232/232 con las pruebas previas del footer intactas y `pnpm validate` OK;
     `footer-section.tsx` baja de 148 a 127 líneas.
-- [ ] T08 Corrección (mejora, hallazgos 3 y 7): la imagen OG no publica `og:image:alt` y la ruta
+- [x] T08 Corrección (mejora, hallazgos 3 y 7): la imagen OG no publica `og:image:alt` y la ruta
   no declara que solo existen `es` y `en` (un idioma desconocido llega a `getLandingContent` y da
   error 500 en vez de 404) → prueba en `opengraph-image.test.tsx`: la ruta exporta `alt` igual al
   nombre de la empresa y desactiva los parámetros dinámicos (falla) → permitir `alt` y
@@ -93,6 +93,10 @@
   (paralela a T06, T07 y T09)
   Archivos: `eslint.config.js`, `src/app/[lang]/opengraph-image.tsx`,
   `src/app/[lang]/opengraph-image.test.tsx`.
+  - Evidencia: rojo, la prueba nueva falla (`alt` es `undefined`); verde, `alt` con el nombre de
+    la empresa y `dynamicParams = false`, 233/233 y `pnpm validate` OK (el build prerenderiza
+    `/es/opengraph-image` y `/en/opengraph-image`). En `eslint.config.js` solo se agrega `alt`:
+    `dynamicParams` ya estaba en la lista del preset `next` de `eslint-plugin-react-refresh`.
 - [ ] T09 Corrección (nit, hallazgo 4): el comentario de la prueba de textos literales dice que
   logo, perfiles sociales y horario «no se muestran», pero «Instagram» se muestra en el footer
   desde T03 → corregir el comentario: se excluyen porque son datos confirmados por el cliente en

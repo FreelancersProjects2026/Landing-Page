@@ -1,12 +1,19 @@
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { ImageResponse } from 'next/og'
-import { getLandingContent, locales } from '@modules/company-profile'
+import {
+  defaultLocale,
+  getLandingContent,
+  locales,
+} from '@modules/company-profile'
 
 import { OgImageCard } from './og-image-card'
 
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
+export const alt = getLandingContent(defaultLocale).company.name
+// Solo existen los idiomas de `generateStaticParams`; cualquier otro da 404.
+export const dynamicParams = false
 
 // Prerenderiza una imagen por idioma, como la página.
 export function generateStaticParams() {
