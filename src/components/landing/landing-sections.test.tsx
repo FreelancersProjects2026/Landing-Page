@@ -260,6 +260,19 @@ describe('HeroSection', () => {
     expect(letters[2].style.getPropertyValue('--letter-delay')).toBe('90ms')
   })
 
+  it('anima la entrada del texto con CSS desde el primer pintado, sin esperar a JS', () => {
+    render(<HeroSection hero={content.hero} whatsappUrl={whatsappUrl} />)
+    const animated = [
+      screen.getByRole('heading', { level: 1 }).parentElement,
+      screen.getByText(content.hero.subtitle),
+    ]
+
+    for (const element of animated) {
+      expect(element).toHaveClass('motion-safe:animate-in', 'fill-mode-both')
+      expect(element).not.toHaveClass('opacity-0')
+    }
+  })
+
   it('hace caer solo unos pocos pétalos sobre la foto', () => {
     const { container } = render(
       <HeroSection hero={content.hero} whatsappUrl={whatsappUrl} />,

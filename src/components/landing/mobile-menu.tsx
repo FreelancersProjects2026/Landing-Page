@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useEffectEvent } from 'react'
 import { Button } from '@/components/ui/button'
 import { Menu, X } from 'lucide-react'
 import { locales, type Locale } from '@modules/company-profile'
@@ -26,14 +26,16 @@ export function MobileMenu({
   locale,
   cta,
 }: MobileMenuProps) {
+  const onEscape = useEffectEvent(() => onClose())
+
   useEffect(() => {
     if (!open) return
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose()
+      if (event.key === 'Escape') onEscape()
     }
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [open, onClose])
+  }, [open])
 
   return (
     <div

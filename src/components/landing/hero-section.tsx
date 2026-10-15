@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import type { LandingContent } from '@modules/company-profile'
 
@@ -10,19 +9,16 @@ import { ParticleVisualization } from './particle-visualization'
 import { RotatingSlogan } from './rotating-slogan'
 import { sectionIds } from './section-ids'
 
+// Entrada por CSS (tw-animate-css): arranca en el primer pintado, sin esperar
+// a la hidratación; fill-mode-both oculta el texto durante el retraso.
+const entrance = 'motion-safe:animate-in fade-in fill-mode-both'
+
 type HeroSectionProps = {
   hero: LandingContent['hero']
   whatsappUrl: string
 }
 
 export function HeroSection({ hero, whatsappUrl }: HeroSectionProps) {
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- activa la animación de entrada tras el montaje
-    setIsVisible(true)
-  }, [])
-
   return (
     <section
       id={sectionIds.home}
@@ -81,11 +77,7 @@ export function HeroSection({ hero, whatsappUrl }: HeroSectionProps) {
         <div className="lg:max-w-[55%]">
           {/* Eyebrow: H1 con la palabra clave principal */}
           <div
-            className={`mb-8 transition-all duration-700 ${
-              isVisible
-                ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-4'
-            }`}
+            className={`mb-8 duration-700 ${entrance} slide-in-from-bottom-4`}
           >
             <h1
               id={`${sectionIds.home}-titulo`}
@@ -99,22 +91,14 @@ export function HeroSection({ hero, whatsappUrl }: HeroSectionProps) {
           {/* Main headline */}
           <div className="mb-12">
             <p
-              className={`text-left text-[clamp(2rem,4.5vw,5.5rem)] font-display leading-[0.92] tracking-tight text-white transition-all duration-1000 ${
-                isVisible
-                  ? 'opacity-100 translate-y-0'
-                  : 'opacity-0 translate-y-8'
-              }`}
+              className={`text-left text-[clamp(2rem,4.5vw,5.5rem)] font-display leading-[0.92] tracking-tight text-white duration-1000 ${entrance} slide-in-from-bottom-8`}
             >
               <RotatingSlogan slogan={hero.slogan} words={hero.sloganWords} />
             </p>
           </div>
 
           <p
-            className={`text-lg lg:text-xl text-white/70 leading-relaxed max-w-xl mb-10 transition-all duration-1000 delay-200 ${
-              isVisible
-                ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-4'
-            }`}
+            className={`text-lg lg:text-xl text-white/70 leading-relaxed max-w-xl mb-10 duration-1000 delay-200 ${entrance} slide-in-from-bottom-4`}
           >
             {hero.subtitle}
           </p>
