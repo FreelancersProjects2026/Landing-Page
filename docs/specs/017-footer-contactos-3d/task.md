@@ -42,7 +42,7 @@
     `#E1306C`; tabla `socialChannels` por `label` y, si falta, quedan los defaults de
     `FooterContactLink`. «oculta a lectores todas las flechas» pasa a «todos los íconos».
     `pnpm validate` OK (242 pruebas, build OK).
-- [ ] T04 Verificación en navegador (sin commit de código salvo que aparezca un defecto, que se
+- [x] T04 Verificación en navegador (sin commit de código salvo que aparezca un defecto, que se
   reporta a planner): `pnpm dev`, footer de `/es` y `/en` en escritorio (hover y Tab sobre los
   tres canales), a 375 px y con `prefers-reduced-motion: reduce` emulado; anotar evidencia aquí.
   (depende de T01, T03, T05 y T07)
@@ -61,6 +61,13 @@
     (`grid grid-cols-2 gap-12` en `footer-section.tsx`) y la fila necesita 168 px
     (3×48 + 2×12); el `<li>` tiene `flex flex-wrap`. Contradice «fila horizontal» (spec y plan);
     se reporta a planner, sin corregir.
+  - Re-verificación tras T09 (2026-10-15, Chrome, mismo `next dev` :3000 con HMR, commit
+    1820001): **pasa**. 375 px (`/es` y `/en`, iframe de 375 px): la columna de contacto es
+    `col-span-2 md:col-span-2` y mide 312 px; los tres orbes (48×48) en la misma fila
+    (mismo `top`, `left` 24/84/144, 12 px de separación); sin scroll horizontal
+    (`scrollWidth` ≤ 375). Escritorio 1920 px `/es`: grid sin cambios en una sola fila
+    (marca 636 px, secciones 191 px, contacto 413 px), los tres orbes en fila; captura
+    visual igual a la anterior. (1), (2) y (4) no dependen del cambio de clase.
 
 ### Correcciones (revisión de T01 y T02)
 - [x] T05 Corrección (mejora, reviwer T01): la prueba de `contact-orb` solo revisa lo anterior al
