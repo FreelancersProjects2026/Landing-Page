@@ -1,7 +1,6 @@
-import { ArrowUpRight } from 'lucide-react'
 import type { Contact, LandingContent } from '@modules/company-profile'
 
-import { externalLinkProps } from './external-link'
+import { FooterContactLink } from './footer-contact-link'
 import { sectionIds } from './section-ids'
 import { splitAfterAt } from './split-after-at'
 
@@ -91,40 +90,20 @@ export function FooterSection({
               <ul className="space-y-4 text-sm text-white/40">
                 <li>{company.location}</li>
                 <li>
-                  <a
-                    href={whatsappUrl}
-                    {...externalLinkProps}
-                    className="hover:text-white transition-colors inline-flex items-center gap-1 group"
-                  >
+                  <FooterContactLink href={whatsappUrl} external>
                     WhatsApp {company.phone}
-                    <ArrowUpRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                  </a>
+                  </FooterContactLink>
                 </li>
                 <li>
-                  <a
-                    href={emailUrl}
-                    className="hover:text-white transition-colors inline-flex items-center gap-1 group"
-                  >
+                  <FooterContactLink href={emailUrl}>
                     <span>{splitAfterAt(company.email)}</span>
-                    <ArrowUpRight
-                      aria-hidden="true"
-                      className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all"
-                    />
-                  </a>
+                  </FooterContactLink>
                 </li>
                 {company.socialProfiles.map(({ label, url }) => (
                   <li key={url}>
-                    <a
-                      href={url}
-                      {...externalLinkProps}
-                      className="hover:text-white transition-colors inline-flex items-center gap-1 group"
-                    >
+                    <FooterContactLink href={url} external>
                       {label}
-                      <ArrowUpRight
-                        aria-hidden="true"
-                        className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all"
-                      />
-                    </a>
+                    </FooterContactLink>
                   </li>
                 ))}
               </ul>

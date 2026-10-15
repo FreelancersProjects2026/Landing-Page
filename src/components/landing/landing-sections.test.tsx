@@ -468,6 +468,18 @@ describe('FooterSection', () => {
       'true',
     )
   })
+
+  it('oculta a lectores todas las flechas de la lista de contacto', () => {
+    const footer = renderFooter()
+
+    const contact = within(footer).getByText('Paraíso de Cartago, Costa Rica')
+      .parentElement as HTMLElement
+    const arrows = contact.querySelectorAll('svg')
+    expect(arrows).toHaveLength(3)
+    arrows.forEach((arrow) =>
+      expect(arrow).toHaveAttribute('aria-hidden', 'true'),
+    )
+  })
 })
 
 describe('ProjectsSection', () => {

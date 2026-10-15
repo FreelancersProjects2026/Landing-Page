@@ -68,7 +68,7 @@
     23:59:00; horario sin días); verde, reglas en `companyProblems` (junto a la de perfiles
     sociales), 93/93 en `company-profile` y `pnpm validate` OK (231 pruebas, build y arquitectura
     en verde).
-- [ ] T07 Corrección (mejora, hallazgo 2): el footer repite tres veces el enlace de contacto con
+- [x] T07 Corrección (mejora, hallazgo 2): el footer repite tres veces el enlace de contacto con
   flecha (WhatsApp, correo, perfiles sociales) y la flecha de WhatsApp no está oculta a lectores
   de pantalla → prueba en `landing-sections.test.tsx` (bloque del footer): todas las flechas de
   la lista de contacto están ocultas a lectores de pantalla (falla por WhatsApp) → extraer un
@@ -79,6 +79,10 @@
   Archivos: `src/components/landing/footer-section.tsx`,
   `src/components/landing/footer-contact-link.tsx` (nuevo),
   `src/components/landing/landing-sections.test.tsx`.
+  - Evidencia: rojo, la prueba nueva del footer falla (la flecha de WhatsApp no tiene
+    `aria-hidden`); verde, `FooterContactLink` (destino, contenido y `external`) en los tres
+    enlaces, 232/232 con las pruebas previas del footer intactas y `pnpm validate` OK;
+    `footer-section.tsx` baja de 148 a 127 líneas.
 - [ ] T08 Corrección (mejora, hallazgos 3 y 7): la imagen OG no publica `og:image:alt` y la ruta
   no declara que solo existen `es` y `en` (un idioma desconocido llega a `getLandingContent` y da
   error 500 en vez de 404) → prueba en `opengraph-image.test.tsx`: la ruta exporta `alt` igual al
