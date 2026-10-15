@@ -19,8 +19,8 @@ comportamiento actual de los enlaces.
 - **Acento**: color de marca del canal, usado en el ícono y la sombra del orbe en hover/foco.
 
 ## Alcance
-1. Cada uno de los tres enlaces de contacto del footer muestra, a la izquierda de su texto
-   actual, un orbe con el ícono del canal: Instagram (`Instagram` de lucide), WhatsApp
+1. Cada uno de los tres enlaces de contacto del footer es solo un orbe con el ícono del canal
+   (sin texto visible, D1), apilados en vertical en la columna de contacto: Instagram (`Instagram` de lucide), WhatsApp
    (`MessageCircle`, el mismo del botón flotante) y correo (`Mail`). Reemplaza la flecha actual.
 2. Efecto en hover del enlace **y** en `:focus-visible` (equivalente para teclado): el orbe se
    inclina (`perspective` + `rotateX`), se ilumina con el acento y proyecta una sombra de ese
@@ -28,7 +28,8 @@ comportamiento actual de los enlaces.
 3. Con `prefers-reduced-motion: reduce` no hay transformaciones ni transiciones de movimiento:
    solo cambian color, borde y sombra.
 4. Sin hover (táctil) el orbe se ve completo en reposo: borde sutil e ícono blanco legible.
-5. Sin cambios de datos: mismos `href`, `target`/`rel`, textos visibles y nombres accesibles.
+5. Sin cambios de datos: mismos `href`, `target`/`rel` y nombres accesibles (el texto actual
+   pasa a ser solo para lectores de pantalla).
 
 ## Fuera de alcance
 - Otros canales (Twitter/X, GitHub, Facebook del ejemplo) y otras secciones (CTA, botón flotante).
@@ -41,6 +42,8 @@ comportamiento actual de los enlaces.
   (`https://www.instagram.com/solutionspjm`, `target="_blank"`, `rel="noopener noreferrer"`).
 - [ ] Cada uno contiene un orbe con su ícono (Instagram, MessageCircle, Mail) marcado
   `aria-hidden="true"` y su acento de color.
+- [ ] Cada enlace muestra solo el orbe; su texto actual está oculto visualmente (`sr-only`) y
+  sigue siendo su nombre accesible. Los tres orbes quedan uno debajo de otro.
 - [ ] El área clicable de cada enlace mide al menos 44×44 px (orbe de 48 px) y la inclinación no
   reduce el área que recibe el hover (se transforma un hijo, no el enlace).
 - [ ] `globals.css` declara la utilidad del orbe con el efecto 3D solo bajo
@@ -53,10 +56,11 @@ comportamiento actual de los enlaces.
 
 ## Dudas
 Ninguna bloquea; se aplican valores por defecto a confirmar con el usuario:
-- D1. **Texto junto al orbe**: el ejemplo es una fila de íconos sin texto. Se conserva el texto
-  visible (teléfono, correo, «Instagram») al lado de cada orbe para no perder datos de contacto
-  visibles (el teléfono solo se muestra aquí). ¿Prefiere una fila de solo íconos con el texto como
-  `aria-label`?
+- D1. **Texto junto al orbe**: **resuelta** (pedido del usuario el 2026-10-15): solo el logo de
+  cada canal, sin texto visible (p. ej. Instagram sin la palabra «Instagram»), con los orbes en
+  vertical. El texto actual queda como nombre accesible solo para lectores de pantalla
+  (`sr-only`). Consecuencia aceptada: el teléfono y el correo dejan de verse en el footer (el
+  correo sigue visible en la sección de contacto).
 - D2. **Colores**: **resuelta** (confirmada por el usuario el 2026-10-15): colores de marca
   oficiales de cada red, no la paleta del sitio. Instagram `#E1306C` (magenta de su gradiente de
   marca; un solo color porque el acento pinta el trazo del ícono y la sombra), WhatsApp `#25D366`,

@@ -45,7 +45,7 @@
 - [ ] T04 Verificación en navegador (sin commit de código salvo que aparezca un defecto, que se
   reporta a planner): `pnpm dev`, footer de `/es` y `/en` en escritorio (hover y Tab sobre los
   tres canales), a 375 px y con `prefers-reduced-motion: reduce` emulado; anotar evidencia aquí.
-  (depende de T01, T03 y T05)
+  (depende de T01, T03, T05 y T07)
 
 ### Correcciones (revisión de T01 y T02)
 - [x] T05 Corrección (mejora, reviwer T01): la prueba de `contact-orb` solo revisa lo anterior al
@@ -66,6 +66,20 @@
   el orbe; verificar el rojo cambiando un hex a mano y revertir. Sin cambio de producción.
   (depende de T03) Archivos: `src/components/landing/landing-sections.test.tsx`.
   - Rojo: con `#EA4336` en el correo → `Expected: "#EA4335" Received: "#EA4336"` (1 falla, 2 pasan); revertido. Verde: 3/3 casos comprueban `--orb-accent` en `span.contact-orb`; `pnpm validate` en verde.
+### Cambio pedido por el usuario (D1 resuelta: solo logo, en vertical)
+- [ ] T07 Prueba en `footer-contact-link.test.tsx`: el texto recibido en `children` va dentro de un
+  elemento `sr-only` (sigue siendo el nombre accesible exacto) y el enlace no muestra texto visible
+  fuera de él (falla) → envolver `children` en `<span className="sr-only">` y quitar `gap-3`
+  (sin texto al lado no hace falta). En `footer-section.tsx` el correo pasa como texto plano
+  (`company.email`, sin `splitAfterAt`, que ya no se ve) y se quita su import. Los orbes ya quedan
+  en vertical (un `<li>` por canal en la lista de contacto); no cambiar esa estructura. Las
+  pruebas de `landing-sections.test.tsx` por nombre accesible deben seguir en verde sin cambios.
+  (depende de T06)
+  Archivos: `src/components/landing/footer-contact-link.tsx`,
+  `src/components/landing/footer-contact-link.test.tsx`,
+  `src/components/landing/footer-section.tsx`.
+- T04 se repite tras T07 (cancelada a mitad por el cambio de diseño; sin evidencia previa).
+
 - Descartados: pruebas de T02 por nombres de clase (jsdom no puede medir foco ni transform; lo
   cubre T04). Respaldo de ícono/acento: queda solo en los valores por defecto de
   `FooterContactLink` (plan actualizado); `FooterSection` no lo repite. Revisión de T05: exigir el

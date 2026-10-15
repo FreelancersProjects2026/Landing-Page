@@ -13,8 +13,10 @@ Cambio solo visual en `src/components/landing/`; no toca `company-profile`.
 
 `FooterContactLink` ya es el enlace de los tres canales: se amplía en lugar de crear otro
 componente. Recibe además el ícono del canal y su acento (color) por props, y reemplaza la flecha
-`ArrowUpRight` por el orbe. El texto visible sigue siendo `children`, así que los nombres
-accesibles no cambian (D1).
+`ArrowUpRight` por el orbe. `children` sigue siendo el nombre accesible pero se oculta a la vista
+con `sr-only` (D1, pedido del usuario: solo el logo); así los nombres accesibles y sus pruebas no
+cambian. Los orbes quedan apilados en vertical porque cada canal ya es un `<li>` de la lista de
+contacto.
 
 `FooterSection` decide ícono y acento de cada canal (presentación, no negocio): WhatsApp y correo
 directos; los perfiles sociales por su `label` con una tabla pequeña que hoy solo tiene
@@ -79,6 +81,5 @@ superan 3:1; no se usa el gradiente completo de Instagram para mantener una sola
 ## Riesgos
 - Transformar el enlace en vez de un hijo achica su caja al inclinarse y produce parpadeo del
   hover: por eso solo se transforman orbe e ícono.
-- `rotateX(60deg)` aplasta visualmente el orbe; el texto al lado mantiene el enlace reconocible.
-- Descartado: componente nuevo `ContactOrb` aparte (duplicaría el enlace que ya existe) y fila de
-  solo íconos (pierde el teléfono visible; queda como D1).
+- `rotateX(60deg)` aplasta visualmente el orbe; ícono y color de marca mantienen el canal reconocible.
+- Descartado: componente nuevo `ContactOrb` aparte (duplicaría el enlace que ya existe).
