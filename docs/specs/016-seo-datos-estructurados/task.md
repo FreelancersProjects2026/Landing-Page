@@ -117,8 +117,27 @@ Descartados:
   extensión agregaría código sin un caso real que lo necesite.
 
 ### Cierre
-- [ ] T05 Verificación: `pnpm validate`; con `pnpm start`, `/es/opengraph-image` y
+- [x] T05 Verificación: `pnpm validate`; con `pnpm start`, `/es/opengraph-image` y
   `/en/opengraph-image` devuelven PNG 1200×630, `/fr/opengraph-image` da 404, y el HTML de `/es`
   y `/en` trae `og:image` y `og:image:alt`; footer en 1280 y 375 px; en la preview de Vercel,
   prueba de resultados enriquecidos sin errores. Anotar evidencia aquí.
   (depende de T02, T03, T04, T06, T07, T08 y T09)
+  - Evidencia (2026-10-15, sobre `dd1e1d5`): `pnpm validate` OK (lint 0 errores y 6 avisos
+    `no-img-element`, uno en `og-image-card.tsx`, donde `ImageResponse` no admite `next/image`;
+    233/233 pruebas; arquitectura sin violaciones; build prerenderiza `/es/opengraph-image` y
+    `/en/opengraph-image`). Con `pnpm start` y curl: `/es` y `/en` dan 200 y traen `og:image`
+    (`https://solutionspjm.com/<lang>/opengraph-image?…`), `og:image:type` `image/png`,
+    `og:image:width` 1200, `og:image:height` 630, `og:image:alt` «solutionsPJM» y sus pares
+    `twitter:image*`. El JSON-LD `ProfessionalService` de es y en trae `email`, `logo` e `image`
+    (`https://solutionspjm.com/logo/icono/LOGOsolutionsPJM.jpeg`), `sameAs` con Instagram y
+    `openingHoursSpecification` lunes–domingo 00:00–23:59, sin `geo` (más el bloque `FAQPage`).
+    `/es/opengraph-image` y `/en/opengraph-image`: 200, `image/png`, cabecera PNG 1200×630
+    (98 753 y 99 682 bytes), revisados a ojo: logo, nombre y `seo.description` del idioma.
+    `/fr/opengraph-image`: 404. Footer con Chrome headless (CDP) a 1280 y 375 px: «Instagram»
+    debajo del correo en la columna de contacto y sin desbordamiento horizontal. Log del servidor
+    sin errores; servidor detenido.
+  - Pendiente manual: prueba de resultados enriquecidos de Google sobre la preview de Vercel
+    (requiere URL pública; no ejecutada).
+  - Observaciones fuera de alcance: el JPEG del logo se ve como un recuadro algo más claro que el
+    fondo de la imagen OG; a 1280 px, al final del scroll, el botón flotante de chat tapa el
+    enlace «Privacidad» del footer.
