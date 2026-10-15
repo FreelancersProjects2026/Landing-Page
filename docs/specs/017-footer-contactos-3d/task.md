@@ -114,3 +114,16 @@
   `FooterContactLink` (plan actualizado); `FooterSection` no lo repite. Revisión de T05: exigir el
   mismo tiempo y easing en las 5 propiedades es intencional (el hallazgo de T01 era justo el
   desfase entre ellas); si cambia la duración, cambia en todas.
+
+### Corrección tras T04 (defecto a 375 px)
+- [ ] T09 Corrección (bloqueante, T04): a 375 px la columna de contacto mide ~140 px (es 1 de las 2
+  columnas del grid móvil `grid-cols-2 gap-12`) y la fila de orbes necesita 168 px (3×48 + 2×12):
+  Instagram salta a otra línea → en `footer-section.tsx` la columna de contacto ocupa el ancho
+  completo en móvil (`col-span-2`, manteniendo `md:col-span-2`); la columna de enlaces de
+  secciones queda sola en su fila, aceptable. No se reduce el orbe (48 px, objetivo táctil) ni la
+  separación. Prueba en `landing-sections.test.tsx`: la columna de contacto abarca las dos columnas
+  del grid móvil (falla), como guarda de regresión; verificar en navegador a 375 px que los tres
+  orbes quedan en una sola fila y anotar evidencia en T04 (marcarla [x] si todo pasa).
+  (depende de T08)
+  Archivos: `src/components/landing/footer-section.tsx`,
+  `src/components/landing/landing-sections.test.tsx`.
