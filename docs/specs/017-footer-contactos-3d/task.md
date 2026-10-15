@@ -29,7 +29,7 @@
     4/4. `icon?: LucideIcon` (respaldo `ArrowUpRight`) y `accent?` (respaldo `#ffffff`) para que
     `FooterSection` siga compilando hasta T03. lint, typecheck, 239 pruebas, architecture y build
     OK; `format:check` solo marca `globals-css.test.ts` (T01 en curso, no tocado).
-- [ ] T03 Prueba en `landing-sections.test.tsx` (bloque `FooterSection`): los enlaces «WhatsApp
+- [x] T03 Prueba en `landing-sections.test.tsx` (bloque `FooterSection`): los enlaces «WhatsApp
   +506 6440-0832», «solutionspjm@gmail.com» e «Instagram» conservan `href`/`target` y contienen
   `lucide-message-circle`, `lucide-mail` y `lucide-instagram` respectivamente, todos
   `aria-hidden`; renombrar/ajustar la prueba «oculta a lectores todas las flechas» a íconos
@@ -37,6 +37,11 @@
   `label` con respaldo `ArrowUpRight` y acento blanco. (depende de T02)
   Archivos: `src/components/landing/footer-section.tsx`,
   `src/components/landing/landing-sections.test.tsx`.
+  - Evidencia: rojo 3/38 fallan (`expected null not to be null`: sin `lucide-message-circle`,
+    `lucide-mail` ni `lucide-instagram`); verde 38/38. Acentos D2 `#25D366`, `#EA4335`,
+    `#E1306C`; tabla `socialChannels` por `label` y, si falta, quedan los defaults de
+    `FooterContactLink`. «oculta a lectores todas las flechas» pasa a «todos los íconos».
+    `pnpm validate` OK (242 pruebas, build OK).
 - [ ] T04 Verificación en navegador (sin commit de código salvo que aparezca un defecto, que se
   reporta a planner): `pnpm dev`, footer de `/es` y `/en` en escritorio (hover y Tab sobre los
   tres canales), a 375 px y con `prefers-reduced-motion: reduce` emulado; anotar evidencia aquí.

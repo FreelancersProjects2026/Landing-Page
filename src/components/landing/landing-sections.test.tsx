@@ -453,7 +453,7 @@ describe('FooterSection', () => {
     expect(within(footer).getByText('© 2026 solutionsPJM')).toBeVisible()
   })
 
-  it('enlaza Instagram en otra pestaña con la flecha oculta a lectores', () => {
+  it('enlaza Instagram en otra pestaña con su ícono oculto a lectores', () => {
     const footer = renderFooter()
 
     const instagram = within(footer).getByRole('link', { name: 'Instagram' })
@@ -480,16 +480,27 @@ describe('FooterSection', () => {
     )
   })
 
-  it('oculta a lectores todas las flechas de la lista de contacto', () => {
+  it.each([
+    ['WhatsApp +506 6440-0832', 'lucide-message-circle'],
+    ['solutionspjm@gmail.com', 'lucide-mail'],
+    ['Instagram', 'lucide-instagram'],
+  ])('muestra en %s su ícono de canal oculto a lectores', (name, icon) => {
+    const footer = renderFooter()
+
+    const link = within(footer).getByRole('link', { name })
+    const svg = link.querySelector(`svg.${icon}`)
+    expect(svg).not.toBeNull()
+    expect(svg?.closest('[aria-hidden="true"]')).not.toBeNull()
+  })
+
+  it('oculta a lectores todos los íconos de la lista de contacto', () => {
     const footer = renderFooter()
 
     const contact = within(footer).getByText('Paraíso de Cartago, Costa Rica')
       .parentElement as HTMLElement
-    const arrows = contact.querySelectorAll('svg')
-    expect(arrows).toHaveLength(3)
-    arrows.forEach((arrow) =>
-      expect(arrow).toHaveAttribute('aria-hidden', 'true'),
-    )
+    const icons = contact.querySelectorAll('svg')
+    expect(icons).toHaveLength(3)
+    icons.forEach((icon) => expect(icon).toHaveAttribute('aria-hidden', 'true'))
   })
 })
 
