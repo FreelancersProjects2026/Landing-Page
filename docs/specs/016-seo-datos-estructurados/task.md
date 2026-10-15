@@ -56,7 +56,7 @@
     (sin él la ruta era dinámica y leía `public/` en tiempo de ejecución).
 
 ### Correcciones de la revisión de T01–T04 (aprobadas, sin bloqueantes)
-- [ ] T06 Corrección (mejora, hallazgo 1): `validateLandingContent` no valida el logo ni el
+- [x] T06 Corrección (mejora, hallazgo 1): `validateLandingContent` no valida el logo ni el
   horario; un logo sin barra inicial rompe la URL del JSON-LD → pruebas en
   `landingContent.test.ts` que esperan error cuando el logo no empieza con «/», cuando apertura o
   cierre no tienen formato HH:MM (00–23 y 00–59) y cuando la lista de días está vacía (fallan) →
@@ -64,6 +64,10 @@
   (paralela a T07, T08 y T09)
   Archivos: `src/modules/company-profile/domain/landingContent.ts`,
   `src/modules/company-profile/domain/landingContent.test.ts`.
+  - Evidencia: rojo, 6 pruebas fallan (logo sin «/»; `opens` 24:00 y 9:00; `closes` 23:60 y
+    23:59:00; horario sin días); verde, reglas en `companyProblems` (junto a la de perfiles
+    sociales), 93/93 en `company-profile` y `pnpm validate` OK (231 pruebas, build y arquitectura
+    en verde).
 - [ ] T07 Corrección (mejora, hallazgo 2): el footer repite tres veces el enlace de contacto con
   flecha (WhatsApp, correo, perfiles sociales) y la flecha de WhatsApp no está oculta a lectores
   de pantalla → prueba en `landing-sections.test.tsx` (bloque del footer): todas las flechas de

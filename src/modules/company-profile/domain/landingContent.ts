@@ -196,6 +196,33 @@ function isHttpsUrl(url: string): boolean {
   return URL.canParse(url) && new URL(url).protocol === 'https:'
 }
 
+const HH_MM = /^([01]\d|2[0-3]):[0-5]\d$/
+
+function companyProblems({
+  logo,
+  socialProfiles,
+  openingHours,
+}: Contact): string[] {
+  const problems: string[] = []
+  socialProfiles.forEach(({ url }, index) => {
+    if (!isHttpsUrl(url)) {
+      problems.push(
+        `company.socialProfiles.${index}.url no es una URL https válida`,
+      )
+    }
+  })
+  if (!logo.startsWith('/')) problems.push('company.logo no empieza con «/»')
+  for (const field of ['opens', 'closes'] as const) {
+    if (!HH_MM.test(openingHours[field])) {
+      problems.push(`company.openingHours.${field} no tiene el formato HH:MM`)
+    }
+  }
+  if (openingHours.days.length === 0) {
+    problems.push('company.openingHours no tiene días')
+  }
+  return problems
+}
+
 function hasPrimaryKeyword(text: string, locale: Locale): boolean {
   const normalized = text.toLowerCase()
   return primaryKeyword[locale].every((part) => normalized.includes(part))
@@ -245,13 +272,7 @@ export function validateLandingContent(
       )
     }
   })
-  content.company.socialProfiles.forEach(({ url }, index) => {
-    if (!isHttpsUrl(url)) {
-      problems.push(
-        `company.socialProfiles.${index}.url no es una URL https válida`,
-      )
-    }
-  })
+  problems.push(...companyProblems(content.company))
   for (const [path, text] of collectTexts(content, '')) {
     if (text.trim().length === 0) problems.push(`${path} está vacío`)
     if (text.includes(PENDING_MARK)) {

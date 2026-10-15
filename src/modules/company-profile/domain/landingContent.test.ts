@@ -305,6 +305,52 @@ describe('validateLandingContent', () => {
     },
   )
 
+  it('rechaza un logo que no empieza con «/»', () => {
+    const content = validContent()
+
+    expect(() =>
+      validateLandingContent({
+        ...content,
+        company: { ...content.company, logo: 'logo/icono/LOGO.jpeg' },
+      }),
+    ).toThrow('company.logo no empieza con «/»')
+  })
+
+  it.each([
+    ['opens', '24:00'],
+    ['opens', '9:00'],
+    ['closes', '23:60'],
+    ['closes', '23:59:00'],
+  ] as const)('rechaza el horario con %s = %s', (field, time) => {
+    const content = validContent()
+    const { openingHours } = content.company
+
+    expect(() =>
+      validateLandingContent({
+        ...content,
+        company: {
+          ...content.company,
+          openingHours: { ...openingHours, [field]: time },
+        },
+      }),
+    ).toThrow(`company.openingHours.${field} no tiene el formato HH:MM`)
+  })
+
+  it('rechaza un horario sin días', () => {
+    const content = validContent()
+    const { openingHours } = content.company
+
+    expect(() =>
+      validateLandingContent({
+        ...content,
+        company: {
+          ...content.company,
+          openingHours: { ...openingHours, days: [] },
+        },
+      }),
+    ).toThrow('company.openingHours no tiene días')
+  })
+
   it('acepta un proyecto con enlace https', () => {
     const content = validContent()
     const withLink = {
