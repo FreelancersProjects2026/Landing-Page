@@ -46,6 +46,8 @@ comportamiento actual de los enlaces.
 - [ ] `globals.css` declara la utilidad del orbe con el efecto 3D solo bajo
   `prefers-reduced-motion: no-preference`, y aplica el mismo estado en `:hover` y `:focus-visible`.
 - [ ] El foco de teclado es visible (anillo) sobre el fondo negro.
+- [ ] Acentos de marca confirmados (D2): Instagram `#E1306C`, WhatsApp `#25D366`, correo
+  `#EA4335`, cada uno con contraste ≥ 3:1 contra el fondo del footer.
 - [ ] Verificado en navegador: escritorio (hover y Tab), 375 px de ancho y movimiento reducido.
 - [ ] `pnpm validate` en verde.
 
@@ -55,9 +57,12 @@ Ninguna bloquea; se aplican valores por defecto a confirmar con el usuario:
   visible (teléfono, correo, «Instagram») al lado de cada orbe para no perder datos de contacto
   visibles (el teléfono solo se muestra aquí). ¿Prefiere una fila de solo íconos con el texto como
   `aria-label`?
-- D2. **Colores**: se usan los colores de marca de cada red como acento: Instagram `#E1306C`,
-  WhatsApp `#25D366`, correo (Gmail) `#EA4335`. ¿Prefiere la paleta del sitio (`#eca8d6`,
-  `#67e8f9`, `#fbbf24`)?
+- D2. **Colores**: **resuelta** (confirmada por el usuario el 2026-10-15): colores de marca
+  oficiales de cada red, no la paleta del sitio. Instagram `#E1306C` (magenta de su gradiente de
+  marca; un solo color porque el acento pinta el trazo del ícono y la sombra), WhatsApp `#25D366`,
+  correo (Gmail) `#EA4335`. Contraste sobre el fondo del footer (`bg-black` fijo en ambos temas;
+  el sitio no tiene tema claro): Instagram ≈ 4,8:1, WhatsApp ≈ 11:1, Gmail ≈ 5,3:1, todos sobre el
+  3:1 de WCAG 1.4.11 para íconos; el anillo de foco es blanco (21:1).
 - D3. **Fondo del orbe en hover**: el ejemplo lo pinta de blanco; el verde de WhatsApp sobre
   blanco no llega al contraste 3:1 de gráficos (WCAG 1.4.11). Se usa un relleno oscuro
   translúcido con borde y sombra del acento, que contrasta sobre el footer negro.

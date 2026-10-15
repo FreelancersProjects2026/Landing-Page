@@ -50,7 +50,9 @@ Estructura del enlace (de fuera hacia dentro):
 - **Táctil**: el estado en reposo ya es legible (borde e ícono visibles); no hace falta
   `@media (hover: hover)`.
 
-Acentos por defecto (D2): Instagram `#E1306C`, WhatsApp `#25D366`, correo `#EA4335`.
+Acentos confirmados por el usuario (D2): colores de marca oficiales, Instagram `#E1306C`,
+WhatsApp `#25D366`, correo `#EA4335`. El footer es negro fijo (no hay tema claro), así que todos
+superan 3:1; no se usa el gradiente completo de Instagram para mantener una sola variable de acento.
 
 ## Estructura objetivo
 | Ruta | Capa | Responsabilidad |
