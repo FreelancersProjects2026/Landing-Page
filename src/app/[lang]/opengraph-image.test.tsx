@@ -35,7 +35,8 @@ describe('opengraph-image', () => {
         typeof size,
       ]
       expect(options).toMatchObject(size)
-      render(card)
+      const { container } = render(card)
+      expect(container.firstChild).toHaveStyle({ background: '#0a0b10' })
       expect(screen.getByText('solutionsPJM')).toBeInTheDocument()
       expect(
         screen.getByText(getLandingContent(lang).seo.description),

@@ -126,7 +126,7 @@ Descartados:
   advertencias se anotan sin corregir. Anotar en la evidencia la fecha, el commit validado y
   errores y advertencias por bloque. Sin cambios de código. (paralela a T11)
   Archivos: ninguno de código; evidencia en este `task.md`.
-- [ ] T11 Corrección (mejora, hallazgo 4 de T05 y observación de T05): el logo se ve como un
+- [x] T11 Corrección (mejora, hallazgo 4 de T05 y observación de T05): el logo se ve como un
   recuadro sobre la tarjeta OG porque el fondo (`#080808`) es más oscuro que el fondo del JPEG
   → prueba en `opengraph-image.test.tsx`: el fondo de `OgImageCard` es `#0a0b10`, el color de
   los bordes del logo medido por planner (falla) → cambiar el fondo en `og-image-card.tsx`.
@@ -135,6 +135,12 @@ Descartados:
   a ojo que el recuadro ya no se ve. Aplica el alcance acordado («fondo oscuro como el logo»);
   el acento de color de D3 sigue pendiente del cliente. (paralela a T10)
   Archivos: `src/app/[lang]/og-image-card.tsx`, `src/app/[lang]/opengraph-image.test.tsx`.
+  - Evidencia: muestreo con `sharp` del JPEG (1254×1254): puntos medios de los cuatro bordes e
+    interiores cercanos `#0a0b10`/`#0a0b0f`, esquinas `#0b0c11`/`#0c0d12` (artefactos JPEG); se
+    fija `#0a0b10`. Rojo, la prueba nueva falla en es/en (fondo `rgb(8, 8, 8)` en vez de
+    `rgb(10, 11, 16)`); verde, 233/233 y `pnpm validate` OK. PNG regenerados por el build
+    revisados a ojo (sin recuadro) y medidos: fondo `#0a0b10`, borde interior del logo
+    `#0a0b0f`–`#0b0c11` (diferencia máxima 1 por canal).
 
 ### Cierre
 - [ ] T05 Verificación: `pnpm validate`; con `pnpm start`, `/es/opengraph-image` y

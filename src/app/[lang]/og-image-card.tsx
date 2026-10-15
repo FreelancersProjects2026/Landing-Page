@@ -17,7 +17,7 @@ export function OgImageCard({ name, text, logoSrc }: OgImageCardProps) {
         width: '100%',
         height: '100%',
         padding: 80,
-        background: '#080808',
+        background: '#0a0b10',
         color: '#ffffff',
       }}
     >
