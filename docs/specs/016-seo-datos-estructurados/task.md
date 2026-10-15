@@ -1,10 +1,10 @@
 # Tareas: SEO con datos estructurados completos, Instagram e imagen OpenGraph
 
 ## Base acordada
-- Spec: `docs/specs/016-seo-datos-estructurados/spec.md`. Plan: `plan.md` (diseño y snippets).
+- Spec: `docs/specs/016-seo-datos-estructurados/spec.md`. Plan: `plan.md` (diseño en prosa).
 - Método: TDD, un commit por tarea, `pnpm validate` en verde.
-- Orden: T01 → (T02 ∥ T03 ∥ T04) → (T06 ∥ T07 ∥ T08 ∥ T09) → T05. Las tareas de cada grupo
-  paralelo no comparten archivos.
+- Orden: T01 → (T02 ∥ T03 ∥ T04) → (T06 ∥ T07 ∥ T08 ∥ T09) → (T10 ∥ T11) → T05. Las tareas
+  de cada grupo paralelo no comparten archivos.
 - Imagen OG: T04 usa la propuesta de D1–D3 de la spec; si el cliente pide otra cosa, se ajusta
   en una tarea de corrección.
 
@@ -116,12 +116,33 @@ Descartados:
   prueba de T01; si cambia de formato, se cambia junto con la ruta. Deducir el tipo a partir de la
   extensión agregaría código sin un caso real que lo necesite.
 
+### Correcciones de la revisión de T05
+- [ ] T10 Verificación (mejora, hallazgo 2 de T05): validar el JSON-LD de `/es` y `/en` en
+  validator.schema.org sin URL pública. Con `pnpm build` y `pnpm start`, obtener con curl los dos
+  bloques JSON-LD de cada idioma (`ProfessionalService` y `FAQPage`) y validarlos en
+  https://validator.schema.org/ con la opción de pegar fragmento de código. Si se puede
+  automatizar (navegador controlado o una petición directa al validador), hacerlo; si no, queda
+  como paso manual con estas instrucciones. Criterio: 0 errores en los cuatro bloques; las
+  advertencias se anotan sin corregir. Anotar en la evidencia la fecha, el commit validado y
+  errores y advertencias por bloque. Sin cambios de código. (paralela a T11)
+  Archivos: ninguno de código; evidencia en este `task.md`.
+- [ ] T11 Corrección (mejora, hallazgo 4 de T05 y observación de T05): el logo se ve como un
+  recuadro sobre la tarjeta OG porque el fondo (`#080808`) es más oscuro que el fondo del JPEG
+  → prueba en `opengraph-image.test.tsx`: el fondo de `OgImageCard` es `#0a0b10`, el color de
+  los bordes del logo medido por planner (falla) → cambiar el fondo en `og-image-card.tsx`.
+  Antes de fijarlo, confirmar el color muestreando con `sharp` (resuelto desde `next`) varios
+  píxeles de los bordes del logo y anotarlo en la evidencia. Regenerar con `pnpm build` y revisar
+  a ojo que el recuadro ya no se ve. Aplica el alcance acordado («fondo oscuro como el logo»);
+  el acento de color de D3 sigue pendiente del cliente. (paralela a T10)
+  Archivos: `src/app/[lang]/og-image-card.tsx`, `src/app/[lang]/opengraph-image.test.tsx`.
+
 ### Cierre
-- [x] T05 Verificación: `pnpm validate`; con `pnpm start`, `/es/opengraph-image` y
+- [ ] T05 Verificación: `pnpm validate`; con `pnpm start`, `/es/opengraph-image` y
   `/en/opengraph-image` devuelven PNG 1200×630, `/fr/opengraph-image` da 404, y el HTML de `/es`
-  y `/en` trae `og:image` y `og:image:alt`; footer en 1280 y 375 px; en la preview de Vercel,
-  prueba de resultados enriquecidos sin errores. Anotar evidencia aquí.
-  (depende de T02, T03, T04, T06, T07, T08 y T09)
+  y `/en` trae `og:image` y `og:image:alt`; footer en 1280 y 375 px; JSON-LD sin errores en
+  validator.schema.org (T10). Anotar evidencia aquí. Queda abierta hasta que se cumplan T10, T11
+  y la confirmación de D1–D3 por el cliente (spec, `## Dudas`).
+  (depende de T02, T03, T04, T06, T07, T08, T09, T10 y T11)
   - Evidencia (2026-10-15, sobre `dd1e1d5`): `pnpm validate` OK (lint 0 errores y 6 avisos
     `no-img-element`, uno en `og-image-card.tsx`, donde `ImageResponse` no admite `next/image`;
     233/233 pruebas; arquitectura sin violaciones; build prerenderiza `/es/opengraph-image` y
@@ -136,8 +157,11 @@ Descartados:
     `/fr/opengraph-image`: 404. Footer con Chrome headless (CDP) a 1280 y 375 px: «Instagram»
     debajo del correo en la columna de contacto y sin desbordamiento horizontal. Log del servidor
     sin errores; servidor detenido.
-  - Pendiente manual: prueba de resultados enriquecidos de Google sobre la preview de Vercel
-    (requiere URL pública; no ejecutada).
-  - Observaciones fuera de alcance: el JPEG del logo se ve como un recuadro algo más claro que el
-    fondo de la imagen OG; a 1280 px, al final del scroll, el botón flotante de chat tapa el
-    enlace «Privacidad» del footer.
+  - Pendiente: validación del JSON-LD (T10; validator.schema.org acepta un fragmento pegado y
+    no necesita URL pública). La prueba de resultados enriquecidos de Google sí necesita la
+    preview de Vercel: es opcional, porque el criterio de la spec se cumple con cualquiera de las
+    dos.
+  - Pendiente: color de fondo de la tarjeta OG (T11).
+  - Pendiente del cliente: confirmar D1–D3 antes de mergear.
+  - Observaciones: el recuadro del logo en la imagen OG pasa a T11; el botón de chat que tapa
+    «Privacidad» y el tamaño de `landingContent.ts` quedan en «Seguimiento» de la spec.

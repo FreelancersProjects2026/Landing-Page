@@ -62,7 +62,8 @@ name).
 ### App: imagen OpenGraph
 - `og-image-card.tsx`: componente puro `OgImageCard` que recibe nombre, texto y fuente del logo.
   Usa estilos en línea compatibles con Satori (todo contenedor con varios hijos en flexbox). Fondo
-  `#080808` (color dominante del logo), logo de unos 320 px a la izquierda, nombre grande y texto
+  `#0a0b10`, el color de fondo del logo medido en sus bordes (T11; antes `#080808`, el color
+  dominante, que dejaba un recuadro visible), logo de unos 320 px a la izquierda, nombre grande y texto
   blanco al 70 % a la derecha. Es la propuesta de D1–D3 de la spec.
 - `opengraph-image.tsx`: declara tamaño 1200×630, tipo PNG y `alt` con el nombre de la empresa.
   Su función por defecto obtiene el contenido del idioma, lee el logo desde `public/` con la ruta
