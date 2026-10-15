@@ -61,6 +61,13 @@
     /[\s:,]border-color 500ms cubic-bezier…/`. Verde: orbe con `border-color` y
     `background-color`, y `svg` con `color`, todos a 500ms cubic-bezier(0.22, 1, 0.36, 1);
     globals-css 4/4 y `pnpm validate` en verde.
+- [x] T06 Corrección (mejora, reviwer T03): el `it.each` de canales del footer no comprueba el
+  acento D2 → añadir a cada caso el `--orb-accent` esperado (`#25D366`, `#EA4335`, `#E1306C`) en
+  el orbe; verificar el rojo cambiando un hex a mano y revertir. Sin cambio de producción.
+  (depende de T03) Archivos: `src/components/landing/landing-sections.test.tsx`.
+  - Rojo: con `#EA4336` en el correo → `Expected: "#EA4335" Received: "#EA4336"` (1 falla, 2 pasan); revertido. Verde: 3/3 casos comprueban `--orb-accent` en `span.contact-orb`; `pnpm validate` en verde.
 - Descartados: pruebas de T02 por nombres de clase (jsdom no puede medir foco ni transform; lo
   cubre T04). Respaldo de ícono/acento: queda solo en los valores por defecto de
-  `FooterContactLink` (plan actualizado); `FooterSection` no lo repite.
+  `FooterContactLink` (plan actualizado); `FooterSection` no lo repite. Revisión de T05: exigir el
+  mismo tiempo y easing en las 5 propiedades es intencional (el hallazgo de T01 era justo el
+  desfase entre ellas); si cambia la duración, cambia en todas.

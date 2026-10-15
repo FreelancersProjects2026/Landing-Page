@@ -481,17 +481,22 @@ describe('FooterSection', () => {
   })
 
   it.each([
-    ['WhatsApp +506 6440-0832', 'lucide-message-circle'],
-    ['solutionspjm@gmail.com', 'lucide-mail'],
-    ['Instagram', 'lucide-instagram'],
-  ])('muestra en %s su ícono de canal oculto a lectores', (name, icon) => {
-    const footer = renderFooter()
+    ['WhatsApp +506 6440-0832', 'lucide-message-circle', '#25D366'],
+    ['solutionspjm@gmail.com', 'lucide-mail', '#EA4335'],
+    ['Instagram', 'lucide-instagram', '#E1306C'],
+  ])(
+    'muestra en %s su ícono oculto a lectores y su acento',
+    (name, icon, accent) => {
+      const footer = renderFooter()
 
-    const link = within(footer).getByRole('link', { name })
-    const svg = link.querySelector(`svg.${icon}`)
-    expect(svg).not.toBeNull()
-    expect(svg?.closest('[aria-hidden="true"]')).not.toBeNull()
-  })
+      const link = within(footer).getByRole('link', { name })
+      const svg = link.querySelector(`svg.${icon}`)
+      expect(svg).not.toBeNull()
+      expect(svg?.closest('[aria-hidden="true"]')).not.toBeNull()
+      const orb = link.querySelector<HTMLElement>('span.contact-orb')
+      expect(orb?.style.getPropertyValue('--orb-accent')).toBe(accent)
+    },
+  )
 
   it('oculta a lectores todos los íconos de la lista de contacto', () => {
     const footer = renderFooter()
