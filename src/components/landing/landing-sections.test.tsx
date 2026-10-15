@@ -510,6 +510,16 @@ describe('FooterSection', () => {
     expect(rows[0]).toHaveClass('flex', 'items-center', 'gap-3')
   })
 
+  it('la columna de contacto abarca las dos columnas del grid móvil', () => {
+    const footer = renderFooter()
+
+    const column = within(footer)
+      .getByText(content.menu.contact)
+      .closest('div') as HTMLElement
+    expect(column.parentElement).toHaveClass('grid-cols-2')
+    expect(column).toHaveClass('col-span-2', 'md:col-span-2')
+  })
+
   it('oculta a lectores todos los íconos de la lista de contacto', () => {
     const footer = renderFooter()
 

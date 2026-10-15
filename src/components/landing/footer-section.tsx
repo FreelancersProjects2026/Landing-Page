@@ -87,7 +87,7 @@ export function FooterSection({
             </ul>
 
             {/* Contact */}
-            <div className="md:col-span-2">
+            <div className="col-span-2 md:col-span-2">
               <p className="text-sm font-medium text-white mb-6">
                 {menu.contact}
               </p>
