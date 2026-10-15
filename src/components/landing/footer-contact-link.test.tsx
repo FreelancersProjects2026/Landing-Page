@@ -36,15 +36,22 @@ describe('FooterContactLink', () => {
   it('es un enlace táctil con foco visible que no se transforma', () => {
     const link = renderLink()
 
-    expect(link).toHaveClass(
-      'group',
-      'inline-flex',
-      'items-center',
-      'gap-3',
-      'min-h-12',
-    )
+    expect(link).toHaveClass('group', 'inline-flex', 'items-center', 'min-h-12')
+    expect(link).not.toHaveClass('gap-3')
     expect(link.className).toContain('focus-visible:ring')
     expect(link.className).not.toMatch(/translate|rotate|scale/)
+  })
+
+  it('el texto solo existe para lectores de pantalla', () => {
+    const link = renderLink()
+    const label = link.querySelector('.sr-only')
+
+    expect(label).toHaveTextContent('Instagram')
+    const visibleText = [...link.childNodes]
+      .filter((node) => node !== label)
+      .map((node) => node.textContent)
+      .join('')
+    expect(visibleText.trim()).toBe('')
   })
 
   it('abre en otra pestaña solo si es externo', () => {

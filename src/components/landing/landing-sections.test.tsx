@@ -498,6 +498,18 @@ describe('FooterSection', () => {
     },
   )
 
+  it('agrupa los canales en una sola fila de la lista de contacto', () => {
+    const footer = renderFooter()
+
+    const rows = [
+      'WhatsApp +506 6440-0832',
+      'solutionspjm@gmail.com',
+      'Instagram',
+    ].map((name) => within(footer).getByRole('link', { name }).closest('li'))
+    expect(new Set(rows).size).toBe(1)
+    expect(rows[0]).toHaveClass('flex', 'items-center', 'gap-3')
+  })
+
   it('oculta a lectores todos los íconos de la lista de contacto', () => {
     const footer = renderFooter()
 

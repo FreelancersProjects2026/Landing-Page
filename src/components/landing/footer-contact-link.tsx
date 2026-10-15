@@ -22,7 +22,7 @@ export function FooterContactLink({
     <a
       href={href}
       {...(external ? externalLinkProps : {})}
-      className="group inline-flex items-center gap-3 min-h-12 rounded-full hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+      className="group inline-flex items-center min-h-12 rounded-full hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
     >
       <span
         aria-hidden="true"
@@ -31,7 +31,7 @@ export function FooterContactLink({
       >
         <Icon aria-hidden="true" className="w-5 h-5" />
       </span>
-      {children}
+      <span className="sr-only">{children}</span>
     </a>
   )
 }

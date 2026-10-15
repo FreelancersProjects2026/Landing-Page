@@ -3,7 +3,6 @@ import type { Contact, LandingContent } from '@modules/company-profile'
 
 import { FooterContactLink } from './footer-contact-link'
 import { sectionIds } from './section-ids'
-import { splitAfterAt } from './split-after-at'
 
 const socialChannels: Record<string, { icon: LucideIcon; accent: string }> = {
   Instagram: { icon: Instagram, accent: '#E1306C' },
@@ -95,7 +94,7 @@ export function FooterSection({
               <ul className="space-y-4 text-sm text-white/40">
                 <li>{company.location}</li>
                 <li>{footer.hours}</li>
-                <li>
+                <li className="flex flex-wrap items-center gap-3">
                   <FooterContactLink
                     href={whatsappUrl}
                     external
@@ -104,27 +103,24 @@ export function FooterSection({
                   >
                     WhatsApp {company.phone}
                   </FooterContactLink>
-                </li>
-                <li>
                   <FooterContactLink
                     href={emailUrl}
                     icon={Mail}
                     accent="#EA4335"
                   >
-                    <span>{splitAfterAt(company.email)}</span>
+                    {company.email}
                   </FooterContactLink>
-                </li>
-                {company.socialProfiles.map(({ label, url }) => (
-                  <li key={url}>
+                  {company.socialProfiles.map(({ label, url }) => (
                     <FooterContactLink
+                      key={url}
                       href={url}
                       external
                       {...socialChannels[label]}
                     >
                       {label}
                     </FooterContactLink>
-                  </li>
-                ))}
+                  ))}
+                </li>
               </ul>
             </div>
           </div>
