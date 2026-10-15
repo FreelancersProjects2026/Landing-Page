@@ -70,20 +70,21 @@ confirmados por el cliente.
 - [x] El fondo de la imagen OG es el mismo color oscuro del fondo del logo, sin recuadro visible
   alrededor del logo (T11).
 - [x] `pnpm validate` en verde.
-- [ ] El cliente confirma D1–D3 o pide cambios (pendiente del cliente; condición para mergear).
+- [x] El cliente confirma D1–D3 o pide cambios (confirmadas tal cual el 2026-10-15).
 
 ## Dudas
 Datos de negocio: ninguna (confirmados por el cliente, tabla de arriba).
 
-Diseño de la imagen OpenGraph. No bloquean el desarrollo (T04 implementó la propuesta), pero sí el
-merge: **pendientes del cliente**. Se le preguntó y aún no responde; si pide cambios, se
-planifican como corrección.
+Diseño de la imagen OpenGraph: **resueltas**. El cliente confirmó el 2026-10-15 las tres
+propuestas tal cual (D1 `seo.description`, D2 Geist por defecto, D3 sin acento de color), así
+que no hay cambios sobre lo implementado.
 - D1. **Texto**: se propone nombre + `seo.description` del idioma (≤ 160 caracteres, ya aprobada).
-  ¿Prefiere el cliente un eslogan corto (p. ej. `hero.slogan`)?
+  ¿Prefiere el cliente un eslogan corto (p. ej. `hero.slogan`)? **Respuesta: `seo.description`.**
 - D2. **Tipografía**: se propone la fuente por defecto de `next/og` (Geist) para no embeber
-  archivos de fuente. ¿Debe usar la tipografía de marca de la landing?
+  archivos de fuente. ¿Debe usar la tipografía de marca de la landing? **Respuesta: Geist por
+  defecto.**
 - D3. **Composición**: logo a la izquierda (≈ 320 px), texto blanco a la derecha y fondo del
-  mismo color que el fondo del logo. ¿Algún acento de color de marca?
+  mismo color que el fondo del logo. ¿Algún acento de color de marca? **Respuesta: sin acento.**
   Nota (T05): con `#080808` el JPEG del logo, de fondo algo más azulado (`#0a0b10` medido en sus
   bordes), se veía como un recuadro. Igualar el fondo al del logo cumple el alcance ya acordado
   («fondo oscuro como el logo») y no cambia la propuesta: se corrige en T11.
