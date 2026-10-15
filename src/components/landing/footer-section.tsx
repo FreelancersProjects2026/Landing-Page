@@ -1,9 +1,12 @@
-import { ArrowUpRight } from 'lucide-react'
+import { Instagram, Mail, MessageCircle, type LucideIcon } from 'lucide-react'
 import type { Contact, LandingContent } from '@modules/company-profile'
 
-import { externalLinkProps } from './external-link'
+import { FooterContactLink } from './footer-contact-link'
 import { sectionIds } from './section-ids'
-import { splitAfterAt } from './split-after-at'
+
+const socialChannels: Record<string, { icon: LucideIcon; accent: string }> = {
+  Instagram: { icon: Instagram, accent: '#E1306C' },
+}
 
 type FooterSectionProps = {
   company: Contact
@@ -84,33 +87,40 @@ export function FooterSection({
             </ul>
 
             {/* Contact */}
-            <div className="md:col-span-2">
+            <div className="col-span-2 md:col-span-2">
               <p className="text-sm font-medium text-white mb-6">
                 {menu.contact}
               </p>
               <ul className="space-y-4 text-sm text-white/40">
                 <li>{company.location}</li>
-                <li>
-                  <a
+                <li>{footer.hours}</li>
+                <li className="flex flex-wrap items-center gap-3">
+                  <FooterContactLink
                     href={whatsappUrl}
-                    {...externalLinkProps}
-                    className="hover:text-white transition-colors inline-flex items-center gap-1 group"
+                    external
+                    icon={MessageCircle}
+                    accent="#25D366"
                   >
                     WhatsApp {company.phone}
-                    <ArrowUpRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                  </a>
-                </li>
-                <li>
-                  <a
+                  </FooterContactLink>
+                  <FooterContactLink
                     href={emailUrl}
-                    className="hover:text-white transition-colors inline-flex items-center gap-1 group"
+                    external
+                    icon={Mail}
+                    accent="#EA4335"
                   >
-                    <span>{splitAfterAt(company.email)}</span>
-                    <ArrowUpRight
-                      aria-hidden="true"
-                      className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all"
-                    />
-                  </a>
+                    {company.email}
+                  </FooterContactLink>
+                  {company.socialProfiles.map(({ label, url }) => (
+                    <FooterContactLink
+                      key={url}
+                      href={url}
+                      external
+                      {...socialChannels[label]}
+                    >
+                      {label}
+                    </FooterContactLink>
+                  ))}
                 </li>
               </ul>
             </div>

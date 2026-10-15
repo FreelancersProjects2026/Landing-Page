@@ -18,6 +18,25 @@ const company: Contact = {
   areaServed: 'Worldwide',
   phone: '+506 6440-0832',
   email: validateEmail('solutionspjm@gmail.com'),
+  logo: '/logo/icono/LOGOsolutionsPJM.jpeg',
+  // URL canónica del perfil, sin los parámetros de seguimiento que envió el cliente (spec 016).
+  socialProfiles: [
+    { label: 'Instagram', url: 'https://www.instagram.com/solutionspjm' },
+  ],
+  // Atención 24/7 confirmada por el cliente. Si cambia, cambiar también footer.hours.
+  openingHours: {
+    days: [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
+    ],
+    opens: '00:00',
+    closes: '23:59',
+  },
 }
 
 // Origen canónico del sitio (spec 004): sin www; www.solutionspjm.com redirige aquí con 308.
@@ -247,6 +266,7 @@ const es = validateLandingContent({
   },
   footer: {
     text: 'solutionsPJM — desarrollo de software en Cartago para negocios de Costa Rica y del mundo.',
+    hours: 'Atención 24/7',
     rights,
   },
   notFound: {
@@ -446,6 +466,7 @@ const en = validateLandingContent({
   },
   footer: {
     text: 'solutionsPJM — software development in Cartago for businesses in Costa Rica and around the world.',
+    hours: 'Available 24/7',
     rights,
   },
   notFound: {

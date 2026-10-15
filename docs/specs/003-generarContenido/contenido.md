@@ -6,6 +6,7 @@ Enmienda aprobada 2026-10-06 (Spec 005): correo y su etiqueta en la sección de 
 Enmienda aprobada 2026-10-06 (Spec 005): opciones y mensajes del botón flotante de WhatsApp.
 Enmienda aprobada 2026-10-06 (Spec 005): alcance internacional (subtítulo del hero, texto del footer y área atendida).
 Enmienda aprobada 2026-10-06 (Spec 005): descripción SEO con alcance internacional.
+Enmienda aprobada 2026-10-15 (Spec 016): horario de atención 24/7 en el footer.
 
 Datos comunes a ambos idiomas:
 
@@ -115,6 +116,7 @@ Servicios · Cómo trabajamos · Proyectos · Equipo · Contacto
 - **Texto:** solutionsPJM — desarrollo de software en Cartago para negocios de Costa Rica y del mundo.
 - **Ubicación:** Paraíso de Cartago, Costa Rica
 - **Contacto:** WhatsApp +506 6440-0832
+- **Horario:** Atención 24/7
 - **Derechos:** © 2026 solutionsPJM
 
 ---
@@ -217,6 +219,7 @@ Services · How we work · Projects · Team · Contact
   the world.
 - **Location:** Paraíso de Cartago, Costa Rica
 - **Contact:** WhatsApp +506 6440-0832
+- **Hours:** Available 24/7
 - **Rights:** © 2026 solutionsPJM
 
 ---

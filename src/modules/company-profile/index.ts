@@ -4,7 +4,7 @@ import { landingContentSource } from './infrastructure/landingContentSource.ts'
 import { privacyPolicySource } from './infrastructure/privacyPolicySource.ts'
 
 export {
-  buildMailtoUrl,
+  buildEmailComposeUrl,
   buildWhatsAppUrl,
 } from './application/landingContent.ts'
 export {
@@ -15,11 +15,13 @@ export {
 export { defaultLocale, isLocale, locales } from './domain/landingContent.ts'
 export type {
   Contact,
+  DayOfWeek,
   ExternalLink,
   FaqItem,
   LandingContent,
   Locale,
   NotFoundContent,
+  OpeningHours,
   PostalAddress,
   Project,
   Seo,

@@ -2,9 +2,17 @@ import {
   buildLocaleUrl,
   siteUrl,
   type LandingContent,
+  type OpeningHours,
 } from '@modules/company-profile'
 
+function buildOpeningHoursSpecification({ days, opens, closes }: OpeningHours) {
+  return [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: days, opens, closes },
+  ]
+}
+
 export function buildStructuredData({ company, seo, locale }: LandingContent) {
+  const logoUrl = `${siteUrl}${company.logo}`
   return {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
@@ -13,6 +21,13 @@ export function buildStructuredData({ company, seo, locale }: LandingContent) {
     url: buildLocaleUrl(siteUrl, locale),
     description: seo.description,
     telephone: company.phone,
+    email: company.email,
+    logo: logoUrl,
+    image: logoUrl,
+    sameAs: company.socialProfiles.map(({ url }) => url),
+    openingHoursSpecification: buildOpeningHoursSpecification(
+      company.openingHours,
+    ),
     address: {
       '@type': 'PostalAddress',
       addressLocality: company.address.locality,

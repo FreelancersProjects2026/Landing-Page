@@ -260,6 +260,19 @@ describe('HeroSection', () => {
     expect(letters[2].style.getPropertyValue('--letter-delay')).toBe('90ms')
   })
 
+  it('anima la entrada del texto con CSS desde el primer pintado, sin esperar a JS', () => {
+    render(<HeroSection hero={content.hero} whatsappUrl={whatsappUrl} />)
+    const animated = [
+      screen.getByRole('heading', { level: 1 }).parentElement,
+      screen.getByText(content.hero.subtitle),
+    ]
+
+    for (const element of animated) {
+      expect(element).toHaveClass('motion-safe:animate-in', 'fill-mode-both')
+      expect(element).not.toHaveClass('opacity-0')
+    }
+  })
+
   it('hace caer solo unos pocos pétalos sobre la foto', () => {
     const { container } = render(
       <HeroSection hero={content.hero} whatsappUrl={whatsappUrl} />,
@@ -367,7 +380,8 @@ describe('HowItWorksSection: accesibilidad', () => {
 
 describe('CtaSection', () => {
   const email = 'solutionspjm@gmail.com'
-  const emailUrl = 'mailto:solutionspjm@gmail.com'
+  const emailUrl =
+    'https://mail.google.com/mail/?view=cm&fs=1&to=solutionspjm%40gmail.com'
 
   function renderCta() {
     render(
@@ -391,14 +405,15 @@ describe('CtaSection', () => {
     )
   })
 
-  it('muestra el correo como una tarjeta-botón mailto: con su etiqueta', () => {
+  it('muestra el correo como una tarjeta-botón que abre Gmail en otra pestaña', () => {
     const section = renderCta()
     const link = within(section).getByRole('link', {
       name: `${content.contact.emailLabel} ${email}`,
     })
 
     expect(link).toHaveAttribute('href', emailUrl)
-    expect(link).not.toHaveAttribute('target')
+    expect(link).toHaveAttribute('target', '_blank')
+    expect(link).toHaveAttribute('rel', 'noopener noreferrer')
     // Los íconos (correo y flecha) son decorativos: no agregan nada al nombre accesible.
     const icons = link.querySelectorAll('svg')
     expect(icons).toHaveLength(2)
@@ -416,7 +431,7 @@ describe('FooterSection', () => {
         menu={content.menu}
         footer={content.footer}
         whatsappUrl={whatsappUrl}
-        emailUrl="mailto:solutionspjm@gmail.com"
+        emailUrl="https://mail.google.com/mail/?view=cm&fs=1&to=solutionspjm%40gmail.com"
         privacy={{ label: 'Privacidad', href: '/es/privacidad' }}
       />,
     )
@@ -448,9 +463,90 @@ describe('FooterSection', () => {
     const email = within(footer).getByRole('link', {
       name: 'solutionspjm@gmail.com',
     })
-    expect(email).toHaveAttribute('href', 'mailto:solutionspjm@gmail.com')
-    expect(email).not.toHaveAttribute('target')
+    expect(email).toHaveAttribute(
+      'href',
+      'https://mail.google.com/mail/?view=cm&fs=1&to=solutionspjm%40gmail.com',
+    )
+    expect(email).toHaveAttribute('target', '_blank')
+    expect(email).toHaveAttribute('rel', 'noopener noreferrer')
     expect(within(footer).getByText('© 2026 solutionsPJM')).toBeVisible()
+  })
+
+  it('enlaza Instagram en otra pestaña con su ícono oculto a lectores', () => {
+    const footer = renderFooter()
+
+    const instagram = within(footer).getByRole('link', { name: 'Instagram' })
+    expect(instagram).toHaveAttribute(
+      'href',
+      'https://www.instagram.com/solutionspjm',
+    )
+    expect(instagram).toHaveAttribute('target', '_blank')
+    expect(instagram).toHaveAttribute('rel', 'noopener noreferrer')
+    expect(instagram.querySelector('svg')).toHaveAttribute(
+      'aria-hidden',
+      'true',
+    )
+  })
+
+  it('muestra el horario como texto en la lista de contacto, sin enlace', () => {
+    const footer = renderFooter()
+
+    const hours = within(footer).getByText('Atención 24/7')
+    expect(hours).toBeVisible()
+    expect(hours.closest('a')).toBeNull()
+    expect(hours.closest('ul')).toBe(
+      within(footer).getByText('Paraíso de Cartago, Costa Rica').closest('ul'),
+    )
+  })
+
+  it.each([
+    ['WhatsApp +506 6440-0832', 'lucide-message-circle', '#25D366'],
+    ['solutionspjm@gmail.com', 'lucide-mail', '#EA4335'],
+    ['Instagram', 'lucide-instagram', '#E1306C'],
+  ])(
+    'muestra en %s su ícono oculto a lectores y su acento',
+    (name, icon, accent) => {
+      const footer = renderFooter()
+
+      const link = within(footer).getByRole('link', { name })
+      const svg = link.querySelector(`svg.${icon}`)
+      expect(svg).not.toBeNull()
+      expect(svg?.closest('[aria-hidden="true"]')).not.toBeNull()
+      const orb = link.querySelector<HTMLElement>('span.contact-orb')
+      expect(orb?.style.getPropertyValue('--orb-accent')).toBe(accent)
+    },
+  )
+
+  it('agrupa los canales en una sola fila de la lista de contacto', () => {
+    const footer = renderFooter()
+
+    const rows = [
+      'WhatsApp +506 6440-0832',
+      'solutionspjm@gmail.com',
+      'Instagram',
+    ].map((name) => within(footer).getByRole('link', { name }).closest('li'))
+    expect(new Set(rows).size).toBe(1)
+    expect(rows[0]).toHaveClass('flex', 'items-center', 'gap-3')
+  })
+
+  it('la columna de contacto abarca las dos columnas del grid móvil', () => {
+    const footer = renderFooter()
+
+    const column = within(footer)
+      .getByText(content.menu.contact)
+      .closest('div') as HTMLElement
+    expect(column.parentElement).toHaveClass('grid-cols-2')
+    expect(column).toHaveClass('col-span-2', 'md:col-span-2')
+  })
+
+  it('oculta a lectores todos los íconos de la lista de contacto', () => {
+    const footer = renderFooter()
+
+    const contact = within(footer).getByText('Paraíso de Cartago, Costa Rica')
+      .parentElement as HTMLElement
+    const icons = contact.querySelectorAll('svg')
+    expect(icons).toHaveLength(3)
+    icons.forEach((icon) => expect(icon).toHaveAttribute('aria-hidden', 'true'))
   })
 })
 
@@ -582,7 +678,7 @@ describe('Imágenes WebP de la landing', () => {
         menu={content.menu}
         footer={content.footer}
         whatsappUrl={whatsappUrl}
-        emailUrl="mailto:solutionspjm@gmail.com"
+        emailUrl="https://mail.google.com/mail/?view=cm&fs=1&to=solutionspjm%40gmail.com"
         privacy={{ label: 'Privacidad', href: '/es/privacidad' }}
       />,
       '/footer/footer.webp',

@@ -24,8 +24,9 @@ export function createGetLandingContent(
   }
 }
 
-export function buildMailtoUrl(email: string): string {
-  return `mailto:${email}`
+// Gmail web en vez de mailto:, que no hace nada si el sistema no tiene una app de correo configurada.
+export function buildEmailComposeUrl(email: string): string {
+  return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`
 }
 
 export function buildWhatsAppUrl(phone: string, message: string): string {

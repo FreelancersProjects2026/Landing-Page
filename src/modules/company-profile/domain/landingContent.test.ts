@@ -17,6 +17,15 @@ function validContent(): LandingContent {
       areaServed: 'Costa Rica',
       phone: '+506 6440-0832',
       email: 'solutionspjm@gmail.com',
+      logo: '/logo/icono/LOGOsolutionsPJM.jpeg',
+      socialProfiles: [
+        { label: 'Instagram', url: 'https://www.instagram.com/solutionspjm' },
+      ],
+      openingHours: {
+        days: ['Monday', 'Sunday'],
+        opens: '00:00',
+        closes: '23:59',
+      },
     },
     seo: {
       title: 'Desarrollo de software a medida Costa Rica | solutionsPJM',
@@ -81,7 +90,11 @@ function validContent(): LandingContent {
       cta: 'Escríbenos por WhatsApp',
       emailLabel: 'O escríbenos al correo',
     },
-    footer: { text: 'solutionsPJM — desarrollo.', rights: '© 2026 PJM' },
+    footer: {
+      text: 'solutionsPJM — desarrollo.',
+      hours: 'Atención 24/7',
+      rights: '© 2026 PJM',
+    },
     notFound: {
       title: 'Esta página se perdió',
       text: 'El enlace no existe.',
@@ -278,6 +291,69 @@ describe('validateLandingContent', () => {
       ).toThrow('projects.items.0.link.url no es una URL https válida')
     },
   )
+
+  it.each(['http://www.instagram.com/solutionspjm', 'instagram.com/x'])(
+    'rechaza un perfil social que no es una URL https válida: %s',
+    (url) => {
+      const content = validContent()
+
+      expect(() =>
+        validateLandingContent({
+          ...content,
+          company: {
+            ...content.company,
+            socialProfiles: [{ label: 'Instagram', url }],
+          },
+        }),
+      ).toThrow('company.socialProfiles.0.url no es una URL https válida')
+    },
+  )
+
+  it('rechaza un logo que no empieza con «/»', () => {
+    const content = validContent()
+
+    expect(() =>
+      validateLandingContent({
+        ...content,
+        company: { ...content.company, logo: 'logo/icono/LOGO.jpeg' },
+      }),
+    ).toThrow('company.logo no empieza con «/»')
+  })
+
+  it.each([
+    ['opens', '24:00'],
+    ['opens', '9:00'],
+    ['closes', '23:60'],
+    ['closes', '23:59:00'],
+  ] as const)('rechaza el horario con %s = %s', (field, time) => {
+    const content = validContent()
+    const { openingHours } = content.company
+
+    expect(() =>
+      validateLandingContent({
+        ...content,
+        company: {
+          ...content.company,
+          openingHours: { ...openingHours, [field]: time },
+        },
+      }),
+    ).toThrow(`company.openingHours.${field} no tiene el formato HH:MM`)
+  })
+
+  it('rechaza un horario sin días', () => {
+    const content = validContent()
+    const { openingHours } = content.company
+
+    expect(() =>
+      validateLandingContent({
+        ...content,
+        company: {
+          ...content.company,
+          openingHours: { ...openingHours, days: [] },
+        },
+      }),
+    ).toThrow('company.openingHours no tiene días')
+  })
 
   it('acepta un proyecto con enlace https', () => {
     const content = validContent()

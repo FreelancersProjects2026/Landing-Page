@@ -33,6 +33,7 @@ Antes de escribir código, carga la skill `senior-dev` (herramienta Skill) y sí
 4. **Refactor** con las pruebas en verde.
 5. `pnpm validate` en verde. No silencies errores con `any`, `@ts-ignore` ni `eslint-disable`.
 6. Marca la tarea en `task.md` y haz **un commit**: `<tipo>(<ámbito>): NNN-Tnn <descripción>` (p. ej. `fix(navegacion): 013-T03 Escape cierra el menú móvil`).
+7. **Al terminar, delegas a reviwer** (`.claude/agents/reviwer.md`) los commits hechos. Si no puedes lanzarlo tú, tu entrega lo pide explícitamente para que el orquestador lo lance sin preguntar. Nada se da por cerrado sin la revisión de reviwer.
 
 ## Si algo no encaja
 
@@ -46,4 +47,5 @@ Archivos: <lista>
 Rojo: <prueba y motivo del fallo>
 Verde: pnpm validate OK | <fallo + salida>
 Para planner: <dudas o "nada">
+Siguiente: reviwer revisa <commits>
 ```

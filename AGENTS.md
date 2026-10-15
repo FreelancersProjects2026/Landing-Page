@@ -16,6 +16,7 @@ Este proyecto pertenece a un equipo de tres profesionales que desarrolla softwar
 ## Reglas de desarrollo
 - Usa React para toda implementación frontend.
 - Vincula cada cambio con una especificación clara y mantén ambos sincronizados.
+- Todo pedido nuevo: crea `docs/specs/NNN-nombre/` (siguiente número libre) y escribe `spec.md` → `plan.md` → `task.md`, en ese orden, antes de implementar.
 - Separa interfaz, aplicación y dominio; evita introducir lógica de negocio en componentes visuales.
 - Aplica TDD: escribe primero una prueba que falle, implementa el comportamiento mínimo y refactoriza con las pruebas en verde.
 - Valida los datos en los límites de cada capa y conserva estados coherentes durante todo el flujo.

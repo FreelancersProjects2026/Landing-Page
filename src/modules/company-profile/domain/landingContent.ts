@@ -19,6 +19,24 @@ export interface PostalAddress {
   readonly country: string
 }
 
+/** Nombres de schema.org, para publicarlos sin traducir. */
+export type DayOfWeek =
+  | 'Monday'
+  | 'Tuesday'
+  | 'Wednesday'
+  | 'Thursday'
+  | 'Friday'
+  | 'Saturday'
+  | 'Sunday'
+
+export interface OpeningHours {
+  readonly days: readonly DayOfWeek[]
+  /** HH:MM */
+  readonly opens: string
+  /** HH:MM */
+  readonly closes: string
+}
+
 export interface Contact {
   readonly name: string
   /** Misma marca escrita con espacio, para búsquedas (spec 011). */
@@ -28,6 +46,10 @@ export interface Contact {
   readonly areaServed: string
   readonly phone: string
   readonly email: string
+  /** Ruta pública del logo (empieza con «/»); la URL absoluta se arma con `siteUrl`. */
+  readonly logo: string
+  readonly socialProfiles: readonly ExternalLink[]
+  readonly openingHours: OpeningHours
 }
 
 export interface Service {
@@ -136,6 +158,7 @@ export interface LandingContent {
   }
   readonly footer: {
     readonly text: string
+    readonly hours: string
     readonly rights: string
   }
   readonly notFound: NotFoundContent
@@ -168,6 +191,37 @@ export function collectTexts(value: unknown, path: string): [string, string][] {
   return Object.entries(value).flatMap(([key, child]) =>
     collectTexts(child, path ? `${path}.${key}` : key),
   )
+}
+
+function isHttpsUrl(url: string): boolean {
+  return URL.canParse(url) && new URL(url).protocol === 'https:'
+}
+
+const HH_MM = /^([01]\d|2[0-3]):[0-5]\d$/
+
+function companyProblems({
+  logo,
+  socialProfiles,
+  openingHours,
+}: Contact): string[] {
+  const problems: string[] = []
+  socialProfiles.forEach(({ url }, index) => {
+    if (!isHttpsUrl(url)) {
+      problems.push(
+        `company.socialProfiles.${index}.url no es una URL https válida`,
+      )
+    }
+  })
+  if (!logo.startsWith('/')) problems.push('company.logo no empieza con «/»')
+  for (const field of ['opens', 'closes'] as const) {
+    if (!HH_MM.test(openingHours[field])) {
+      problems.push(`company.openingHours.${field} no tiene el formato HH:MM`)
+    }
+  }
+  if (openingHours.days.length === 0) {
+    problems.push('company.openingHours no tiene días')
+  }
+  return problems
 }
 
 function hasPrimaryKeyword(text: string, locale: Locale): boolean {
@@ -213,15 +267,13 @@ export function validateLandingContent(
     }
   }
   content.projects.items.forEach(({ link }, index) => {
-    if (
-      link &&
-      !(URL.canParse(link.url) && new URL(link.url).protocol === 'https:')
-    ) {
+    if (link && !isHttpsUrl(link.url)) {
       problems.push(
         `projects.items.${index}.link.url no es una URL https válida`,
       )
     }
   })
+  problems.push(...companyProblems(content.company))
   for (const [path, text] of collectTexts(content, '')) {
     if (text.trim().length === 0) problems.push(`${path} está vacío`)
     if (text.includes(PENDING_MARK)) {

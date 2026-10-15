@@ -373,3 +373,52 @@
     --glow-angle: 360deg;
   }
 }
+
+@utility contact-orb {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;
+  border: 1px solid rgb(255 255 255 / 0.15);
+  transform-style: preserve-3d;
+
+  & svg {
+    color: rgb(255 255 255 / 0.7);
+  }
+
+  :where(a:hover, a:focus-visible) > & {
+    border-color: var(--orb-accent);
+    background: rgb(0 0 0 / 0.6);
+    box-shadow: 0 10px 10px var(--orb-accent);
+  }
+
+  :where(a:hover, a:focus-visible) > & svg {
+    color: var(--orb-accent);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition:
+      transform 500ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 500ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 500ms cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 500ms cubic-bezier(0.22, 1, 0.36, 1);
+
+    & svg {
+      transition:
+        transform 500ms cubic-bezier(0.22, 1, 0.36, 1),
+        color 500ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    :where(a:hover, a:focus-visible) > & {
+      transform: perspective(180px) rotateX(60deg) translateY(2px);
+    }
+
+    :where(a:hover, a:focus-visible) > & svg {
+      transform: translate3d(0, 0, 15px) perspective(180px) rotateX(-35deg)
+        translateY(2px);
+    }
+  }
+}

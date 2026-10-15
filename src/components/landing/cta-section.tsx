@@ -94,6 +94,7 @@ export function CtaSection({
               >
                 <a
                   href={emailUrl}
+                  {...externalLinkProps}
                   className="group relative flex flex-col gap-10 overflow-hidden rounded-2xl border border-foreground/20 p-6 lg:p-8 text-foreground hover:text-background focus-visible:text-background motion-safe:transition-colors motion-safe:duration-300 motion-safe:ease-out motion-safe:hover:delay-150 motion-safe:focus-visible:delay-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-4 focus-visible:ring-offset-background"
                 >
                   {/* Relleno que sube desde abajo e invierte los colores */}
