@@ -452,6 +452,22 @@ describe('FooterSection', () => {
     expect(email).not.toHaveAttribute('target')
     expect(within(footer).getByText('© 2026 solutionsPJM')).toBeVisible()
   })
+
+  it('enlaza Instagram en otra pestaña con la flecha oculta a lectores', () => {
+    const footer = renderFooter()
+
+    const instagram = within(footer).getByRole('link', { name: 'Instagram' })
+    expect(instagram).toHaveAttribute(
+      'href',
+      'https://www.instagram.com/solutionspjm',
+    )
+    expect(instagram).toHaveAttribute('target', '_blank')
+    expect(instagram).toHaveAttribute('rel', 'noopener noreferrer')
+    expect(instagram.querySelector('svg')).toHaveAttribute(
+      'aria-hidden',
+      'true',
+    )
+  })
 })
 
 describe('ProjectsSection', () => {

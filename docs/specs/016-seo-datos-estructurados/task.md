@@ -30,13 +30,15 @@
   - Evidencia: rojo, 2 pruebas fallan (es/en sin `email`, `logo`, `image`, `sameAs` ni
     `openingHoursSpecification`); verde, 5/5 en `structured-data` y `pnpm validate` OK (221 pruebas,
     build y arquitectura en verde).
-- [ ] T03 Prueba en `landing-sections.test.tsx` (bloque del footer): hay un enlace
+- [x] T03 Prueba en `landing-sections.test.tsx` (bloque del footer): hay un enlace
   «Instagram» a `https://www.instagram.com/solutionspjm` con `target="_blank"` y
   `rel="noopener noreferrer"` (falla) → renderizar `company.socialProfiles` en la lista de
   contacto del footer con `externalLinkProps` y la flecha decorativa oculta a lectores de pantalla.
   (depende de T01; paralela a T02 y T04)
   Archivos: `src/components/landing/footer-section.tsx`,
   `src/components/landing/landing-sections.test.tsx`.
+  - Evidencia: rojo, la prueba del footer falla (no hay enlace con nombre «Instagram»); verde,
+    222/222 y `pnpm validate` OK (build y arquitectura en verde; `footer-section.tsx` 148 líneas).
 - [ ] T04 Prueba en `opengraph-image.test.tsx`: el tamaño declarado es 1200×630, el tipo es
   PNG, y `OgImageCard` renderiza nombre, `seo.description` del idioma y una imagen con
   data URL JPEG (falla: no existen) → crear `og-image-card.tsx` y `opengraph-image.tsx` según

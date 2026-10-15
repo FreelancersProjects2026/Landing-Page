@@ -112,6 +112,21 @@ export function FooterSection({
                     />
                   </a>
                 </li>
+                {company.socialProfiles.map(({ label, url }) => (
+                  <li key={url}>
+                    <a
+                      href={url}
+                      {...externalLinkProps}
+                      className="hover:text-white transition-colors inline-flex items-center gap-1 group"
+                    >
+                      {label}
+                      <ArrowUpRight
+                        aria-hidden="true"
+                        className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all"
+                      />
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
