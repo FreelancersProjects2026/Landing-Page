@@ -37,16 +37,51 @@ describe('globals.css', () => {
   })
 
   it('declara contact-orb con el 3D solo sin movimiento reducido y hover junto a foco', () => {
-    const start = css.indexOf('@utility contact-orb {')
-    expect(start).toBeGreaterThanOrEqual(0)
-    const block = css.slice(start, css.indexOf('\n}', start))
-    const [still, motion = ''] = block.split(
+    const block = bracedBlock(css, '@utility contact-orb {')
+    const motion = bracedBlock(
+      block,
       '@media (prefers-reduced-motion: no-preference) {',
     )
+    const still = block.replace(motion, '')
 
     expect(motion).toContain('rotateX(')
     expect(motion).toContain('translate3d(')
     expect(still).not.toMatch(/transform:|transition|rotateX|translate3d/)
+    expect(block).toContain('var(--orb-accent)')
     expect(block).toMatch(/:hover,\s*a:focus-visible/)
   })
+
+  it('anima en contact-orb los mismos estados que cambian al hover', () => {
+    const block = bracedBlock(css, '@utility contact-orb {')
+    const motion = bracedBlock(
+      block,
+      '@media (prefers-reduced-motion: no-preference) {',
+    )
+    const easing = '500ms cubic-bezier(0.22, 1, 0.36, 1)'
+
+    for (const property of [
+      'transform',
+      'box-shadow',
+      'border-color',
+      'background-color',
+      'color',
+    ]) {
+      expect(motion).toMatch(new RegExp(`[\\s:,]${property} ${escape(easing)}`))
+    }
+  })
 })
+
+function bracedBlock(source: string, opening: string): string {
+  const start = source.indexOf(opening)
+  expect(start).toBeGreaterThanOrEqual(0)
+  let depth = 0
+  for (let i = start + opening.length - 1; i < source.length; i++) {
+    if (source[i] === '{') depth++
+    if (source[i] === '}' && --depth === 0) return source.slice(start, i + 1)
+  }
+  throw new Error(`Bloque sin cerrar: ${opening}`)
+}
+
+function escape(text: string): string {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}

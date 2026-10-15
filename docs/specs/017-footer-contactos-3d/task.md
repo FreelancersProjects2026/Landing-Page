@@ -45,4 +45,22 @@
 - [ ] T04 Verificación en navegador (sin commit de código salvo que aparezca un defecto, que se
   reporta a planner): `pnpm dev`, footer de `/es` y `/en` en escritorio (hover y Tab sobre los
   tres canales), a 375 px y con `prefers-reduced-motion: reduce` emulado; anotar evidencia aquí.
-  (depende de T01 y T03)
+  (depende de T01, T03 y T05)
+
+### Correcciones (revisión de T01 y T02)
+- [x] T05 Corrección (mejora, reviwer T01): la prueba de `contact-orb` solo revisa lo anterior al
+  `@media`, no exige `var(--orb-accent)` y la transición omite borde, fondo y color →
+  en `globals-css.test.ts`, que todo el bloque de `@utility contact-orb` fuera de su
+  `@media (prefers-reduced-motion: no-preference)` (antes y después) no tenga `transform:` ni
+  `transition`, y que la utilidad use `var(--orb-accent)` (falla al menos la transición) → en
+  `globals.css` sumar `border-color`, `background-color` y `color` a la transición del bloque
+  `no-preference` (mismo tiempo y easing). (depende de T01; paralela a T03)
+  Archivos: `src/app/globals.css`, `src/app/globals-css.test.ts`.
+  - Evidencia: la prueba aísla el `@media` contando llaves (`bracedBlock`) y exige
+    `var(--orb-accent)`. Rojo: `expected '@media (prefers-reduced-motion: no-pr…' to match
+    /[\s:,]border-color 500ms cubic-bezier…/`. Verde: orbe con `border-color` y
+    `background-color`, y `svg` con `color`, todos a 500ms cubic-bezier(0.22, 1, 0.36, 1);
+    globals-css 4/4 y `pnpm validate` en verde.
+- Descartados: pruebas de T02 por nombres de clase (jsdom no puede medir foco ni transform; lo
+  cubre T04). Respaldo de ícono/acento: queda solo en los valores por defecto de
+  `FooterContactLink` (plan actualizado); `FooterSection` no lo repite.
