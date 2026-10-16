@@ -111,7 +111,7 @@
   `src/components/landing/landing-sections.test.tsx`.
   - Evidencia: rojo, `sizes` recibido `(min-width: 1024px) 600px, calc(100vw - 48px)`. Verde
     con `300px` debajo de `lg`. `pnpm test` y `pnpm check` en verde.
-- [ ] T07 Medición final (sin código): `pnpm validate` verde; `pnpm build && pnpm start` y
+- [x] T07 Medición final (sin código): `pnpm validate` verde; `pnpm build && pnpm start` y
   Lighthouse móvil local con el mismo método que T04 (dos corridas, `--save-assets`) → anotar en
   `## Medición` (subsección «Final») LCP/FCP simulados, elemento LCP y la **lista de peticiones
   que empiezan antes del LCP observado** (URL, tipo y tamaño), comparada con T04. Confirmar que
@@ -120,3 +120,10 @@
   fuentes, CSS) para decidir si hace falta otra ronda. (depende de T05, T06 y T08)
   Commit: `docs(landing): 020-T07 medición final`.
   Archivos: `docs/specs/020-lcp-render-hero/spec.md`.
+  - Evidencia: Lighthouse 12.8.2 móvil local, 2 corridas: Rendimiento 90/90, FCP 1,4 s, LCP
+    3,6/3,5 s, TBT 10 ms, CLS 0; LCP = subtítulo del hero, retraso de render ~3,1 s. Antes del LCP
+    449 KB (T04: 573): `como-trabajamos.webp` 186 KB sustituida por la de 640 (62 KB). La imagen
+    de la 404 no está en el HTML ni en el RSC de `/es` y arranca después del LCP, pero se sigue
+    pidiendo en local por la cabecera `link: rel=preload` de la 404 que responde a
+    `/_vercel/insights/script.js` → criterio de la 404 sin marcar. Bloqueando `*.js` el LCP baja a
+    2,6 s: dominan los scripts. Puerto 3123 liberado.

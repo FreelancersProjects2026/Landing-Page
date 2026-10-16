@@ -83,17 +83,18 @@ pantalla, empezando por las de mayor impacto y menor esfuerzo.
 - [ ] La vista de la 404 no emite `<link rel="preload">` de su imagen; la imagen conserva
   prioridad alta y carga inmediata en la 404. En `/es` compilada, la 404 no aparece entre las
   peticiones de red.
-- [ ] Existe `public/ComoTrabajamos/como-trabajamos-640.webp` (640 px de ancho, WebP); la imagen
+- [x] Existe `public/ComoTrabajamos/como-trabajamos-640.webp` (640 px de ancho, WebP); la imagen
   de «Cómo trabajamos» la ofrece en `srcset` junto a la original, con `sizes` acorde a su ancho
   mostrado, y conserva `loading="lazy"`, `decoding="async"`, `alt=""` y `aria-hidden`.
-- [ ] Medición final anotada en `## Medición` con la lista de peticiones que empiezan antes del
+- [x] Medición final anotada en `## Medición` con la lista de peticiones que empiezan antes del
   LCP (tipo, tamaño) comparada con T04.
 - [x] Medición posterior anotada en `## Medición`: elemento LCP (debe ser texto del hero, no el
   logo del menú), tiempo y desglose comparados con T01, y lista de candidatos LCP que confirme o
   descarte la hipótesis (b).
 - [x] Con `prefers-reduced-motion` no hay animación (se mantienen `motion-safe:`/`motion-reduce:`).
 - [x] `src/app/[lang]/page.test.tsx` (hidratación) sigue en verde; `pnpm validate` en verde.
-- [ ] Lighthouse móvil local tras el cambio: LCP simulado menor que los 3,7 s de T01.
+- [x] Lighthouse móvil local tras el cambio: LCP simulado menor que los 3,7 s de T01 (T07:
+  3,5–3,6 s; dentro del ruido entre corridas, ver «Final»).
 - [ ] Tras el deploy, PSI móvil de `/es` reporta LCP < 2,5 s y Rendimiento ≥ 95 (verificación
   manual del usuario).
 
@@ -158,6 +159,66 @@ pantalla, empezando por las de mayor impacto y menor esfuerzo.
   de ~2,2 s entre FCP y LCP simulados lo genera la estimación de Lantern, no la animación.
 - Conclusión para planner: el LCP **no** es el eslogan → T03 no se activa. Como el LCP sigue
   ≥ 2,5 s por otra causa, se replanifica con las alternativas de `plan.md`.
+
+### Final (T07, 2026-10-16, tras T05 `4ffd6e6`, T06 `6deccf6` y T08 `3d037d8`)
+- Mismo método que T04 (Lighthouse 12.8.2 CLI, móvil, throttling simulado, Chrome headless,
+  `pnpm build && pnpm start -p 3123` → `http://localhost:3123/es`), dos corridas con
+  `--save-assets`.
+- Corrida 1: Rendimiento 90; FCP 1,4 s; **LCP 3,6 s** (3 552 ms); TBT 10 ms; CLS 0.
+  Corrida 2: Rendimiento 90; FCP 1,4 s; **LCP 3,5 s** (3 544 ms); TBT 10 ms; CLS 0.
+- Elemento LCP: el mismo subtítulo del hero
+  (`section#inicio > div.relative > div.lg:max-w-[55%] > p.text-lg`, 364 × 117 px).
+- Desglose (`largest-contentful-paint-element`, simulado):
+
+  | Fase              | Corrida 1 | Corrida 2 | T04 (c2) |
+  | ----------------- | --------- | --------- | -------- |
+  | TTFB              | 454 ms    | 452 ms    | 452 ms   |
+  | Retraso de carga  | 0 ms      | 0 ms      | 0 ms     |
+  | Tiempo de carga   | 0 ms      | 0 ms      | 0 ms     |
+  | Retraso de render | 3 098 ms  | 3 091 ms  | 3 091 ms |
+
+  FCP y LCP observados iguales (112 / 108 ms).
+- Peticiones que empiezan antes del LCP observado (`network-requests`, corrida 2, 108 ms;
+  tamaño transferido):
+
+  | Tipo        | T07                                                    | T04 (c2, 107 ms)      |
+  | ----------- | ------------------------------------------------------ | --------------------- |
+  | Documento   | `/es` 16,5 KB                                          | 16,4 KB               |
+  | CSS         | 2 hojas, 23,3 KB (bloquean el render)                  | 23,3 KB               |
+  | Fuentes     | 3, 84,3 KB (15,0 + 29,5 precargadas; 39,8 la mono)     | 84,3 KB               |
+  | Imágenes    | `hero-960.webp` 57,4; logo 1,4; **`como-trabajamos-640.webp` 62,2** → 121,0 KB | 245,1 KB (con `como-trabajamos.webp` 186,4) |
+  | Scripts     | 10 chunks, 204,2 KB + `/_vercel/insights/script.js` 0,5 | 204,2 KB              |
+  | **Total**   | **449,3 KB**                                           | **573,3 KB**          |
+
+  En la corrida 1 entra además `LOGOsolutionsPJM-192.png` (19,6 KB, tipo «Other», a 111 ms
+  con LCP a 112 ms).
+- **`como-trabajamos.webp` (186 KB) ya no aparece**: baja la variante de 640 (62 KB, a ~46 ms,
+  aún por el margen de carga diferida de Chrome). −124 KB antes del LCP.
+- **Imagen de la 404**: no está en el HTML ni en el payload RSC de `/es` (T05), y en ninguna
+  corrida (ni en T04) arranca antes del LCP observado. Pero **sigue pidiéndose** en `/es` local a
+  ~116–159 ms, con prioridad alta e iniciador «other». Causa observada: `@vercel/analytics` pide
+  `/_vercel/insights/script.js`, que en `next start` local no existe; la 404 de Next responde con
+  la cabecera `link: </404/404-raices-obsidiana.webp>; rel=preload; as="image";
+  fetchpriority="high"` y Chrome la sigue. En Vercel ese script existe, así que en producción no
+  debería ocurrir (deducido, no medido). Efecto secundario: cualquier respuesta 404 (no solo la
+  página) emite esa precarga por cabecera. Por eso el criterio de la 404 queda sin marcar.
+- **LCP simulado sin cambio** (3,5–3,6 s frente a 3,5–3,7 s en T04): quitar 124 KB de imagen no
+  movió el LCP, así que las imágenes no estaban en el camino crítico de Lantern.
+- **Qué domina lo que queda** (diagnóstico con `--blocked-url-patterns`, una corrida cada una,
+  sin tocar código):
+
+  | Bloqueado                       | FCP   | LCP   | Rendimiento |
+  | ------------------------------- | ----- | ----- | ----------- |
+  | Nada (referencia)               | 1,4 s | 3,5 s | 90          |
+  | Todos los `*.js`                | 1,4 s | 2,6 s | 97          |
+  | Fuente mono (39,8 KB)           | 1,2 s | 3,5 s | 91          |
+  | CSS principal (21,8 KB)         | 1,1 s | 3,4 s | 92 (LCP pasa a la imagen hero) |
+
+  **Dominan los scripts**: sin JS el LCP baja ~0,9 s. El chunk `29_1ix9xaos4m.js` (50 KB) cuesta
+  ~700 ms de arranque y `0-ssspa2fpt11.js` (70 KB) ~250 ms (`bootup-time`, CPU ×4); trabajo del
+  hilo principal 1,4 s. La fuente mono no influye en el LCP y el CSS influye en el FCP (~450 ms
+  de bloqueo de render) pero apenas en el LCP. Aun sin JS, el LCP simulado (2,6 s) sigue por
+  encima de 2,5 s.
 
 ## Dudas
 - **Por qué el span del menú ganaba el LCP**: resuelta en T04. (a) confirmada: sin `fade-in`, el
