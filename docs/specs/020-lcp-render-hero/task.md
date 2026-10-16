@@ -301,7 +301,7 @@
     `pnpm check` y `pnpm architecture` OK (sin `pnpm build`, a petición).
 
 ### Corrección de T13 (hallazgo de reviwer sobre `387a4bf`; antes de T12)
-- [ ] T16 Corrección [mejora] (rama sin prueba): ninguna prueba cubre `onBlur={() =>
+- [x] T16 Corrección [mejora] (rama sin prueba): ninguna prueba cubre `onBlur={() =>
   onFocusChange(false)}` en `whatsapp-button-lazy.tsx`. Si se borra esa línea, las 260 pruebas
   siguen en verde, y el botón real robaría el foco cuando el usuario ya lo movió a otro elemento
   antes de que cargue el menú. La prueba «si el botón provisional no tenía el foco…» nunca enfoca
@@ -317,3 +317,10 @@
   (depende de T13)
   Commit: `test(landing): 020-T16 el botón real no roba el foco movido`.
   Archivos: `src/components/landing/whatsapp-button-lazy.test.tsx`.
+  - Evidencia: prueba «si el foco salió del botón provisional, el botón real no lo roba al
+    cargar»: renderiza el envoltorio (módulo nuevo, `vi.resetModules()`) y aparte un `<button>`
+    «Otro elemento»; comprueba que el provisional no tiene `aria-haspopup`, lo enfoca, mueve el foco
+    al otro y espera al real (`expanded: false`): el real sin foco y el otro con foco. Pasa con el
+    código actual. Rojo: sin la línea `onBlur` en `whatsapp-button-lazy.tsx` falla con «Received
+    element is focused» (el real roba el foco); línea restaurada sin commitear. `pnpm test`
+    33 archivos / 261 pruebas en verde; `pnpm check` OK.

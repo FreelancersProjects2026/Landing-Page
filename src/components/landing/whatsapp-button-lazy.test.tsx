@@ -70,6 +70,24 @@ describe('WhatsAppButtonLazy', () => {
     expect(button).toHaveFocus()
   })
 
+  it('si el foco salió del botón provisional, el botón real no lo roba al cargar', async () => {
+    await renderLazyButton()
+    render(<button type="button">Otro elemento</button>)
+    const other = screen.getByRole('button', { name: 'Otro elemento' })
+    const fallback = screen.getByRole('button', { name: label })
+    expect(fallback).not.toHaveAttribute('aria-haspopup')
+    fallback.focus()
+    other.focus()
+
+    const button = await screen.findByRole('button', {
+      name: label,
+      expanded: false,
+    })
+
+    expect(button).not.toHaveFocus()
+    expect(other).toHaveFocus()
+  })
+
   it('si el botón provisional no tenía el foco, el botón real no lo toma', async () => {
     await renderLazyButton()
     expect(screen.getByRole('button', { name: label })).not.toHaveAttribute(
