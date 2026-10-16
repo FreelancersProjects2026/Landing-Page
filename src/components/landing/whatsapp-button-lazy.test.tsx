@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
 
@@ -22,14 +22,19 @@ function renderLazyButton() {
 }
 
 describe('WhatsAppButtonLazy', () => {
-  it('pinta el botón flotante de inmediato, en su posición fija', () => {
+  it('pinta el botón sin menú de inmediato y lo sustituye por el que abre el menú', async () => {
     renderLazyButton()
 
-    expect(screen.getByRole('button', { name: label })).toHaveClass(
-      'fixed',
-      'right-4',
-      'bottom-[calc(1rem+env(safe-area-inset-bottom))]',
-      'z-30',
+    expect(screen.getByRole('button', { name: label })).not.toHaveAttribute(
+      'aria-haspopup',
+    )
+    await waitFor(
+      () =>
+        expect(screen.getByRole('button', { name: label })).toHaveAttribute(
+          'aria-haspopup',
+          'menu',
+        ),
+      { timeout: 5000 },
     )
   })
 

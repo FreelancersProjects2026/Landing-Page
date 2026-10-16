@@ -205,8 +205,18 @@
     `true`); verde, `pnpm test` 258/258 y `pnpm check` OK. `pnpm build` OK; con `pnpm start -p
     3123`, `/es`, `/en`, `/es/privacidad`, `/en/privacy`, `/no-existe` y `/es/no-existe` (404)
     tienen 0 `<link rel="stylesheet">` y un `<style>` de 136 825 bytes = suma de los dos chunks
-    CSS del build (132 476 + 4 349), así que no se pierde CSS. Las menciones `.css` restantes son
-    del payload RSC. Comparación visual en navegador no hecha (solo curl); queda para T12.
+    CSS del build (132 476 + 4 349), así que no se pierde CSS. ~~Las menciones `.css` restantes son
+    del payload RSC.~~ **Corrección (reviwer sobre `6e9dc0d`)**: el payload RSC
+    (`self.__next_f.push`) lleva el CSS **entero** otra vez, así que el CSS va dos veces en cada
+    HTML. `es.html` pesa 375 852 B (gzip 63 105 B; brotli q11 34 086 B, q5 42 128 B), y cada
+    `.rsc` de navegación también lo lleva (`es.rsc` 170 978 B). Además, se pierde la caché de la
+    hoja entre páginas. Con gzip el HTML crece ~45 KB; con brotli alto la copia sale casi gratis.
+    Se decide en T12 si se mantiene. Comparación visual en navegador no hecha (solo curl); queda
+    para T12.
+  - Nota de proceso: el commit `6e9dc0d` incluyó ediciones de planner en `task.md` (orden de la
+    ronda 3, corrección del texto de T10 y dependencias de T12) que estaban sin commitear en el
+    árbol de trabajo. Va contra «un commit por tarea». No se reescribe la historia; en adelante,
+    planner commitea sus cambios de docs antes de lanzar tareas que toquen `task.md`.
 - [ ] T12 Medición ronda 3 (sin código): `pnpm validate` verde; `pnpm build && pnpm start` y
   Lighthouse móvil local con el mismo método que T07 (dos corridas, `--save-assets`) → anotar en
   `## Medición` (subsección «Ronda 3») LCP, FCP, **Speed Index**, elemento LCP y la lista de
@@ -216,6 +226,16 @@
     estilo.
   - Para la hipótesis del SI, anotar en qué momento el último fotograma de la tira de Lighthouse
     sigue cambiando (animaciones del hero).
+  - **Decisión sobre `inlineCss` (T11)**:
+    - Medir el peso del HTML de `/es` con la compresión real. En local, el tamaño con gzip y con
+      brotli del HTML servido. Tras el deploy, con
+      `curl -sI -H 'Accept-Encoding: br' https://solutionspjm.com/es` (`content-encoding` y
+      `content-length`, o el tamaño transferido en DevTools).
+    - Medir FCP y LCP **con y sin** `inlineCss`, dos corridas cada uno. La variante sin
+      `inlineCss` se mide en un build local con la opción desactivada temporalmente, sin
+      commitearla.
+    - Si con `inlineCss` FCP y LCP no mejoran de forma clara (más allá del ruido entre corridas)
+      frente al coste en bytes, reportarlo a planner, que planifica una tarea para revertir T11.
   - Marcar los criterios de la ronda 3 en `spec.md`.
   - Reportar a planner y recordar al usuario que corra PSI móvil 3 veces en producción tras el
     deploy y anote la mediana.
@@ -224,7 +244,7 @@
   Archivos: `docs/specs/020-lcp-render-hero/spec.md`.
 
 ### Correcciones de T10 (hallazgos de reviwer sobre `c520365`; antes de T12)
-- [ ] T14 Corrección [mejora] (prueba de comportamiento, no de clases): en
+- [x] T14 Corrección [mejora] (prueba de comportamiento, no de clases): en
   `whatsapp-button-lazy.test.tsx`, sustituir la prueba «pinta el botón flotante de inmediato, en su
   posición fija», que comprueba nombres de clase, por una observable. Al renderizar, el botón con
   el nombre accesible está presente de inmediato y **no** expone `aria-haspopup`; tras cargar el
@@ -234,6 +254,12 @@
   parar y reportar a planner. (antes de T15)
   Commit: `test(landing): 020-T14 botón diferido probado por comportamiento`.
   Archivos: `src/components/landing/whatsapp-button-lazy.test.tsx`.
+  - Evidencia: prueba «pinta el botón sin menú de inmediato y lo sustituye por el que abre el
+    menú»: `getByRole('button', { name })` sin `aria-haspopup` tras `render`; `waitFor` hasta
+    `aria-haspopup="menu"` con el mismo nombre (`findByRole` no sirve: resuelve con el fallback).
+    Pasa con el código actual. Mutaciones temporales: quitar el `.not` → falla («Expected the
+    element to have attribute»); esperar `'dialog'` en vez de `'menu'` → falla. `pnpm test`
+    33 archivos / 258 pruebas en verde; `pnpm check` OK (6 avisos `no-img-element` conocidos).
 - [ ] T15 Corrección [mejora, KISS] (timeout inútil): `{ timeout: 5000 }` en `findByRole` iguala el
   timeout por defecto de Vitest por prueba, así que no aporta. Quitarlo en
   `whatsapp-button-lazy.test.tsx` y en `page.test.tsx`, y que la espera sea determinista: precargar
