@@ -402,7 +402,7 @@ describe('HowItWorksSection: accesibilidad', () => {
       'srcset',
       '/ComoTrabajamos/como-trabajamos-640.webp 640w, /ComoTrabajamos/como-trabajamos.webp 1212w',
     )
-    expect(image).toHaveAttribute('sizes')
+    expect(image).toHaveAttribute('sizes', '(min-width: 1024px) 600px, 300px')
     expect(image).toHaveAttribute('loading', 'lazy')
     expect(image).toHaveAttribute('decoding', 'async')
     expect(image).toHaveAttribute('alt', '')

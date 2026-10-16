@@ -98,7 +98,7 @@
     Variante con sharp (`resize` 640, WebP q80 effort 6): 640×685, 63 446 B frente a 190 576 B
     de la original (1212×1298); revisada a ojo. `sizes="(min-width: 1024px) 600px,
     calc(100vw - 48px)"`. `pnpm test` (255) y `pnpm check` en verde.
-- [ ] T08 Corrección [mejora] (hallazgo de reviwer sobre T06, `6deccf6`): en
+- [x] T08 Corrección [mejora] (hallazgo de reviwer sobre T06, `6deccf6`): en
   `landing-sections.test.tsx`, la prueba de la imagen de «Cómo trabajamos» exige
   `sizes="(min-width: 1024px) 600px, 300px"` (falla: hoy es `calc(100vw - 48px)` debajo de `lg`)
   → en `how-it-works-section.tsx` cambiar el valor de debajo de `lg` a `300px`, el ancho pintado:
@@ -109,6 +109,8 @@
   Commit: `fix(landing): 020-T08 sizes según el ancho pintado de cómo trabajamos`.
   Archivos: `src/components/landing/how-it-works-section.tsx`,
   `src/components/landing/landing-sections.test.tsx`.
+  - Evidencia: rojo, `sizes` recibido `(min-width: 1024px) 600px, calc(100vw - 48px)`. Verde
+    con `300px` debajo de `lg`. `pnpm test` y `pnpm check` en verde.
 - [ ] T07 Medición final (sin código): `pnpm validate` verde; `pnpm build && pnpm start` y
   Lighthouse móvil local con el mismo método que T04 (dos corridas, `--save-assets`) → anotar en
   `## Medición` (subsección «Final») LCP/FCP simulados, elemento LCP y la **lista de peticiones
