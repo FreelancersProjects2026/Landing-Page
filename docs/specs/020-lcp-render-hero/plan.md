@@ -41,10 +41,11 @@ peticiones que empiezan antes del LCP observado (~110 ms). Se atacan por impacto
 2. **`como-trabajamos.webp` (186 KB) pedida antes del LCP**: se genera una variante de 640 px de
    ancho (`como-trabajamos-640.webp`) con el sharp que ya trae Next, mediante un script de un solo
    uso fuera del repo (como el logo WebP de la spec 019), y se sirve con `srcset` (640w y la
-   original 1212w) y `sizes` según el ancho mostrado: en móvil el contenedor ocupa el ancho menos
-   el padding (`px-6`), y en `lg` es una de dos columnas, con el `object-contain` a 640 px de
-   alto limitándola a ~600 px. Con el DPR del móvil de Lighthouse (1,75) el navegador elige la
-   de 640. Descartado: bajar la calidad de la original (empeora escritorio).
+   original 1212w) y `sizes` según el ancho **pintado**: debajo de `lg` el contenedor mide 320 px
+   de alto y `object-contain` con proporción 1212/1298 limita la imagen a ~299 px de ancho
+   (`300px`), no al ancho del contenedor; en `lg` es una de dos columnas, con el `object-contain`
+   a 640 px de alto limitándola a ~600 px. Así, en móviles con DPR hasta 2 el navegador elige la
+   de 640. (Corregido en T08: T06 usó `calc(100vw - 48px)`, el ancho del contenedor.) Descartado: bajar la calidad de la original (empeora escritorio).
 3. **Medir de nuevo** (como T04) y anotar la lista de peticiones previas al LCP (tipo y tamaño).
    Con eso planner decide si sigue alguna de las alternativas de abajo o un recorte del JS de las
    secciones bajo el pliegue (`'use client'` en cta, services, how-it-works, projects, team y

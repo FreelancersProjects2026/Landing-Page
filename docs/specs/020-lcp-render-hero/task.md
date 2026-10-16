@@ -8,7 +8,8 @@
 - Sin cambio de contenido ni de dominio. Sin dependencias nuevas. No debilitar
   `src/app/[lang]/page.test.tsx`.
 - Orden (replanificado tras T01): T02 → T04. T03 descartada tras T04.
-- Orden (replanificado tras T04): T05 ∥ T06 (no comparten archivos) → T07. Recorte de JS o
+- Orden (replanificado tras T04): T05 ∥ T06 (no comparten archivos) → T08 (corrección de T06)
+  → T07. Recorte de JS o
   alternativas del plan solo si T07 los señala (se planifican aparte).
 - Variantes de imagen: sharp ya instalado por Next (`node_modules/.pnpm/sharp@0.34.5`), script de
   un solo uso fuera del repo, sin dependencias nuevas.
@@ -86,6 +87,8 @@
   columnas, limitada por `object-contain` a 640 px de alto) y el ancho de la pantalla menos el
   padding `px-6` debajo de `lg`, para que el móvil de Lighthouse (412 px CSS, DPR 1,75) elija la
   de 640. `src` sigue siendo la original. (paralela a T05)
+  **Nota (corregida en T08):** la fórmula de debajo de `lg` era errónea; el ancho pintado lo
+  limita el alto de 320 px con `object-contain` (~299 px), no el ancho del contenedor.
   Commit: `fix(landing): 020-T06 variante móvil de la imagen de cómo trabajamos`.
   Archivos: `public/ComoTrabajamos/como-trabajamos-640.webp` (nuevo),
   `src/components/landing/how-it-works-section.tsx`,
@@ -95,12 +98,23 @@
     Variante con sharp (`resize` 640, WebP q80 effort 6): 640×685, 63 446 B frente a 190 576 B
     de la original (1212×1298); revisada a ojo. `sizes="(min-width: 1024px) 600px,
     calc(100vw - 48px)"`. `pnpm test` (255) y `pnpm check` en verde.
+- [ ] T08 Corrección [mejora] (hallazgo de reviwer sobre T06, `6deccf6`): en
+  `landing-sections.test.tsx`, la prueba de la imagen de «Cómo trabajamos» exige
+  `sizes="(min-width: 1024px) 600px, 300px"` (falla: hoy es `calc(100vw - 48px)` debajo de `lg`)
+  → en `how-it-works-section.tsx` cambiar el valor de debajo de `lg` a `300px`, el ancho pintado:
+  el contenedor mide `h-[320px]` y con `object-contain` y proporción 1212/1298 la imagen mide
+  ~299 px CSS de ancho. Con DPR 2 en teléfonos de 370–412 px se descargaba la de 1212 cuando
+  basta la de 640 (contradice «`sizes` según su tamaño mostrado» de `spec.md`). Escritorio
+  (`600px`) no cambia. (depende de T06; antes de T07)
+  Commit: `fix(landing): 020-T08 sizes según el ancho pintado de cómo trabajamos`.
+  Archivos: `src/components/landing/how-it-works-section.tsx`,
+  `src/components/landing/landing-sections.test.tsx`.
 - [ ] T07 Medición final (sin código): `pnpm validate` verde; `pnpm build && pnpm start` y
   Lighthouse móvil local con el mismo método que T04 (dos corridas, `--save-assets`) → anotar en
   `## Medición` (subsección «Final») LCP/FCP simulados, elemento LCP y la **lista de peticiones
   que empiezan antes del LCP observado** (URL, tipo y tamaño), comparada con T04. Confirmar que
   ya no aparecen la imagen de la 404 ni `como-trabajamos.webp` de 186 KB. Marcar criterios de
   `spec.md` (menos PSI en producción). Reportar a planner qué domina lo que queda (scripts,
-  fuentes, CSS) para decidir si hace falta otra ronda. (depende de T05 y T06)
+  fuentes, CSS) para decidir si hace falta otra ronda. (depende de T05, T06 y T08)
   Commit: `docs(landing): 020-T07 medición final`.
   Archivos: `docs/specs/020-lcp-render-hero/spec.md`.
