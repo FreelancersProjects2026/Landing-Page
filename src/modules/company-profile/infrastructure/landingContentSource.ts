@@ -205,7 +205,7 @@ const es = validateLandingContent({
   team: {
     title: 'Tres desarrolladores, un mismo equipo',
     intro:
-      'Somos una empresa de desarrollo de software de Paraíso de Cartago. Hablas directamente con las personas que construyen tu sistema.',
+      'Somos una empresa de desarrollo de software de Costa Rica. Hablas directamente con las personas que construyen tu sistema.',
     members: [
       {
         ...team.patrick,
