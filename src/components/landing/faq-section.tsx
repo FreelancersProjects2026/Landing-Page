@@ -37,16 +37,16 @@ export function FaqSection({ label, title, items }: FaqSectionProps) {
           {items.map(({ question, answer }) => (
             <details
               key={question}
-              className="group border-b border-foreground/10"
+              className="faq-item group border-b border-foreground/10"
             >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-xl lg:text-2xl font-display [&::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-xl lg:text-2xl font-display text-foreground/80 hover:text-foreground group-open:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-4 focus-visible:ring-offset-background motion-safe:transition-colors motion-safe:duration-300 [&::-webkit-details-marker]:hidden">
                 {question}
                 <Plus
                   aria-hidden="true"
-                  className="w-5 h-5 shrink-0 text-muted-foreground motion-safe:transition-transform group-open:rotate-45"
+                  className="w-5 h-5 shrink-0 text-muted-foreground group-hover:text-foreground group-open:rotate-45 group-open:text-foreground motion-safe:transition-[rotate,color] motion-safe:duration-500 motion-safe:ease-out"
                 />
               </summary>
-              <p className="pb-6 text-lg text-muted-foreground leading-relaxed">
+              <p className="faq-answer pb-6 text-lg text-muted-foreground leading-relaxed">
                 {answer}
               </p>
             </details>
