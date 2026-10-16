@@ -222,3 +222,41 @@
   (depende de T10, T11, T13, T14 y T15)
   Commit: `docs(landing): 020-T12 medición ronda 3`.
   Archivos: `docs/specs/020-lcp-render-hero/spec.md`.
+
+### Correcciones de T10 (hallazgos de reviwer sobre `c520365`; antes de T12)
+- [ ] T14 Corrección [mejora] (prueba de comportamiento, no de clases): en
+  `whatsapp-button-lazy.test.tsx`, sustituir la prueba «pinta el botón flotante de inmediato, en su
+  posición fija», que comprueba nombres de clase, por una observable. Al renderizar, el botón con
+  el nombre accesible está presente de inmediato y **no** expone `aria-haspopup`; tras cargar el
+  componente diferido, el botón tiene el mismo nombre accesible y `aria-haspopup="menu"`. La
+  posición no se vuelve a probar aquí: el trigger es compartido y ya la cubre
+  `whatsapp-button.test.tsx`. Solo cambia la prueba; si la nueva no pasa con el código actual,
+  parar y reportar a planner. (antes de T15)
+  Commit: `test(landing): 020-T14 botón diferido probado por comportamiento`.
+  Archivos: `src/components/landing/whatsapp-button-lazy.test.tsx`.
+- [ ] T15 Corrección [mejora, KISS] (timeout inútil): `{ timeout: 5000 }` en `findByRole` iguala el
+  timeout por defecto de Vitest por prueba, así que no aporta. Quitarlo en
+  `whatsapp-button-lazy.test.tsx` y en `page.test.tsx`, y que la espera sea determinista: precargar
+  el módulo diferido en un `beforeAll` (`await import('./whatsapp-button')` o su ruta equivalente
+  en `page.test.tsx`), de modo que el `findByRole` con su timeout por defecto (1 s) baste. Las
+  aserciones no cambian, la prueba de hidratación no se toca y `pnpm test` pasa dos veces seguidas
+  en verde. (depende de T14)
+  Commit: `test(landing): 020-T15 espera del menú diferido sin timeout redundante`.
+  Archivos: `src/components/landing/whatsapp-button-lazy.test.tsx`, `src/app/[lang]/page.test.tsx`.
+- [ ] T13 Corrección [mejora, a11y] (foco perdido al cargar el menú): cuando llega el chunk, React
+  desmonta el `<button>` del fallback y monta el real; si el usuario tenía el foco ahí (con Tab), el
+  foco cae a `<body>`.
+  - Prueba en `whatsapp-button-lazy.test.tsx`: se enfoca el botón del fallback, se espera al botón
+    real (`aria-haspopup="menu"`) y este tiene el foco. Segunda prueba: si el fallback no tenía el
+    foco, el botón real no lo toma (no roba el foco). Falla la primera.
+  - Cambio propuesto, el mínimo: un traspaso de foco en el trigger compartido. El envoltorio da por
+    contexto un ref booleano. Al desmontarse, `WhatsAppTrigger` anota si su `<button>` era
+    `document.activeElement`. Al montarse, si estaba anotado, se enfoca y limpia la marca. Sin el
+    envoltorio (uso directo en `whatsapp-button.test.tsx`), el contexto no existe y no hace nada.
+    Si coder encuentra algo más simple que cumpla las dos pruebas, puede usarlo y anotarlo.
+  - `whatsapp-button.test.tsx` y `page.test.tsx` siguen en verde sin cambiar aserciones.
+  (depende de T15)
+  Commit: `fix(landing): 020-T13 el foco pasa del botón provisional al real`.
+  Archivos: `src/components/landing/whatsapp-trigger.tsx`,
+  `src/components/landing/whatsapp-button-lazy.tsx`,
+  `src/components/landing/whatsapp-button-lazy.test.tsx`.

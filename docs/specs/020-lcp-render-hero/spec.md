@@ -128,6 +128,8 @@ Alcance de la ronda:
   iniciales: se pide después del LCP observado.
 - [ ] Ronda 3: el menú de WhatsApp conserva su comportamiento (pruebas de `whatsapp-button.test.tsx`
   y del botón flotante en `page.test.tsx` en verde, sin quitar ninguna aserción).
+- [ ] Ronda 3: si el botón provisional tenía el foco, al cargar el menú el foco pasa al botón real
+  (no cae a `<body>`); si no lo tenía, el real no lo roba (T13).
 - [ ] Ronda 3: `next.config.mjs` activa `experimental.inlineCss`. `/es`, `/en`, la privacidad y la
   404 compiladas no piden hojas de estilo (`<link rel="stylesheet">`) y se ven igual.
 - [ ] Ronda 3: medición local anotada en `## Medición` («Ronda 3»), con la lista de scripts que
@@ -283,4 +285,7 @@ Alcance de la ronda:
 - **Botón de WhatsApp antes de cargar el menú** (ronda 3): entre el primer pintado y la carga del
   chunk diferido (justo después de la hidratación), el botón se ve pero un toque no abre el menú.
   Se asume aceptable porque la ventana es breve y WhatsApp también está en el hero, el CTA, la
-  sección de contacto y el footer. A confirmar por el usuario.
+  sección de contacto y el footer. A confirmar por el usuario. **Foco**: al llegar el chunk, React
+  cambia el botón provisional por el real; si el usuario ya lo había enfocado con Tab, el foco caía
+  a `<body>` (hallazgo de reviwer sobre T10). Se corrige en T13: el foco pasa al botón real, y si el
+  provisional no tenía el foco, el real no lo toma.
