@@ -139,8 +139,9 @@ Alcance de la ronda:
   payload RSC); `es.html` pasa a 375 852 B (gzip 63 105 B, brotli 34–42 KB), cada `.rsc` también lo
   lleva y se pierde la caché de la hoja. T12 mide el peso con la compresión real de Vercel y
   FCP/LCP con y sin la opción; si no compensa, se revierte T11 en una tarea.
-  **T12: se mantiene** (FCP −150 ms estable; LCP −230 ms, en el límite del ruido). Falta medir
-  el brotli real de Vercel tras el deploy.
+  **T12: no concluyente, decisión escalada a planner** (FCP −150 ms estable; LCP −233 ms dentro
+  del ruido, con solo 2 corridas; coste en navegaciones siguientes no medido). Se decide tras T17,
+  junto con T10. Falta medir el brotli real de Vercel tras el deploy.
 - [x] Ronda 3: medición local anotada en `## Medición` («Ronda 3»), con la lista de scripts que
   empiezan antes del LCP y el Speed Index, comparada con T07.
 
@@ -305,20 +306,28 @@ Alcance de la ronda:
   | **Total**   | **469,9 KB** (494,6 en c1)                                   | 449,3 KB                       |
 
   Scripts: desaparece `29_1ix9xaos4m.js` (50,1 KB); entran `30ovs0h4fmpog.js` (18,2 KB) y
-  `3n3zts851b2p1.js` (10,1 KB); el resto, igual (`0-ssspa2fpt11.js` 69,7, `07b01dw1b3skm.js`
-  38,3, `1dg2f_cnrzia-.js` 13,9, `2wd_t3ikai8ik.js` 10,9, `0zaqvpcaih_nz.js` 7,9,
-  `15g5crpuo06-n.js` 6,5, `turbopack-*.js` 4,4, `3qy0shirk377_.js` 1,6, `01kgg-fbm7ezm.js` 0,6).
-  −22 KB de JS antes del LCP. `/_vercel/insights/script.js` arranca ahora a 118–120 ms, después.
+  `3n3zts851b2p1.js` (10,1 KB). Además, varios chunks cambiaron de hash respecto a T07 (no es «el
+  resto, igual»): en T07 estaban `2s4zbrua0g06o` 7,8, `0mw67wy1375zi` 11,0, `2semfcofb2wsj` 6,4 y
+  `turbopack-37ukxn4-07nwu`; en ronda 3, `0-ssspa2fpt11.js` 69,7, `07b01dw1b3skm.js` 38,3,
+  `1dg2f_cnrzia-.js` 13,9, `2wd_t3ikai8ik.js` 10,9, `0zaqvpcaih_nz.js` 7,9, `15g5crpuo06-n.js` 6,5,
+  `turbopack-*.js` 4,4, `3qy0shirk377_.js` 1,6 y `01kgg-fbm7ezm.js` 0,6. Total: −22 KB de JS antes
+  del LCP. `/_vercel/insights/script.js`: con `inlineCss` arranca a 116,7 / 119,6 ms (después del
+  LCP). Sin `inlineCss`, en c1 arranca a 108,3 ms, **antes** del LCP (112,6 ms).
 - **Chunk de Radix** (`0p3d03n8blbsx.js`, 24,6 KB): no está entre los scripts iniciales del HTML,
   pero se pide justo al hidratar, que en la traza sin throttling coincide con el primer pintado:
   a 116 ms (LCP 115) en c2 con `inlineCss` y a 114 ms (LCP 114) sin ella, pero a **112 ms (LCP
   115)** en c1 con `inlineCss` y a **104 ms (LCP 113)** en c1 sin ella. **No se confirma** que
-  arranque siempre después del LCP observado: en 2 de 4 corridas empieza 3–9 ms antes.
-- **Trabajo de arranque**: Radix fuera no bajó el hilo principal. `bootup-time` atribuye ahora
-  881–892 ms (300 de script) a `30ovs0h4fmpog.js`, frente a 724 ms (248) de `29_1ix9xaos4m.js`
-  en T07. Hilo principal 1 641–1 676 ms frente a 1 386 ms en T07. El coste está en la
-  hidratación y las animaciones de los componentes cliente de la landing, no en el código de
-  Radix.
+  arranque siempre después del LCP observado. Respecto al LCP: −2,3 y −8,1 ms antes en dos
+  corridas, +0,5 y +0,7 ms después en las otras dos. En la práctica coincide con la hidratación.
+- **Trabajo de arranque**: Radix fuera no bajó el hilo principal; subió. `bootup-time` atribuye
+  880–912 ms a `30ovs0h4fmpog.js`, frente a 724 ms de `29_1ix9xaos4m.js` en T07. Hilo principal:
+  1 675–1 692 ms con `inlineCss` y 1 626–1 640 ms sin ella, frente a ~1 386 ms en T07.
+  **Observado**: sin `inlineCss`, el LCP de ronda 3 (3 682–3 847 ms) es 140–300 ms **peor** que el
+  de T07 (3 543–3 552 ms) con el mismo FCP. Entre T07 y esta variante solo cambió T10 (menú
+  diferido; T13–T16 son el traspaso de foco y pruebas). **Deducido, no demostrado**: T10 es causa
+  candidata del aumento de arranque y del LCP (por ejemplo, el chunk del envoltorio y la carga
+  diferida coinciden con la hidratación). `inlineCss` solo devuelve el LCP al nivel de T07. Se
+  aísla en T17.
 - **Speed Index (hipótesis del SI de 4,6 s en PSI)**: en local el SI es 1,2 s con `inlineCss` y
   1,4 s sin ella (T07: 1,4 s); **no se reproduce**. Tira de `screenshot-thumbnails` (tiempos
   observados 375–3 000 ms, cada 375 ms): el primer fotograma ya muestra el hero con estilos,
@@ -330,7 +339,8 @@ Alcance de la ronda:
   medición. Queda pendiente la mediana de 3 corridas de PSI.
 - **Decisión sobre `inlineCss` (T11)**:
   - Peso del HTML de `/es`: con `inlineCss`, 375 852 B sin comprimir, gzip de `next start`
-    63 943 B y brotli 46 828 (q4), 42 098 (q5) y 34 080 B (q11). Sin `inlineCss`: 98 566 B, gzip
+    63 943 B. Brotli 46 828 (q4), 42 098 (q5) y 34 080 B (q11), **calculado fuera de la
+    medición** (`next start` no sirvió brotli; no verificable hasta el deploy). Sin `inlineCss`: 98 566 B, gzip
     16 375 B, más 23,3 KB de hojas cacheables. Producción hoy (sin T11): `curl -H
     'Accept-Encoding: br' https://solutionspjm.com/es` → `content-encoding: br`, 15 254 B
     transferidos (98 069 B descomprimido), 2 hojas `rel="stylesheet"`. Con brotli, el HTML
@@ -343,9 +353,11 @@ Alcance de la ronda:
     pero la variación entre corridas de una misma variante (~160 ms) es del mismo orden.
     Rendimiento 90–91 frente a 88–89.
   - Aplicando la regla (se mantiene solo si FCP/LCP mejoran de forma clara, más allá del ruido,
-    frente a su coste): **se mantiene**. La mejora del FCP es clara y repetible; la del LCP es
-    modesta y está en el límite del ruido. El coste en bytes es pequeño con brotli en la primera
-    visita, pero se paga en cada página. Lo decide planner con la mediana de PSI.
+    frente a su coste): **no concluyente, decisión escalada a planner** (hallazgo bloqueante de
+    reviwer sobre `b1df782`). La mejora del FCP es clara y repetible. La del LCP (−233 ms de media)
+    está en el ruido: dispersión de ~162 ms por variante, solo 2 corridas y ~70 ms entre rangos. El
+    coste en navegaciones siguientes (CSS en cada `.rsc`, sin caché) no se midió. Planner decide
+    tras T17.
 - Comprobación visual con `inlineCss` (Chrome headless, captura de `/es` y de `/es/no-existe`,
   404): ambas se ven con estilos (hero con imagen, tipografías y botón; 404 con imagen, título y
   botón). Las capturas se tomaron con ventana de escritorio estrecha, así que el texto se corta

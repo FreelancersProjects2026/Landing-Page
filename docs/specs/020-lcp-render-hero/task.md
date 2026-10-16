@@ -248,11 +248,16 @@
     subtítulo del hero, retraso de render ~3,0–3,2 s: **LCP sigue ≥ 2,5 s**. Antes del LCP: sin
     hojas de estilo, scripts 182,1 KB (T07: 204,2; sale `29_*.js`), HTML 62,9 KB con gzip. Radix
     (`0p3d03n8blbsx.js`) fuera del HTML inicial, pero se pide al hidratar, en 2 de 4 corridas 3–9 ms
-    antes del LCP observado. El hilo principal no baja (1,6–1,7 s; `30ovs0h4fmpog.js` ~890 ms de
-    arranque). SI de 4,6 s no reproducido: la tira deja de cambiar a ~2,46 s. HTML de `/es`: gzip
-    63 943 B, brotli 34–47 KB (sin `inlineCss`: gzip 16 375 B; producción br 15 254 B).
-    `inlineCss` se mantiene (FCP −150 ms estable, LCP −230 ms en el límite del ruido). `/es` y la
-    404 se ven con estilos (Chrome headless). Puerto 3123 liberado.
+    antes del LCP observado. El hilo principal no baja (1 675–1 692 ms con `inlineCss`, 1 626–1 640 sin
+    ella; `30ovs0h4fmpog.js` 880–912 ms de arranque). SI de 4,6 s no reproducido: la tira deja de cambiar a ~2,46 s. HTML de `/es`: gzip
+    63 943 B, brotli 34–47 KB calculado fuera de la medición, porque `next start` no sirvió br (sin `inlineCss`: gzip 16 375 B; producción br 15 254 B).
+    ~~`inlineCss` se mantiene~~ → **no concluyente, decisión escalada a planner** (hallazgo
+    bloqueante de reviwer sobre `b1df782`: LCP −233 ms dentro del ruido). `/es` y la 404 se ven con
+    estilos (Chrome headless). Puerto 3123 liberado.
+  - Hallazgos de reviwer sobre `b1df782`, corregidos en `spec.md` por planner: lista de chunks con
+    los hashes de T07, cifras de arranque e hilo principal, tiempos de `/_vercel/insights` y de
+    Radix respecto al LCP, brotli no verificable, y que T10 es causa candidata (deducido) del LCP
+    peor que T07 sin `inlineCss`.
 
 ### Correcciones de T10 (hallazgos de reviwer sobre `c520365`; antes de T12)
 - [x] T14 Corrección [mejora] (prueba de comportamiento, no de clases): en
@@ -335,3 +340,27 @@
     código actual. Rojo: sin la línea `onBlur` en `whatsapp-button-lazy.tsx` falla con «Received
     element is focused» (el real roba el foco); línea restaurada sin commitear. `pnpm test`
     33 archivos / 261 pruebas en verde; `pnpm check` OK.
+
+### Ronda 3, aislar T10 (tras los hallazgos de reviwer sobre T12, `b1df782`)
+- [ ] T17 Medición (sin código commiteado): aislar el efecto de T10 (menú de WhatsApp en diferido)
+  para decidir si se revierte T10, `inlineCss` (T11), ambos o ninguno.
+  - Variantes, todas con build local de producción y Lighthouse con el mismo método que T12, **3
+    corridas cada una**:
+    - **A**: HEAD tal cual (con T10 y con `inlineCss`).
+    - **B**: con `inlineCss` y **sin T10**. En el árbol de trabajo, sin commitear, `page.tsx`
+      vuelve a importar `WhatsAppButton` directamente en lugar de `WhatsAppButtonLazy`. Es el único
+      cambio, y basta para sacar el envoltorio y el `next/dynamic` del bundle.
+    - **C**: sin T10 y sin `inlineCss` (lo mismo que B, más `inlineCss: false`). Equivale a T07
+      con el código actual y sirve de control del ruido entre builds.
+  - Anotar en `spec.md` `## Medición` (subsección «Ronda 3, aislar T10») una tabla por corrida con
+    FCP, LCP, SI, `mainthread-work-breakdown` total y `bootup-time` del chunk principal. Añadir la
+    mediana por variante y la lista de scripts que empiezan antes del LCP observado (URL y tamaño)
+    de la corrida mediana de cada variante.
+  - Al terminar, restaurar el árbol de trabajo (`git status` limpio salvo `spec.md`) y liberar el
+    puerto.
+  - Reportar a planner las medianas: A frente a B mide el efecto de T10 con `inlineCss`; B frente a
+    C mide el efecto de `inlineCss` sin T10. Planner decide la reversión, si la hay, en tareas
+    nuevas. No se revierte nada en esta tarea.
+  (depende de T12)
+  Commit: `docs(landing): 020-T17 medición para aislar T10`.
+  Archivos: `docs/specs/020-lcp-render-hero/spec.md`.
