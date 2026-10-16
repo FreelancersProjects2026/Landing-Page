@@ -1,0 +1,30 @@
+# Tareas: LCP móvil
+
+## Base acordada
+- Spec: `docs/specs/019-lcp-movil/spec.md`. Plan: `plan.md`.
+- Rama: `perf/lcp-movil` (no crear otra, no hacer push).
+- Método: TDD, un commit por tarea `fix(landing): 019-Tnn ...`, `pnpm validate` en verde.
+- Sin cambio de contenido visible ni de dominio. Sin dependencias nuevas.
+- Orden: T01 → T02 (comparten `landing-sections.test.tsx`); T03 en paralelo con ambas.
+
+## Tareas
+- [ ] T01 Prueba en `landing-sections.test.tsx`: las imágenes de cómo trabajamos, proyectos,
+  footer y servicios tienen `loading="lazy"` y `decoding="async"`; la hero no tiene
+  `loading="lazy"` y conserva `fetchpriority="high"` (falla) → añadir `loading="lazy"` y
+  `decoding="async"` a esos cuatro `<img>`. (paralela a T03)
+  Archivos: `src/components/landing/how-it-works-section.tsx`,
+  `src/components/landing/projects-section.tsx`, `src/components/landing/footer-section.tsx`,
+  `src/components/landing/service-cards.tsx`, `src/components/landing/landing-sections.test.tsx`.
+- [ ] T02 Prueba en `landing-sections.test.tsx` (bloque navegación, hoy asserta el JPEG): el logo
+  contiene `/logo/icono/LOGOsolutionsPJM-192.png` (falla) → cambiar el `src` del `<Image>` de
+  `navigation.tsx`; mantener `alt=""`, 40×40 y `preload`. No tocar `whatsapp-button`.
+  (depende de T01)
+  Archivos: `src/components/landing/navigation.tsx`,
+  `src/components/landing/landing-sections.test.tsx`.
+- [ ] T03 Prueba en `fonts.test.ts`: el mock registra las opciones de cada fuente y
+  `JetBrains_Mono` se llama con `preload: false`, las Instrument sin él (falla) → añadir
+  `preload: false` a `JetBrains_Mono` en `fonts.ts`. (paralela a T01/T02)
+  Archivos: `src/app/fonts.ts`, `src/app/fonts.test.ts`.
+- [ ] T04 Verificación (sin commit de código): `pnpm validate` verde; `pnpm build && pnpm start` y
+  el `<head>` de `/es` solo precarga hero, logo PNG 192 y fuentes Instrument. Marcar criterios en
+  `spec.md`. (depende de T01–T03)
