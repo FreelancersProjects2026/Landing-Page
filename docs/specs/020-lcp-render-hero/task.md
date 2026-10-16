@@ -12,6 +12,7 @@
   → T07. Recorte de JS o
   alternativas del plan solo si T07 los señala (se planifican aparte).
 - Tras T07: T09 (corrección de T05, cabecera `Link` de la 404).
+- Ronda 3 (tras el deploy de 020, misma rama y spec): T10 ∥ T11 (no comparten archivos) → T12.
 - Variantes de imagen: sharp ya instalado por Next (`node_modules/.pnpm/sharp@0.34.5`), script de
   un solo uso fuera del repo, sin dependencias nuevas.
 
@@ -155,3 +156,52 @@
   Archivos: `src/components/not-found/not-found-view.tsx`,
   `src/components/not-found/not-found-view.test.tsx`, `docs/specs/020-lcp-render-hero/spec.md`
   (solo el criterio).
+
+### Ronda 3: JS de Radix y CSS en línea
+- [ ] T10 Prueba nueva en `whatsapp-button-lazy.test.tsx`: al renderizar `WhatsAppButtonLazy`, el
+  botón con el nombre accesible está presente de inmediato y con las clases de posición (`fixed`,
+  `right-4`, `bottom-[calc(1rem+env(safe-area-inset-bottom))]`, `z-30`); tras cargar el
+  componente diferido, un clic abre el `menu` con un `menuitem` por opción y sus `href` (falla: el
+  envoltorio no existe).
+  → Extraer el `<button>` flotante a `whatsapp-trigger.tsx`, que reenvía props y ref al
+  `<button>`, y usarlo en `whatsapp-button.tsx` dentro de `DropdownMenuTrigger asChild`. Crear
+  `whatsapp-button-lazy.tsx` (`'use client'`) con `next/dynamic` de `./whatsapp-button`,
+  `ssr: false` y `loading` que pinta `WhatsAppTrigger` con el mismo `label`. `page.tsx` importa
+  el envoltorio.
+  - `whatsapp-button.test.tsx` debe seguir en verde sin cambiar aserciones.
+  - En `page.test.tsx` solo se permite esperar al botón real antes de abrir el menú (por ejemplo,
+    `findBy…` hasta `aria-haspopup="menu"`); no se quita ninguna aserción ni se toca la prueba de
+    hidratación. Si la hidratación falla, parar y reportar a planner.
+  - Verificación: en `pnpm build && pnpm start`, el HTML de `/es` contiene el botón (`curl` y
+    buscar su `aria-label`), y el chunk con Radix ya no está entre los `<script>` iniciales.
+  (paralela a T11)
+  Commit: `fix(landing): 020-T10 menú de WhatsApp en diferido, Radix fuera del arranque`.
+  Archivos: `src/components/landing/whatsapp-trigger.tsx` (nuevo),
+  `src/components/landing/whatsapp-button.tsx`,
+  `src/components/landing/whatsapp-button-lazy.tsx` (nuevo),
+  `src/components/landing/whatsapp-button-lazy.test.tsx` (nuevo), `src/app/[lang]/page.tsx`,
+  `src/app/[lang]/page.test.tsx` (solo si hace falta esperar).
+- [ ] T11 Prueba en `next.config.test.ts`: `nextConfig.experimental?.inlineCss` es `true` (falla)
+  → añadir `inlineCss: true` a `experimental` en `next.config.mjs`, con un comentario breve del
+  porqué (quita la hoja de estilos que bloquea el render). Las pruebas existentes siguen.
+  - Verificación: `pnpm build && pnpm start`. El HTML de `/es`, `/en`, la privacidad y una URL 404
+    no tiene `<link rel="stylesheet">` y sí `<style>` con el CSS; las cuatro se ven igual en el
+    navegador. Si el build falla o alguna página pierde estilos, parar y reportar a planner.
+  (paralela a T10)
+  Commit: `fix(landing): 020-T11 CSS en línea en el HTML`.
+  Archivos: `next.config.mjs`, `next.config.test.ts`.
+- [ ] T12 Medición ronda 3 (sin código): `pnpm validate` verde; `pnpm build && pnpm start` y
+  Lighthouse móvil local con el mismo método que T07 (dos corridas, `--save-assets`) → anotar en
+  `## Medición` (subsección «Ronda 3») LCP, FCP, **Speed Index**, elemento LCP y la lista de
+  scripts y hojas de estilo que empiezan antes del LCP observado (URL y tamaño), comparada con
+  T07.
+  - Confirmar que el chunk de Radix (hoy `29_*.js`) arranca después del LCP y que no hay hojas de
+    estilo.
+  - Para la hipótesis del SI, anotar en qué momento el último fotograma de la tira de Lighthouse
+    sigue cambiando (animaciones del hero).
+  - Marcar los criterios de la ronda 3 en `spec.md`.
+  - Reportar a planner y recordar al usuario que corra PSI móvil 3 veces en producción tras el
+    deploy y anote la mediana.
+  (depende de T10 y T11)
+  Commit: `docs(landing): 020-T12 medición ronda 3`.
+  Archivos: `docs/specs/020-lcp-render-hero/spec.md`.

@@ -66,14 +66,35 @@ pantalla, empezando por las de mayor impacto y menor esfuerzo.
    JavaScript de las secciones bajo el pliegue o aplicar otra alternativa del plan. Eso se
    planifica aparte, según la medición.
 
+### Ronda 3 (tras el deploy de 020, misma spec y rama por pedido del usuario)
+PSI móvil en producción con 020 desplegada (una corrida, ruido ±0,5 s): Rendimiento 90, FCP 1,8 s,
+LCP 3,1 s, TBT 0, CLS 0, **Speed Index 4,6 s**. Con 019: 95, FCP 1,2 s, LCP 2,9 s, SI 1,3 s. T07
+mostró que dominan los scripts (sin JS, el LCP simulado baja a 2,6 s) y que el CSS principal
+bloquea ~450 ms de FCP. Datos del build local:
+- `29_1ix9xaos4m.js` (155 KB sin comprimir, ~700 ms de arranque en T07) contiene Radix
+  DropdownMenu (popper/floating, focus-scope, dismissable-layer), importado solo por el botón
+  flotante de WhatsApp (`whatsapp-button.tsx`), que no hace falta para el primer pintado.
+- `0-ssspa2fpt11.js` (221 KB) es react-dom: no se puede recortar.
+
+Alcance de la ronda:
+8. El código de Radix del botón flotante de WhatsApp se descarga después de la hidratación, no en
+   el arranque. El botón sigue en el HTML del servidor con el mismo aspecto, nombre accesible y
+   posición. El menú conserva su comportamiento: clic, Enter, Esc, regreso del foco, roles
+   `menu`/`menuitem` y sin bloquear el scroll.
+9. El CSS se sirve en línea en el HTML (`experimental.inlineCss`, disponible en Next 16.2.12), sin
+   la petición de hoja de estilos que bloquea el render.
+10. Medir de nuevo en local y pedir al usuario 3 corridas de PSI en producción (se usa la mediana).
+
 ## Fuera de alcance
 - Cambios de contenido, textos, dominio (`company-profile`) o diseño estático del hero.
 - Cambiar la imagen hero.
 - Variantes de `servicios.webp` (oculta en móvil con `hidden lg:block`, no se descarga),
   `footer.webp` (con `object-cover` a 340 px de alto se muestra ~1 020 px CSS de ancho en móvil;
   está al final de la página) y `proyectos.webp` (no aparece entre las peticiones previas al LCP).
-- Fuentes, `next.config.mjs` (`inlineCss`) y JavaScript diferido: solo si la medición del punto 7
-  los señala.
+- Fuentes: T07 mostró que la mono no influye en el LCP.
+- Recortar `'use client'` de las secciones bajo el pliegue o reescribir sus animaciones: solo si la
+  medición de la ronda 3 lo señala. (`inlineCss` y el JS diferido de Radix entraron en la ronda 3.)
+- Reemplazar Radix por la API nativa `popover`: descartado en el plan.
 - Dependencias nuevas (las variantes se generan con el sharp que ya trae Next, como en la spec 019).
 
 ## Criterios de aceptación
@@ -101,7 +122,16 @@ pantalla, empezando por las de mayor impacto y menor esfuerzo.
   **No concluyente (dentro del ruido)**: T07 da 3,5–3,6 s, pero T04 ya dio 3 681 ms en la
   corrida 1 y la propia medición «Final» concluye que el LCP no cambió.
 - [ ] Tras el deploy, PSI móvil de `/es` reporta LCP < 2,5 s y Rendimiento ≥ 95 (verificación
-  manual del usuario).
+  manual del usuario: **mediana de 3 corridas**).
+- [ ] Ronda 3: el HTML de `/es` sigue incluyendo el botón flotante de WhatsApp (mismo nombre
+  accesible y clases de posición), y el chunk con Radix DropdownMenu no está entre los scripts
+  iniciales: se pide después del LCP observado.
+- [ ] Ronda 3: el menú de WhatsApp conserva su comportamiento (pruebas de `whatsapp-button.test.tsx`
+  y del botón flotante en `page.test.tsx` en verde, sin quitar ninguna aserción).
+- [ ] Ronda 3: `next.config.mjs` activa `experimental.inlineCss`. `/es`, `/en`, la privacidad y la
+  404 compiladas no piden hojas de estilo (`<link rel="stylesheet">`) y se ven igual.
+- [ ] Ronda 3: medición local anotada en `## Medición` («Ronda 3»), con la lista de scripts que
+  empiezan antes del LCP y el Speed Index, comparada con T07.
 
 ## Medición
 ### Antes (T01, 2026-10-16)
@@ -243,3 +273,14 @@ pantalla, empezando por las de mayor impacto y menor esfuerzo.
   eyebrow, que está arriba del pliegue, usa `font-mono`. Cambiar su tipografía altera el diseño
   aprobado: no se toca salvo que la medición final la señale como causa principal, y en ese caso
   se consulta al usuario.
+- **Speed Index de 4,6 s en producción** (antes 1,3 s). Hipótesis, sin verificar: el fotograma
+  final que toma Lighthouse cae en medio de animaciones continuas del hero (palabra rotativa del
+  eslogan, pétalos, brillo, partículas), así que la progresión visual tarda en «completarse».
+  Contra la hipótesis: esas animaciones ya existían con 019. Es una sola corrida, así que puede ser
+  ruido. La ronda 3 lo mide en local (SI y tira de fotogramas) y con la mediana de 3 corridas de
+  PSI. Si se confirma, se planifica aparte: tocar las animaciones cambia el diseño aprobado y se
+  consulta al usuario.
+- **Botón de WhatsApp antes de cargar el menú** (ronda 3): entre el primer pintado y la carga del
+  chunk diferido (justo después de la hidratación), el botón se ve pero un toque no abre el menú.
+  Se asume aceptable porque la ventana es breve y WhatsApp también está en el hero, el CTA, la
+  sección de contacto y el footer. A confirmar por el usuario.

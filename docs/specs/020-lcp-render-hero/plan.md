@@ -80,6 +80,48 @@ Descartadas:
 - `fetchPriority="low"`: dependería de un detalle interno de React menos claro que `lazy`.
 - Tocar `next.config.mjs` o un middleware para quitar cabeceras: es más código y global.
 
+### Ronda 3: JS de Radix y CSS en línea (T10–T12)
+**T10, Radix fuera del arranque.** Opción elegida: `next/dynamic` con `ssr: false` y un fallback
+estático.
+- Un envoltorio cliente nuevo (`whatsapp-button-lazy.tsx`) carga `WhatsAppButton` en diferido.
+  `ssr: false` no se permite en Server Components, por eso hace falta el envoltorio: `page.tsx`
+  es Server Component y pasa a importar el envoltorio.
+- Mientras carga, `loading` pinta el mismo botón visual sin Radix: mismo `aria-label`, clases de
+  posición y el ícono `MessageCircle`. Next renderiza ese `loading` en el servidor, así que el
+  HTML conserva el botón y el layout no cambia.
+- Para no duplicar el marcado, el botón (trigger) se extrae a un componente propio que reciben
+  tanto el fallback como `DropdownMenuTrigger asChild`. Ese componente reenvía al `<button>` las
+  props y la ref que inyecta Radix (`aria-expanded`, `data-state`, manejadores).
+- El chunk de Radix se pide al montar el envoltorio en el cliente, después de la hidratación, así
+  que queda fuera de la ventana previa al LCP que cuenta Lantern.
+
+Descartadas:
+- API nativa `popover`: no da semántica de menú (roles `menu`/`menuitem`, flechas) sin escribirla
+  a mano, jsdom no implementa la API Popover (las pruebas de teclado y Esc quedarían sin cubrir), y
+  posicionar respecto al botón requiere CSS anchor positioning, que no es universal.
+- `next/dynamic` sin `ssr: false`: el chunk se sigue cargando para hidratar, sin ganancia.
+- Cargar Radix solo al primer toque: más estado y manejo de foco para una ventana que ya es breve.
+
+`page.test.tsx` comprueba el botón en el primer render (lo cubre el fallback) y abre el menú. Si
+el clic llega antes de que cargue el componente diferido, la prueba puede esperar al botón real
+(por ejemplo con `findBy…` hasta que tenga `aria-haspopup="menu"`), pero no se quita ninguna
+aserción ni se toca la prueba de hidratación. Si la hidratación falla con el fallback, coder para
+y lo reporta.
+
+**T11, CSS en línea.** `experimental.inlineCss: true` en `next.config.mjs` (existe en Next
+16.2.12, `config-shared`). Next inyecta el CSS como `<style>` en el HTML de producción en lugar de
+`<link rel="stylesheet">`, y elimina la petición que bloquea el render (~450 ms de FCP en T07).
+Coste: ~23 KB de CSS sin caché entre páginas. Es aceptable en una landing de una página, y la
+privacidad y la 404 se visitan poco. Se verifica que la 404 global y la privacidad siguen con
+estilos. No requiere ADR: es una opción de configuración reversible, no un cambio de arquitectura.
+
+**T12, medición.** Igual que T07 (dos corridas locales, `--save-assets`). Se anotan LCP, FCP, SI y
+la lista de scripts que empiezan antes del LCP observado, para confirmar que el chunk de Radix ya
+no está ahí y que no se piden hojas de estilo. También se mira la tira de fotogramas para la
+hipótesis del Speed Index (animaciones del hero). Después se pide al usuario que corra **PSI móvil
+3 veces** en producción tras el deploy y anote la **mediana**: una sola corrida tiene ±0,5 s de
+ruido.
+
 Alternativas (no son tareas; solo si la medición final las señala):
 - `experimental.inlineCss: true` en `next.config.mjs`: elimina los 2 CSS que bloquean el render.
 - Variante `hero-720.webp` en el `srcset` para móvil, si el LCP es la imagen y pesa su carga.
@@ -112,6 +154,12 @@ No hay modelo de dominio nuevo: es presentación pura en `src/components/landing
 | `public/ComoTrabajamos/como-trabajamos-640.webp` | Recurso estático | Variante de 640 px (nueva). |
 | `src/components/landing/how-it-works-section.tsx` | UI (landing) | `srcset`/`sizes` de la imagen. |
 | `src/components/landing/landing-images.test.ts` | Prueba | La variante existe, es WebP y mide 640 px. |
+| `src/components/landing/whatsapp-trigger.tsx` | UI (landing) | Botón flotante (marcado compartido por el fallback y el trigger de Radix), T10. |
+| `src/components/landing/whatsapp-button.tsx` | UI (landing) | Usa el trigger extraído; resto igual, T10. |
+| `src/components/landing/whatsapp-button-lazy.tsx` | UI (landing) | Envoltorio cliente: `next/dynamic` `ssr: false` con el trigger como `loading`, T10. |
+| `src/components/landing/whatsapp-button-lazy.test.tsx` | Prueba | Botón presente al instante; tras cargar, abre el menú con sus opciones, T10. |
+| `src/app/[lang]/page.tsx` | App | Importa el envoltorio en lugar de `WhatsAppButton`, T10. |
+| `next.config.mjs`, `next.config.test.ts` | Config | `experimental.inlineCss: true` y su prueba, T11. |
 | `src/components/landing/hero-section.tsx` | UI (landing) | Entrada sin fundido. |
 | `src/components/landing/landing-sections.test.tsx` | Prueba | Texto del hero sin `fade-in`. |
 | `src/components/landing/rotating-slogan.tsx` | UI (landing) | Primera palabra sin animación de entrada. |
@@ -133,5 +181,10 @@ No hay modelo de dominio nuevo: es presentación pura en `src/components/landing
   640 px de ancho (sharp) y pesa menos que la original.
 - `landing-sections.test.tsx` (RTL): la imagen de «Cómo trabajamos» ofrece en `srcset` la variante
   `-640.webp` y la original, tiene `sizes` y conserva `loading="lazy"`.
-- Manual: Lighthouse móvil local antes (T01), después (T04) y final (T07); PSI de producción tras
-  el deploy.
+- `whatsapp-button-lazy.test.tsx` (RTL): al renderizar, el botón con el nombre accesible está
+  presente de inmediato, con las clases de posición; tras cargar el componente diferido, un clic
+  abre el `menu` con un `menuitem` por opción y sus `href`. Las pruebas de
+  `whatsapp-button.test.tsx` siguen en verde sin cambios de aserciones.
+- `next.config.test.ts`: `experimental.inlineCss` es `true`; las pruebas existentes siguen.
+- Manual: Lighthouse móvil local antes (T01), después (T04), final (T07) y ronda 3 (T12); PSI de
+  producción tras el deploy (mediana de 3 corridas).
