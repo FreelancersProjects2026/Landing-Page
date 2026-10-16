@@ -53,6 +53,33 @@ peticiones que empiezan antes del LCP observado (~110 ms). Se atacan por impacto
    el chunk para hidratar, y quitar `'use client'` implica rehacer las animaciones de entrada
    (`useInView`); solo vale la pena si la medición muestra que los scripts dominan.
 
+### Corrección tras T07: cabecera `Link` de la 404 (T09)
+**Qué la emite.** Es el mismo mecanismo que en la spec 019. React 19, al renderizar en el
+servidor, registra una precarga para todo `<img>` que no sea `loading="lazy"`: `next/image` con
+`images.unoptimized` acaba en un `<img>` normal. Next pasa a React un callback de cabeceras y
+convierte esas precargas en la cabecera HTTP `Link: <…>; rel=preload; as="image"`. La 404 global
+(`global-not-found.tsx` → `LocalizedNotFound` → `NotFoundView`) se renderiza en cada respuesta
+404, incluso en las de subrecursos como `/_vercel/insights/script.js`, así que toda 404 lleva la
+cabecera.
+- Antes de T05, la cabecera ya existía sin `fetchpriority`: la imagen era eager por `preload`, y
+  Chrome la pedía con prioridad Low.
+- T05 la dejó eager con `fetchPriority="high"`: la cabecera añade `fetchpriority="high"` y la
+  petición sube a High.
+
+**Cambio mínimo elegido.** Cargar la imagen de la 404 en diferido: `loading="lazy"`, sin
+`fetchPriority`. React no registra precargas para imágenes diferidas, así que desaparece la
+cabecera en cualquier respuesta 404. En la página 404 la imagen está arriba del pliegue: Chrome
+la pide igualmente en cuanto calcula el layout, con un retraso pequeño que se acepta porque la 404
+no es una página de conversión y no se mide su LCP. El criterio de la spec cambia de «prioridad
+alta y carga inmediata» a «sin precarga en ninguna respuesta 404».
+
+Descartadas:
+- Reemplazar `next/image` por un `<img>` simple: React precarga igual cualquier `<img>` eager, así
+  que no cambia nada.
+- Solo quitar `fetchPriority`: vuelve a la cabecera de prioridad Low que existía antes de T05.
+- `fetchPriority="low"`: dependería de un detalle interno de React menos claro que `lazy`.
+- Tocar `next.config.mjs` o un middleware para quitar cabeceras: es más código y global.
+
 Alternativas (no son tareas; solo si la medición final las señala):
 - `experimental.inlineCss: true` en `next.config.mjs`: elimina los 2 CSS que bloquean el render.
 - Variante `hero-720.webp` en el `srcset` para móvil, si el LCP es la imagen y pesa su carga.
@@ -80,8 +107,8 @@ No hay modelo de dominio nuevo: es presentación pura en `src/components/landing
 | Ruta | Capa | Responsabilidad |
 |------|------|-----------------|
 | `docs/specs/020-lcp-render-hero/spec.md` | Docs | Sección `## Medición` (T01, T04 y T07). |
-| `src/components/not-found/not-found-view.tsx` | UI | Imagen de la 404 con prioridad alta, sin precarga. |
-| `src/components/not-found/not-found-view.test.tsx` | Prueba | Sin `<link rel=preload>`; imagen con `fetchpriority="high"`. |
+| `src/components/not-found/not-found-view.tsx` | UI | Imagen de la 404 en diferido, sin precarga (T05, corregido en T09). |
+| `src/components/not-found/not-found-view.test.tsx` | Prueba | Sin `<link rel=preload>`; imagen `loading="lazy"`, sin `fetchpriority` (T09). |
 | `public/ComoTrabajamos/como-trabajamos-640.webp` | Recurso estático | Variante de 640 px (nueva). |
 | `src/components/landing/how-it-works-section.tsx` | UI (landing) | `srcset`/`sizes` de la imagen. |
 | `src/components/landing/landing-images.test.ts` | Prueba | La variante existe, es WebP y mide 640 px. |

@@ -56,8 +56,10 @@ pantalla, empezando por las de mayor impacto y menor esfuerzo.
 3. ~~Primera palabra rotativa sin animación inicial~~: **descartado** en T04 (el LCP no es el
    eslogan).
 4. Volver a medir con Lighthouse local (hecho en T04: LCP simulado sin cambio).
-5. La imagen de la 404 deja de precargarse en cualquier página; en la 404 sigue cargándose con
-   prioridad alta (está arriba del pliegue allí).
+5. La imagen de la 404 deja de precargarse en cualquier página, tanto por `<link>` en el
+   documento como por la cabecera HTTP `Link` de las respuestas 404. Desde T09 se carga en diferido
+   (`loading="lazy"`): la prioridad alta de T05 era justo lo que hacía que la cabecera la pidiera
+   en High.
 6. `como-trabajamos.webp` tiene una variante ligera para móvil (640 px de ancho) servida con
    `srcset`/`sizes` según su tamaño mostrado; la original sigue para pantallas grandes.
 7. Medir de nuevo y, con la lista de peticiones previas al LCP, decidir si hace falta reducir el
@@ -80,9 +82,11 @@ pantalla, empezando por las de mayor impacto y menor esfuerzo.
   `motion-safe:animate-in` y su `slide-in-from-bottom-*`.
 - [x] ~~Si aplica (alcance 3): primera palabra rotativa sin `animate-hero-letter`~~: no aplica
   (T04: el LCP es el subtítulo, no el eslogan).
-- [ ] La vista de la 404 no emite `<link rel="preload">` de su imagen; la imagen conserva
-  prioridad alta y carga inmediata en la 404. En `/es` compilada, la 404 no aparece entre las
-  peticiones de red.
+- [ ] La vista de la 404 no emite `<link rel="preload">` de su imagen, y ninguna respuesta 404
+  lleva la cabecera `Link: rel=preload` de esa imagen (comprobado con `curl -I` en `pnpm start`).
+  La imagen se carga en diferido en la 404. En `/es` compilada, la imagen de la 404 no aparece
+  entre las peticiones de red. (Redactado de nuevo tras T07: con el criterio anterior, «prioridad
+  alta y carga inmediata», la primera mitad fallaba en cualquier entorno. Lo corrige T09.)
 - [x] Existe `public/ComoTrabajamos/como-trabajamos-640.webp` (640 px de ancho, WebP); la imagen
   de «Cómo trabajamos» la ofrece en `srcset` junto a la original, con `sizes` acorde a su ancho
   mostrado, y conserva `loading="lazy"`, `decoding="async"`, `alt=""` y `aria-hidden`.
@@ -93,8 +97,9 @@ pantalla, empezando por las de mayor impacto y menor esfuerzo.
   descarte la hipótesis (b).
 - [x] Con `prefers-reduced-motion` no hay animación (se mantienen `motion-safe:`/`motion-reduce:`).
 - [x] `src/app/[lang]/page.test.tsx` (hidratación) sigue en verde; `pnpm validate` en verde.
-- [x] Lighthouse móvil local tras el cambio: LCP simulado menor que los 3,7 s de T01 (T07:
-  3,5–3,6 s; dentro del ruido entre corridas, ver «Final»).
+- [ ] Lighthouse móvil local tras el cambio: LCP simulado menor que los 3,7 s de T01.
+  **No concluyente (dentro del ruido)**: T07 da 3,5–3,6 s, pero T04 ya dio 3 681 ms en la
+  corrida 1 y la propia medición «Final» concluye que el LCP no cambió.
 - [ ] Tras el deploy, PSI móvil de `/es` reporta LCP < 2,5 s y Rendimiento ≥ 95 (verificación
   manual del usuario).
 
@@ -200,8 +205,15 @@ pantalla, empezando por las de mayor impacto y menor esfuerzo.
   `/_vercel/insights/script.js`, que en `next start` local no existe; la 404 de Next responde con
   la cabecera `link: </404/404-raices-obsidiana.webp>; rel=preload; as="image";
   fetchpriority="high"` y Chrome la sigue. En Vercel ese script existe, así que en producción no
-  debería ocurrir (deducido, no medido). Efecto secundario: cualquier respuesta 404 (no solo la
-  página) emite esa precarga por cabecera. Por eso el criterio de la 404 queda sin marcar.
+  debería ocurrir en `/es` (deducido, no medido).
+- **La cabecera ya existía antes de T05** (observado en `t04-run2-0.devtoolslog.json`): en T04 la
+  respuesta 404 de `/_vercel/insights/script.js` ya traía `link: </404/404-raices-obsidiana.webp>;
+  rel=preload; as="image"` y la imagen se pedía con prioridad **Low**. Tras T05 la cabecera añade
+  `fetchpriority="high"` y la petición pasa a **High**: T05 quitó la precarga del payload RSC,
+  pero subió la prioridad de la precarga por cabecera. Por eso la primera mitad del criterio de la
+  404 falla en cualquier entorno, y queda sin marcar hasta T09.
+- **Deducido** (generalizado desde una sola respuesta 404 observada): cualquier respuesta 404, no
+  solo la página, emitiría esa precarga por cabecera, porque todas las sirve la 404 global.
 - **LCP simulado sin cambio** (3,5–3,6 s frente a 3,5–3,7 s en T04): quitar 124 KB de imagen no
   movió el LCP, así que las imágenes no estaban en el camino crítico de Lantern.
 - **Qué domina lo que queda** (diagnóstico con `--blocked-url-patterns`, una corrida cada una,

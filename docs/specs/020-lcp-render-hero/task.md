@@ -11,6 +11,7 @@
 - Orden (replanificado tras T04): T05 ∥ T06 (no comparten archivos) → T08 (corrección de T06)
   → T07. Recorte de JS o
   alternativas del plan solo si T07 los señala (se planifican aparte).
+- Tras T07: T09 (corrección de T05, cabecera `Link` de la 404).
 - Variantes de imagen: sharp ya instalado por Next (`node_modules/.pnpm/sharp@0.34.5`), script de
   un solo uso fuera del repo, sin dependencias nuevas.
 
@@ -127,3 +128,24 @@
     pidiendo en local por la cabecera `link: rel=preload` de la 404 que responde a
     `/_vercel/insights/script.js` → criterio de la 404 sin marcar. Bloqueando `*.js` el LCP baja a
     2,6 s: dominan los scripts. Puerto 3123 liberado.
+- [ ] T09 Corrección [mejora] (hallazgo de reviwer sobre T07, `db42090`): toda respuesta 404 lleva
+  `Link: </404/404-raices-obsidiana.webp>; rel=preload; as="image"; fetchpriority="high"`. La
+  emite React al renderizar en el servidor el `<img>` eager de `NotFoundView`, y Next la convierte
+  en cabecera; T05 subió su prioridad de Low a High (ver «Corrección tras T07» en `plan.md`).
+  - Prueba en `not-found-view.test.tsx`: la imagen tiene `loading="lazy"` y no tiene
+    `fetchpriority`; sigue sin haber ningún `link[rel="preload"]` de imagen en el documento (falla:
+    hoy es `eager` con `fetchpriority="high"`).
+  - Cambio: en `not-found-view.tsx` quitar `fetchPriority="high"` y pasar a `loading="lazy"`;
+    mantener `src`, `alt`, tamaño y clases. Ajustar `global-not-found.test.tsx` solo si asserta la
+    prioridad; no debilitar el resto.
+  - Verificación manual: `pnpm build && pnpm start` y `curl -sI http://localhost:3000/xyz` y
+    `curl -sI http://localhost:3000/_vercel/insights/script.js`. Ambas responden 404 sin ninguna
+    cabecera `link` que mencione `404-raices-obsidiana`; anotar la salida como evidencia. La 404
+    sigue mostrando la imagen en el navegador. Si la cabecera persiste, parar y reportar a planner
+    sin probar otras variantes.
+  - Al terminar, marcar en `spec.md` el criterio de la 404.
+  (depende de T07)
+  Commit: `fix(not-found): 020-T09 imagen de la 404 sin cabecera de precarga`.
+  Archivos: `src/components/not-found/not-found-view.tsx`,
+  `src/components/not-found/not-found-view.test.tsx`, `docs/specs/020-lcp-render-hero/spec.md`
+  (solo el criterio).
