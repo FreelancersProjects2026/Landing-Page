@@ -12,4 +12,8 @@ describe('next.config', () => {
   it('activa la 404 global para las URL sin idioma', () => {
     expect(nextConfig.experimental?.globalNotFound).toBe(true)
   })
+
+  it('pone el CSS en línea en el HTML', () => {
+    expect(nextConfig.experimental?.inlineCss).toBe(true)
+  })
 })

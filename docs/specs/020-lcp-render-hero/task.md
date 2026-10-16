@@ -13,6 +13,8 @@
   alternativas del plan solo si T07 los señala (se planifican aparte).
 - Tras T07: T09 (corrección de T05, cabecera `Link` de la 404).
 - Ronda 3 (tras el deploy de 020, misma rama y spec): T10 ∥ T11 (no comparten archivos) → T12.
+- Correcciones de T10 (antes de T12): T14 → T15 → T13 (comparten `whatsapp-button-lazy.test.tsx`;
+  ninguna toca `next.config.*`, así que pueden correr en paralelo con T11).
 - Variantes de imagen: sharp ya instalado por Next (`node_modules/.pnpm/sharp@0.34.5`), script de
   un solo uso fuera del repo, sin dependencias nuevas.
 
@@ -160,7 +162,9 @@
 ### Ronda 3: JS de Radix y CSS en línea
 - [x] T10 Prueba nueva en `whatsapp-button-lazy.test.tsx`: al renderizar `WhatsAppButtonLazy`, el
   botón con el nombre accesible está presente de inmediato y con las clases de posición (`fixed`,
-  `right-4`, `bottom-[calc(1rem+env(safe-area-inset-bottom))]`, `z-30`); tras cargar el
+  `right-4`, `bottom-[calc(1rem+env(safe-area-inset-bottom))]`, `z-30`) [**error de planificación,
+  corregido en T14**: pedía probar nombres de clase, contra la regla de probar comportamiento
+  observable; la posición ya la cubre `whatsapp-button.test.tsx` sobre el trigger compartido]; tras cargar el
   componente diferido, un clic abre el `menu` con un `menuitem` por opción y sus `href` (falla: el
   envoltorio no existe).
   → Extraer el `<button>` flotante a `whatsapp-trigger.tsx`, que reenvía props y ref al
@@ -188,7 +192,7 @@
     hidratación queda intacta y en verde. `pnpm build && pnpm start`: el HTML de `/es` trae el
     botón con su `aria-label` y clases de posición; el chunk de Radix (`0p3d03n8blbsx.js`, 74 KB)
     no está entre los 12 `<script>` iniciales y solo lo referencia el chunk del envoltorio.
-- [ ] T11 Prueba en `next.config.test.ts`: `nextConfig.experimental?.inlineCss` es `true` (falla)
+- [x] T11 Prueba en `next.config.test.ts`: `nextConfig.experimental?.inlineCss` es `true` (falla)
   → añadir `inlineCss: true` a `experimental` en `next.config.mjs`, con un comentario breve del
   porqué (quita la hoja de estilos que bloquea el render). Las pruebas existentes siguen.
   - Verificación: `pnpm build && pnpm start`. El HTML de `/es`, `/en`, la privacidad y una URL 404
@@ -197,6 +201,12 @@
   (paralela a T10)
   Commit: `fix(landing): 020-T11 CSS en línea en el HTML`.
   Archivos: `next.config.mjs`, `next.config.test.ts`.
+  - Evidencia: rojo, `next.config.test.ts` «pone el CSS en línea» falla (`undefined` no es
+    `true`); verde, `pnpm test` 258/258 y `pnpm check` OK. `pnpm build` OK; con `pnpm start -p
+    3123`, `/es`, `/en`, `/es/privacidad`, `/en/privacy`, `/no-existe` y `/es/no-existe` (404)
+    tienen 0 `<link rel="stylesheet">` y un `<style>` de 136 825 bytes = suma de los dos chunks
+    CSS del build (132 476 + 4 349), así que no se pierde CSS. Las menciones `.css` restantes son
+    del payload RSC. Comparación visual en navegador no hecha (solo curl); queda para T12.
 - [ ] T12 Medición ronda 3 (sin código): `pnpm validate` verde; `pnpm build && pnpm start` y
   Lighthouse móvil local con el mismo método que T07 (dos corridas, `--save-assets`) → anotar en
   `## Medición` (subsección «Ronda 3») LCP, FCP, **Speed Index**, elemento LCP y la lista de
@@ -209,6 +219,6 @@
   - Marcar los criterios de la ronda 3 en `spec.md`.
   - Reportar a planner y recordar al usuario que corra PSI móvil 3 veces en producción tras el
     deploy y anote la mediana.
-  (depende de T10 y T11)
+  (depende de T10, T11, T13, T14 y T15)
   Commit: `docs(landing): 020-T12 medición ronda 3`.
   Archivos: `docs/specs/020-lcp-render-hero/spec.md`.
