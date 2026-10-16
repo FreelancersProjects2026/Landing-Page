@@ -274,7 +274,7 @@
     `page.test.tsx`). Aserciones y prueba de hidratación intactas. `pnpm test` dos veces seguidas:
     33 archivos / 258 pruebas en verde; `pnpm check` OK. Nota: sin la precarga la prueba aislada
     también pasa con la caché caliente; la precarga quita la dependencia del primer import en frío.
-- [ ] T13 Corrección [mejora, a11y] (foco perdido al cargar el menú): cuando llega el chunk, React
+- [x] T13 Corrección [mejora, a11y] (foco perdido al cargar el menú): cuando llega el chunk, React
   desmonta el `<button>` del fallback y monta el real; si el usuario tenía el foco ahí (con Tab), el
   foco cae a `<body>`.
   - Prueba en `whatsapp-button-lazy.test.tsx`: se enfoca el botón del fallback, se espera al botón
@@ -291,3 +291,11 @@
   Archivos: `src/components/landing/whatsapp-trigger.tsx`,
   `src/components/landing/whatsapp-button-lazy.tsx`,
   `src/components/landing/whatsapp-button-lazy.test.tsx`.
+  - Evidencia: más simple que el ref al desmontar: el provisional anota su foco con
+    `onFocus`/`onBlur` en un estado del envoltorio, y el real se monta con `autoFocus` si estaba
+    enfocado (el trigger lo lee de un contexto privado; `WhatsAppTriggerAutoFocus` lo provee, sin él
+    vale `false`). Las pruebas importan el envoltorio en un módulo nuevo por prueba
+    (`vi.resetModules()`): `next/dynamic` guarda el componente cargado y sin eso el provisional solo
+    se ve en la primera prueba. Rojo: «si el botón provisional tenía el foco…» falla (`toHaveFocus`,
+    el real sin foco); la de no robar el foco pasa. Verde: `pnpm test` 33 archivos / 260 pruebas;
+    `pnpm check` y `pnpm architecture` OK (sin `pnpm build`, a petición).
