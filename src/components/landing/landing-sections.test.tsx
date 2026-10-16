@@ -624,6 +624,16 @@ describe('TeamSection', () => {
       )
     }
   })
+
+  it('muestra cada red social como botón con icono y nombre accesible', () => {
+    render(<TeamSection label={content.menu.team} {...content.team} />)
+    const section = screen.getByRole('region', { name: content.team.title })
+
+    for (const link of within(section).getAllByRole('link')) {
+      expect(link.querySelector('svg[aria-hidden="true"]')).not.toBeNull()
+      expect(link.querySelector('.sr-only')?.textContent).toBe(link.textContent)
+    }
+  })
 })
 
 describe('FaqSection', () => {

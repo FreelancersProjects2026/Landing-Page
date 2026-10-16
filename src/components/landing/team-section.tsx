@@ -1,11 +1,17 @@
 'use client'
 
-import { ArrowUpRight } from 'lucide-react'
+import { Github, Linkedin, type LucideIcon } from 'lucide-react'
 import type { TeamMember } from '@modules/company-profile'
 
-import { externalLinkProps } from './external-link'
+import { FooterContactLink } from './footer-contact-link'
 import { sectionIds } from './section-ids'
 import { revealClass, useInView } from './use-in-view'
+
+// Mismo orbe 3D del footer; GitHub usa blanco porque su negro no se ve sobre fondo oscuro.
+const socialChannels: Record<string, { icon: LucideIcon; accent: string }> = {
+  GitHub: { icon: Github, accent: '#ffffff' },
+  LinkedIn: { icon: Linkedin, accent: '#0A66C2' },
+}
 
 type TeamSectionProps = {
   label: string
@@ -64,17 +70,16 @@ export function TeamSection({
               <p className="text-muted-foreground leading-relaxed mb-8 flex-1">
                 {member.role}
               </p>
-              <div className="flex gap-6">
+              <div className="flex gap-3">
                 {member.links.map((link) => (
-                  <a
+                  <FooterContactLink
                     key={link.url}
                     href={link.url}
-                    {...externalLinkProps}
-                    className="text-sm text-foreground/70 hover:text-foreground transition-colors inline-flex items-center gap-1 group"
+                    external
+                    {...socialChannels[link.label]}
                   >
                     {link.label}
-                    <ArrowUpRight className="w-3 h-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                  </a>
+                  </FooterContactLink>
                 ))}
               </div>
             </article>
