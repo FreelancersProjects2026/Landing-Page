@@ -54,7 +54,26 @@ debajo de 2,5 s sin cambiar nada visible.
 - [x] `pnpm validate` en verde.
 - [x] Con `pnpm build && pnpm start`, el `<head>` de `/es` solo precarga la hero, el logo
   `LOGOsolutionsPJM-192.webp` y las fuentes Instrument (ninguna de las cuatro imágenes bajo el pliegue ni el JPEG del logo).
-- [ ] Tras el deploy, PSI móvil de `/es` reporta LCP < 2,5 s (verificación manual del usuario).
+- [ ] Tras el deploy, PSI móvil de `/es` reporta LCP < 2,5 s (verificación manual del usuario). **No cumplido**: LCP 2,9 s (ver
+  Resultado en producción); se continúa en `docs/specs/020-lcp-render-hero/`.
+
+## Resultado en producción
+PSI móvil de `https://solutionspjm.com/es`, 2026-10-16, tras el deploy:
+
+| Métrica | Antes | Después |
+|---------|-------|---------|
+| Rendimiento | 71 | 95 |
+| Accesibilidad | | 96 |
+| Prácticas recomendadas | | 100 |
+| SEO | | 100 |
+| FCP | 2,3 s | 1,2 s |
+| LCP | 5,8 s | 2,9 s |
+| TBT | 0 ms | 10 ms |
+| CLS | 0 | 0 |
+| Speed Index | | 1,3 s |
+
+El LCP bajó a la mitad, pero sigue por encima de 2,5 s: el criterio queda sin cumplir. El hueco
+FCP → LCP (~1,7 s) apunta a retraso de render, no de descarga; lo aborda la spec 020.
 
 ## Dudas
 Ninguna: plan aprobado por el usuario.
