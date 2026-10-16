@@ -128,7 +128,7 @@
     pidiendo en local por la cabecera `link: rel=preload` de la 404 que responde a
     `/_vercel/insights/script.js` → criterio de la 404 sin marcar. Bloqueando `*.js` el LCP baja a
     2,6 s: dominan los scripts. Puerto 3123 liberado.
-- [ ] T09 Corrección [mejora] (hallazgo de reviwer sobre T07, `db42090`): toda respuesta 404 lleva
+- [x] T09 Corrección [mejora] (hallazgo de reviwer sobre T07, `db42090`): toda respuesta 404 lleva
   `Link: </404/404-raices-obsidiana.webp>; rel=preload; as="image"; fetchpriority="high"`. La
   emite React al renderizar en el servidor el `<img>` eager de `NotFoundView`, y Next la convierte
   en cabecera; T05 subió su prioridad de Low a High (ver «Corrección tras T07» en `plan.md`).
@@ -146,6 +146,12 @@
   - Al terminar, marcar en `spec.md` el criterio de la 404.
   (depende de T07)
   Commit: `fix(not-found): 020-T09 imagen de la 404 sin cabecera de precarga`.
+  - Evidencia: rojo = la prueba «carga la imagen en diferido, sin prioridad ni precarga» fallaba
+    (la imagen era `eager` con `fetchpriority="high"`). Tras el cambio, `pnpm build && pnpm start -p
+    3123`: `curl -sI /xyz` y `curl -sI /_vercel/insights/script.js` → `HTTP/1.1 404 Not Found`, con
+    cabeceras `Vary`, `Cache-Control`, `X-Powered-By`, `Content-Type`, `Date`, `Connection` y
+    `Keep-Alive`, sin ninguna `link`. El HTML de `/xyz` sigue con el `<img>` de
+    `404-raices-obsidiana.webp` (`loading="lazy"`). `pnpm test` (255) y `pnpm check` en verde.
   Archivos: `src/components/not-found/not-found-view.tsx`,
   `src/components/not-found/not-found-view.test.tsx`, `docs/specs/020-lcp-render-hero/spec.md`
   (solo el criterio).

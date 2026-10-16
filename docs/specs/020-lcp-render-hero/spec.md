@@ -82,7 +82,7 @@ pantalla, empezando por las de mayor impacto y menor esfuerzo.
   `motion-safe:animate-in` y su `slide-in-from-bottom-*`.
 - [x] ~~Si aplica (alcance 3): primera palabra rotativa sin `animate-hero-letter`~~: no aplica
   (T04: el LCP es el subtítulo, no el eslogan).
-- [ ] La vista de la 404 no emite `<link rel="preload">` de su imagen, y ninguna respuesta 404
+- [x] La vista de la 404 no emite `<link rel="preload">` de su imagen, y ninguna respuesta 404
   lleva la cabecera `Link: rel=preload` de esa imagen (comprobado con `curl -I` en `pnpm start`).
   La imagen se carga en diferido en la 404. En `/es` compilada, la imagen de la 404 no aparece
   entre las peticiones de red. (Redactado de nuevo tras T07: con el criterio anterior, «prioridad
