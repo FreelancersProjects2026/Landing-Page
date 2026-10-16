@@ -366,6 +366,73 @@ Alcance de la ronda:
   rel="stylesheet">` y 1 `<style>`.
 - Puerto 3123 liberado; `next.config.mjs` restaurado (`git status` limpio salvo estos docs).
 
+### Ronda 3, aislar T10 (T17, 2026-10-16, en `06959e4`)
+- Mismo método que T12 (Lighthouse 12.8.2 CLI, móvil, throttling simulado, Chrome headless,
+  `--save-assets`, `pnpm build && pnpm start -p 3123` → `http://localhost:3123/es`), **3 corridas
+  por variante**, un build por variante. Reportes `t17-A|B|C-n` en el scratchpad de la sesión.
+  - **A**: HEAD tal cual (T10 + `inlineCss`).
+  - **B**: `inlineCss` sin T10 (`page.tsx` importa `WhatsAppButton` en vez de
+    `WhatsAppButtonLazy`; sin commitear).
+  - **C**: como B y `inlineCss: false` (control ≈ T07).
+- Por corrida (ms, simulados salvo «LCP obs.»; «Arranque» = `bootup-time` del chunk con más
+  arranque; «Hilo» = `mainthread-work-breakdown` total):
+
+  | Corrida | Rend. | FCP   | LCP       | SI    | Hilo  | Arranque (chunk)              | LCP obs. |
+  | ------- | ----- | ----- | --------- | ----- | ----- | ----------------------------- | -------- |
+  | A1      | 88    | 1 205 | **3 835** | 1 205 | 1 368 | 708 (`30ovs0h4fmpog.js`)      | 110      |
+  | A2      | 91    | 1 207 | 3 466     | 1 207 | 1 824 | 978 (`30ovs0h4fmpog.js`)      | 116      |
+  | A3      | 88    | 1 207 | 3 839     | 1 207 | 1 951 | 1 056 (`30ovs0h4fmpog.js`)    | 131      |
+  | B1      | 90    | 1 210 | **3 641** | 1 259 | 1 917 | 1 022 (`0upn5da2ozqdm.js`)    | 143      |
+  | B2      | 90    | 1 209 | 3 658     | 1 316 | 2 015 | 1 059 (`0upn5da2ozqdm.js`)    | 157      |
+  | B3      | 91    | 1 208 | 3 519     | 1 279 | 2 148 | 1 233 (`0upn5da2ozqdm.js`)    | 131      |
+  | C1      | 89    | 1 369 | 3 716     | 1 369 | 2 078 | 1 150 (`0upn5da2ozqdm.js`)    | 146      |
+  | C2      | 90    | 1 363 | 3 567     | 1 363 | 1 896 | 1 035 (`0upn5da2ozqdm.js`)    | 135      |
+  | C3      | 89    | 1 366 | **3 712** | 1 366 | 1 933 | 1 070 (`0upn5da2ozqdm.js`)    | 138      |
+
+- **Medianas** (en negrita, la corrida mediana por LCP):
+
+  | Variante | FCP   | LCP   | Rango LCP     | SI    | Hilo  | Arranque |
+  | -------- | ----- | ----- | ------------- | ----- | ----- | -------- |
+  | A        | 1 207 | 3 835 | 3 466–3 839   | 1 207 | 1 824 | 978      |
+  | B        | 1 209 | 3 641 | 3 519–3 658   | 1 279 | 2 015 | 1 059    |
+  | C        | 1 366 | 3 712 | 3 567–3 716   | 1 366 | 1 933 | 1 070    |
+
+- Elemento LCP: el subtítulo del hero (`section#inicio > div.relative > div.lg:max-w-[55%] >
+  p.text-lg`) en las 9 corridas. TTFB 453–456 ms, retraso y tiempo de carga 0, retraso de render
+  3 012–3 385 ms.
+- Scripts que empiezan antes del LCP observado en la corrida mediana (tamaño transferido):
+  - **A1** (LCP obs. 110 ms): 13 scripts, **207,1 KB**: `0-ssspa2fpt11` 69,7, `07b01dw1b3skm` 38,3,
+    `0p3d03n8blbsx` (Radix) 24,6, `30ovs0h4fmpog` 18,2, `1dg2f_cnrzia-` 13,9, `2wd_t3ikai8ik`
+    10,9, `3n3zts851b2p1` 10,1, `0zaqvpcaih_nz` 7,9, `15g5crpuo06-n` 6,5, `turbopack-266may2gbd4gg`
+    4,4, `3qy0shirk377_` 1,6, `01kgg-fbm7ezm` 0,6 y `/_vercel/insights/script.js` 0,4. Sin hojas.
+  - **B1** (143 ms): 11 scripts, **204,2 KB**: `0-ssspa2fpt11` 69,7, `0upn5da2ozqdm` 50,1,
+    `07b01dw1b3skm` 38,3, `1dg2f_cnrzia-` 13,9, `0mw67wy1375zi` 11,0, `2s4zbrua0g06o` 7,8,
+    `2semfcofb2wsj` 6,4, `turbopack-37ukxn4-07nwu` 4,4, `3qy0shirk377_` 1,6, `01kgg-fbm7ezm` 0,6 e
+    insights 0,4. Sin hojas. Los mismos chunks que T07 salvo el principal, que cambia de hash
+    (`0upn5da2ozqdm` 50,1 KB frente a `29_1ix9xaos4m` 50,1 KB; deducido: por el traspaso de foco de T13).
+  - **C3** (138 ms): los mismos 11 scripts que B1 (204,2 KB) y 2 hojas (`1__nm1parv3i_.css` 21,8 y
+    `2d7dl23onpl4r.css` 1,4 KB). HTML 16,5 KB frente a 62,9 KB con `inlineCss`.
+- **A frente a B (efecto de T10, con `inlineCss`)**: FCP igual (1 207 / 1 209). LCP mediano
+  **+194 ms con T10** (3 835 frente a 3 641), pero el rango de A (373 ms) es mayor que la
+  diferencia y A2 (3 466) es la mejor de las 9 corridas. Hilo principal y arranque del chunk
+  principal **menores** con T10 (−191 y −81 ms de mediana). SI −72 ms con T10. **Observado**: las
+  dos corridas de A con LCP ~3,84 s son las que piden Radix (`0p3d03n8blbsx`, a 91 y 123 ms) e
+  insights antes del LCP observado (13 scripts, 207,1 KB); A2, con Radix a 118 ms, después del LCP
+  observado (116), cuenta 11 scripts (182,1 KB) y da 3 466 ms. **Deducido**: el LCP simulado de A
+  depende de si la petición de Radix, que sale al hidratar, cae antes o después del primer pintado
+  observado; T10 no lo baja de forma fiable y en 2 de 3 corridas lo empeora.
+- **B frente a C (efecto de `inlineCss`, sin T10)**: FCP **−157 ms** con `inlineCss`, estable
+  (±3 ms). LCP mediano −71 ms (3 641 frente a 3 712), dentro del ruido (rangos de 139 y 149 ms que
+  se solapan). SI −87 ms. Hilo y arranque sin diferencia clara. Coincide con T12: `inlineCss`
+  mejora el FCP con claridad, el LCP no.
+- C frente a T07 (control): LCP 3 567–3 716 frente a 3 543–3 552 ms, con los mismos chunks salvo
+  el principal. C, sin T10, ya queda hasta ~165 ms por encima de T07; el LCP de T12 sin
+  `inlineCss` (3 683–3 847, con T10) se solapa con C. **Deducido**: buena parte de la diferencia
+  que T12 atribuía a T10 es ruido entre sesiones y builds (~150 ms).
+- Ninguna variante baja el LCP de 2,5 s. Decisión de reversión: planner, en tareas nuevas.
+- Restaurados `page.tsx` y `next.config.mjs`; puerto 3123 liberado (`git status` limpio salvo
+  estos docs).
+
 ## Dudas
 - **Por qué el span del menú ganaba el LCP**: resuelta en T04. (a) confirmada: sin `fade-in`, el
   subtítulo pasa a ser el LCP. (b) observada (la imagen hero no es candidata) con mecanismo

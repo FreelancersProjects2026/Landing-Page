@@ -342,7 +342,7 @@
     33 archivos / 261 pruebas en verde; `pnpm check` OK.
 
 ### Ronda 3, aislar T10 (tras los hallazgos de reviwer sobre T12, `b1df782`)
-- [ ] T17 Medición (sin código commiteado): aislar el efecto de T10 (menú de WhatsApp en diferido)
+- [x] T17 Medición (sin código commiteado): aislar el efecto de T10 (menú de WhatsApp en diferido)
   para decidir si se revierte T10, `inlineCss` (T11), ambos o ninguno.
   - Variantes, todas con build local de producción y Lighthouse con el mismo método que T12, **3
     corridas cada una**:
@@ -364,3 +364,9 @@
   (depende de T12)
   Commit: `docs(landing): 020-T17 medición para aislar T10`.
   Archivos: `docs/specs/020-lcp-render-hero/spec.md`.
+  - Evidencia: Lighthouse 12.8.2 móvil, 3 corridas por variante. Medianas (FCP / LCP / SI / hilo /
+    arranque del chunk principal, ms): A 1 207 / 3 835 / 1 207 / 1 824 / 978; B 1 209 / 3 641 /
+    1 279 / 2 015 / 1 059; C 1 366 / 3 712 / 1 366 / 1 933 / 1 070. A frente a B: LCP +194 ms con
+    T10, dentro del rango de A (3 466–3 839), según caiga Radix antes o después del LCP observado.
+    B frente a C: FCP −157 ms estable, LCP −71 ms en el ruido. Elemento LCP: subtítulo del hero en
+    las 9. `page.tsx` y `next.config.mjs` restaurados; puerto 3123 liberado.
