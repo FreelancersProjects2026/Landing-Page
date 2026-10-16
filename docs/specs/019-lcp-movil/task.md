@@ -34,6 +34,8 @@
   Archivos: `src/app/fonts.ts`, `src/app/fonts.test.ts`.
   - Evidencia: rojo 1 fallo (`preload` de mono `undefined`, se esperaba `false`); verde
     `pnpm test` 251/251 y `pnpm check` OK (solo los avisos conocidos de `<img>`).
-- [ ] T04 Verificación (sin commit de código): `pnpm validate` verde; `pnpm build && pnpm start` y
+- [x] T04 Verificación (sin commit de código): `pnpm validate` verde; `pnpm build && pnpm start` y
   el `<head>` de `/es` solo precarga hero, logo `LOGOsolutionsPJM-192.webp` y fuentes Instrument. Marcar criterios en
   `spec.md`. (depende de T01–T03)
+  Evidencia: `pnpm validate` verde (251/251, architecture OK, build OK). `<head>` de `/es`: 2 fuentes
+  Instrument, logo `LOGOsolutionsPJM-192.webp`, hero `hero-960.webp`; sin preloads de imágenes bajo el pliegue.

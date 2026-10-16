@@ -44,15 +44,15 @@ debajo de 2,5 s sin cambiar nada visible.
 - El logo del botón de WhatsApp (su popover no se renderiza en SSR, no genera precarga).
 
 ## Criterios de aceptación
-- [ ] Las imágenes de cómo trabajamos, proyectos, footer y servicios tienen `loading="lazy"` y
+- [x] Las imágenes de cómo trabajamos, proyectos, footer y servicios tienen `loading="lazy"` y
   `decoding="async"`.
-- [ ] La hero no tiene `loading="lazy"` y conserva `fetchPriority="high"`.
-- [ ] El logo de la navegación apunta a `/logo/icono/LOGOsolutionsPJM-192.webp` (192×192), sigue sin
+- [x] La hero no tiene `loading="lazy"` y conserva `fetchPriority="high"`.
+- [x] El logo de la navegación apunta a `/logo/icono/LOGOsolutionsPJM-192.webp` (192×192), sigue sin
   `loading="lazy"` y con `alt=""`.
-- [ ] `JetBrains_Mono` se configura con `preload: false`; Instrument Sans y Serif siguen
+- [x] `JetBrains_Mono` se configura con `preload: false`; Instrument Sans y Serif siguen
   precargadas.
-- [ ] `pnpm validate` en verde.
-- [ ] Con `pnpm build && pnpm start`, el `<head>` de `/es` solo precarga la hero, el logo
+- [x] `pnpm validate` en verde.
+- [x] Con `pnpm build && pnpm start`, el `<head>` de `/es` solo precarga la hero, el logo
   `LOGOsolutionsPJM-192.webp` y las fuentes Instrument (ninguna de las cuatro imágenes bajo el pliegue ni el JPEG del logo).
 - [ ] Tras el deploy, PSI móvil de `/es` reporta LCP < 2,5 s (verificación manual del usuario).
 
