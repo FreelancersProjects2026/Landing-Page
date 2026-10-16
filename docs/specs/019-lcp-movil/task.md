@@ -18,11 +18,14 @@
   - Evidencia: rojo 4 fallos (`loading="lazy"` ausente en cómo trabajamos, proyectos, servicios y
     footer); verde `pnpm test` 250/250 y `pnpm check` OK.
 - [ ] T02 Prueba en `landing-sections.test.tsx` (bloque navegación, hoy asserta el JPEG): el logo
-  contiene `/logo/icono/LOGOsolutionsPJM-192.png` (falla) → cambiar el `src` del `<Image>` de
-  `navigation.tsx`; mantener `alt=""`, 40×40 y `preload`. No tocar `whatsapp-button`.
-  (depende de T01)
-  Archivos: `src/components/landing/navigation.tsx`,
-  `src/components/landing/landing-sections.test.tsx`.
+  contiene `/logo/icono/LOGOsolutionsPJM-192.webp` (falla) → generar
+  `public/logo/icono/LOGOsolutionsPJM-192.webp` (192×192) desde `LOGOsolutionsPJM.jpeg` con sharp
+  (ya en `node_modules/.pnpm/sharp@0.34.5`; script de un solo uso fuera del repo, sin añadir
+  dependencias) y apuntar el `src` del `<Image>` de `navigation.tsx` a ese WebP; mantener
+  `alt=""`, 40×40 y `preload`. No usar el PNG (regla de spec 015, `landing-images.test.ts`). No
+  tocar `whatsapp-button`. (depende de T01)
+  Archivos: `public/logo/icono/LOGOsolutionsPJM-192.webp` (nuevo),
+  `src/components/landing/navigation.tsx`, `src/components/landing/landing-sections.test.tsx`.
 - [x] T03 Prueba en `fonts.test.ts`: el mock registra las opciones de cada fuente y
   `JetBrains_Mono` se llama con `preload: false`, las Instrument sin él (falla) → añadir
   `preload: false` a `JetBrains_Mono` en `fonts.ts`. (paralela a T01/T02)
@@ -30,5 +33,5 @@
   - Evidencia: rojo 1 fallo (`preload` de mono `undefined`, se esperaba `false`); verde
     `pnpm test` 251/251 y `pnpm check` OK (solo los avisos conocidos de `<img>`).
 - [ ] T04 Verificación (sin commit de código): `pnpm validate` verde; `pnpm build && pnpm start` y
-  el `<head>` de `/es` solo precarga hero, logo PNG 192 y fuentes Instrument. Marcar criterios en
+  el `<head>` de `/es` solo precarga hero, logo `LOGOsolutionsPJM-192.webp` y fuentes Instrument. Marcar criterios en
   `spec.md`. (depende de T01–T03)

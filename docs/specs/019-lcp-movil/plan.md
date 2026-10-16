@@ -24,8 +24,12 @@ No hay modelo de dominio nuevo: es presentación pura.
 - **Imágenes bajo el pliegue**: cada `<img>` de cómo trabajamos, proyectos, footer y servicios
   recibe `loading="lazy"` y `decoding="async"`. Nada más cambia (clases, `alt`, tamaños).
 - **Hero**: intacta; eager con `fetchPriority="high"`. Se fija en prueba para que nadie la difiera.
-- **Logo de navegación**: el `src` del `<Image>` pasa al PNG de 192 px. Mismos `width`/`height`
-  (40), `alt=""` y `preload`.
+- **Logo de navegación**: se genera una vez `public/logo/icono/LOGOsolutionsPJM-192.webp`
+  (192×192) desde `LOGOsolutionsPJM.jpeg` con sharp, que ya está instalado como dependencia de
+  Next (`node_modules/.pnpm/sharp@0.34.5`); el script es de un solo uso, vive fuera del repo y no
+  se añade ninguna dependencia. El `src` del `<Image>` pasa a ese WebP. Mismos `width`/`height`
+  (40), `alt=""` y `preload`. Se descarta el PNG de 192 px existente: la spec 015
+  (`landing-images.test.ts`) prohíbe `.png` en componentes de la landing.
 - **Fuentes**: `JetBrains_Mono` recibe `preload: false`. Instrument Sans y Serif no cambian. El
   texto mono usa el respaldo `monospace` de `--font-mono` hasta que llega la fuente.
 
@@ -36,7 +40,8 @@ No hay modelo de dominio nuevo: es presentación pura.
 | `src/components/landing/projects-section.tsx` | UI (landing) | `<img>` diferido. |
 | `src/components/landing/footer-section.tsx` | UI (landing) | `<img>` diferido. |
 | `src/components/landing/service-cards.tsx` | UI (landing) | `<img>` diferido. |
-| `src/components/landing/navigation.tsx` | UI (landing) | Logo PNG 192 px. |
+| `public/logo/icono/LOGOsolutionsPJM-192.webp` | Recurso estático | Logo 192×192 en WebP (nuevo). |
+| `src/components/landing/navigation.tsx` | UI (landing) | Logo WebP 192 px. |
 | `src/components/landing/landing-sections.test.tsx` | Prueba | Lazy en las cuatro, hero eager, ruta del logo. |
 | `src/app/fonts.ts` | App | JetBrains Mono sin precarga. |
 | `src/app/fonts.test.ts` | Prueba | Opciones con que se llama a cada fuente. |
@@ -44,7 +49,8 @@ No hay modelo de dominio nuevo: es presentación pura.
 ## Pruebas
 - `landing-sections.test.tsx` (RTL): renderiza cada sección y comprueba que su imagen tiene
   `loading="lazy"` y `decoding="async"`; la imagen de la hero no tiene `loading="lazy"` y tiene
-  `fetchpriority="high"`. El logo de la navegación contiene `/logo/icono/LOGOsolutionsPJM-192.png`.
+  `fetchpriority="high"`. El logo de la navegación contiene `/logo/icono/LOGOsolutionsPJM-192.webp`; `landing-images.test.ts` (spec 015) sigue
+  en verde.
 - `fonts.test.ts`: el mock de `next/font/google` registra las opciones de cada llamada;
   `JetBrains_Mono` recibe `preload: false` y las Instrument no lo reciben.
 - Manual: `pnpm build && pnpm start` y revisar los `<link rel=preload>` del `<head>` de `/es`.

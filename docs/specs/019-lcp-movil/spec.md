@@ -30,9 +30,10 @@ debajo de 2,5 s sin cambiar nada visible.
 ## Alcance
 1. Las cuatro imágenes bajo el pliegue (cómo trabajamos, proyectos, footer, servicios) se cargan
    en diferido (`loading="lazy"`, `decoding="async"`), así React deja de precargarlas.
-2. El logo de la navegación usa el PNG de 192 px ya existente
-   (`/logo/icono/LOGOsolutionsPJM-192.png`, 20 KB) en lugar del JPEG de 68 KB; sigue precargado
-   porque está arriba del pliegue.
+2. El logo de la navegación usa un WebP nuevo de 192×192 (`/logo/icono/LOGOsolutionsPJM-192.webp`),
+   generado a partir de `LOGOsolutionsPJM.jpeg`, en lugar del JPEG de 68 KB; sigue precargado
+   porque está arriba del pliegue. No se usa el PNG de 192 px existente porque la spec 015 prohíbe
+   referenciar `.png` desde la landing (`landing-images.test.ts`).
 3. La fuente JetBrains Mono deja de precargarse (`preload: false`): arriba del pliegue solo la usa
    el eyebrow pequeño del h1 y tiene respaldo monoespaciado.
 
@@ -46,13 +47,13 @@ debajo de 2,5 s sin cambiar nada visible.
 - [ ] Las imágenes de cómo trabajamos, proyectos, footer y servicios tienen `loading="lazy"` y
   `decoding="async"`.
 - [ ] La hero no tiene `loading="lazy"` y conserva `fetchPriority="high"`.
-- [ ] El logo de la navegación apunta a `/logo/icono/LOGOsolutionsPJM-192.png`, sigue sin
+- [ ] El logo de la navegación apunta a `/logo/icono/LOGOsolutionsPJM-192.webp` (192×192), sigue sin
   `loading="lazy"` y con `alt=""`.
 - [ ] `JetBrains_Mono` se configura con `preload: false`; Instrument Sans y Serif siguen
   precargadas.
 - [ ] `pnpm validate` en verde.
-- [ ] Con `pnpm build && pnpm start`, el `<head>` de `/es` solo precarga la hero, el logo de 192 px
-  y las fuentes Instrument (ninguna de las cuatro imágenes bajo el pliegue ni el JPEG del logo).
+- [ ] Con `pnpm build && pnpm start`, el `<head>` de `/es` solo precarga la hero, el logo
+  `LOGOsolutionsPJM-192.webp` y las fuentes Instrument (ninguna de las cuatro imágenes bajo el pliegue ni el JPEG del logo).
 - [ ] Tras el deploy, PSI móvil de `/es` reporta LCP < 2,5 s (verificación manual del usuario).
 
 ## Dudas
