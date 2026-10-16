@@ -44,7 +44,7 @@ describe('Navigation', () => {
     // Siempre está arriba del pliegue: se precarga en vez de cargarse en diferido.
     expect(logo).not.toHaveAttribute('loading', 'lazy')
     expect(decodeURIComponent(logo?.getAttribute('src') ?? '')).toContain(
-      '/logo/icono/LOGOsolutionsPJM.jpeg',
+      '/logo/icono/LOGOsolutionsPJM-192.webp',
     )
     expect(
       within(nav)
