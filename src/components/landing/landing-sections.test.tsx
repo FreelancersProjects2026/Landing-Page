@@ -270,15 +270,20 @@ describe('HeroSection', () => {
     expect(letters[2].style.getPropertyValue('--letter-delay')).toBe('90ms')
   })
 
-  it('anima la entrada del texto con CSS desde el primer pintado, sin esperar a JS', () => {
-    render(<HeroSection hero={content.hero} whatsappUrl={whatsappUrl} />)
+  it('anima la entrada del texto deslizándolo, visible desde el primer pintado', () => {
+    const { container } = render(
+      <HeroSection hero={content.hero} whatsappUrl={whatsappUrl} />,
+    )
     const animated = [
       screen.getByRole('heading', { level: 1 }).parentElement,
+      container.querySelector('[data-rotating-word]')?.closest('p'),
       screen.getByText(content.hero.subtitle),
     ]
 
     for (const element of animated) {
-      expect(element).toHaveClass('motion-safe:animate-in', 'fill-mode-both')
+      expect(element).toHaveClass('motion-safe:animate-in')
+      expect(element?.className).toMatch(/slide-in-from-bottom-\d+/)
+      expect(element).not.toHaveClass('fade-in')
       expect(element).not.toHaveClass('opacity-0')
     }
   })
@@ -385,6 +390,22 @@ describe('HowItWorksSection: accesibilidad', () => {
     } finally {
       vi.useRealTimers()
     }
+  })
+
+  it('ofrece la variante de 640 px al móvil y conserva la carga diferida', () => {
+    const { container } = renderProcess()
+    const image = container.querySelector(
+      'img[src="/ComoTrabajamos/como-trabajamos.webp"]',
+    )
+
+    expect(image).toHaveAttribute(
+      'srcset',
+      '/ComoTrabajamos/como-trabajamos-640.webp 640w, /ComoTrabajamos/como-trabajamos.webp 1212w',
+    )
+    expect(image).toHaveAttribute('sizes', '(min-width: 1024px) 600px, 300px')
+    expect(image).toHaveAttribute('loading', 'lazy')
+    expect(image).toHaveAttribute('decoding', 'async')
+    expect(image).toHaveAttribute('alt', '')
   })
 })
 

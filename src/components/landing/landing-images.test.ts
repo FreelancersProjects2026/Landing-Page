@@ -71,3 +71,18 @@ describe('imágenes de sección de la landing', () => {
     expect(existsSync(path)).toBe(false)
   })
 })
+
+describe('variante móvil de «Cómo trabajamos»', () => {
+  const ORIGINAL = 'public/ComoTrabajamos/como-trabajamos.webp'
+  const MOBILE = 'public/ComoTrabajamos/como-trabajamos-640.webp'
+
+  it('existe, es WebP, mide 640 px de ancho y pesa menos que la original', async () => {
+    const bytes = readFileSync(MOBILE)
+    const { width } = await loadSharp()(MOBILE).metadata()
+
+    expect(bytes.toString('ascii', 0, 4)).toBe('RIFF')
+    expect(bytes.toString('ascii', 8, 12)).toBe('WEBP')
+    expect(width).toBe(640)
+    expect(bytes.length).toBeLessThan(readFileSync(ORIGINAL).length)
+  })
+})

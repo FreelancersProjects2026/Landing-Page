@@ -10,8 +10,9 @@ import { RotatingSlogan } from './rotating-slogan'
 import { sectionIds } from './section-ids'
 
 // Entrada por CSS (tw-animate-css): arranca en el primer pintado, sin esperar
-// a la hidratación; fill-mode-both oculta el texto durante el retraso.
-const entrance = 'motion-safe:animate-in fade-in fill-mode-both'
+// a la hidratación. Solo desliza, sin fade-in: con opacity 0 Chrome no cuenta
+// el eslogan ni el subtítulo como candidatos LCP y gana el logo del menú.
+const entrance = 'motion-safe:animate-in fill-mode-both'
 
 type HeroSectionProps = {
   hero: LandingContent['hero']

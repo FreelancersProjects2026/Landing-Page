@@ -66,6 +66,8 @@ export function HowItWorksSection({
           >
             <img
               src="/ComoTrabajamos/como-trabajamos.webp"
+              srcSet="/ComoTrabajamos/como-trabajamos-640.webp 640w, /ComoTrabajamos/como-trabajamos.webp 1212w"
+              sizes="(min-width: 1024px) 600px, 300px"
               width={1212}
               height={1298}
               alt=""
