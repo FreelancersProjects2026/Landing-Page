@@ -15,6 +15,8 @@
 - Ronda 3 (tras el deploy de 020, misma rama y spec): T10 ∥ T11 (no comparten archivos) → T12.
 - Correcciones de T10 (antes de T12): T14 → T15 → T13 → T16 (comparten `whatsapp-button-lazy.test.tsx`;
   ninguna toca `next.config.*`, así que pueden correr en paralelo con T11).
+- Tras T17 (decisión del usuario): se mantiene `inlineCss`, se revierte T10 con T13–T16.
+  T18 → T19 (T18 quita el envoltorio que importa el trigger que borra T19) → merge → T20 (usuario).
 - Variantes de imagen: sharp ya instalado por Next (`node_modules/.pnpm/sharp@0.34.5`), script de
   un solo uso fuera del repo, sin dependencias nuevas.
 
@@ -370,3 +372,47 @@
     T10, dentro del rango de A (3 466–3 839), según caiga Radix antes o después del LCP observado.
     B frente a C: FCP −157 ms estable, LCP −71 ms en el ruido. Elemento LCP: subtítulo del hero en
     las 9. `page.tsx` y `next.config.mjs` restaurados; puerto 3123 liberado.
+
+### Reversión de T10 (decisión del usuario tras T17; se mantiene `inlineCss`)
+- [ ] T18 Prueba en `page.test.tsx` («el botón flotante abre WhatsApp…»): quitar el `beforeAll`
+  que precarga `@/components/landing/whatsapp-button` (y `beforeAll` del import de `vitest` si
+  queda sin uso) y el comentario «El menú se carga en diferido…». El clic se hace sobre
+  `screen.getByRole('button', { name: content.whatsapp.label, expanded: false })`, síncrono, sin
+  `findByRole`. Falla con el envoltorio actual (el primer render es el botón provisional, sin
+  `aria-expanded`) → en `page.tsx`, importar y usar `WhatsAppButton` en lugar de
+  `WhatsAppButtonLazy` (mismas props), y borrar `whatsapp-button-lazy.tsx` y
+  `whatsapp-button-lazy.test.tsx`, que quedan sin uso.
+  - El resto de aserciones de `page.test.tsx` no cambia y la prueba de hidratación no se toca.
+  - Verde: `pnpm test`, `pnpm check` y `pnpm architecture`. `grep -r "whatsapp-button-lazy\|WhatsAppButtonLazy" src`
+    sin resultados. Anotar el mensaje del rojo como evidencia.
+  - `whatsapp-trigger.tsx` y `whatsapp-button.tsx` **no** se tocan aquí (son de T19).
+  Commit: `fix(landing): 020-T18 botón de WhatsApp sin carga diferida`.
+  Archivos: `src/app/[lang]/page.tsx`, `src/app/[lang]/page.test.tsx`,
+  `src/components/landing/whatsapp-button-lazy.tsx` (borrar),
+  `src/components/landing/whatsapp-button-lazy.test.tsx` (borrar).
+- [ ] T19 Refactor (sin cambio de comportamiento, sin rojo nuevo): devolver el `<button>` del
+  trigger a `whatsapp-button.tsx` dentro de `DropdownMenuTrigger asChild`, tal como estaba en
+  `910caa8` (`git show 910caa8:src/components/landing/whatsapp-button.tsx`: mismo marcado, clases,
+  `iconTransition` e íconos `MessageCircle`/`X`), y borrar `whatsapp-trigger.tsx` (con
+  `WhatsAppTriggerAutoFocus` y su contexto de foco, que quedan sin uso).
+  - Criterio: `git diff 910caa8 -- src/components/landing/whatsapp-button.tsx src/app/[lang]/page.tsx`
+    vacío; `whatsapp-button.test.tsx` en verde sin cambios; `grep -r "whatsapp-trigger\|WhatsAppTrigger" src`
+    sin resultados.
+  - `pnpm validate` en verde. Con `pnpm build && pnpm start`, el HTML de `/es` incluye el botón
+    flotante con su `aria-label` y `aria-haspopup="menu"`, y no hay `<link rel="stylesheet">`
+    (`inlineCss` sigue). Liberar el puerto.
+  (depende de T18)
+  Commit: `refactor(landing): 020-T19 botón flotante sin trigger aparte`.
+  Archivos: `src/components/landing/whatsapp-button.tsx`,
+  `src/components/landing/whatsapp-trigger.tsx` (borrar).
+- [ ] T20 Cierre (a cargo del usuario, tras el merge a `main` y el deploy): PSI móvil de
+  `https://solutionspjm.com/es`, **3 corridas**, anotar Rendimiento, FCP, LCP, SI, TBT y CLS de
+  cada una y la **mediana**. Además, `curl -sI -H 'Accept-Encoding: br' https://solutionspjm.com/es`
+  (`content-encoding` y tamaño transferido) para el coste real de `inlineCss`.
+  - Anotar en `spec.md` `## Medición` (subsección «Producción tras 020») y marcar o dejar sin
+    marcar, con el dato, el criterio «PSI móvil … LCP < 2,5 s y Rendimiento ≥ 95».
+  - Con eso se cierra la spec 020, cumpla o no el criterio. Si no lo cumple, el trabajo adicional
+    va en una spec nueva.
+  (depende de T19 y del merge)
+  Commit: `docs(landing): 020-T20 PSI en producción y cierre`.
+  Archivos: `docs/specs/020-lcp-render-hero/spec.md`, `docs/specs/020-lcp-render-hero/task.md`.

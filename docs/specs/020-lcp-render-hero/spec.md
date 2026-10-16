@@ -85,6 +85,20 @@ Alcance de la ronda:
    la petición de hoja de estilos que bloquea el render.
 10. Medir de nuevo en local y pedir al usuario 3 corridas de PSI en producción (se usa la mediana).
 
+### Decisión del usuario tras T17 (2026-10-16)
+- **Se mantiene `inlineCss` (T11)**: mejora el FCP de forma clara y repetible (−150 ms en T12,
+  −157 ms en T17, ±6 ms entre corridas). El LCP queda en el ruido. El brotli real de Vercel se
+  anota en la verificación en producción.
+- **Se revierte T10 (menú de WhatsApp en diferido) con sus correcciones T13–T16**: no baja el LCP
+  de forma fiable (en T17, +194 ms de mediana y peor en 2 de 3 corridas, según caiga la petición
+  de Radix antes o después del primer pintado). Además añade complejidad (envoltorio, contexto del
+  fallback y traspaso de foco) y deja instantes en que el botón se ve pero no abre el menú. El
+  alcance 8 queda retirado: el botón flotante vuelve a ser `WhatsAppButton` directo, como antes de
+  T10 (T18–T19).
+- **Cierre de la spec**: tras el merge y el deploy, el usuario corre PSI móvil de `/es` 3 veces en
+  producción y se anota la mediana (T20). Con ese dato se cierra la spec 020, cumpla o no el
+  criterio de LCP < 2,5 s. Si no lo cumple, cualquier trabajo adicional va en una spec nueva.
+
 ## Fuera de alcance
 - Cambios de contenido, textos, dominio (`company-profile`) o diseño estático del hero.
 - Cambiar la imagen hero.
@@ -93,7 +107,8 @@ Alcance de la ronda:
   está al final de la página) y `proyectos.webp` (no aparece entre las peticiones previas al LCP).
 - Fuentes: T07 mostró que la mono no influye en el LCP.
 - Recortar `'use client'` de las secciones bajo el pliegue o reescribir sus animaciones: solo si la
-  medición de la ronda 3 lo señala. (`inlineCss` y el JS diferido de Radix entraron en la ronda 3.)
+  medición de la ronda 3 lo señala. (`inlineCss` y el JS diferido de Radix entraron en la ronda 3;
+  el JS diferido se revierte tras T17.)
 - Reemplazar Radix por la API nativa `popover`: descartado en el plan.
 - Dependencias nuevas (las variantes se generan con el sharp que ya trae Next, como en la spec 019).
 
@@ -123,18 +138,24 @@ Alcance de la ronda:
   corrida 1 y la propia medición «Final» concluye que el LCP no cambió.
 - [ ] Tras el deploy, PSI móvil de `/es` reporta LCP < 2,5 s y Rendimiento ≥ 95 (verificación
   manual del usuario: **mediana de 3 corridas**).
-- [ ] Ronda 3: el HTML de `/es` sigue incluyendo el botón flotante de WhatsApp (mismo nombre
+- [x] ~~Ronda 3: el HTML de `/es` sigue incluyendo el botón flotante de WhatsApp (mismo nombre
   accesible y clases de posición), y el chunk con Radix DropdownMenu no está entre los scripts
-  iniciales: se pide después del LCP observado.
-  **T12: parcial.** El botón está en el HTML y Radix no está entre los scripts iniciales, pero se
-  pide al hidratar, a la vez que el LCP observado: en 2 de 4 corridas empieza 3–9 ms antes.
-- [x] Ronda 3: el menú de WhatsApp conserva su comportamiento (pruebas de `whatsapp-button.test.tsx`
-  y del botón flotante en `page.test.tsx` en verde, sin quitar ninguna aserción).
-- [x] Ronda 3: si el botón provisional tenía el foco, al cargar el menú el foco pasa al botón real
-  (no cae a `<body>`); si no lo tenía, el real no lo roba (T13).
+  iniciales: se pide después del LCP observado.~~ **Retirado** (T10 revertido por decisión del
+  usuario tras T17). T12 lo dio parcial: Radix se pedía al hidratar, en 2 de 4 corridas 3–9 ms
+  antes del LCP observado.
+- [x] ~~Ronda 3: si el botón provisional tenía el foco, al cargar el menú el foco pasa al botón
+  real (no cae a `<body>`); si no lo tenía, el real no lo roba (T13).~~ **Retirado** con T10: sin
+  carga diferida no hay botón provisional.
+- [ ] Reversión de T10: `page.tsx` usa `WhatsAppButton` directo y el botón flotante del primer
+  render ya es el que abre el menú (`aria-expanded="false"`, sin esperas en `page.test.tsx`). No
+  quedan `whatsapp-button-lazy.tsx`, su prueba ni `whatsapp-trigger.tsx`; `whatsapp-button.tsx`
+  vuelve a su versión anterior a T10 (T18–T19).
+- [ ] Ronda 3: el menú de WhatsApp conserva su comportamiento (pruebas de `whatsapp-button.test.tsx`
+  y del botón flotante en `page.test.tsx` en verde, sin quitar ninguna aserción). Se vuelve a
+  comprobar tras la reversión (T18–T19).
 - [x] Ronda 3: `next.config.mjs` activa `experimental.inlineCss`. `/es`, `/en`, la privacidad y la
   404 compiladas no piden hojas de estilo (`<link rel="stylesheet">`) y se ven igual.
-- [ ] Ronda 3: `inlineCss` se mantiene solo si mejora FCP/LCP de forma clara (más allá del ruido)
+- [x] Ronda 3: `inlineCss` se mantiene solo si mejora FCP/LCP de forma clara (más allá del ruido)
   frente a su coste. Hallazgo de reviwer sobre T11: el CSS va dos veces en cada HTML (`<style>` y
   payload RSC); `es.html` pasa a 375 852 B (gzip 63 105 B, brotli 34–42 KB), cada `.rsc` también lo
   lleva y se pierde la caché de la hoja. T12 mide el peso con la compresión real de Vercel y
@@ -142,6 +163,8 @@ Alcance de la ronda:
   **T12: no concluyente, decisión escalada a planner** (FCP −150 ms estable; LCP −233 ms dentro
   del ruido, con solo 2 corridas; coste en navegaciones siguientes no medido). Se decide tras T17,
   junto con T10. Falta medir el brotli real de Vercel tras el deploy.
+  **Decisión del usuario tras T17: se mantiene.** El FCP mejora de forma clara y repetible (−157 ms
+  en T17, ±3 ms); el LCP, no. El brotli real se anota en T20.
 - [x] Ronda 3: medición local anotada en `## Medición` («Ronda 3»), con la lista de scripts que
   empiezan antes del LCP y el Speed Index, comparada con T07.
 
@@ -371,8 +394,10 @@ Alcance de la ronda:
   `--save-assets`, `pnpm build && pnpm start -p 3123` → `http://localhost:3123/es`), **3 corridas
   por variante**, un build por variante. Reportes `t17-A|B|C-n` en el scratchpad de la sesión.
   - **A**: HEAD tal cual (T10 + `inlineCss`).
-  - **B**: `inlineCss` sin T10 (`page.tsx` importa `WhatsAppButton` en vez de
-    `WhatsAppButtonLazy`; sin commitear).
+  - **B**: `inlineCss` sin la carga diferida de T10 (`page.tsx` importa `WhatsAppButton` en vez
+    de `WhatsAppButtonLazy`; sin commitear). **No es «sin T10» del todo**: solo se revirtió ese
+    import; la extracción del botón a `whatsapp-trigger.tsx` que hizo T10 (con el contexto de foco
+    de T13) seguía en el código. A frente a B mide solo la carga diferida, no todo T10.
   - **C**: como B y `inlineCss: false` (control ≈ T07).
 - Por corrida (ms, simulados salvo «LCP obs.»; «Arranque» = `bootup-time` del chunk con más
   arranque; «Hilo» = `mainthread-work-breakdown` total):
@@ -401,7 +426,7 @@ Alcance de la ronda:
   p.text-lg`) en las 9 corridas. TTFB 453–456 ms, retraso y tiempo de carga 0, retraso de render
   3 012–3 385 ms.
 - Scripts que empiezan antes del LCP observado en la corrida mediana (tamaño transferido):
-  - **A1** (LCP obs. 110 ms): 13 scripts, **207,1 KB**: `0-ssspa2fpt11` 69,7, `07b01dw1b3skm` 38,3,
+  - **A1** (LCP obs. 110 ms): 13 scripts, **207,2 KB** (suma de los tamaños sin redondear): `0-ssspa2fpt11` 69,7, `07b01dw1b3skm` 38,3,
     `0p3d03n8blbsx` (Radix) 24,6, `30ovs0h4fmpog` 18,2, `1dg2f_cnrzia-` 13,9, `2wd_t3ikai8ik`
     10,9, `3n3zts851b2p1` 10,1, `0zaqvpcaih_nz` 7,9, `15g5crpuo06-n` 6,5, `turbopack-266may2gbd4gg`
     4,4, `3qy0shirk377_` 1,6, `01kgg-fbm7ezm` 0,6 y `/_vercel/insights/script.js` 0,4. Sin hojas.
@@ -412,12 +437,15 @@ Alcance de la ronda:
     (`0upn5da2ozqdm` 50,1 KB frente a `29_1ix9xaos4m` 50,1 KB; deducido: por el traspaso de foco de T13).
   - **C3** (138 ms): los mismos 11 scripts que B1 (204,2 KB) y 2 hojas (`1__nm1parv3i_.css` 21,8 y
     `2d7dl23onpl4r.css` 1,4 KB). HTML 16,5 KB frente a 62,9 KB con `inlineCss`.
-- **A frente a B (efecto de T10, con `inlineCss`)**: FCP igual (1 207 / 1 209). LCP mediano
-  **+194 ms con T10** (3 835 frente a 3 641), pero el rango de A (373 ms) es mayor que la
-  diferencia y A2 (3 466) es la mejor de las 9 corridas. Hilo principal y arranque del chunk
-  principal **menores** con T10 (−191 y −81 ms de mediana). SI −72 ms con T10. **Observado**: las
+- **A frente a B (efecto de la carga diferida de T10, con `inlineCss`)**: FCP igual (1 207 /
+  1 209). LCP mediano **+194 ms con la carga diferida** (3 835 frente a 3 641), pero el rango de A
+  (373 ms) es mayor que la diferencia y A2 (3 466) es la mejor de las 9 corridas. Hilo principal
+  −191 ms de mediana con la carga diferida. La columna «Arranque» no es comparable entre A y B:
+  mide el chunk con más arranque de cada build, que en A es `30ovs0h4fmpog.js` (18,2 KB) y en B
+  `0upn5da2ozqdm.js` (50,1 KB), dos fragmentos con contenido distinto. SI −72 ms con la carga
+  diferida. **Observado**: las
   dos corridas de A con LCP ~3,84 s son las que piden Radix (`0p3d03n8blbsx`, a 91 y 123 ms) e
-  insights antes del LCP observado (13 scripts, 207,1 KB); A2, con Radix a 118 ms, después del LCP
+  insights antes del LCP observado (13 scripts, 207,2 KB); A2, con Radix a 118 ms, después del LCP
   observado (116), cuenta 11 scripts (182,1 KB) y da 3 466 ms. **Deducido**: el LCP simulado de A
   depende de si la petición de Radix, que sale al hidratar, cae antes o después del primer pintado
   observado; T10 no lo baja de forma fiable y en 2 de 3 corridas lo empeora.
@@ -451,7 +479,8 @@ Alcance de la ronda:
   ruido. La ronda 3 lo mide en local (SI y tira de fotogramas) y con la mediana de 3 corridas de
   PSI. Si se confirma, se planifica aparte: tocar las animaciones cambia el diseño aprobado y se
   consulta al usuario.
-- **Botón de WhatsApp antes de cargar el menú** (ronda 3): entre el primer pintado y la carga del
+- **Botón de WhatsApp antes de cargar el menú** (ronda 3): **ya no aplica**, T10 se revierte
+  (decisión del usuario tras T17). Contexto original: entre el primer pintado y la carga del
   chunk diferido (justo después de la hidratación), el botón se ve pero un toque no abre el menú.
   Se asume aceptable porque la ventana es breve y WhatsApp también está en el hero, el CTA, la
   sección de contacto y el footer. A confirmar por el usuario. **Foco**: al llegar el chunk, React
