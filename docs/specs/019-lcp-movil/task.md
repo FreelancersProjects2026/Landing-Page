@@ -23,10 +23,12 @@
   (depende de T01)
   Archivos: `src/components/landing/navigation.tsx`,
   `src/components/landing/landing-sections.test.tsx`.
-- [ ] T03 Prueba en `fonts.test.ts`: el mock registra las opciones de cada fuente y
+- [x] T03 Prueba en `fonts.test.ts`: el mock registra las opciones de cada fuente y
   `JetBrains_Mono` se llama con `preload: false`, las Instrument sin él (falla) → añadir
   `preload: false` a `JetBrains_Mono` en `fonts.ts`. (paralela a T01/T02)
   Archivos: `src/app/fonts.ts`, `src/app/fonts.test.ts`.
+  - Evidencia: rojo 1 fallo (`preload` de mono `undefined`, se esperaba `false`); verde
+    `pnpm test` 251/251 y `pnpm check` OK (solo los avisos conocidos de `<img>`).
 - [ ] T04 Verificación (sin commit de código): `pnpm validate` verde; `pnpm build && pnpm start` y
   el `<head>` de `/es` solo precarga hero, logo PNG 192 y fuentes Instrument. Marcar criterios en
   `spec.md`. (depende de T01–T03)
