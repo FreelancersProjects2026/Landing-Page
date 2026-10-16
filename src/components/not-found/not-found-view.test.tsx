@@ -56,4 +56,14 @@ describe('NotFoundView', () => {
       '/es',
     )
   })
+
+  // La 404 global viaja en el payload RSC de cada página: una precarga llegaría a /es.
+  it('pide la imagen con prioridad alta sin precargarla en el documento', () => {
+    render(<NotFoundView {...props} />)
+
+    expect(document.querySelector('link[rel="preload"][as="image"]')).toBeNull()
+    const image = screen.getByRole('img', { name: props.imageAlt })
+    expect(image).toHaveAttribute('fetchpriority', 'high')
+    expect(image).not.toHaveAttribute('loading', 'lazy')
+  })
 })

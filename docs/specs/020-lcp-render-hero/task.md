@@ -60,7 +60,7 @@
     `LargestTextPaint`/`LargestImagePaint`), equivalentes al `PerformanceObserver` en DevTools:
     único candidato LCP el subtítulo; la imagen hero no es candidata (observado; mecanismo de (b)
     deducido). LCP no es el eslogan → T03 no aplica; LCP ≥ 2,5 s → replanificar.
-- [ ] T05 Prueba en `not-found-view.test.tsx`: al renderizar `NotFoundView` no hay ningún
+- [x] T05 Prueba en `not-found-view.test.tsx`: al renderizar `NotFoundView` no hay ningún
   `link[rel="preload"]` de imagen en el documento, y la imagen tiene `fetchpriority="high"` y no
   tiene `loading="lazy"` (falla por el `preload`) → en `not-found-view.tsx` cambiar `preload` por
   `fetchPriority="high"` y `loading="eager"`; mantener tamaño, `alt` y clases. Bug: la precarga de
@@ -70,6 +70,12 @@
   Commit: `fix(not-found): 020-T05 imagen de la 404 sin precarga`.
   Archivos: `src/components/not-found/not-found-view.tsx`,
   `src/components/not-found/not-found-view.test.tsx`.
+  - Evidencia: rojo, la prueba nueva falla con `link[rel="preload"][as="image"]` de
+    `404-raices-obsidiana.webp` en el documento. Verde con `fetchPriority="high"` y
+    `loading="eager"`. En `pnpm build && pnpm start`, `/es` no menciona `404-raices-obsidiana`
+    ni en el HTML ni en el payload RSC (`curl -H 'RSC: 1'`); solo precarga el logo y el hero. La
+    404 (`/es/no-existe`, 404) sigue mostrando la imagen con `fetchpriority="high"`
+    `loading="eager"`. `pnpm test` (253) y `pnpm check` en verde.
 - [ ] T06 Pruebas en `landing-images.test.ts`, que la variante
   `public/ComoTrabajamos/como-trabajamos-640.webp` existe, es WebP, mide 640 px de ancho y pesa
   menos que la original, y en `landing-sections.test.tsx`, que la imagen de «Cómo trabajamos»

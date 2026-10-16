@@ -30,7 +30,8 @@ export function NotFoundView({
         alt={imageAlt}
         width={1672}
         height={941}
-        preload
+        fetchPriority="high"
+        loading="eager"
         className="relative w-full max-w-6xl max-h-[55svh] object-contain motion-safe:animate-in motion-safe:fade-in motion-safe:zoom-in-95 motion-safe:duration-700"
       />
       <div className="relative -mt-4 flex flex-col items-center gap-5 sm:-mt-8">
