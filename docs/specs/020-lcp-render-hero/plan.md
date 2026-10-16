@@ -111,8 +111,11 @@ y lo reporta.
 **T11, CSS en línea.** `experimental.inlineCss: true` en `next.config.mjs` (existe en Next
 16.2.12, `config-shared`). Next inyecta el CSS como `<style>` en el HTML de producción en lugar de
 `<link rel="stylesheet">`, y elimina la petición que bloquea el render (~450 ms de FCP en T07).
-Coste: ~23 KB de CSS sin caché entre páginas. Es aceptable en una landing de una página, y la
-privacidad y la 404 se visitan poco. Se verifica que la 404 global y la privacidad siguen con
+Coste previsto: ~23 KB de CSS sin caché entre páginas. **Corregido tras T11** (reviwer): el CSS
+(136 825 B) va dos veces en cada HTML, en `<style>` y en el payload RSC, y también en cada `.rsc`
+de navegación. Con gzip, el HTML de `/es` crece ~45 KB; con brotli alto la copia sale casi gratis.
+Por eso T12 mide el peso con la compresión real de Vercel y FCP/LCP con y sin `inlineCss`; si no
+hay una mejora clara, se revierte T11 en una tarea. Se verifica que la 404 global y la privacidad siguen con
 estilos. No requiere ADR: es una opción de configuración reversible, no un cambio de arquitectura.
 
 **T12, medición.** Igual que T07 (dos corridas locales, `--save-assets`). Se anotan LCP, FCP, SI y

@@ -132,6 +132,11 @@ Alcance de la ronda:
   (no cae a `<body>`); si no lo tenía, el real no lo roba (T13).
 - [ ] Ronda 3: `next.config.mjs` activa `experimental.inlineCss`. `/es`, `/en`, la privacidad y la
   404 compiladas no piden hojas de estilo (`<link rel="stylesheet">`) y se ven igual.
+- [ ] Ronda 3: `inlineCss` se mantiene solo si mejora FCP/LCP de forma clara (más allá del ruido)
+  frente a su coste. Hallazgo de reviwer sobre T11: el CSS va dos veces en cada HTML (`<style>` y
+  payload RSC); `es.html` pasa a 375 852 B (gzip 63 105 B, brotli 34–42 KB), cada `.rsc` también lo
+  lleva y se pierde la caché de la hoja. T12 mide el peso con la compresión real de Vercel y
+  FCP/LCP con y sin la opción; si no compensa, se revierte T11 en una tarea.
 - [ ] Ronda 3: medición local anotada en `## Medición` («Ronda 3»), con la lista de scripts que
   empiezan antes del LCP y el Speed Index, comparada con T07.
 
