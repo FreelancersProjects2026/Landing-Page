@@ -42,6 +42,8 @@ export function FooterSection({
           width={1600}
           height={533}
           alt=""
+          loading="lazy"
+          decoding="async"
           aria-hidden="true"
           className="w-full h-full object-cover object-center"
         />

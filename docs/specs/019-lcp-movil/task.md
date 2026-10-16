@@ -8,13 +8,15 @@
 - Orden: T01 → T02 (comparten `landing-sections.test.tsx`); T03 en paralelo con ambas.
 
 ## Tareas
-- [ ] T01 Prueba en `landing-sections.test.tsx`: las imágenes de cómo trabajamos, proyectos,
+- [x] T01 Prueba en `landing-sections.test.tsx`: las imágenes de cómo trabajamos, proyectos,
   footer y servicios tienen `loading="lazy"` y `decoding="async"`; la hero no tiene
   `loading="lazy"` y conserva `fetchpriority="high"` (falla) → añadir `loading="lazy"` y
   `decoding="async"` a esos cuatro `<img>`. (paralela a T03)
   Archivos: `src/components/landing/how-it-works-section.tsx`,
   `src/components/landing/projects-section.tsx`, `src/components/landing/footer-section.tsx`,
   `src/components/landing/service-cards.tsx`, `src/components/landing/landing-sections.test.tsx`.
+  - Evidencia: rojo 4 fallos (`loading="lazy"` ausente en cómo trabajamos, proyectos, servicios y
+    footer); verde `pnpm test` 250/250 y `pnpm check` OK.
 - [ ] T02 Prueba en `landing-sections.test.tsx` (bloque navegación, hoy asserta el JPEG): el logo
   contiene `/logo/icono/LOGOsolutionsPJM-192.png` (falla) → cambiar el `src` del `<Image>` de
   `navigation.tsx`; mantener `alt=""`, 40×40 y `preload`. No tocar `whatsapp-button`.

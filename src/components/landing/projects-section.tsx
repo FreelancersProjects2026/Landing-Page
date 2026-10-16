@@ -86,6 +86,8 @@ export function ProjectsSection({ label, title, items }: ProjectsSectionProps) {
           width={1600}
           height={903}
           alt=""
+          loading="lazy"
+          decoding="async"
           aria-hidden="true"
           className="w-full h-full object-contain"
         />

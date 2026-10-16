@@ -226,6 +226,16 @@ describe('HeroSection', () => {
     expect(background).toHaveAttribute('aria-hidden', 'true')
   })
 
+  it('carga la foto del hero de inmediato y con prioridad alta', () => {
+    const { container } = render(
+      <HeroSection hero={content.hero} whatsappUrl={whatsappUrl} />,
+    )
+    const background = container.querySelector('img')
+
+    expect(background).not.toHaveAttribute('loading', 'lazy')
+    expect(background).toHaveAttribute('fetchpriority', 'high')
+  })
+
   it('mantiene cada palabra rotativa del eslogan 3,5 segundos', () => {
     vi.useFakeTimers()
     try {
@@ -686,7 +696,7 @@ describe('Imágenes WebP de la landing', () => {
       '533',
     ],
   ])(
-    '%s: declara width/height del WebP y el CSS manda el tamaño',
+    '%s: declara width/height del WebP, carga diferida y el CSS manda el tamaño',
     (_name, section, src, width, height) => {
       const { container } = render(section)
       const image = container.querySelector(`img[src="${src}"]`)
@@ -694,6 +704,8 @@ describe('Imágenes WebP de la landing', () => {
       expect(image).toHaveAttribute('width', width)
       expect(image).toHaveAttribute('height', height)
       expect(image).toHaveClass('w-full', 'h-full')
+      expect(image).toHaveAttribute('loading', 'lazy')
+      expect(image).toHaveAttribute('decoding', 'async')
     },
   )
 })
