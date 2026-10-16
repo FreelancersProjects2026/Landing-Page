@@ -2,7 +2,7 @@ import { act, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { hydrateRoot } from 'react-dom/client'
 import { renderToString } from 'react-dom/server'
-import { describe, expect, it, vi } from 'vitest'
+import { beforeAll, describe, expect, it, vi } from 'vitest'
 
 import {
   buildWhatsAppUrl,
@@ -19,6 +19,10 @@ const gmailUrl =
 function renderPage(lang: string) {
   return Home({ params: Promise.resolve({ lang }) })
 }
+
+beforeAll(async () => {
+  await import('@/components/landing/whatsapp-button')
+})
 
 describe.each(['es', 'en'])('Home (%s)', (lang) => {
   const content = getLandingContent(lang)
@@ -89,11 +93,10 @@ describe.each(['es', 'en'])('Home (%s)', (lang) => {
 
     // El menú se carga en diferido: se espera al botón real (con aria-expanded).
     await userEvent.click(
-      await screen.findByRole(
-        'button',
-        { name: content.whatsapp.label, expanded: false },
-        { timeout: 5000 },
-      ),
+      await screen.findByRole('button', {
+        name: content.whatsapp.label,
+        expanded: false,
+      }),
     )
 
     expect(

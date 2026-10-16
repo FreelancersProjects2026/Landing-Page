@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it } from 'vitest'
+import { beforeAll, describe, expect, it } from 'vitest'
 
 import { WhatsAppButtonLazy } from './whatsapp-button-lazy'
 
@@ -21,6 +21,10 @@ function renderLazyButton() {
   )
 }
 
+beforeAll(async () => {
+  await import('./whatsapp-button')
+})
+
 describe('WhatsAppButtonLazy', () => {
   it('pinta el botón sin menú de inmediato y lo sustituye por el que abre el menú', async () => {
     renderLazyButton()
@@ -28,23 +32,20 @@ describe('WhatsAppButtonLazy', () => {
     expect(screen.getByRole('button', { name: label })).not.toHaveAttribute(
       'aria-haspopup',
     )
-    await waitFor(
-      () =>
-        expect(screen.getByRole('button', { name: label })).toHaveAttribute(
-          'aria-haspopup',
-          'menu',
-        ),
-      { timeout: 5000 },
+    await waitFor(() =>
+      expect(screen.getByRole('button', { name: label })).toHaveAttribute(
+        'aria-haspopup',
+        'menu',
+      ),
     )
   })
 
   it('tras cargar el menú diferido, un clic muestra cada opción con su enlace', async () => {
     renderLazyButton()
-    const button = await screen.findByRole(
-      'button',
-      { name: label, expanded: false },
-      { timeout: 5000 },
-    )
+    const button = await screen.findByRole('button', {
+      name: label,
+      expanded: false,
+    })
 
     await userEvent.click(button)
 

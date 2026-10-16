@@ -260,7 +260,7 @@
     Pasa con el código actual. Mutaciones temporales: quitar el `.not` → falla («Expected the
     element to have attribute»); esperar `'dialog'` en vez de `'menu'` → falla. `pnpm test`
     33 archivos / 258 pruebas en verde; `pnpm check` OK (6 avisos `no-img-element` conocidos).
-- [ ] T15 Corrección [mejora, KISS] (timeout inútil): `{ timeout: 5000 }` en `findByRole` iguala el
+- [x] T15 Corrección [mejora, KISS] (timeout inútil): `{ timeout: 5000 }` en `findByRole` iguala el
   timeout por defecto de Vitest por prueba, así que no aporta. Quitarlo en
   `whatsapp-button-lazy.test.tsx` y en `page.test.tsx`, y que la espera sea determinista: precargar
   el módulo diferido en un `beforeAll` (`await import('./whatsapp-button')` o su ruta equivalente
@@ -269,6 +269,11 @@
   en verde. (depende de T14)
   Commit: `test(landing): 020-T15 espera del menú diferido sin timeout redundante`.
   Archivos: `src/components/landing/whatsapp-button-lazy.test.tsx`, `src/app/[lang]/page.test.tsx`.
+  - Evidencia: sin `{ timeout: 5000 }` en ambos archivos (incluido el `waitFor` de T14);
+    `beforeAll` precarga `./whatsapp-button` (y `@/components/landing/whatsapp-button` en
+    `page.test.tsx`). Aserciones y prueba de hidratación intactas. `pnpm test` dos veces seguidas:
+    33 archivos / 258 pruebas en verde; `pnpm check` OK. Nota: sin la precarga la prueba aislada
+    también pasa con la caché caliente; la precarga quita la dependencia del primer import en frío.
 - [ ] T13 Corrección [mejora, a11y] (foco perdido al cargar el menú): cuando llega el chunk, React
   desmonta el `<button>` del fallback y monta el real; si el usuario tenía el foco ahí (con Tab), el
   foco cae a `<body>`.
