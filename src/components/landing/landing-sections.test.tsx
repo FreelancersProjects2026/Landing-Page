@@ -391,6 +391,22 @@ describe('HowItWorksSection: accesibilidad', () => {
       vi.useRealTimers()
     }
   })
+
+  it('ofrece la variante de 640 px al móvil y conserva la carga diferida', () => {
+    const { container } = renderProcess()
+    const image = container.querySelector(
+      'img[src="/ComoTrabajamos/como-trabajamos.webp"]',
+    )
+
+    expect(image).toHaveAttribute(
+      'srcset',
+      '/ComoTrabajamos/como-trabajamos-640.webp 640w, /ComoTrabajamos/como-trabajamos.webp 1212w',
+    )
+    expect(image).toHaveAttribute('sizes')
+    expect(image).toHaveAttribute('loading', 'lazy')
+    expect(image).toHaveAttribute('decoding', 'async')
+    expect(image).toHaveAttribute('alt', '')
+  })
 })
 
 describe('CtaSection', () => {

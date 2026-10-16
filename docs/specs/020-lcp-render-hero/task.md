@@ -76,7 +76,7 @@
     ni en el HTML ni en el payload RSC (`curl -H 'RSC: 1'`); solo precarga el logo y el hero. La
     404 (`/es/no-existe`, 404) sigue mostrando la imagen con `fetchpriority="high"`
     `loading="eager"`. `pnpm test` (253) y `pnpm check` en verde.
-- [ ] T06 Pruebas en `landing-images.test.ts`, que la variante
+- [x] T06 Pruebas en `landing-images.test.ts`, que la variante
   `public/ComoTrabajamos/como-trabajamos-640.webp` existe, es WebP, mide 640 px de ancho y pesa
   menos que la original, y en `landing-sections.test.tsx`, que la imagen de «Cómo trabajamos»
   tiene `srcset` con `como-trabajamos-640.webp 640w` y `como-trabajamos.webp 1212w`, tiene `sizes`
@@ -91,6 +91,10 @@
   `src/components/landing/how-it-works-section.tsx`,
   `src/components/landing/landing-images.test.ts`,
   `src/components/landing/landing-sections.test.tsx`.
+  - Evidencia: rojo, ENOENT de `como-trabajamos-640.webp` y `srcset` ausente en la imagen.
+    Variante con sharp (`resize` 640, WebP q80 effort 6): 640×685, 63 446 B frente a 190 576 B
+    de la original (1212×1298); revisada a ojo. `sizes="(min-width: 1024px) 600px,
+    calc(100vw - 48px)"`. `pnpm test` (255) y `pnpm check` en verde.
 - [ ] T07 Medición final (sin código): `pnpm validate` verde; `pnpm build && pnpm start` y
   Lighthouse móvil local con el mismo método que T04 (dos corridas, `--save-assets`) → anotar en
   `## Medición` (subsección «Final») LCP/FCP simulados, elemento LCP y la **lista de peticiones
