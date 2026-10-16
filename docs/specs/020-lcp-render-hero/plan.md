@@ -9,14 +9,24 @@
   `fade-in` pone `--tw-enter-opacity: 0`. Sin `fade-in`, `animate-in` anima solo `transform`.
 
 ## Enfoque
-Primero medir, después tocar. T01 confirma el elemento LCP con `pnpm build && pnpm start` y
-Lighthouse móvil (DevTools) o un `PerformanceObserver` de `largest-contentful-paint` con
-throttling móvil, y anota elemento y desglose en la spec.
+Primero medir, después tocar. T01 midió: el elemento LCP es el texto de marca del menú, no el
+hero. Eso ocurre porque los candidatos grandes del hero quedan fuera del LCP: el texto arranca en
+`opacity: 0` por `fade-in` (causa a, confirmada en código), y la imagen hero, que cubre todo el
+viewport, probablemente se descarta como fondo (causa b, hipótesis que T04 verifica).
 
-Si el LCP es texto del hero, el arreglo es borrar `fade-in` de la constante de entrada del hero:
-el texto queda opaco desde el primer pintado y conserva el deslizamiento. Cambio mínimo, sin CSS
-nuevo. Si además es el eslogan, la primera palabra rotativa se renderiza sin la clase
-`animate-hero-letter` y solo las palabras siguientes entran letra por letra.
+El arreglo sigue siendo borrar `fade-in` de la constante de entrada del hero, pero ahora con otra
+justificación: el texto queda opaco desde el primer pintado, conserva el deslizamiento, y el
+eslogan y el subtítulo, mucho más grandes que el logo, pasan a ser el LCP con un tiempo cercano al
+FCP. Cambio mínimo, sin CSS nuevo. No se toca la imagen hero: aunque la hipótesis (b) se
+confirme, el texto basta como LCP temprano.
+
+La primera palabra rotativa sin `animate-hero-letter` (T03) pasa a condicional: solo se hace si
+la medición posterior a T02 muestra que el LCP es el eslogan y que llega tarde por esa animación.
+Hacerlo antes sería cambiar el efecto aprobado sin evidencia.
+
+T04 vuelve a medir con el mismo método que T01 y, además, lista todas las entradas
+`largest-contentful-paint` del navegador (un `PerformanceObserver` con `buffered: true` en la
+consola de DevTools) para ver qué candidatos se reportan y confirmar o descartar la hipótesis (b).
 
 Alternativas (no son tareas; solo si la medición descarta el texto o el LCP sigue ≥ 2,5 s):
 - `experimental.inlineCss: true` en `next.config.mjs`: elimina los 2 CSS que bloquean el render.
@@ -34,7 +44,8 @@ No hay modelo de dominio nuevo: es presentación pura en `src/components/landing
   `motion-safe:animate-in fill-mode-both`. Eyebrow, eslogan y subtítulo mantienen su duración,
   retraso y `slide-in-from-bottom-*`. El comentario se actualiza: el texto es visible desde el
   primer pintado y solo se desplaza.
-- **Palabra rotativa** (`rotating-slogan.tsx`, solo si T01 señala el eslogan): la primera palabra
+- **Palabra rotativa** (`rotating-slogan.tsx`, condicional: solo si la medición tras T02 señala
+  el eslogan y su animación letra por letra lo retrasa): la primera palabra
   del primer render se pinta sin `animate-hero-letter`; al rotar, las palabras entran como hoy.
   SSR y cliente producen el mismo primer render, así que no hay riesgo de hidratación.
   `motion-reduce` sigue igual.
