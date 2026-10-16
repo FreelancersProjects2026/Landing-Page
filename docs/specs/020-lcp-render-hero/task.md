@@ -13,7 +13,7 @@
   alternativas del plan solo si T07 los señala (se planifican aparte).
 - Tras T07: T09 (corrección de T05, cabecera `Link` de la 404).
 - Ronda 3 (tras el deploy de 020, misma rama y spec): T10 ∥ T11 (no comparten archivos) → T12.
-- Correcciones de T10 (antes de T12): T14 → T15 → T13 (comparten `whatsapp-button-lazy.test.tsx`;
+- Correcciones de T10 (antes de T12): T14 → T15 → T13 → T16 (comparten `whatsapp-button-lazy.test.tsx`;
   ninguna toca `next.config.*`, así que pueden correr en paralelo con T11).
 - Variantes de imagen: sharp ya instalado por Next (`node_modules/.pnpm/sharp@0.34.5`), script de
   un solo uso fuera del repo, sin dependencias nuevas.
@@ -239,7 +239,7 @@
   - Marcar los criterios de la ronda 3 en `spec.md`.
   - Reportar a planner y recordar al usuario que corra PSI móvil 3 veces en producción tras el
     deploy y anote la mediana.
-  (depende de T10, T11, T13, T14 y T15)
+  (depende de T10, T11, T13, T14, T15 y T16)
   Commit: `docs(landing): 020-T12 medición ronda 3`.
   Archivos: `docs/specs/020-lcp-render-hero/spec.md`.
 
@@ -299,3 +299,21 @@
     se ve en la primera prueba. Rojo: «si el botón provisional tenía el foco…» falla (`toHaveFocus`,
     el real sin foco); la de no robar el foco pasa. Verde: `pnpm test` 33 archivos / 260 pruebas;
     `pnpm check` y `pnpm architecture` OK (sin `pnpm build`, a petición).
+
+### Corrección de T13 (hallazgo de reviwer sobre `387a4bf`; antes de T12)
+- [ ] T16 Corrección [mejora] (rama sin prueba): ninguna prueba cubre `onBlur={() =>
+  onFocusChange(false)}` en `whatsapp-button-lazy.tsx`. Si se borra esa línea, las 260 pruebas
+  siguen en verde, y el botón real robaría el foco cuando el usuario ya lo movió a otro elemento
+  antes de que cargue el menú. La prueba «si el botón provisional no tenía el foco…» nunca enfoca
+  el provisional, así que no protege este caso.
+  - Prueba nueva en `whatsapp-button-lazy.test.tsx`: renderizar el envoltorio junto a otro
+    elemento enfocable, enfocar el botón provisional, mover el foco al otro elemento y esperar al
+    botón real (`aria-haspopup="menu"`). El botón real **no** tiene el foco y el otro elemento lo
+    conserva.
+  - Rojo demostrado: quitar temporalmente el `onBlur` y ver la prueba fallar; restaurarlo sin
+    commitear esa eliminación y anotar el mensaje de fallo como evidencia.
+  - Sin cambio de producción esperado. Si la prueba no pasa con el código actual, parar y reportar
+    a planner.
+  (depende de T13)
+  Commit: `test(landing): 020-T16 el botón real no roba el foco movido`.
+  Archivos: `src/components/landing/whatsapp-button-lazy.test.tsx`.
