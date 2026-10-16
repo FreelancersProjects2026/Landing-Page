@@ -10,24 +10,38 @@ La medición de T01 (ver `## Medición`) cambió el diagnóstico: el elemento LC
 del hero sino el texto de marca «solutionsPJM» del menú (`navigation.tsx`, span de 138 × 32 px).
 Que un elemento tan pequeño gane indica que los candidatos grandes del hero quedan fuera del LCP
 en la carga:
-- **(a) Texto del hero invisible al pintar** (confirmado en código): eyebrow, eslogan y subtítulo
+- **(a) Texto del hero invisible al pintar** (**confirmada en T04**): eyebrow, eslogan y subtítulo
   entran con `motion-safe:animate-in fade-in fill-mode-both` (`hero-section.tsx`), es decir,
   arrancan en `opacity: 0`, y Chrome no cuenta como candidato LCP un pintado con opacidad 0.
   Además, cada letra de la palabra rotativa del eslogan entra con `opacity: 0` y `blur(20px)`
   (`animate-hero-letter` en `globals.css`).
-- **(b) Imagen hero tratada como fondo** (hipótesis, no verificada): la imagen ocupa todo el
-  viewport (`absolute inset-0` dentro de `min-h-screen`), y Chrome descarta para el LCP las
-  imágenes que cubren el viewport completo por considerarlas fondo. Se confirma o descarta en T04
-  con la lista de candidatos LCP.
+- **(b) Imagen hero fuera del LCP**: **observado en T04**, `hero-960.webp` no aparece como
+  candidata aunque se descarga a ~20 ms con prioridad alta. **Deducido, no demostrado por la
+  traza**: el mecanismo sería la exclusión de Chrome de las imágenes que cubren todo el viewport
+  (`absolute inset-0` dentro de `min-h-screen`), tratadas como fondo; la traza no expone el
+  motivo.
 
-Sobre el tiempo: en la traza sin simular, el retraso de render del logo es de solo 155 ms (se
-pinta casi a la par del FCP). Los 3,7 s son la estimación de Lantern (throttling simulado de
-Lighthouse), que es lo que también reporta PSI.
+Tras T02 el elemento LCP es el subtítulo del hero, pero el **LCP simulado no baja** (3,5–3,7 s).
+En la traza real FCP = LCP ≈ 110 ms: los ~2,2 s de diferencia los pone Lantern (throttling
+simulado de Lighthouse, el mismo que usa PSI). Su LCP pesimista suma todas las peticiones que
+empiezan antes del LCP observado. Antes de 110 ms arrancan (reporte de T04, corrida 2):
+- **Imagen de la 404** `/404/404-raices-obsidiana.webp` (102 KB), precargada en la landing
+  (`isLinkPreload`), inyectada en cliente (no está en el HTML SSR). Es un **bug**: el `<Image
+  preload>` de `src/components/not-found/not-found-view.tsx` viaja en el payload RSC de la 404
+  global y React emite la precarga al hidratar `/es`.
+- **`como-trabajamos.webp`** (186 KB), pedida a ~45 ms pese a `loading="lazy"`: en móvil la
+  sección cae dentro del margen de carga diferida de Chrome. Se muestra a ~364 px CSS de ancho en
+  móvil (contenedor de 320 px de alto, `object-contain`), pero el archivo mide 1212 px.
+- **Scripts**: 204 KB en chunks; varias secciones bajo el pliegue son `'use client'` (cta,
+  services, how-it-works, projects, team, whatsapp-button con Radix).
+- **Fuentes**: 84 KB, entre ellas una de 40 KB sin precarga (probablemente JetBrains Mono, usada
+  por el eyebrow del hero).
 
 ## Objetivo
-Que el eslogan y el subtítulo del hero, mucho más grandes que el logo, sean visibles desde el
-primer pintado y pasen a ser el elemento LCP con un tiempo cercano al FCP, para que el LCP móvil
-baje de 2,5 s. Sin cambiar contenido ni el diseño aprobado: solo cambia cómo aparece el texto.
+Que el LCP móvil (Lighthouse simulado y PSI) baje de 2,5 s sin cambiar contenido ni el diseño
+aprobado. Primero, que el texto del hero sea candidato LCP desde el primer pintado (hecho en T02).
+Después, quitar de la ventana previa al LCP las descargas que no hacen falta para la primera
+pantalla, empezando por las de mayor impacto y menor esfuerzo.
 
 ## Lenguaje ubicuo
 - **Elemento LCP**: el elemento más grande visible al cargar; Chrome toma su tiempo de pintado.
@@ -39,25 +53,41 @@ baje de 2,5 s. Sin cambiar contenido ni el diseño aprobado: solo cambia cómo a
 1. Confirmar localmente el elemento LCP y su desglose (hecho en T01).
 2. Quitar el fundido de entrada del eyebrow, eslogan y subtítulo, que conservan el deslizamiento
    (`transform`) bajo `motion-safe`. Así son candidatos LCP desde el primer pintado.
-3. **Condicional**: solo si, tras el punto 2, el LCP es el eslogan y su animación letra por letra
-   lo retrasa (el LCP llega después del FCP por la palabra rotativa), la primera palabra se pinta
-   visible desde el primer pintado (sin `opacity: 0` ni `blur` inicial). El efecto letra por
-   letra se mantiene en cada cambio de palabra posterior.
-4. Volver a medir con Lighthouse local y comparar el elemento y el tiempo con T01. Si el LCP sigue
-   ≥ 2,5 s, planner replanifica con las alternativas de `plan.md`.
+3. ~~Primera palabra rotativa sin animación inicial~~: **descartado** en T04 (el LCP no es el
+   eslogan).
+4. Volver a medir con Lighthouse local (hecho en T04: LCP simulado sin cambio).
+5. La imagen de la 404 deja de precargarse en cualquier página; en la 404 sigue cargándose con
+   prioridad alta (está arriba del pliegue allí).
+6. `como-trabajamos.webp` tiene una variante ligera para móvil (640 px de ancho) servida con
+   `srcset`/`sizes` según su tamaño mostrado; la original sigue para pantallas grandes.
+7. Medir de nuevo y, con la lista de peticiones previas al LCP, decidir si hace falta reducir el
+   JavaScript de las secciones bajo el pliegue o aplicar otra alternativa del plan. Eso se
+   planifica aparte, según la medición.
 
 ## Fuera de alcance
 - Cambios de contenido, textos, dominio (`company-profile`) o diseño estático del hero.
-- Cambiar la imagen hero, las fuentes o `next.config.mjs` (alternativas en el plan, solo si la
-  medición las exige).
-- Dependencias nuevas.
+- Cambiar la imagen hero.
+- Variantes de `servicios.webp` (oculta en móvil con `hidden lg:block`, no se descarga),
+  `footer.webp` (con `object-cover` a 340 px de alto se muestra ~1 020 px CSS de ancho en móvil;
+  está al final de la página) y `proyectos.webp` (no aparece entre las peticiones previas al LCP).
+- Fuentes, `next.config.mjs` (`inlineCss`) y JavaScript diferido: solo si la medición del punto 7
+  los señala.
+- Dependencias nuevas (las variantes se generan con el sharp que ya trae Next, como en la spec 019).
 
 ## Criterios de aceptación
 - [x] Elemento LCP local identificado y desglose anotado en `## Medición` (antes del cambio).
 - [x] Ningún texto del hero (eyebrow, eslogan, subtítulo) usa `fade-in`; siguen con
   `motion-safe:animate-in` y su `slide-in-from-bottom-*`.
-- [ ] Si aplica (alcance 3, decidido tras medir): en el primer render la palabra rotativa no lleva
-  `animate-hero-letter`; tras el primer cambio de palabra, sí.
+- [x] ~~Si aplica (alcance 3): primera palabra rotativa sin `animate-hero-letter`~~: no aplica
+  (T04: el LCP es el subtítulo, no el eslogan).
+- [ ] La vista de la 404 no emite `<link rel="preload">` de su imagen; la imagen conserva
+  prioridad alta y carga inmediata en la 404. En `/es` compilada, la 404 no aparece entre las
+  peticiones de red.
+- [ ] Existe `public/ComoTrabajamos/como-trabajamos-640.webp` (640 px de ancho, WebP); la imagen
+  de «Cómo trabajamos» la ofrece en `srcset` junto a la original, con `sizes` acorde a su ancho
+  mostrado, y conserva `loading="lazy"`, `decoding="async"`, `alt=""` y `aria-hidden`.
+- [ ] Medición final anotada en `## Medición` con la lista de peticiones que empiezan antes del
+  LCP (tipo, tamaño) comparada con T04.
 - [x] Medición posterior anotada en `## Medición`: elemento LCP (debe ser texto del hero, no el
   logo del menú), tiempo y desglose comparados con T01, y lista de candidatos LCP que confirme o
   descarte la hipótesis (b).
@@ -116,10 +146,12 @@ baje de 2,5 s. Sin cambiar contenido ni el diseño aprobado: solo cambia cómo a
   - `largestContentfulPaint::Candidate` → texto, `P.text-lg` (subtítulo), tamaño 39 050.
   - `LargestTextPaint::Candidate` → el mismo subtítulo.
   - `LargestImagePaint::Candidate` → solo el icono del logo del menú (40 × 40, 1 600).
-  - **La imagen hero no aparece como candidata**, aunque `hero-960.webp` se descarga a ~20 ms con
-    prioridad alta y no tiene opacidad: Chrome la descarta por cubrir todo el viewport.
-    **Hipótesis (b) confirmada.** El eslogan tampoco aparece (sus letras animadas arrancan en
-    `opacity: 0`), pero el subtítulo es mayor y gana igual.
+  - **Observado**: la imagen hero no aparece como candidata, aunque `hero-960.webp` se descarga a
+    ~20 ms con prioridad alta y no tiene opacidad. **Deducido** (la traza no da el motivo): Chrome
+    la excluye por cubrir todo el viewport. Hipótesis (b) consistente con lo observado.
+  - El eslogan tampoco aparece como candidato. No se puede atribuir a la opacidad 0 de sus letras
+    animadas: `LargestTextPaint` solo emite un candidato cuando supera al anterior, así que el
+    eslogan pudo quedar fuera simplemente por ser más pequeño que el subtítulo.
 - Comparación con T01: la causa (a) queda confirmada (el texto del hero ya cuenta como LCP), pero
   el **LCP simulado no baja** (3,5–3,7 s frente a 3,7 s) y sigue ≥ 2,5 s. El retraso de render
   simulado es casi el mismo: en la traza real el LCP ocurre a la vez que el FCP, así que el hueco
@@ -128,17 +160,13 @@ baje de 2,5 s. Sin cambiar contenido ni el diseño aprobado: solo cambia cómo a
   ≥ 2,5 s por otra causa, se replanifica con las alternativas de `plan.md`.
 
 ## Dudas
-- **Por qué el span de 138 × 32 px del menú gana** a eslogan, subtítulo e imagen hero (la duda
-  anterior, «elemento LCP no confirmado», quedó resuelta en T01). Hipótesis: (a) el texto del
-  hero arranca en `opacity: 0` por `fade-in` y Chrome no cuenta esos pintados; (b) la imagen hero
-  cubre todo el viewport y Chrome la descarta como fondo. Se verifica en T04, tras T02: si el LCP
-  pasa a ser texto del hero se confirma (a); la lista de entradas `largest-contentful-paint`
-  confirma o descarta (b).
-- **Riesgo de que el LCP simulado baje poco**: en la traza real el logo ya se pinta unos 155 ms
-  después del FCP. Si el texto del hero pasa a pintarse en el mismo momento, la estimación de
-  Lantern podría cambiar poco. T04 lo mide; si no baja de 2,5 s, se pasa a las alternativas del
-  plan (CSS en línea, fuentes) en una replanificación.
-- **Primera palabra del eslogan sin efecto blur al cargar** (alcance 3): cambia levemente la
-  primera impresión (la palabra aparece nítida con su degradado, sin entrar letra por letra). Se
-  asume aceptable porque el efecto sigue en cada rotación; la alternativa es conservar solo el
-  `blur` sin `opacity: 0`. A confirmar por el usuario.
+- **Por qué el span del menú ganaba el LCP**: resuelta en T04. (a) confirmada: sin `fade-in`, el
+  subtítulo pasa a ser el LCP. (b) observada (la imagen hero no es candidata) con mecanismo
+  deducido (ver `## Problema`).
+- **Riesgo de que el LCP simulado baje poco**: se materializó en T04. Esta replanificación ataca
+  las peticiones previas al LCP que cuenta Lantern.
+- **Primera palabra del eslogan sin blur**: ya no aplica (T03 descartada).
+- **JetBrains Mono en el eyebrow del hero**: la fuente de 40 KB se pide antes del LCP porque el
+  eyebrow, que está arriba del pliegue, usa `font-mono`. Cambiar su tipografía altera el diseño
+  aprobado: no se toca salvo que la medición final la señale como causa principal, y en ese caso
+  se consulta al usuario.

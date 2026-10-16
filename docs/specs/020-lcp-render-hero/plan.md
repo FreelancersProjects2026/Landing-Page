@@ -28,7 +28,31 @@ T04 vuelve a medir con el mismo método que T01 y, además, lista todas las entr
 `largest-contentful-paint` del navegador (un `PerformanceObserver` con `buffered: true` en la
 consola de DevTools) para ver qué candidatos se reportan y confirmar o descartar la hipótesis (b).
 
-Alternativas (no son tareas; solo si la medición descarta el texto o el LCP sigue ≥ 2,5 s):
+### Replanificación tras T04
+T04 confirmó (a) y observó (b) (la imagen hero no es candidata; el mecanismo es deducido), pero el LCP simulado sigue en 3,5–3,7 s porque Lantern suma las
+peticiones que empiezan antes del LCP observado (~110 ms). Se atacan por impacto y esfuerzo:
+
+1. **Imagen de la 404 precargada en la landing (bug, 102 KB)**: `NotFoundView` usa `<Image
+   preload>`. El árbol de la 404 global viaja en el payload RSC, así que React emite la precarga
+   al hidratar cualquier página. Se cambia `preload` por `fetchPriority="high"` con carga
+   inmediata (`loading="eager"`): en la 404 la imagen sigue llegando con prioridad alta, pero ya
+   no se emite `<link rel=preload>` en ninguna página. Descartado: dejar la 404 con carga
+   diferida (está arriba del pliegue allí).
+2. **`como-trabajamos.webp` (186 KB) pedida antes del LCP**: se genera una variante de 640 px de
+   ancho (`como-trabajamos-640.webp`) con el sharp que ya trae Next, mediante un script de un solo
+   uso fuera del repo (como el logo WebP de la spec 019), y se sirve con `srcset` (640w y la
+   original 1212w) y `sizes` según el ancho mostrado: en móvil el contenedor ocupa el ancho menos
+   el padding (`px-6`), y en `lg` es una de dos columnas, con el `object-contain` a 640 px de
+   alto limitándola a ~600 px. Con el DPR del móvil de Lighthouse (1,75) el navegador elige la
+   de 640. Descartado: bajar la calidad de la original (empeora escritorio).
+3. **Medir de nuevo** (como T04) y anotar la lista de peticiones previas al LCP (tipo y tamaño).
+   Con eso planner decide si sigue alguna de las alternativas de abajo o un recorte del JS de las
+   secciones bajo el pliegue (`'use client'` en cta, services, how-it-works, projects, team y
+   whatsapp-button). Ese recorte no se planifica aún: `next/dynamic` con SSR no evita descargar
+   el chunk para hidratar, y quitar `'use client'` implica rehacer las animaciones de entrada
+   (`useInView`); solo vale la pena si la medición muestra que los scripts dominan.
+
+Alternativas (no son tareas; solo si la medición final las señala):
 - `experimental.inlineCss: true` en `next.config.mjs`: elimina los 2 CSS que bloquean el render.
 - Variante `hero-720.webp` en el `srcset` para móvil, si el LCP es la imagen y pesa su carga.
 - Fuentes Instrument: revisar `display`/precarga si el retraso viene del intercambio de fuente.
@@ -54,7 +78,12 @@ No hay modelo de dominio nuevo: es presentación pura en `src/components/landing
 ## Estructura objetivo
 | Ruta | Capa | Responsabilidad |
 |------|------|-----------------|
-| `docs/specs/020-lcp-render-hero/spec.md` | Docs | Sección `## Medición` (T01 y T04). |
+| `docs/specs/020-lcp-render-hero/spec.md` | Docs | Sección `## Medición` (T01, T04 y T07). |
+| `src/components/not-found/not-found-view.tsx` | UI | Imagen de la 404 con prioridad alta, sin precarga. |
+| `src/components/not-found/not-found-view.test.tsx` | Prueba | Sin `<link rel=preload>`; imagen con `fetchpriority="high"`. |
+| `public/ComoTrabajamos/como-trabajamos-640.webp` | Recurso estático | Variante de 640 px (nueva). |
+| `src/components/landing/how-it-works-section.tsx` | UI (landing) | `srcset`/`sizes` de la imagen. |
+| `src/components/landing/landing-images.test.ts` | Prueba | La variante existe, es WebP y mide 640 px. |
 | `src/components/landing/hero-section.tsx` | UI (landing) | Entrada sin fundido. |
 | `src/components/landing/landing-sections.test.tsx` | Prueba | Texto del hero sin `fade-in`. |
 | `src/components/landing/rotating-slogan.tsx` | UI (landing) | Primera palabra sin animación de entrada. |
@@ -69,4 +98,12 @@ No hay modelo de dominio nuevo: es presentación pura en `src/components/landing
   palabra sí. Las pruebas existentes de rotación y escalonado (`--letter-delay`) en
   `landing-sections.test.tsx` deben seguir en verde.
 - `src/app/[lang]/page.test.tsx` sin cambios y en verde.
-- Manual: Lighthouse móvil local antes (T01) y después (T04); PSI de producción tras el deploy.
+- `not-found-view.test.tsx` (RTL): al renderizar `NotFoundView` no aparece ningún
+  `link[rel="preload"]` de imagen en el documento, y la imagen tiene `fetchpriority="high"` y no
+  tiene `loading="lazy"`. Las pruebas de `global-not-found.test.tsx` siguen en verde.
+- `landing-images.test.ts`: `public/ComoTrabajamos/como-trabajamos-640.webp` existe, es WebP, mide
+  640 px de ancho (sharp) y pesa menos que la original.
+- `landing-sections.test.tsx` (RTL): la imagen de «Cómo trabajamos» ofrece en `srcset` la variante
+  `-640.webp` y la original, tiene `sizes` y conserva `loading="lazy"`.
+- Manual: Lighthouse móvil local antes (T01), después (T04) y final (T07); PSI de producción tras
+  el deploy.
