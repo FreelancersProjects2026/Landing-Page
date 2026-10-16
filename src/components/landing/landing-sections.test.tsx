@@ -270,15 +270,20 @@ describe('HeroSection', () => {
     expect(letters[2].style.getPropertyValue('--letter-delay')).toBe('90ms')
   })
 
-  it('anima la entrada del texto con CSS desde el primer pintado, sin esperar a JS', () => {
-    render(<HeroSection hero={content.hero} whatsappUrl={whatsappUrl} />)
+  it('anima la entrada del texto deslizándolo, visible desde el primer pintado', () => {
+    const { container } = render(
+      <HeroSection hero={content.hero} whatsappUrl={whatsappUrl} />,
+    )
     const animated = [
       screen.getByRole('heading', { level: 1 }).parentElement,
+      container.querySelector('[data-rotating-word]')?.closest('p'),
       screen.getByText(content.hero.subtitle),
     ]
 
     for (const element of animated) {
-      expect(element).toHaveClass('motion-safe:animate-in', 'fill-mode-both')
+      expect(element).toHaveClass('motion-safe:animate-in')
+      expect(element?.className).toMatch(/slide-in-from-bottom-\d+/)
+      expect(element).not.toHaveClass('fade-in')
       expect(element).not.toHaveClass('opacity-0')
     }
   })

@@ -21,7 +21,7 @@
   - Evidencia: Lighthouse 12.8.2 móvil local, LCP 3,7 s; elemento LCP = logo del nav
     (`span.font-display` «solutionsPJM»), retraso de render 88 %. No es texto del hero → parar,
     planner replanifica.
-- [ ] T02 Prueba en `landing-sections.test.tsx` (ajustar «anima la entrada del texto con CSS…»):
+- [x] T02 Prueba en `landing-sections.test.tsx` (ajustar «anima la entrada del texto con CSS…»):
   eyebrow, eslogan y subtítulo tienen `motion-safe:animate-in` y `slide-in-from-bottom-*` y no
   tienen `fade-in` ni `opacity-0` (falla) → quitar `fade-in` de la constante de entrada en
   `hero-section.tsx` y actualizar su comentario: el texto es visible desde el primer pintado para
@@ -29,6 +29,8 @@
   cuenta y gana el logo del menú). (depende de T01)
   Archivos: `src/components/landing/hero-section.tsx`,
   `src/components/landing/landing-sections.test.tsx`.
+  - Evidencia: rojo «expect(element).not.toHaveClass("fade-in")» en el eyebrow; verde tras
+    quitar `fade-in`; `pnpm test` 252/252 y `pnpm check` OK.
 - [ ] T03 **Condicional, en espera**: solo si T04 muestra que el LCP es el eslogan y que llega
   tarde por la animación letra por letra de la palabra rotativa. Prueba nueva en `rotating-slogan.test.tsx`
   (temporizadores falsos): en el primer render las letras de `[data-rotating-word]` no tienen
