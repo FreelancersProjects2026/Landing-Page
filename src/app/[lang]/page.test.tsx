@@ -87,8 +87,13 @@ describe.each(['es', 'en'])('Home (%s)', (lang) => {
   it('el botón flotante abre WhatsApp con el mensaje de cada opción del idioma', async () => {
     render(await renderPage(lang))
 
+    // El menú se carga en diferido: se espera al botón real (con aria-expanded).
     await userEvent.click(
-      screen.getByRole('button', { name: content.whatsapp.label }),
+      await screen.findByRole(
+        'button',
+        { name: content.whatsapp.label, expanded: false },
+        { timeout: 5000 },
+      ),
     )
 
     expect(

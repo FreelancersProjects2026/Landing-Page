@@ -7,7 +7,7 @@ import { TeamSection } from '@/components/landing/team-section'
 import { FaqSection } from '@/components/landing/faq-section'
 import { CtaSection } from '@/components/landing/cta-section'
 import { FooterSection } from '@/components/landing/footer-section'
-import { WhatsAppButton } from '@/components/landing/whatsapp-button'
+import { WhatsAppButtonLazy } from '@/components/landing/whatsapp-button-lazy'
 import {
   buildEmailComposeUrl,
   buildPrivacyPath,
@@ -87,7 +87,7 @@ export default async function Home({
           emailUrl={emailUrl}
           privacy={privacy}
         />
-        <WhatsAppButton
+        <WhatsAppButtonLazy
           label={content.whatsapp.label}
           name={content.company.name}
           greeting={content.contact.text}

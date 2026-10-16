@@ -158,7 +158,7 @@
   (solo el criterio).
 
 ### Ronda 3: JS de Radix y CSS en línea
-- [ ] T10 Prueba nueva en `whatsapp-button-lazy.test.tsx`: al renderizar `WhatsAppButtonLazy`, el
+- [x] T10 Prueba nueva en `whatsapp-button-lazy.test.tsx`: al renderizar `WhatsAppButtonLazy`, el
   botón con el nombre accesible está presente de inmediato y con las clases de posición (`fixed`,
   `right-4`, `bottom-[calc(1rem+env(safe-area-inset-bottom))]`, `z-30`); tras cargar el
   componente diferido, un clic abre el `menu` con un `menuitem` por opción y sus `href` (falla: el
@@ -181,6 +181,13 @@
   `src/components/landing/whatsapp-button-lazy.tsx` (nuevo),
   `src/components/landing/whatsapp-button-lazy.test.tsx` (nuevo), `src/app/[lang]/page.tsx`,
   `src/app/[lang]/page.test.tsx` (solo si hace falta esperar).
+  - Evidencia: rojo, `whatsapp-button-lazy.test.tsx` no carga porque el envoltorio no existe;
+    verde, `pnpm test` 257/257 (dos corridas), `pnpm check` y `pnpm architecture` OK. `loading` de
+    `next/dynamic` no recibe props: el `label` llega al fallback por contexto. En `page.test.tsx`
+    solo se espera al botón real (`findByRole` con `expanded: false`, timeout 5 s); la prueba de
+    hidratación queda intacta y en verde. `pnpm build && pnpm start`: el HTML de `/es` trae el
+    botón con su `aria-label` y clases de posición; el chunk de Radix (`0p3d03n8blbsx.js`, 74 KB)
+    no está entre los 12 `<script>` iniciales y solo lo referencia el chunk del envoltorio.
 - [ ] T11 Prueba en `next.config.test.ts`: `nextConfig.experimental?.inlineCss` es `true` (falla)
   → añadir `inlineCss: true` a `experimental` en `next.config.mjs`, con un comentario breve del
   porqué (quita la hoja de estilos que bloquea el render). Las pruebas existentes siguen.
