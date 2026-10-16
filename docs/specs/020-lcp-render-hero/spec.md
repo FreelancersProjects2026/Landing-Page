@@ -126,18 +126,22 @@ Alcance de la ronda:
 - [ ] Ronda 3: el HTML de `/es` sigue incluyendo el botón flotante de WhatsApp (mismo nombre
   accesible y clases de posición), y el chunk con Radix DropdownMenu no está entre los scripts
   iniciales: se pide después del LCP observado.
-- [ ] Ronda 3: el menú de WhatsApp conserva su comportamiento (pruebas de `whatsapp-button.test.tsx`
+  **T12: parcial.** El botón está en el HTML y Radix no está entre los scripts iniciales, pero se
+  pide al hidratar, a la vez que el LCP observado: en 2 de 4 corridas empieza 3–9 ms antes.
+- [x] Ronda 3: el menú de WhatsApp conserva su comportamiento (pruebas de `whatsapp-button.test.tsx`
   y del botón flotante en `page.test.tsx` en verde, sin quitar ninguna aserción).
-- [ ] Ronda 3: si el botón provisional tenía el foco, al cargar el menú el foco pasa al botón real
+- [x] Ronda 3: si el botón provisional tenía el foco, al cargar el menú el foco pasa al botón real
   (no cae a `<body>`); si no lo tenía, el real no lo roba (T13).
-- [ ] Ronda 3: `next.config.mjs` activa `experimental.inlineCss`. `/es`, `/en`, la privacidad y la
+- [x] Ronda 3: `next.config.mjs` activa `experimental.inlineCss`. `/es`, `/en`, la privacidad y la
   404 compiladas no piden hojas de estilo (`<link rel="stylesheet">`) y se ven igual.
 - [ ] Ronda 3: `inlineCss` se mantiene solo si mejora FCP/LCP de forma clara (más allá del ruido)
   frente a su coste. Hallazgo de reviwer sobre T11: el CSS va dos veces en cada HTML (`<style>` y
   payload RSC); `es.html` pasa a 375 852 B (gzip 63 105 B, brotli 34–42 KB), cada `.rsc` también lo
   lleva y se pierde la caché de la hoja. T12 mide el peso con la compresión real de Vercel y
   FCP/LCP con y sin la opción; si no compensa, se revierte T11 en una tarea.
-- [ ] Ronda 3: medición local anotada en `## Medición` («Ronda 3»), con la lista de scripts que
+  **T12: se mantiene** (FCP −150 ms estable; LCP −230 ms, en el límite del ruido). Falta medir
+  el brotli real de Vercel tras el deploy.
+- [x] Ronda 3: medición local anotada en `## Medición` («Ronda 3»), con la lista de scripts que
   empiezan antes del LCP y el Speed Index, comparada con T07.
 
 ## Medición
@@ -268,6 +272,87 @@ Alcance de la ronda:
   hilo principal 1,4 s. La fuente mono no influye en el LCP y el CSS influye en el FCP (~450 ms
   de bloqueo de render) pero apenas en el LCP. Aun sin JS, el LCP simulado (2,6 s) sigue por
   encima de 2,5 s.
+
+### Ronda 3 (T12, 2026-10-16, en `fc98e3d`: T10, T11, T13–T16)
+- Mismo método que T07 (Lighthouse 12.8.2 CLI, móvil, throttling simulado, Chrome headless,
+  `pnpm build && pnpm start -p 3123` → `http://localhost:3123/es`), dos corridas con
+  `--save-assets` por variante. `pnpm validate` verde en la revisión de `fc98e3d` (HEAD).
+- Resultados (simulados; «sin `inlineCss`» = build local con `inlineCss: false`, sin commitear y
+  restaurado después):
+
+  | Variante                 | Rend. | FCP              | LCP              | SI    | TBT   | CLS |
+  | ------------------------ | ----- | ---------------- | ---------------- | ----- | ----- | --- |
+  | Con `inlineCss`, c1      | 90    | 1,2 s (1 212 ms) | 3,6 s (3 613 ms) | 1,2 s | 10 ms | 0   |
+  | Con `inlineCss`, c2      | 91    | 1,2 s (1 206 ms) | 3,5 s (3 451 ms) | 1,2 s | 10 ms | 0   |
+  | Sin `inlineCss`, c1      | 88    | 1,4 s (1 365 ms) | 3,8 s (3 847 ms) | 1,4 s | 10 ms | 0   |
+  | Sin `inlineCss`, c2      | 89    | 1,4 s (1 362 ms) | 3,7 s (3 683 ms) | 1,4 s | 10 ms | 0   |
+  | T07 (c1 / c2)            | 90    | 1,4 s            | 3,6 / 3,5 s      | 1,4 s | 10 ms | 0   |
+
+- Elemento LCP: el mismo subtítulo del hero (`section#inicio > div.relative >
+  div.lg:max-w-[55%] > p.text-lg`, 364 × 117 px) en las cuatro corridas. Desglose con
+  `inlineCss`: TTFB 456 / 453 ms, retraso y tiempo de carga 0, **retraso de render 3 157 /
+  2 999 ms**. FCP y LCP observados iguales (115 ms). **El LCP sigue ≥ 2,5 s.**
+- Scripts y hojas de estilo que empiezan antes del LCP observado (corrida 2 con `inlineCss`,
+  115 ms; tamaño transferido):
+
+  | Tipo        | Ronda 3                                                      | T07 (c2)                       |
+  | ----------- | ------------------------------------------------------------ | ------------------------------ |
+  | Documento   | `/es` **62,9 KB** (CSS en línea, gzip)                       | 16,5 KB                        |
+  | CSS         | **ninguna hoja**                                             | 2 hojas, 23,3 KB               |
+  | Scripts     | 11 chunks, **182,1 KB**                                      | 10 chunks, 204,2 KB + insights 0,5 |
+  | Fuentes     | 84,3 KB (sin cambio)                                         | 84,3 KB                        |
+  | Imágenes    | 121,0 KB (sin cambio) + `LOGOsolutionsPJM-192.png` 19,6 KB   | 121,0 KB                       |
+  | **Total**   | **469,9 KB** (494,6 en c1)                                   | 449,3 KB                       |
+
+  Scripts: desaparece `29_1ix9xaos4m.js` (50,1 KB); entran `30ovs0h4fmpog.js` (18,2 KB) y
+  `3n3zts851b2p1.js` (10,1 KB); el resto, igual (`0-ssspa2fpt11.js` 69,7, `07b01dw1b3skm.js`
+  38,3, `1dg2f_cnrzia-.js` 13,9, `2wd_t3ikai8ik.js` 10,9, `0zaqvpcaih_nz.js` 7,9,
+  `15g5crpuo06-n.js` 6,5, `turbopack-*.js` 4,4, `3qy0shirk377_.js` 1,6, `01kgg-fbm7ezm.js` 0,6).
+  −22 KB de JS antes del LCP. `/_vercel/insights/script.js` arranca ahora a 118–120 ms, después.
+- **Chunk de Radix** (`0p3d03n8blbsx.js`, 24,6 KB): no está entre los scripts iniciales del HTML,
+  pero se pide justo al hidratar, que en la traza sin throttling coincide con el primer pintado:
+  a 116 ms (LCP 115) en c2 con `inlineCss` y a 114 ms (LCP 114) sin ella, pero a **112 ms (LCP
+  115)** en c1 con `inlineCss` y a **104 ms (LCP 113)** en c1 sin ella. **No se confirma** que
+  arranque siempre después del LCP observado: en 2 de 4 corridas empieza 3–9 ms antes.
+- **Trabajo de arranque**: Radix fuera no bajó el hilo principal. `bootup-time` atribuye ahora
+  881–892 ms (300 de script) a `30ovs0h4fmpog.js`, frente a 724 ms (248) de `29_1ix9xaos4m.js`
+  en T07. Hilo principal 1 641–1 676 ms frente a 1 386 ms en T07. El coste está en la
+  hidratación y las animaciones de los componentes cliente de la landing, no en el código de
+  Radix.
+- **Speed Index (hipótesis del SI de 4,6 s en PSI)**: en local el SI es 1,2 s con `inlineCss` y
+  1,4 s sin ella (T07: 1,4 s); **no se reproduce**. Tira de `screenshot-thumbnails` (tiempos
+  observados 375–3 000 ms, cada 375 ms): el primer fotograma ya muestra el hero con estilos,
+  imagen y texto. Hasta ~2,46 s solo cambian detalles: las letras de la palabra rotativa
+  («tu» → «tu negocio») y el deslizamiento del eyebrow. Los fotogramas de 2 625 y 3 000 ms son
+  idénticos (mismo hash) y `final-screenshot` y `observedLastVisualChange` caen en 2 456–2 462 ms
+  (T07: 2 448–2 470 ms). Las animaciones continuas (pétalos, partículas, brillo) no hacen que la
+  tira siga cambiando después de ~2,5 s. El SI de 4,6 s de producción no se explica con esta
+  medición. Queda pendiente la mediana de 3 corridas de PSI.
+- **Decisión sobre `inlineCss` (T11)**:
+  - Peso del HTML de `/es`: con `inlineCss`, 375 852 B sin comprimir, gzip de `next start`
+    63 943 B y brotli 46 828 (q4), 42 098 (q5) y 34 080 B (q11). Sin `inlineCss`: 98 566 B, gzip
+    16 375 B, más 23,3 KB de hojas cacheables. Producción hoy (sin T11): `curl -H
+    'Accept-Encoding: br' https://solutionspjm.com/es` → `content-encoding: br`, 15 254 B
+    transferidos (98 069 B descomprimido), 2 hojas `rel="stylesheet"`. Con brotli, el HTML
+    crece de 19 a 32 KB (q11 a q4), y se ahorran las dos hojas (23,3 KB con gzip, algo menos con
+    brotli). El coste neto en la primera visita queda entre −4 y +9 KB, según la calidad de
+    brotli de Vercel, que solo se mide tras el deploy. En cada
+    navegación siguiente cuesta más, porque el CSS va en cada HTML y en cada `.rsc` sin caché.
+  - FCP: −150 ms con `inlineCss` (1 206–1 212 frente a 1 362–1 365 ms), estable entre corridas
+    (±6 ms). LCP: −230 ms de media (3 451–3 613 frente a 3 683–3 847 ms). Los rangos no se solapan,
+    pero la variación entre corridas de una misma variante (~160 ms) es del mismo orden.
+    Rendimiento 90–91 frente a 88–89.
+  - Aplicando la regla (se mantiene solo si FCP/LCP mejoran de forma clara, más allá del ruido,
+    frente a su coste): **se mantiene**. La mejora del FCP es clara y repetible; la del LCP es
+    modesta y está en el límite del ruido. El coste en bytes es pequeño con brotli en la primera
+    visita, pero se paga en cada página. Lo decide planner con la mediana de PSI.
+- Comprobación visual con `inlineCss` (Chrome headless, captura de `/es` y de `/es/no-existe`,
+  404): ambas se ven con estilos (hero con imagen, tipografías y botón; 404 con imagen, título y
+  botón). Las capturas se tomaron con ventana de escritorio estrecha, así que el texto se corta
+  por el ancho mínimo de la ventana headless, no por el CSS. La tira de Lighthouse, con
+  emulación móvil, muestra `/es` completa y con estilos. `/es/no-existe`: 0 `<link
+  rel="stylesheet">` y 1 `<style>`.
+- Puerto 3123 liberado; `next.config.mjs` restaurado (`git status` limpio salvo estos docs).
 
 ## Dudas
 - **Por qué el span del menú ganaba el LCP**: resuelta en T04. (a) confirmada: sin `fade-in`, el

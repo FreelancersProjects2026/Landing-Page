@@ -217,7 +217,7 @@
     ronda 3, corrección del texto de T10 y dependencias de T12) que estaban sin commitear en el
     árbol de trabajo. Va contra «un commit por tarea». No se reescribe la historia; en adelante,
     planner commitea sus cambios de docs antes de lanzar tareas que toquen `task.md`.
-- [ ] T12 Medición ronda 3 (sin código): `pnpm validate` verde; `pnpm build && pnpm start` y
+- [x] T12 Medición ronda 3 (sin código): `pnpm validate` verde; `pnpm build && pnpm start` y
   Lighthouse móvil local con el mismo método que T07 (dos corridas, `--save-assets`) → anotar en
   `## Medición` (subsección «Ronda 3») LCP, FCP, **Speed Index**, elemento LCP y la lista de
   scripts y hojas de estilo que empiezan antes del LCP observado (URL y tamaño), comparada con
@@ -242,6 +242,17 @@
   (depende de T10, T11, T13, T14, T15 y T16)
   Commit: `docs(landing): 020-T12 medición ronda 3`.
   Archivos: `docs/specs/020-lcp-render-hero/spec.md`.
+  - Evidencia: Lighthouse 12.8.2 móvil local, 2 corridas por variante. Con `inlineCss`: Rend.
+    90/91, FCP 1,2 s, LCP 3,6/3,5 s (3 613/3 451 ms), SI 1,2 s, TBT 10 ms, CLS 0. Sin `inlineCss`
+    (build local sin commitear, restaurado): 88/89, FCP 1,4 s, LCP 3,8/3,7 s, SI 1,4 s. LCP =
+    subtítulo del hero, retraso de render ~3,0–3,2 s: **LCP sigue ≥ 2,5 s**. Antes del LCP: sin
+    hojas de estilo, scripts 182,1 KB (T07: 204,2; sale `29_*.js`), HTML 62,9 KB con gzip. Radix
+    (`0p3d03n8blbsx.js`) fuera del HTML inicial, pero se pide al hidratar, en 2 de 4 corridas 3–9 ms
+    antes del LCP observado. El hilo principal no baja (1,6–1,7 s; `30ovs0h4fmpog.js` ~890 ms de
+    arranque). SI de 4,6 s no reproducido: la tira deja de cambiar a ~2,46 s. HTML de `/es`: gzip
+    63 943 B, brotli 34–47 KB (sin `inlineCss`: gzip 16 375 B; producción br 15 254 B).
+    `inlineCss` se mantiene (FCP −150 ms estable, LCP −230 ms en el límite del ruido). `/es` y la
+    404 se ven con estilos (Chrome headless). Puerto 3123 liberado.
 
 ### Correcciones de T10 (hallazgos de reviwer sobre `c520365`; antes de T12)
 - [x] T14 Corrección [mejora] (prueba de comportamiento, no de clases): en
