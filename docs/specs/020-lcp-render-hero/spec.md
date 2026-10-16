@@ -53,8 +53,28 @@ sin cambiar contenido ni el diseño aprobado: solo cambia cómo aparece el texto
   manual del usuario).
 
 ## Medición
-Pendiente (T01). Registrar: herramienta, elemento LCP (selector), TTFB, retraso de carga, tiempo
-de carga y retraso de render, antes (T01) y después (T04) del cambio.
+### Antes (T01, 2026-10-16)
+- Herramienta: Lighthouse 12.8.2 CLI, móvil por defecto, throttling simulado, Chrome headless,
+  contra `pnpm build && pnpm start -p 3123` → `http://localhost:3123/es`. Dos corridas, mismo
+  resultado.
+- Rendimiento 89; FCP 1,4 s; **LCP 3,7 s**; TBT 20 ms; CLS 0.
+- **Elemento LCP: NO es texto del hero.** Es el logotipo de la barra de navegación:
+  - Selector: `nav.relative > div.flex > a.flex > span.font-display` (texto «solutionsPJM»,
+    138 × 32 px, `src/components/landing/navigation.tsx`).
+  - Snippet: `<span class="font-display tracking-tight transition-all duration-500 text-2xl text-white">`.
+- Desglose (`largest-contentful-paint-element`, simulado):
+
+  | Fase              | Tiempo    | % LCP |
+  | ----------------- | --------- | ----- |
+  | TTFB              | 457 ms    | 12 %  |
+  | Retraso de carga  | 0 ms      | 0 %   |
+  | Tiempo de carga   | 0 ms      | 0 %   |
+  | Retraso de render | 3 280 ms  | 88 %  |
+
+  (`lcp-breakdown-insight`, traza sin simular: TTFB 10 ms, retraso de render 155 ms.)
+- Conclusión: alcance 2–3 no aplica tal cual (alcance 4). Que un texto pequeño del nav gane a
+  eslogan, subtítulo e imagen hero sugiere que estos no cuentan como candidatos LCP en la carga;
+  lo replanifica planner.
 
 ## Dudas
 - **Elemento LCP no confirmado**: la API de PSI respondió 429. Candidatos: `<p>` del eslogan,

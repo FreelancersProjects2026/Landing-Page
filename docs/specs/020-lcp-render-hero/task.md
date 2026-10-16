@@ -11,12 +11,15 @@
   T04 al final.
 
 ## Tareas
-- [ ] T01 Medición (sin código): `pnpm build && pnpm start`; Lighthouse móvil en DevTools sobre
+- [x] T01 Medición (sin código): `pnpm build && pnpm start`; Lighthouse móvil en DevTools sobre
   `http://localhost:3000/es` (o `PerformanceObserver` `largest-contentful-paint` con throttling
   móvil) → anotar en `spec.md` `## Medición` el elemento LCP (selector) y el desglose TTFB /
   retraso de carga / tiempo de carga / retraso de render. Si el LCP **no** es texto del hero,
   parar y reportar a planner (T02/T03 no aplican).
   Archivos: `docs/specs/020-lcp-render-hero/spec.md`.
+  - Evidencia: Lighthouse 12.8.2 móvil local, LCP 3,7 s; elemento LCP = logo del nav
+    (`span.font-display` «solutionsPJM»), retraso de render 88 %. No es texto del hero → parar,
+    planner replanifica.
 - [ ] T02 Prueba en `landing-sections.test.tsx` (ajustar «anima la entrada del texto con CSS…»):
   eyebrow, eslogan y subtítulo tienen `motion-safe:animate-in` y `slide-in-from-bottom-*` y no
   tienen `fade-in` ni `opacity-0` (falla) → quitar `fade-in` de la constante de entrada en
