@@ -69,6 +69,8 @@ export function HowItWorksSection({
               width={1212}
               height={1298}
               alt=""
+              loading="lazy"
+              decoding="async"
               aria-hidden="true"
               className="absolute bottom-0 left-0 w-full h-full object-contain object-bottom"
             />

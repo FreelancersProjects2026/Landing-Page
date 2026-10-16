@@ -44,7 +44,7 @@ describe('Navigation', () => {
     // Siempre está arriba del pliegue: se precarga en vez de cargarse en diferido.
     expect(logo).not.toHaveAttribute('loading', 'lazy')
     expect(decodeURIComponent(logo?.getAttribute('src') ?? '')).toContain(
-      '/logo/icono/LOGOsolutionsPJM.jpeg',
+      '/logo/icono/LOGOsolutionsPJM-192.webp',
     )
     expect(
       within(nav)
@@ -224,6 +224,16 @@ describe('HeroSection', () => {
     )
     expect(background).toHaveAttribute('alt', '')
     expect(background).toHaveAttribute('aria-hidden', 'true')
+  })
+
+  it('carga la foto del hero de inmediato y con prioridad alta', () => {
+    const { container } = render(
+      <HeroSection hero={content.hero} whatsappUrl={whatsappUrl} />,
+    )
+    const background = container.querySelector('img')
+
+    expect(background).not.toHaveAttribute('loading', 'lazy')
+    expect(background).toHaveAttribute('fetchpriority', 'high')
   })
 
   it('mantiene cada palabra rotativa del eslogan 3,5 segundos', () => {
@@ -614,6 +624,16 @@ describe('TeamSection', () => {
       )
     }
   })
+
+  it('muestra cada red social como botón con icono y nombre accesible', () => {
+    render(<TeamSection label={content.menu.team} {...content.team} />)
+    const section = screen.getByRole('region', { name: content.team.title })
+
+    for (const link of within(section).getAllByRole('link')) {
+      expect(link.querySelector('svg[aria-hidden="true"]')).not.toBeNull()
+      expect(link.querySelector('.sr-only')?.textContent).toBe(link.textContent)
+    }
+  })
 })
 
 describe('FaqSection', () => {
@@ -686,7 +706,7 @@ describe('Imágenes WebP de la landing', () => {
       '533',
     ],
   ])(
-    '%s: declara width/height del WebP y el CSS manda el tamaño',
+    '%s: declara width/height del WebP, carga diferida y el CSS manda el tamaño',
     (_name, section, src, width, height) => {
       const { container } = render(section)
       const image = container.querySelector(`img[src="${src}"]`)
@@ -694,6 +714,8 @@ describe('Imágenes WebP de la landing', () => {
       expect(image).toHaveAttribute('width', width)
       expect(image).toHaveAttribute('height', height)
       expect(image).toHaveClass('w-full', 'h-full')
+      expect(image).toHaveAttribute('loading', 'lazy')
+      expect(image).toHaveAttribute('decoding', 'async')
     },
   )
 })

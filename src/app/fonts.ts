@@ -18,6 +18,7 @@ const instrumentSerif = Instrument_Serif({
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-jetbrains',
+  preload: false,
 })
 
 // Compartidas por el layout de cada idioma y la 404 global, que no usa ese layout.

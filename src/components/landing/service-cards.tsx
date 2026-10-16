@@ -48,6 +48,8 @@ export function FeaturedServiceCard({
           width={1600}
           height={903}
           alt=""
+          loading="lazy"
+          decoding="async"
           aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover object-center"
           style={{ transform: 'scaleX(-1)' }}

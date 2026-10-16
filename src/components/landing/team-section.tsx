@@ -1,11 +1,17 @@
 'use client'
 
-import { ArrowUpRight } from 'lucide-react'
+import { Github, Linkedin, type LucideIcon } from 'lucide-react'
 import type { TeamMember } from '@modules/company-profile'
 
-import { externalLinkProps } from './external-link'
+import { FooterContactLink } from './footer-contact-link'
 import { sectionIds } from './section-ids'
 import { revealClass, useInView } from './use-in-view'
+
+// Mismo orbe 3D del footer; GitHub usa blanco porque su negro no se ve sobre fondo oscuro.
+const socialChannels: Record<string, { icon: LucideIcon; accent: string }> = {
+  GitHub: { icon: Github, accent: '#ffffff' },
+  LinkedIn: { icon: Linkedin, accent: '#0A66C2' },
+}
 
 type TeamSectionProps = {
   label: string
@@ -52,30 +58,35 @@ export function TeamSection({
           {members.map((member, index) => (
             <article
               key={member.name}
-              className={`relative border border-foreground/10 p-8 lg:p-10 flex flex-col transition-all duration-700 ${revealClass(isVisible, 'translate-y-12')}`}
+              className={`flex transition-all duration-700 ${revealClass(isVisible, 'translate-y-12')}`}
               style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <span className="font-mono text-sm text-muted-foreground">
-                {String(index + 1).padStart(2, '0')}
-              </span>
-              <h3 className="text-2xl lg:text-3xl font-display mt-4 mb-4">
-                {member.name}
-              </h3>
-              <p className="text-muted-foreground leading-relaxed mb-8 flex-1">
-                {member.role}
-              </p>
-              <div className="flex gap-6">
-                {member.links.map((link) => (
-                  <a
-                    key={link.url}
-                    href={link.url}
-                    {...externalLinkProps}
-                    className="text-sm text-foreground/70 hover:text-foreground transition-colors inline-flex items-center gap-1 group"
-                  >
-                    {link.label}
-                    <ArrowUpRight className="w-3 h-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                  </a>
-                ))}
+              {/* Negro y borde blanco como Cómo trabajamos, hover en blanco como el resto de la
+                  página; sin numeración ni barra de progreso, que sugerirían un orden entre personas.
+                  Va en un div interno para no heredar el retraso escalonado del reveal. */}
+              <div className="group relative flex flex-1 flex-col bg-black p-8 lg:p-10 border border-white/25 hover:border-white/60 focus-within:border-white/60 motion-safe:transition-colors motion-safe:duration-500">
+                <div
+                  aria-hidden="true"
+                  className="absolute -top-px -left-px -right-px h-px bg-white origin-left scale-x-0 group-hover:scale-x-100 group-focus-within:scale-x-100 motion-safe:transition-transform motion-safe:duration-700 motion-safe:ease-out"
+                />
+                <h3 className="text-2xl lg:text-3xl font-display mb-4">
+                  {member.name}
+                </h3>
+                <p className="text-white/60 leading-relaxed mb-8 flex-1 group-hover:text-white/80 group-focus-within:text-white/80 motion-safe:transition-colors motion-safe:duration-300">
+                  {member.role}
+                </p>
+                <div className="flex gap-3">
+                  {member.links.map((link) => (
+                    <FooterContactLink
+                      key={link.url}
+                      href={link.url}
+                      external
+                      {...socialChannels[link.label]}
+                    >
+                      {link.label}
+                    </FooterContactLink>
+                  ))}
+                </div>
               </div>
             </article>
           ))}

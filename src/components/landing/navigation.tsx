@@ -73,7 +73,7 @@ export function Navigation({
             className="flex items-center gap-2 group"
           >
             <Image
-              src="/logo/icono/LOGOsolutionsPJM.jpeg"
+              src="/logo/icono/LOGOsolutionsPJM-192.webp"
               alt=""
               width={40}
               height={40}
