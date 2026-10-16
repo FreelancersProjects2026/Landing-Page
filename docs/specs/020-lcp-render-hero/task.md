@@ -41,7 +41,7 @@
   (depende de T04)
   Archivos: `src/components/landing/rotating-slogan.tsx`,
   `src/components/landing/rotating-slogan.test.tsx` (nuevo).
-- [ ] T04 Medición posterior (sin código): `pnpm validate` verde; `pnpm build && pnpm start` y
+- [x] T04 Medición posterior (sin código): `pnpm validate` verde; `pnpm build && pnpm start` y
   Lighthouse móvil local con el mismo método que T01 → anotar en `## Medición` (subsección
   «Después») el elemento LCP, LCP/FCP simulados y el desglose, comparados con T01. Además, en
   DevTools con throttling móvil, listar todas las entradas `largest-contentful-paint`
@@ -51,3 +51,7 @@
   si el LCP sigue ≥ 2,5 s por otra causa → replanificar con las alternativas del plan.
   (depende de T02)
   Archivos: `docs/specs/020-lcp-render-hero/spec.md`.
+  - Evidencia: Lighthouse 12.8.2 móvil local, 2 corridas: LCP 3,7 s / 3,5 s, FCP 1,4 s; elemento
+    LCP = subtítulo del hero (`p.text-lg`); retraso de render 87–88 %. Traza: único candidato LCP
+    el subtítulo; la imagen hero no es candidata (hipótesis b confirmada). LCP no es el eslogan →
+    T03 no se activa; LCP ≥ 2,5 s → replanificar.

@@ -54,15 +54,15 @@ baje de 2,5 s. Sin cambiar contenido ni el diseño aprobado: solo cambia cómo a
 
 ## Criterios de aceptación
 - [x] Elemento LCP local identificado y desglose anotado en `## Medición` (antes del cambio).
-- [ ] Ningún texto del hero (eyebrow, eslogan, subtítulo) usa `fade-in`; siguen con
+- [x] Ningún texto del hero (eyebrow, eslogan, subtítulo) usa `fade-in`; siguen con
   `motion-safe:animate-in` y su `slide-in-from-bottom-*`.
 - [ ] Si aplica (alcance 3, decidido tras medir): en el primer render la palabra rotativa no lleva
   `animate-hero-letter`; tras el primer cambio de palabra, sí.
-- [ ] Medición posterior anotada en `## Medición`: elemento LCP (debe ser texto del hero, no el
+- [x] Medición posterior anotada en `## Medición`: elemento LCP (debe ser texto del hero, no el
   logo del menú), tiempo y desglose comparados con T01, y lista de candidatos LCP que confirme o
   descarte la hipótesis (b).
-- [ ] Con `prefers-reduced-motion` no hay animación (se mantienen `motion-safe:`/`motion-reduce:`).
-- [ ] `src/app/[lang]/page.test.tsx` (hidratación) sigue en verde; `pnpm validate` en verde.
+- [x] Con `prefers-reduced-motion` no hay animación (se mantienen `motion-safe:`/`motion-reduce:`).
+- [x] `src/app/[lang]/page.test.tsx` (hidratación) sigue en verde; `pnpm validate` en verde.
 - [ ] Lighthouse móvil local tras el cambio: LCP simulado menor que los 3,7 s de T01.
 - [ ] Tras el deploy, PSI móvil de `/es` reporta LCP < 2,5 s y Rendimiento ≥ 95 (verificación
   manual del usuario).
@@ -91,6 +91,41 @@ baje de 2,5 s. Sin cambiar contenido ni el diseño aprobado: solo cambia cómo a
   estos no cuentan como candidatos LCP en la carga. Replanificado (2026-10-16): ver `## Problema`,
   causas (a) y (b); T02 se mantiene con esa justificación, T03 pasa a condicional y T04 vuelve a
   medir.
+
+### Después (T04, 2026-10-16, tras T02 `4013da8`)
+- Mismo método que T01 (Lighthouse 12.8.2 CLI, móvil, throttling simulado, Chrome headless,
+  `pnpm start -p 3123` → `http://localhost:3123/es`), dos corridas con `--save-assets`.
+- Corrida 1: Rendimiento 89; FCP 1,4 s; **LCP 3,7 s**; TBT 10 ms; CLS 0.
+  Corrida 2: Rendimiento 90; FCP 1,4 s; **LCP 3,5 s**; TBT 10 ms; CLS 0.
+- **Elemento LCP: el subtítulo del hero** (ya no el logo del menú ni el eslogan):
+  - Selector: `section#inicio > div.relative > div.lg:max-w-[55%] > p.text-lg` («Desde Costa Rica
+    desarrollamos software a medida…», 364 × 117 px).
+- Desglose (`largest-contentful-paint-element`, simulado):
+
+  | Fase              | Corrida 1 | Corrida 2 | T01      |
+  | ----------------- | --------- | --------- | -------- |
+  | TTFB              | 453 ms    | 452 ms    | 457 ms   |
+  | Retraso de carga  | 0 ms      | 0 ms      | 0 ms     |
+  | Tiempo de carga   | 0 ms      | 0 ms      | 0 ms     |
+  | Retraso de render | 3 228 ms  | 3 091 ms  | 3 280 ms |
+
+  (`lcp-breakdown-insight`, traza sin simular: TTFB 4–6 ms, retraso de render ~104 ms; FCP y LCP
+  observados iguales, 107–110 ms.)
+- Candidatos `largest-contentful-paint` de la traza (iguales en ambas corridas, un solo candidato
+  por tipo, todos a ~110 ms):
+  - `largestContentfulPaint::Candidate` → texto, `P.text-lg` (subtítulo), tamaño 39 050.
+  - `LargestTextPaint::Candidate` → el mismo subtítulo.
+  - `LargestImagePaint::Candidate` → solo el icono del logo del menú (40 × 40, 1 600).
+  - **La imagen hero no aparece como candidata**, aunque `hero-960.webp` se descarga a ~20 ms con
+    prioridad alta y no tiene opacidad: Chrome la descarta por cubrir todo el viewport.
+    **Hipótesis (b) confirmada.** El eslogan tampoco aparece (sus letras animadas arrancan en
+    `opacity: 0`), pero el subtítulo es mayor y gana igual.
+- Comparación con T01: la causa (a) queda confirmada (el texto del hero ya cuenta como LCP), pero
+  el **LCP simulado no baja** (3,5–3,7 s frente a 3,7 s) y sigue ≥ 2,5 s. El retraso de render
+  simulado es casi el mismo: en la traza real el LCP ocurre a la vez que el FCP, así que el hueco
+  de ~2,2 s entre FCP y LCP simulados lo genera la estimación de Lantern, no la animación.
+- Conclusión para planner: el LCP **no** es el eslogan → T03 no se activa. Como el LCP sigue
+  ≥ 2,5 s por otra causa, se replanifica con las alternativas de `plan.md`.
 
 ## Dudas
 - **Por qué el span de 138 × 32 px del menú gana** a eslogan, subtítulo e imagen hero (la duda
