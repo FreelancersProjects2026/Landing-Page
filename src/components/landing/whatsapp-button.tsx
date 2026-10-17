@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useId } from 'react'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, MessageCircle, X } from 'lucide-react'
 
 import {
   DropdownMenu,
@@ -14,7 +14,6 @@ import {
 import type { ExternalLink } from '@modules/company-profile'
 
 import { externalLinkProps } from './external-link'
-import { WhatsAppTrigger } from './whatsapp-trigger'
 
 type WhatsAppButtonProps = {
   label: string
@@ -22,6 +21,9 @@ type WhatsAppButtonProps = {
   greeting: string
   options: readonly ExternalLink[]
 }
+
+const iconTransition =
+  'absolute size-7 motion-safe:transition-[opacity,rotate] motion-safe:duration-300 motion-safe:ease-out'
 
 // Radix resuelve aria-expanded, teclado, Esc y el regreso del foco al botón.
 // modal={false}: un chat flotante no debe bloquear el scroll ni los clics de la página.
@@ -36,7 +38,20 @@ export function WhatsAppButton({
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
-        <WhatsAppTrigger label={label} />
+        <button
+          type="button"
+          aria-label={label}
+          className="group fixed right-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-30 flex size-14 items-center justify-center rounded-full bg-foreground text-background shadow-lg transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
+        >
+          <MessageCircle
+            aria-hidden="true"
+            className={`${iconTransition} group-data-[state=open]:rotate-90 group-data-[state=open]:opacity-0`}
+          />
+          <X
+            aria-hidden="true"
+            className={`${iconTransition} -rotate-90 opacity-0 group-data-[state=open]:rotate-0 group-data-[state=open]:opacity-100`}
+          />
+        </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         side="top"

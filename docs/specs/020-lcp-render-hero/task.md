@@ -395,7 +395,7 @@
     name "Escríbenos por WhatsApp"` (ídem «Message us on WhatsApp»). Verde: `pnpm test` 256/256,
     `pnpm check` 0 errores (6 avisos `no-img-element` conocidos), `pnpm architecture` sin
     violaciones. El grep solo encuentra un comentario de `whatsapp-trigger.tsx` (se borra en T19).
-- [ ] T19 Refactor (sin cambio de comportamiento, sin rojo nuevo): devolver el `<button>` del
+- [x] T19 Refactor (sin cambio de comportamiento, sin rojo nuevo): devolver el `<button>` del
   trigger a `whatsapp-button.tsx` dentro de `DropdownMenuTrigger asChild`, tal como estaba en
   `910caa8` (`git show 910caa8:src/components/landing/whatsapp-button.tsx`: mismo marcado, clases,
   `iconTransition` e íconos `MessageCircle`/`X`), y borrar `whatsapp-trigger.tsx` (con
@@ -410,6 +410,12 @@
   Commit: `refactor(landing): 020-T19 botón flotante sin trigger aparte`.
   Archivos: `src/components/landing/whatsapp-button.tsx`,
   `src/components/landing/whatsapp-trigger.tsx` (borrar).
+  - Evidencia: `git diff 910caa8 -- whatsapp-button.tsx src/app/[lang]/page.tsx` vacío;
+    `whatsapp-button.test.tsx` sin cambios y en verde; grep de `whatsapp-button-lazy`,
+    `WhatsAppButtonLazy`, `whatsapp-trigger` y `WhatsAppTrigger` en `src` sin resultados.
+    `pnpm validate` OK (256/256, 0 errores y 6 avisos `no-img-element` conocidos, sin violaciones).
+    `pnpm start`: el HTML de `/es` trae `<button aria-label="Escríbenos por WhatsApp" …
+    aria-haspopup="menu" aria-expanded="false">`, 0 `<link rel="stylesheet">` y 1 `<style>`. Puerto liberado.
 - [ ] T20 Cierre (a cargo del usuario, tras el merge a `main` y el deploy): PSI móvil de
   `https://solutionspjm.com/es`, **3 corridas**, anotar Rendimiento, FCP, LCP, SI, TBT y CLS de
   cada una y la **mediana**. Además, `curl -sI -H 'Accept-Encoding: br' https://solutionspjm.com/es`
