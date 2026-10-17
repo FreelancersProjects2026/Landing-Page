@@ -146,13 +146,16 @@ Alcance de la ronda:
 - [x] ~~Ronda 3: si el botón provisional tenía el foco, al cargar el menú el foco pasa al botón
   real (no cae a `<body>`); si no lo tenía, el real no lo roba (T13).~~ **Retirado** con T10: sin
   carga diferida no hay botón provisional.
-- [ ] Reversión de T10: `page.tsx` usa `WhatsAppButton` directo y el botón flotante del primer
+- [x] Reversión de T10: `page.tsx` usa `WhatsAppButton` directo y el botón flotante del primer
   render ya es el que abre el menú (`aria-expanded="false"`, sin esperas en `page.test.tsx`). No
   quedan `whatsapp-button-lazy.tsx`, su prueba ni `whatsapp-trigger.tsx`; `whatsapp-button.tsx`
-  vuelve a su versión anterior a T10 (T18–T19).
-- [ ] Ronda 3: el menú de WhatsApp conserva su comportamiento (pruebas de `whatsapp-button.test.tsx`
+  vuelve a su versión anterior a T10 (T18–T19). Cumplido: `git diff 910caa8` vacío en
+  `whatsapp-button.tsx` y `page.tsx`, sin archivos lazy ni trigger (evidencia en T18–T19).
+- [x] Ronda 3: el menú de WhatsApp conserva su comportamiento (pruebas de `whatsapp-button.test.tsx`
   y del botón flotante en `page.test.tsx` en verde, sin quitar ninguna aserción). Se vuelve a
-  comprobar tras la reversión (T18–T19).
+  comprobar tras la reversión (T18–T19). Cumplido:
+  `whatsapp-button.test.tsx` sin cambios y en verde, la prueba del botón flotante de `page.test.tsx`
+  pasa con todas sus aserciones y el HTML de producción trae `aria-haspopup="menu"`.
 - [x] Ronda 3: `next.config.mjs` activa `experimental.inlineCss`. `/es`, `/en`, la privacidad y la
   404 compiladas no piden hojas de estilo (`<link rel="stylesheet">`) y se ven igual.
 - [x] Ronda 3: `inlineCss` se mantiene solo si mejora FCP/LCP de forma clara (más allá del ruido)
