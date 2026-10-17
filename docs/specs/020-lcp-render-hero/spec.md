@@ -66,14 +66,50 @@ pantalla, empezando por las de mayor impacto y menor esfuerzo.
    JavaScript de las secciones bajo el pliegue o aplicar otra alternativa del plan. Eso se
    planifica aparte, según la medición.
 
+### Ronda 3 (tras el deploy de 020, misma spec y rama por pedido del usuario)
+PSI móvil en producción con 020 desplegada (una corrida, ruido ±0,5 s): Rendimiento 90, FCP 1,8 s,
+LCP 3,1 s, TBT 0, CLS 0, **Speed Index 4,6 s**. Con 019: 95, FCP 1,2 s, LCP 2,9 s, SI 1,3 s. T07
+mostró que dominan los scripts (sin JS, el LCP simulado baja a 2,6 s) y que el CSS principal
+bloquea ~450 ms de FCP. Datos del build local:
+- `29_1ix9xaos4m.js` (155 KB sin comprimir, ~700 ms de arranque en T07) contiene Radix
+  DropdownMenu (popper/floating, focus-scope, dismissable-layer), importado solo por el botón
+  flotante de WhatsApp (`whatsapp-button.tsx`), que no hace falta para el primer pintado.
+- `0-ssspa2fpt11.js` (221 KB) es react-dom: no se puede recortar.
+
+Alcance de la ronda:
+8. El código de Radix del botón flotante de WhatsApp se descarga después de la hidratación, no en
+   el arranque. El botón sigue en el HTML del servidor con el mismo aspecto, nombre accesible y
+   posición. El menú conserva su comportamiento: clic, Enter, Esc, regreso del foco, roles
+   `menu`/`menuitem` y sin bloquear el scroll.
+9. El CSS se sirve en línea en el HTML (`experimental.inlineCss`, disponible en Next 16.2.12), sin
+   la petición de hoja de estilos que bloquea el render.
+10. Medir de nuevo en local y pedir al usuario 3 corridas de PSI en producción (se usa la mediana).
+
+### Decisión del usuario tras T17 (2026-10-16)
+- **Se mantiene `inlineCss` (T11)**: mejora el FCP de forma clara y repetible (−150 ms en T12,
+  −157 ms en T17, ±6 ms entre corridas). El LCP queda en el ruido. El brotli real de Vercel se
+  anota en la verificación en producción.
+- **Se revierte T10 (menú de WhatsApp en diferido) con sus correcciones T13–T16**: no baja el LCP
+  de forma fiable (en T17, +194 ms de mediana y peor en 2 de 3 corridas, según caiga la petición
+  de Radix antes o después del primer pintado). Además añade complejidad (envoltorio, contexto del
+  fallback y traspaso de foco) y deja instantes en que el botón se ve pero no abre el menú. El
+  alcance 8 queda retirado: el botón flotante vuelve a ser `WhatsAppButton` directo, como antes de
+  T10 (T18–T19).
+- **Cierre de la spec**: tras el merge y el deploy, el usuario corre PSI móvil de `/es` 3 veces en
+  producción y se anota la mediana (T20). Con ese dato se cierra la spec 020, cumpla o no el
+  criterio de LCP < 2,5 s. Si no lo cumple, cualquier trabajo adicional va en una spec nueva.
+
 ## Fuera de alcance
 - Cambios de contenido, textos, dominio (`company-profile`) o diseño estático del hero.
 - Cambiar la imagen hero.
 - Variantes de `servicios.webp` (oculta en móvil con `hidden lg:block`, no se descarga),
   `footer.webp` (con `object-cover` a 340 px de alto se muestra ~1 020 px CSS de ancho en móvil;
   está al final de la página) y `proyectos.webp` (no aparece entre las peticiones previas al LCP).
-- Fuentes, `next.config.mjs` (`inlineCss`) y JavaScript diferido: solo si la medición del punto 7
-  los señala.
+- Fuentes: T07 mostró que la mono no influye en el LCP.
+- Recortar `'use client'` de las secciones bajo el pliegue o reescribir sus animaciones: solo si la
+  medición de la ronda 3 lo señala. (`inlineCss` y el JS diferido de Radix entraron en la ronda 3;
+  el JS diferido se revierte tras T17.)
+- Reemplazar Radix por la API nativa `popover`: descartado en el plan.
 - Dependencias nuevas (las variantes se generan con el sharp que ya trae Next, como en la spec 019).
 
 ## Criterios de aceptación
@@ -101,7 +137,39 @@ pantalla, empezando por las de mayor impacto y menor esfuerzo.
   **No concluyente (dentro del ruido)**: T07 da 3,5–3,6 s, pero T04 ya dio 3 681 ms en la
   corrida 1 y la propia medición «Final» concluye que el LCP no cambió.
 - [ ] Tras el deploy, PSI móvil de `/es` reporta LCP < 2,5 s y Rendimiento ≥ 95 (verificación
-  manual del usuario).
+  manual del usuario: **mediana de 3 corridas**).
+- [x] ~~Ronda 3: el HTML de `/es` sigue incluyendo el botón flotante de WhatsApp (mismo nombre
+  accesible y clases de posición), y el chunk con Radix DropdownMenu no está entre los scripts
+  iniciales: se pide después del LCP observado.~~ **Retirado** (T10 revertido por decisión del
+  usuario tras T17). T12 lo dio parcial: Radix se pedía al hidratar, en 2 de 4 corridas 3–9 ms
+  antes del LCP observado.
+- [x] ~~Ronda 3: si el botón provisional tenía el foco, al cargar el menú el foco pasa al botón
+  real (no cae a `<body>`); si no lo tenía, el real no lo roba (T13).~~ **Retirado** con T10: sin
+  carga diferida no hay botón provisional.
+- [x] Reversión de T10: `page.tsx` usa `WhatsAppButton` directo y el botón flotante del primer
+  render ya es el que abre el menú (`aria-expanded="false"`, sin esperas en `page.test.tsx`). No
+  quedan `whatsapp-button-lazy.tsx`, su prueba ni `whatsapp-trigger.tsx`; `whatsapp-button.tsx`
+  vuelve a su versión anterior a T10 (T18–T19). Cumplido: `git diff 910caa8` vacío en
+  `whatsapp-button.tsx` y `page.tsx`, sin archivos lazy ni trigger (evidencia en T18–T19).
+- [x] Ronda 3: el menú de WhatsApp conserva su comportamiento (pruebas de `whatsapp-button.test.tsx`
+  y del botón flotante en `page.test.tsx` en verde, sin quitar ninguna aserción). Se vuelve a
+  comprobar tras la reversión (T18–T19). Cumplido:
+  `whatsapp-button.test.tsx` sin cambios y en verde, la prueba del botón flotante de `page.test.tsx`
+  pasa con todas sus aserciones y el HTML de producción trae `aria-haspopup="menu"`.
+- [x] Ronda 3: `next.config.mjs` activa `experimental.inlineCss`. `/es`, `/en`, la privacidad y la
+  404 compiladas no piden hojas de estilo (`<link rel="stylesheet">`) y se ven igual.
+- [x] Ronda 3: `inlineCss` se mantiene solo si mejora FCP/LCP de forma clara (más allá del ruido)
+  frente a su coste. Hallazgo de reviwer sobre T11: el CSS va dos veces en cada HTML (`<style>` y
+  payload RSC); `es.html` pasa a 375 852 B (gzip 63 105 B, brotli 34–42 KB), cada `.rsc` también lo
+  lleva y se pierde la caché de la hoja. T12 mide el peso con la compresión real de Vercel y
+  FCP/LCP con y sin la opción; si no compensa, se revierte T11 en una tarea.
+  **T12: no concluyente, decisión escalada a planner** (FCP −150 ms estable; LCP −233 ms dentro
+  del ruido, con solo 2 corridas; coste en navegaciones siguientes no medido). Se decide tras T17,
+  junto con T10. Falta medir el brotli real de Vercel tras el deploy.
+  **Decisión del usuario tras T17: se mantiene.** El FCP mejora de forma clara y repetible (−157 ms
+  en T17, ±3 ms); el LCP, no. El brotli real se anota en T20.
+- [x] Ronda 3: medición local anotada en `## Medición` («Ronda 3»), con la lista de scripts que
+  empiezan antes del LCP y el Speed Index, comparada con T07.
 
 ## Medición
 ### Antes (T01, 2026-10-16)
@@ -232,6 +300,170 @@ pantalla, empezando por las de mayor impacto y menor esfuerzo.
   de bloqueo de render) pero apenas en el LCP. Aun sin JS, el LCP simulado (2,6 s) sigue por
   encima de 2,5 s.
 
+### Ronda 3 (T12, 2026-10-16, en `fc98e3d`: T10, T11, T13–T16)
+- Mismo método que T07 (Lighthouse 12.8.2 CLI, móvil, throttling simulado, Chrome headless,
+  `pnpm build && pnpm start -p 3123` → `http://localhost:3123/es`), dos corridas con
+  `--save-assets` por variante. `pnpm validate` verde en la revisión de `fc98e3d` (HEAD).
+- Resultados (simulados; «sin `inlineCss`» = build local con `inlineCss: false`, sin commitear y
+  restaurado después):
+
+  | Variante                 | Rend. | FCP              | LCP              | SI    | TBT   | CLS |
+  | ------------------------ | ----- | ---------------- | ---------------- | ----- | ----- | --- |
+  | Con `inlineCss`, c1      | 90    | 1,2 s (1 212 ms) | 3,6 s (3 613 ms) | 1,2 s | 10 ms | 0   |
+  | Con `inlineCss`, c2      | 91    | 1,2 s (1 206 ms) | 3,5 s (3 451 ms) | 1,2 s | 10 ms | 0   |
+  | Sin `inlineCss`, c1      | 88    | 1,4 s (1 365 ms) | 3,8 s (3 847 ms) | 1,4 s | 10 ms | 0   |
+  | Sin `inlineCss`, c2      | 89    | 1,4 s (1 362 ms) | 3,7 s (3 683 ms) | 1,4 s | 10 ms | 0   |
+  | T07 (c1 / c2)            | 90    | 1,4 s            | 3,6 / 3,5 s      | 1,4 s | 10 ms | 0   |
+
+- Elemento LCP: el mismo subtítulo del hero (`section#inicio > div.relative >
+  div.lg:max-w-[55%] > p.text-lg`, 364 × 117 px) en las cuatro corridas. Desglose con
+  `inlineCss`: TTFB 456 / 453 ms, retraso y tiempo de carga 0, **retraso de render 3 157 /
+  2 999 ms**. FCP y LCP observados iguales (115 ms). **El LCP sigue ≥ 2,5 s.**
+- Scripts y hojas de estilo que empiezan antes del LCP observado (corrida 2 con `inlineCss`,
+  115 ms; tamaño transferido):
+
+  | Tipo        | Ronda 3                                                      | T07 (c2)                       |
+  | ----------- | ------------------------------------------------------------ | ------------------------------ |
+  | Documento   | `/es` **62,9 KB** (CSS en línea, gzip)                       | 16,5 KB                        |
+  | CSS         | **ninguna hoja**                                             | 2 hojas, 23,3 KB               |
+  | Scripts     | 11 chunks, **182,1 KB**                                      | 10 chunks, 204,2 KB + insights 0,5 |
+  | Fuentes     | 84,3 KB (sin cambio)                                         | 84,3 KB                        |
+  | Imágenes    | 121,0 KB (sin cambio) + `LOGOsolutionsPJM-192.png` 19,6 KB   | 121,0 KB                       |
+  | **Total**   | **469,9 KB** (494,6 en c1)                                   | 449,3 KB                       |
+
+  Scripts: desaparece `29_1ix9xaos4m.js` (50,1 KB); entran `30ovs0h4fmpog.js` (18,2 KB) y
+  `3n3zts851b2p1.js` (10,1 KB). Además, varios chunks cambiaron de hash respecto a T07 (no es «el
+  resto, igual»): en T07 estaban `2s4zbrua0g06o` 7,8, `0mw67wy1375zi` 11,0, `2semfcofb2wsj` 6,4 y
+  `turbopack-37ukxn4-07nwu`; en ronda 3, `0-ssspa2fpt11.js` 69,7, `07b01dw1b3skm.js` 38,3,
+  `1dg2f_cnrzia-.js` 13,9, `2wd_t3ikai8ik.js` 10,9, `0zaqvpcaih_nz.js` 7,9, `15g5crpuo06-n.js` 6,5,
+  `turbopack-*.js` 4,4, `3qy0shirk377_.js` 1,6 y `01kgg-fbm7ezm.js` 0,6. Total: −22 KB de JS antes
+  del LCP. `/_vercel/insights/script.js`: con `inlineCss` arranca a 116,7 / 119,6 ms (después del
+  LCP). Sin `inlineCss`, en c1 arranca a 108,3 ms, **antes** del LCP (112,6 ms).
+- **Chunk de Radix** (`0p3d03n8blbsx.js`, 24,6 KB): no está entre los scripts iniciales del HTML,
+  pero se pide justo al hidratar, que en la traza sin throttling coincide con el primer pintado:
+  a 116 ms (LCP 115) en c2 con `inlineCss` y a 114 ms (LCP 114) sin ella, pero a **112 ms (LCP
+  115)** en c1 con `inlineCss` y a **104 ms (LCP 113)** en c1 sin ella. **No se confirma** que
+  arranque siempre después del LCP observado. Respecto al LCP: −2,3 y −8,1 ms antes en dos
+  corridas, +0,5 y +0,7 ms después en las otras dos. En la práctica coincide con la hidratación.
+- **Trabajo de arranque**: Radix fuera no bajó el hilo principal; subió. `bootup-time` atribuye
+  880–912 ms a `30ovs0h4fmpog.js`, frente a 724 ms de `29_1ix9xaos4m.js` en T07. Hilo principal:
+  1 675–1 692 ms con `inlineCss` y 1 626–1 640 ms sin ella, frente a ~1 386 ms en T07.
+  **Observado**: sin `inlineCss`, el LCP de ronda 3 (3 682–3 847 ms) es 140–300 ms **peor** que el
+  de T07 (3 543–3 552 ms) con el mismo FCP. Entre T07 y esta variante solo cambió T10 (menú
+  diferido; T13–T16 son el traspaso de foco y pruebas). **Deducido, no demostrado**: T10 es causa
+  candidata del aumento de arranque y del LCP (por ejemplo, el chunk del envoltorio y la carga
+  diferida coinciden con la hidratación). `inlineCss` solo devuelve el LCP al nivel de T07. Se
+  aísla en T17.
+- **Speed Index (hipótesis del SI de 4,6 s en PSI)**: en local el SI es 1,2 s con `inlineCss` y
+  1,4 s sin ella (T07: 1,4 s); **no se reproduce**. Tira de `screenshot-thumbnails` (tiempos
+  observados 375–3 000 ms, cada 375 ms): el primer fotograma ya muestra el hero con estilos,
+  imagen y texto. Hasta ~2,46 s solo cambian detalles: las letras de la palabra rotativa
+  («tu» → «tu negocio») y el deslizamiento del eyebrow. Los fotogramas de 2 625 y 3 000 ms son
+  idénticos (mismo hash) y `final-screenshot` y `observedLastVisualChange` caen en 2 456–2 462 ms
+  (T07: 2 448–2 470 ms). Las animaciones continuas (pétalos, partículas, brillo) no hacen que la
+  tira siga cambiando después de ~2,5 s. El SI de 4,6 s de producción no se explica con esta
+  medición. Queda pendiente la mediana de 3 corridas de PSI.
+- **Decisión sobre `inlineCss` (T11)**:
+  - Peso del HTML de `/es`: con `inlineCss`, 375 852 B sin comprimir, gzip de `next start`
+    63 943 B. Brotli 46 828 (q4), 42 098 (q5) y 34 080 B (q11), **calculado fuera de la
+    medición** (`next start` no sirvió brotli; no verificable hasta el deploy). Sin `inlineCss`: 98 566 B, gzip
+    16 375 B, más 23,3 KB de hojas cacheables. Producción hoy (sin T11): `curl -H
+    'Accept-Encoding: br' https://solutionspjm.com/es` → `content-encoding: br`, 15 254 B
+    transferidos (98 069 B descomprimido), 2 hojas `rel="stylesheet"`. Con brotli, el HTML
+    crece de 19 a 32 KB (q11 a q4), y se ahorran las dos hojas (23,3 KB con gzip, algo menos con
+    brotli). El coste neto en la primera visita queda entre −4 y +9 KB, según la calidad de
+    brotli de Vercel, que solo se mide tras el deploy. En cada
+    navegación siguiente cuesta más, porque el CSS va en cada HTML y en cada `.rsc` sin caché.
+  - FCP: −150 ms con `inlineCss` (1 206–1 212 frente a 1 362–1 365 ms), estable entre corridas
+    (±6 ms). LCP: −230 ms de media (3 451–3 613 frente a 3 683–3 847 ms). Los rangos no se solapan,
+    pero la variación entre corridas de una misma variante (~160 ms) es del mismo orden.
+    Rendimiento 90–91 frente a 88–89.
+  - Aplicando la regla (se mantiene solo si FCP/LCP mejoran de forma clara, más allá del ruido,
+    frente a su coste): **no concluyente, decisión escalada a planner** (hallazgo bloqueante de
+    reviwer sobre `b1df782`). La mejora del FCP es clara y repetible. La del LCP (−233 ms de media)
+    está en el ruido: dispersión de ~162 ms por variante, solo 2 corridas y ~70 ms entre rangos. El
+    coste en navegaciones siguientes (CSS en cada `.rsc`, sin caché) no se midió. Planner decide
+    tras T17.
+- Comprobación visual con `inlineCss` (Chrome headless, captura de `/es` y de `/es/no-existe`,
+  404): ambas se ven con estilos (hero con imagen, tipografías y botón; 404 con imagen, título y
+  botón). Las capturas se tomaron con ventana de escritorio estrecha, así que el texto se corta
+  por el ancho mínimo de la ventana headless, no por el CSS. La tira de Lighthouse, con
+  emulación móvil, muestra `/es` completa y con estilos. `/es/no-existe`: 0 `<link
+  rel="stylesheet">` y 1 `<style>`.
+- Puerto 3123 liberado; `next.config.mjs` restaurado (`git status` limpio salvo estos docs).
+
+### Ronda 3, aislar T10 (T17, 2026-10-16, en `06959e4`)
+- Mismo método que T12 (Lighthouse 12.8.2 CLI, móvil, throttling simulado, Chrome headless,
+  `--save-assets`, `pnpm build && pnpm start -p 3123` → `http://localhost:3123/es`), **3 corridas
+  por variante**, un build por variante. Reportes `t17-A|B|C-n` en el scratchpad de la sesión.
+  - **A**: HEAD tal cual (T10 + `inlineCss`).
+  - **B**: `inlineCss` sin la carga diferida de T10 (`page.tsx` importa `WhatsAppButton` en vez
+    de `WhatsAppButtonLazy`; sin commitear). **No es «sin T10» del todo**: solo se revirtió ese
+    import; la extracción del botón a `whatsapp-trigger.tsx` que hizo T10 (con el contexto de foco
+    de T13) seguía en el código. A frente a B mide solo la carga diferida, no todo T10.
+  - **C**: como B y `inlineCss: false` (control ≈ T07).
+- Por corrida (ms, simulados salvo «LCP obs.»; «Arranque» = `bootup-time` del chunk con más
+  arranque; «Hilo» = `mainthread-work-breakdown` total):
+
+  | Corrida | Rend. | FCP   | LCP       | SI    | Hilo  | Arranque (chunk)              | LCP obs. |
+  | ------- | ----- | ----- | --------- | ----- | ----- | ----------------------------- | -------- |
+  | A1      | 88    | 1 205 | **3 835** | 1 205 | 1 368 | 708 (`30ovs0h4fmpog.js`)      | 110      |
+  | A2      | 91    | 1 207 | 3 466     | 1 207 | 1 824 | 978 (`30ovs0h4fmpog.js`)      | 116      |
+  | A3      | 88    | 1 207 | 3 839     | 1 207 | 1 951 | 1 056 (`30ovs0h4fmpog.js`)    | 131      |
+  | B1      | 90    | 1 210 | **3 641** | 1 259 | 1 917 | 1 022 (`0upn5da2ozqdm.js`)    | 143      |
+  | B2      | 90    | 1 209 | 3 658     | 1 316 | 2 015 | 1 059 (`0upn5da2ozqdm.js`)    | 157      |
+  | B3      | 91    | 1 208 | 3 519     | 1 279 | 2 148 | 1 233 (`0upn5da2ozqdm.js`)    | 131      |
+  | C1      | 89    | 1 369 | 3 716     | 1 369 | 2 078 | 1 150 (`0upn5da2ozqdm.js`)    | 146      |
+  | C2      | 90    | 1 363 | 3 567     | 1 363 | 1 896 | 1 035 (`0upn5da2ozqdm.js`)    | 135      |
+  | C3      | 89    | 1 366 | **3 712** | 1 366 | 1 933 | 1 070 (`0upn5da2ozqdm.js`)    | 138      |
+
+- **Medianas** (en negrita, la corrida mediana por LCP):
+
+  | Variante | FCP   | LCP   | Rango LCP     | SI    | Hilo  | Arranque |
+  | -------- | ----- | ----- | ------------- | ----- | ----- | -------- |
+  | A        | 1 207 | 3 835 | 3 466–3 839   | 1 207 | 1 824 | 978      |
+  | B        | 1 209 | 3 641 | 3 519–3 658   | 1 279 | 2 015 | 1 059    |
+  | C        | 1 366 | 3 712 | 3 567–3 716   | 1 366 | 1 933 | 1 070    |
+
+- Elemento LCP: el subtítulo del hero (`section#inicio > div.relative > div.lg:max-w-[55%] >
+  p.text-lg`) en las 9 corridas. TTFB 453–456 ms, retraso y tiempo de carga 0, retraso de render
+  3 012–3 385 ms.
+- Scripts que empiezan antes del LCP observado en la corrida mediana (tamaño transferido):
+  - **A1** (LCP obs. 110 ms): 13 scripts, **207,2 KB** (suma de los tamaños sin redondear): `0-ssspa2fpt11` 69,7, `07b01dw1b3skm` 38,3,
+    `0p3d03n8blbsx` (Radix) 24,6, `30ovs0h4fmpog` 18,2, `1dg2f_cnrzia-` 13,9, `2wd_t3ikai8ik`
+    10,9, `3n3zts851b2p1` 10,1, `0zaqvpcaih_nz` 7,9, `15g5crpuo06-n` 6,5, `turbopack-266may2gbd4gg`
+    4,4, `3qy0shirk377_` 1,6, `01kgg-fbm7ezm` 0,6 y `/_vercel/insights/script.js` 0,4. Sin hojas.
+  - **B1** (143 ms): 11 scripts, **204,2 KB**: `0-ssspa2fpt11` 69,7, `0upn5da2ozqdm` 50,1,
+    `07b01dw1b3skm` 38,3, `1dg2f_cnrzia-` 13,9, `0mw67wy1375zi` 11,0, `2s4zbrua0g06o` 7,8,
+    `2semfcofb2wsj` 6,4, `turbopack-37ukxn4-07nwu` 4,4, `3qy0shirk377_` 1,6, `01kgg-fbm7ezm` 0,6 e
+    insights 0,4. Sin hojas. Los mismos chunks que T07 salvo el principal, que cambia de hash
+    (`0upn5da2ozqdm` 50,1 KB frente a `29_1ix9xaos4m` 50,1 KB; deducido: por el traspaso de foco de T13).
+  - **C3** (138 ms): los mismos 11 scripts que B1 (204,2 KB) y 2 hojas (`1__nm1parv3i_.css` 21,8 y
+    `2d7dl23onpl4r.css` 1,4 KB). HTML 16,5 KB frente a 62,9 KB con `inlineCss`.
+- **A frente a B (efecto de la carga diferida de T10, con `inlineCss`)**: FCP igual (1 207 /
+  1 209). LCP mediano **+194 ms con la carga diferida** (3 835 frente a 3 641), pero el rango de A
+  (373 ms) es mayor que la diferencia y A2 (3 466) es la mejor de las 9 corridas. Hilo principal
+  −191 ms de mediana con la carga diferida. La columna «Arranque» no es comparable entre A y B:
+  mide el chunk con más arranque de cada build, que en A es `30ovs0h4fmpog.js` (18,2 KB) y en B
+  `0upn5da2ozqdm.js` (50,1 KB), dos fragmentos con contenido distinto. SI −72 ms con la carga
+  diferida. **Observado**: las
+  dos corridas de A con LCP ~3,84 s son las que piden Radix (`0p3d03n8blbsx`, a 91 y 123 ms) e
+  insights antes del LCP observado (13 scripts, 207,2 KB); A2, con Radix a 118 ms, después del LCP
+  observado (116), cuenta 11 scripts (182,1 KB) y da 3 466 ms. **Deducido**: el LCP simulado de A
+  depende de si la petición de Radix, que sale al hidratar, cae antes o después del primer pintado
+  observado; T10 no lo baja de forma fiable y en 2 de 3 corridas lo empeora.
+- **B frente a C (efecto de `inlineCss`, sin T10)**: FCP **−157 ms** con `inlineCss`, estable
+  (±3 ms). LCP mediano −71 ms (3 641 frente a 3 712), dentro del ruido (rangos de 139 y 149 ms que
+  se solapan). SI −87 ms. Hilo y arranque sin diferencia clara. Coincide con T12: `inlineCss`
+  mejora el FCP con claridad, el LCP no.
+- C frente a T07 (control): LCP 3 567–3 716 frente a 3 543–3 552 ms, con los mismos chunks salvo
+  el principal. C, sin T10, ya queda hasta ~165 ms por encima de T07; el LCP de T12 sin
+  `inlineCss` (3 683–3 847, con T10) se solapa con C. **Deducido**: buena parte de la diferencia
+  que T12 atribuía a T10 es ruido entre sesiones y builds (~150 ms).
+- Ninguna variante baja el LCP de 2,5 s. Decisión de reversión: planner, en tareas nuevas.
+- Restaurados `page.tsx` y `next.config.mjs`; puerto 3123 liberado (`git status` limpio salvo
+  estos docs).
+
 ## Dudas
 - **Por qué el span del menú ganaba el LCP**: resuelta en T04. (a) confirmada: sin `fade-in`, el
   subtítulo pasa a ser el LCP. (b) observada (la imagen hero no es candidata) con mecanismo
@@ -243,3 +475,18 @@ pantalla, empezando por las de mayor impacto y menor esfuerzo.
   eyebrow, que está arriba del pliegue, usa `font-mono`. Cambiar su tipografía altera el diseño
   aprobado: no se toca salvo que la medición final la señale como causa principal, y en ese caso
   se consulta al usuario.
+- **Speed Index de 4,6 s en producción** (antes 1,3 s). Hipótesis, sin verificar: el fotograma
+  final que toma Lighthouse cae en medio de animaciones continuas del hero (palabra rotativa del
+  eslogan, pétalos, brillo, partículas), así que la progresión visual tarda en «completarse».
+  Contra la hipótesis: esas animaciones ya existían con 019. Es una sola corrida, así que puede ser
+  ruido. La ronda 3 lo mide en local (SI y tira de fotogramas) y con la mediana de 3 corridas de
+  PSI. Si se confirma, se planifica aparte: tocar las animaciones cambia el diseño aprobado y se
+  consulta al usuario.
+- **Botón de WhatsApp antes de cargar el menú** (ronda 3): **ya no aplica**, T10 se revierte
+  (decisión del usuario tras T17). Contexto original: entre el primer pintado y la carga del
+  chunk diferido (justo después de la hidratación), el botón se ve pero un toque no abre el menú.
+  Se asume aceptable porque la ventana es breve y WhatsApp también está en el hero, el CTA, la
+  sección de contacto y el footer. A confirmar por el usuario. **Foco**: al llegar el chunk, React
+  cambia el botón provisional por el real; si el usuario ya lo había enfocado con Tab, el foco caía
+  a `<body>` (hallazgo de reviwer sobre T10). Se corrige en T13: el foco pasa al botón real, y si el
+  provisional no tenía el foco, el real no lo toma.

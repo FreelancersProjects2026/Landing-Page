@@ -12,6 +12,11 @@
   → T07. Recorte de JS o
   alternativas del plan solo si T07 los señala (se planifican aparte).
 - Tras T07: T09 (corrección de T05, cabecera `Link` de la 404).
+- Ronda 3 (tras el deploy de 020, misma rama y spec): T10 ∥ T11 (no comparten archivos) → T12.
+- Correcciones de T10 (antes de T12): T14 → T15 → T13 → T16 (comparten `whatsapp-button-lazy.test.tsx`;
+  ninguna toca `next.config.*`, así que pueden correr en paralelo con T11).
+- Tras T17 (decisión del usuario): se mantiene `inlineCss`, se revierte T10 con T13–T16.
+  T18 → T19 (T18 quita el envoltorio que importa el trigger que borra T19) → merge → T20 (usuario).
 - Variantes de imagen: sharp ya instalado por Next (`node_modules/.pnpm/sharp@0.34.5`), script de
   un solo uso fuera del repo, sin dependencias nuevas.
 
@@ -155,3 +160,270 @@
   Archivos: `src/components/not-found/not-found-view.tsx`,
   `src/components/not-found/not-found-view.test.tsx`, `docs/specs/020-lcp-render-hero/spec.md`
   (solo el criterio).
+
+### Ronda 3: JS de Radix y CSS en línea
+- [x] T10 Prueba nueva en `whatsapp-button-lazy.test.tsx`: al renderizar `WhatsAppButtonLazy`, el
+  botón con el nombre accesible está presente de inmediato y con las clases de posición (`fixed`,
+  `right-4`, `bottom-[calc(1rem+env(safe-area-inset-bottom))]`, `z-30`) [**error de planificación,
+  corregido en T14**: pedía probar nombres de clase, contra la regla de probar comportamiento
+  observable; la posición ya la cubre `whatsapp-button.test.tsx` sobre el trigger compartido]; tras cargar el
+  componente diferido, un clic abre el `menu` con un `menuitem` por opción y sus `href` (falla: el
+  envoltorio no existe).
+  → Extraer el `<button>` flotante a `whatsapp-trigger.tsx`, que reenvía props y ref al
+  `<button>`, y usarlo en `whatsapp-button.tsx` dentro de `DropdownMenuTrigger asChild`. Crear
+  `whatsapp-button-lazy.tsx` (`'use client'`) con `next/dynamic` de `./whatsapp-button`,
+  `ssr: false` y `loading` que pinta `WhatsAppTrigger` con el mismo `label`. `page.tsx` importa
+  el envoltorio.
+  - `whatsapp-button.test.tsx` debe seguir en verde sin cambiar aserciones.
+  - En `page.test.tsx` solo se permite esperar al botón real antes de abrir el menú (por ejemplo,
+    `findBy…` hasta `aria-haspopup="menu"`); no se quita ninguna aserción ni se toca la prueba de
+    hidratación. Si la hidratación falla, parar y reportar a planner.
+  - Verificación: en `pnpm build && pnpm start`, el HTML de `/es` contiene el botón (`curl` y
+    buscar su `aria-label`), y el chunk con Radix ya no está entre los `<script>` iniciales.
+  (paralela a T11)
+  Commit: `fix(landing): 020-T10 menú de WhatsApp en diferido, Radix fuera del arranque`.
+  Archivos: `src/components/landing/whatsapp-trigger.tsx` (nuevo),
+  `src/components/landing/whatsapp-button.tsx`,
+  `src/components/landing/whatsapp-button-lazy.tsx` (nuevo),
+  `src/components/landing/whatsapp-button-lazy.test.tsx` (nuevo), `src/app/[lang]/page.tsx`,
+  `src/app/[lang]/page.test.tsx` (solo si hace falta esperar).
+  - Evidencia: rojo, `whatsapp-button-lazy.test.tsx` no carga porque el envoltorio no existe;
+    verde, `pnpm test` 257/257 (dos corridas), `pnpm check` y `pnpm architecture` OK. `loading` de
+    `next/dynamic` no recibe props: el `label` llega al fallback por contexto. En `page.test.tsx`
+    solo se espera al botón real (`findByRole` con `expanded: false`, timeout 5 s); la prueba de
+    hidratación queda intacta y en verde. `pnpm build && pnpm start`: el HTML de `/es` trae el
+    botón con su `aria-label` y clases de posición; el chunk de Radix (`0p3d03n8blbsx.js`, 74 KB)
+    no está entre los 12 `<script>` iniciales y solo lo referencia el chunk del envoltorio.
+- [x] T11 Prueba en `next.config.test.ts`: `nextConfig.experimental?.inlineCss` es `true` (falla)
+  → añadir `inlineCss: true` a `experimental` en `next.config.mjs`, con un comentario breve del
+  porqué (quita la hoja de estilos que bloquea el render). Las pruebas existentes siguen.
+  - Verificación: `pnpm build && pnpm start`. El HTML de `/es`, `/en`, la privacidad y una URL 404
+    no tiene `<link rel="stylesheet">` y sí `<style>` con el CSS; las cuatro se ven igual en el
+    navegador. Si el build falla o alguna página pierde estilos, parar y reportar a planner.
+  (paralela a T10)
+  Commit: `fix(landing): 020-T11 CSS en línea en el HTML`.
+  Archivos: `next.config.mjs`, `next.config.test.ts`.
+  - Evidencia: rojo, `next.config.test.ts` «pone el CSS en línea» falla (`undefined` no es
+    `true`); verde, `pnpm test` 258/258 y `pnpm check` OK. `pnpm build` OK; con `pnpm start -p
+    3123`, `/es`, `/en`, `/es/privacidad`, `/en/privacy`, `/no-existe` y `/es/no-existe` (404)
+    tienen 0 `<link rel="stylesheet">` y un `<style>` de 136 825 bytes = suma de los dos chunks
+    CSS del build (132 476 + 4 349), así que no se pierde CSS. ~~Las menciones `.css` restantes son
+    del payload RSC.~~ **Corrección (reviwer sobre `6e9dc0d`)**: el payload RSC
+    (`self.__next_f.push`) lleva el CSS **entero** otra vez, así que el CSS va dos veces en cada
+    HTML. `es.html` pesa 375 852 B (gzip 63 105 B; brotli q11 34 086 B, q5 42 128 B), y cada
+    `.rsc` de navegación también lo lleva (`es.rsc` 170 978 B). Además, se pierde la caché de la
+    hoja entre páginas. Con gzip el HTML crece ~45 KB; con brotli alto la copia sale casi gratis.
+    Se decide en T12 si se mantiene. Comparación visual en navegador no hecha (solo curl); queda
+    para T12.
+  - Nota de proceso: el commit `6e9dc0d` incluyó ediciones de planner en `task.md` (orden de la
+    ronda 3, corrección del texto de T10 y dependencias de T12) que estaban sin commitear en el
+    árbol de trabajo. Va contra «un commit por tarea». No se reescribe la historia; en adelante,
+    planner commitea sus cambios de docs antes de lanzar tareas que toquen `task.md`.
+- [x] T12 Medición ronda 3 (sin código): `pnpm validate` verde; `pnpm build && pnpm start` y
+  Lighthouse móvil local con el mismo método que T07 (dos corridas, `--save-assets`) → anotar en
+  `## Medición` (subsección «Ronda 3») LCP, FCP, **Speed Index**, elemento LCP y la lista de
+  scripts y hojas de estilo que empiezan antes del LCP observado (URL y tamaño), comparada con
+  T07.
+  - Confirmar que el chunk de Radix (hoy `29_*.js`) arranca después del LCP y que no hay hojas de
+    estilo.
+  - Para la hipótesis del SI, anotar en qué momento el último fotograma de la tira de Lighthouse
+    sigue cambiando (animaciones del hero).
+  - **Decisión sobre `inlineCss` (T11)**:
+    - Medir el peso del HTML de `/es` con la compresión real. En local, el tamaño con gzip y con
+      brotli del HTML servido. Tras el deploy, con
+      `curl -sI -H 'Accept-Encoding: br' https://solutionspjm.com/es` (`content-encoding` y
+      `content-length`, o el tamaño transferido en DevTools).
+    - Medir FCP y LCP **con y sin** `inlineCss`, dos corridas cada uno. La variante sin
+      `inlineCss` se mide en un build local con la opción desactivada temporalmente, sin
+      commitearla.
+    - Si con `inlineCss` FCP y LCP no mejoran de forma clara (más allá del ruido entre corridas)
+      frente al coste en bytes, reportarlo a planner, que planifica una tarea para revertir T11.
+  - Marcar los criterios de la ronda 3 en `spec.md`.
+  - Reportar a planner y recordar al usuario que corra PSI móvil 3 veces en producción tras el
+    deploy y anote la mediana.
+  (depende de T10, T11, T13, T14, T15 y T16)
+  Commit: `docs(landing): 020-T12 medición ronda 3`.
+  Archivos: `docs/specs/020-lcp-render-hero/spec.md`.
+  - Evidencia: Lighthouse 12.8.2 móvil local, 2 corridas por variante. Con `inlineCss`: Rend.
+    90/91, FCP 1,2 s, LCP 3,6/3,5 s (3 613/3 451 ms), SI 1,2 s, TBT 10 ms, CLS 0. Sin `inlineCss`
+    (build local sin commitear, restaurado): 88/89, FCP 1,4 s, LCP 3,8/3,7 s, SI 1,4 s. LCP =
+    subtítulo del hero, retraso de render ~3,0–3,2 s: **LCP sigue ≥ 2,5 s**. Antes del LCP: sin
+    hojas de estilo, scripts 182,1 KB (T07: 204,2; sale `29_*.js`), HTML 62,9 KB con gzip. Radix
+    (`0p3d03n8blbsx.js`) fuera del HTML inicial, pero se pide al hidratar, en 2 de 4 corridas 3–9 ms
+    antes del LCP observado. El hilo principal no baja (1 675–1 692 ms con `inlineCss`, 1 626–1 640 sin
+    ella; `30ovs0h4fmpog.js` 880–912 ms de arranque). SI de 4,6 s no reproducido: la tira deja de cambiar a ~2,46 s. HTML de `/es`: gzip
+    63 943 B, brotli 34–47 KB calculado fuera de la medición, porque `next start` no sirvió br (sin `inlineCss`: gzip 16 375 B; producción br 15 254 B).
+    ~~`inlineCss` se mantiene~~ → **no concluyente, decisión escalada a planner** (hallazgo
+    bloqueante de reviwer sobre `b1df782`: LCP −233 ms dentro del ruido). `/es` y la 404 se ven con
+    estilos (Chrome headless). Puerto 3123 liberado.
+  - Hallazgos de reviwer sobre `b1df782`, corregidos en `spec.md` por planner: lista de chunks con
+    los hashes de T07, cifras de arranque e hilo principal, tiempos de `/_vercel/insights` y de
+    Radix respecto al LCP, brotli no verificable, y que T10 es causa candidata (deducido) del LCP
+    peor que T07 sin `inlineCss`.
+
+### Correcciones de T10 (hallazgos de reviwer sobre `c520365`; antes de T12)
+- [x] T14 Corrección [mejora] (prueba de comportamiento, no de clases): en
+  `whatsapp-button-lazy.test.tsx`, sustituir la prueba «pinta el botón flotante de inmediato, en su
+  posición fija», que comprueba nombres de clase, por una observable. Al renderizar, el botón con
+  el nombre accesible está presente de inmediato y **no** expone `aria-haspopup`; tras cargar el
+  componente diferido, el botón tiene el mismo nombre accesible y `aria-haspopup="menu"`. La
+  posición no se vuelve a probar aquí: el trigger es compartido y ya la cubre
+  `whatsapp-button.test.tsx`. Solo cambia la prueba; si la nueva no pasa con el código actual,
+  parar y reportar a planner. (antes de T15)
+  Commit: `test(landing): 020-T14 botón diferido probado por comportamiento`.
+  Archivos: `src/components/landing/whatsapp-button-lazy.test.tsx`.
+  - Evidencia: prueba «pinta el botón sin menú de inmediato y lo sustituye por el que abre el
+    menú»: `getByRole('button', { name })` sin `aria-haspopup` tras `render`; `waitFor` hasta
+    `aria-haspopup="menu"` con el mismo nombre (`findByRole` no sirve: resuelve con el fallback).
+    Pasa con el código actual. Mutaciones temporales: quitar el `.not` → falla («Expected the
+    element to have attribute»); esperar `'dialog'` en vez de `'menu'` → falla. `pnpm test`
+    33 archivos / 258 pruebas en verde; `pnpm check` OK (6 avisos `no-img-element` conocidos).
+- [x] T15 Corrección [mejora, KISS] (timeout inútil): `{ timeout: 5000 }` en `findByRole` iguala el
+  timeout por defecto de Vitest por prueba, así que no aporta. Quitarlo en
+  `whatsapp-button-lazy.test.tsx` y en `page.test.tsx`, y que la espera sea determinista: precargar
+  el módulo diferido en un `beforeAll` (`await import('./whatsapp-button')` o su ruta equivalente
+  en `page.test.tsx`), de modo que el `findByRole` con su timeout por defecto (1 s) baste. Las
+  aserciones no cambian, la prueba de hidratación no se toca y `pnpm test` pasa dos veces seguidas
+  en verde. (depende de T14)
+  Commit: `test(landing): 020-T15 espera del menú diferido sin timeout redundante`.
+  Archivos: `src/components/landing/whatsapp-button-lazy.test.tsx`, `src/app/[lang]/page.test.tsx`.
+  - Evidencia: sin `{ timeout: 5000 }` en ambos archivos (incluido el `waitFor` de T14);
+    `beforeAll` precarga `./whatsapp-button` (y `@/components/landing/whatsapp-button` en
+    `page.test.tsx`). Aserciones y prueba de hidratación intactas. `pnpm test` dos veces seguidas:
+    33 archivos / 258 pruebas en verde; `pnpm check` OK. Nota: sin la precarga la prueba aislada
+    también pasa con la caché caliente; la precarga quita la dependencia del primer import en frío.
+- [x] T13 Corrección [mejora, a11y] (foco perdido al cargar el menú): cuando llega el chunk, React
+  desmonta el `<button>` del fallback y monta el real; si el usuario tenía el foco ahí (con Tab), el
+  foco cae a `<body>`.
+  - Prueba en `whatsapp-button-lazy.test.tsx`: se enfoca el botón del fallback, se espera al botón
+    real (`aria-haspopup="menu"`) y este tiene el foco. Segunda prueba: si el fallback no tenía el
+    foco, el botón real no lo toma (no roba el foco). Falla la primera.
+  - Cambio propuesto, el mínimo: un traspaso de foco en el trigger compartido. El envoltorio da por
+    contexto un ref booleano. Al desmontarse, `WhatsAppTrigger` anota si su `<button>` era
+    `document.activeElement`. Al montarse, si estaba anotado, se enfoca y limpia la marca. Sin el
+    envoltorio (uso directo en `whatsapp-button.test.tsx`), el contexto no existe y no hace nada.
+    Si coder encuentra algo más simple que cumpla las dos pruebas, puede usarlo y anotarlo.
+  - `whatsapp-button.test.tsx` y `page.test.tsx` siguen en verde sin cambiar aserciones.
+  (depende de T15)
+  Commit: `fix(landing): 020-T13 el foco pasa del botón provisional al real`.
+  Archivos: `src/components/landing/whatsapp-trigger.tsx`,
+  `src/components/landing/whatsapp-button-lazy.tsx`,
+  `src/components/landing/whatsapp-button-lazy.test.tsx`.
+  - Evidencia: más simple que el ref al desmontar: el provisional anota su foco con
+    `onFocus`/`onBlur` en un estado del envoltorio, y el real se monta con `autoFocus` si estaba
+    enfocado (el trigger lo lee de un contexto privado; `WhatsAppTriggerAutoFocus` lo provee, sin él
+    vale `false`). Las pruebas importan el envoltorio en un módulo nuevo por prueba
+    (`vi.resetModules()`): `next/dynamic` guarda el componente cargado y sin eso el provisional solo
+    se ve en la primera prueba. Rojo: «si el botón provisional tenía el foco…» falla (`toHaveFocus`,
+    el real sin foco); la de no robar el foco pasa. Verde: `pnpm test` 33 archivos / 260 pruebas;
+    `pnpm check` y `pnpm architecture` OK (sin `pnpm build`, a petición).
+
+### Corrección de T13 (hallazgo de reviwer sobre `387a4bf`; antes de T12)
+- [x] T16 Corrección [mejora] (rama sin prueba): ninguna prueba cubre `onBlur={() =>
+  onFocusChange(false)}` en `whatsapp-button-lazy.tsx`. Si se borra esa línea, las 260 pruebas
+  siguen en verde, y el botón real robaría el foco cuando el usuario ya lo movió a otro elemento
+  antes de que cargue el menú. La prueba «si el botón provisional no tenía el foco…» nunca enfoca
+  el provisional, así que no protege este caso.
+  - Prueba nueva en `whatsapp-button-lazy.test.tsx`: renderizar el envoltorio junto a otro
+    elemento enfocable, enfocar el botón provisional, mover el foco al otro elemento y esperar al
+    botón real (`aria-haspopup="menu"`). El botón real **no** tiene el foco y el otro elemento lo
+    conserva.
+  - Rojo demostrado: quitar temporalmente el `onBlur` y ver la prueba fallar; restaurarlo sin
+    commitear esa eliminación y anotar el mensaje de fallo como evidencia.
+  - Sin cambio de producción esperado. Si la prueba no pasa con el código actual, parar y reportar
+    a planner.
+  (depende de T13)
+  Commit: `test(landing): 020-T16 el botón real no roba el foco movido`.
+  Archivos: `src/components/landing/whatsapp-button-lazy.test.tsx`.
+  - Evidencia: prueba «si el foco salió del botón provisional, el botón real no lo roba al
+    cargar»: renderiza el envoltorio (módulo nuevo, `vi.resetModules()`) y aparte un `<button>`
+    «Otro elemento»; comprueba que el provisional no tiene `aria-haspopup`, lo enfoca, mueve el foco
+    al otro y espera al real (`expanded: false`): el real sin foco y el otro con foco. Pasa con el
+    código actual. Rojo: sin la línea `onBlur` en `whatsapp-button-lazy.tsx` falla con «Received
+    element is focused» (el real roba el foco); línea restaurada sin commitear. `pnpm test`
+    33 archivos / 261 pruebas en verde; `pnpm check` OK.
+
+### Ronda 3, aislar T10 (tras los hallazgos de reviwer sobre T12, `b1df782`)
+- [x] T17 Medición (sin código commiteado): aislar el efecto de T10 (menú de WhatsApp en diferido)
+  para decidir si se revierte T10, `inlineCss` (T11), ambos o ninguno.
+  - Variantes, todas con build local de producción y Lighthouse con el mismo método que T12, **3
+    corridas cada una**:
+    - **A**: HEAD tal cual (con T10 y con `inlineCss`).
+    - **B**: con `inlineCss` y **sin T10**. En el árbol de trabajo, sin commitear, `page.tsx`
+      vuelve a importar `WhatsAppButton` directamente en lugar de `WhatsAppButtonLazy`. Es el único
+      cambio, y basta para sacar el envoltorio y el `next/dynamic` del bundle.
+    - **C**: sin T10 y sin `inlineCss` (lo mismo que B, más `inlineCss: false`). Equivale a T07
+      con el código actual y sirve de control del ruido entre builds.
+  - Anotar en `spec.md` `## Medición` (subsección «Ronda 3, aislar T10») una tabla por corrida con
+    FCP, LCP, SI, `mainthread-work-breakdown` total y `bootup-time` del chunk principal. Añadir la
+    mediana por variante y la lista de scripts que empiezan antes del LCP observado (URL y tamaño)
+    de la corrida mediana de cada variante.
+  - Al terminar, restaurar el árbol de trabajo (`git status` limpio salvo `spec.md`) y liberar el
+    puerto.
+  - Reportar a planner las medianas: A frente a B mide el efecto de T10 con `inlineCss`; B frente a
+    C mide el efecto de `inlineCss` sin T10. Planner decide la reversión, si la hay, en tareas
+    nuevas. No se revierte nada en esta tarea.
+  (depende de T12)
+  Commit: `docs(landing): 020-T17 medición para aislar T10`.
+  Archivos: `docs/specs/020-lcp-render-hero/spec.md`.
+  - Evidencia: Lighthouse 12.8.2 móvil, 3 corridas por variante. Medianas (FCP / LCP / SI / hilo /
+    arranque del chunk principal, ms): A 1 207 / 3 835 / 1 207 / 1 824 / 978; B 1 209 / 3 641 /
+    1 279 / 2 015 / 1 059; C 1 366 / 3 712 / 1 366 / 1 933 / 1 070. A frente a B: LCP +194 ms con
+    T10, dentro del rango de A (3 466–3 839), según caiga Radix antes o después del LCP observado.
+    B frente a C: FCP −157 ms estable, LCP −71 ms en el ruido. Elemento LCP: subtítulo del hero en
+    las 9. `page.tsx` y `next.config.mjs` restaurados; puerto 3123 liberado.
+
+### Reversión de T10 (decisión del usuario tras T17; se mantiene `inlineCss`)
+- [x] T18 Prueba en `page.test.tsx` («el botón flotante abre WhatsApp…»): quitar el `beforeAll`
+  que precarga `@/components/landing/whatsapp-button` (y `beforeAll` del import de `vitest` si
+  queda sin uso) y el comentario «El menú se carga en diferido…». El clic se hace sobre
+  `screen.getByRole('button', { name: content.whatsapp.label, expanded: false })`, síncrono, sin
+  `findByRole`. Falla con el envoltorio actual (el primer render es el botón provisional, sin
+  `aria-expanded`) → en `page.tsx`, importar y usar `WhatsAppButton` en lugar de
+  `WhatsAppButtonLazy` (mismas props), y borrar `whatsapp-button-lazy.tsx` y
+  `whatsapp-button-lazy.test.tsx`, que quedan sin uso.
+  - El resto de aserciones de `page.test.tsx` no cambia y la prueba de hidratación no se toca.
+  - Verde: `pnpm test`, `pnpm check` y `pnpm architecture`. `grep -r "whatsapp-button-lazy\|WhatsAppButtonLazy" src`
+    sin resultados. Anotar el mensaje del rojo como evidencia.
+  - `whatsapp-trigger.tsx` y `whatsapp-button.tsx` **no** se tocan aquí (son de T19).
+  Commit: `fix(landing): 020-T18 botón de WhatsApp sin carga diferida`.
+  Archivos: `src/app/[lang]/page.tsx`, `src/app/[lang]/page.test.tsx`,
+  `src/components/landing/whatsapp-button-lazy.tsx` (borrar),
+  `src/components/landing/whatsapp-button-lazy.test.tsx` (borrar).
+  - Evidencia: rojo, 2 fallos (es/en) en «el botón flotante abre WhatsApp…»:
+    `TestingLibraryElementError: Unable to find an accessible element with the role "button" and
+    name "Escríbenos por WhatsApp"` (ídem «Message us on WhatsApp»). Verde: `pnpm test` 256/256,
+    `pnpm check` 0 errores (6 avisos `no-img-element` conocidos), `pnpm architecture` sin
+    violaciones. El grep solo encuentra un comentario de `whatsapp-trigger.tsx` (se borra en T19).
+- [x] T19 Refactor (sin cambio de comportamiento, sin rojo nuevo): devolver el `<button>` del
+  trigger a `whatsapp-button.tsx` dentro de `DropdownMenuTrigger asChild`, tal como estaba en
+  `910caa8` (`git show 910caa8:src/components/landing/whatsapp-button.tsx`: mismo marcado, clases,
+  `iconTransition` e íconos `MessageCircle`/`X`), y borrar `whatsapp-trigger.tsx` (con
+  `WhatsAppTriggerAutoFocus` y su contexto de foco, que quedan sin uso).
+  - Criterio: `git diff 910caa8 -- src/components/landing/whatsapp-button.tsx src/app/[lang]/page.tsx`
+    vacío; `whatsapp-button.test.tsx` en verde sin cambios; `grep -r "whatsapp-trigger\|WhatsAppTrigger" src`
+    sin resultados.
+  - `pnpm validate` en verde. Con `pnpm build && pnpm start`, el HTML de `/es` incluye el botón
+    flotante con su `aria-label` y `aria-haspopup="menu"`, y no hay `<link rel="stylesheet">`
+    (`inlineCss` sigue). Liberar el puerto.
+  (depende de T18)
+  Commit: `refactor(landing): 020-T19 botón flotante sin trigger aparte`.
+  Archivos: `src/components/landing/whatsapp-button.tsx`,
+  `src/components/landing/whatsapp-trigger.tsx` (borrar).
+  - Evidencia: `git diff 910caa8 -- whatsapp-button.tsx src/app/[lang]/page.tsx` vacío;
+    `whatsapp-button.test.tsx` sin cambios y en verde; grep de `whatsapp-button-lazy`,
+    `WhatsAppButtonLazy`, `whatsapp-trigger` y `WhatsAppTrigger` en `src` sin resultados.
+    `pnpm validate` OK (256/256, 0 errores y 6 avisos `no-img-element` conocidos, sin violaciones).
+    `pnpm start`: el HTML de `/es` trae `<button aria-label="Escríbenos por WhatsApp" …
+    aria-haspopup="menu" aria-expanded="false">`, 0 `<link rel="stylesheet">` y 1 `<style>`. Puerto liberado.
+- [ ] T20 Cierre (a cargo del usuario, tras el merge a `main` y el deploy): PSI móvil de
+  `https://solutionspjm.com/es`, **3 corridas**, anotar Rendimiento, FCP, LCP, SI, TBT y CLS de
+  cada una y la **mediana**. Además, `curl -sI -H 'Accept-Encoding: br' https://solutionspjm.com/es`
+  (`content-encoding` y tamaño transferido) para el coste real de `inlineCss`.
+  - Anotar en `spec.md` `## Medición` (subsección «Producción tras 020») y marcar o dejar sin
+    marcar, con el dato, el criterio «PSI móvil … LCP < 2,5 s y Rendimiento ≥ 95».
+  - Con eso se cierra la spec 020, cumpla o no el criterio. Si no lo cumple, el trabajo adicional
+    va en una spec nueva.
+  (depende de T19 y del merge)
+  Commit: `docs(landing): 020-T20 PSI en producción y cierre`.
+  Archivos: `docs/specs/020-lcp-render-hero/spec.md`, `docs/specs/020-lcp-render-hero/task.md`.

@@ -88,7 +88,10 @@ describe.each(['es', 'en'])('Home (%s)', (lang) => {
     render(await renderPage(lang))
 
     await userEvent.click(
-      screen.getByRole('button', { name: content.whatsapp.label }),
+      screen.getByRole('button', {
+        name: content.whatsapp.label,
+        expanded: false,
+      }),
     )
 
     expect(
