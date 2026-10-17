@@ -374,7 +374,7 @@
     las 9. `page.tsx` y `next.config.mjs` restaurados; puerto 3123 liberado.
 
 ### Reversión de T10 (decisión del usuario tras T17; se mantiene `inlineCss`)
-- [ ] T18 Prueba en `page.test.tsx` («el botón flotante abre WhatsApp…»): quitar el `beforeAll`
+- [x] T18 Prueba en `page.test.tsx` («el botón flotante abre WhatsApp…»): quitar el `beforeAll`
   que precarga `@/components/landing/whatsapp-button` (y `beforeAll` del import de `vitest` si
   queda sin uso) y el comentario «El menú se carga en diferido…». El clic se hace sobre
   `screen.getByRole('button', { name: content.whatsapp.label, expanded: false })`, síncrono, sin
@@ -390,6 +390,11 @@
   Archivos: `src/app/[lang]/page.tsx`, `src/app/[lang]/page.test.tsx`,
   `src/components/landing/whatsapp-button-lazy.tsx` (borrar),
   `src/components/landing/whatsapp-button-lazy.test.tsx` (borrar).
+  - Evidencia: rojo, 2 fallos (es/en) en «el botón flotante abre WhatsApp…»:
+    `TestingLibraryElementError: Unable to find an accessible element with the role "button" and
+    name "Escríbenos por WhatsApp"` (ídem «Message us on WhatsApp»). Verde: `pnpm test` 256/256,
+    `pnpm check` 0 errores (6 avisos `no-img-element` conocidos), `pnpm architecture` sin
+    violaciones. El grep solo encuentra un comentario de `whatsapp-trigger.tsx` (se borra en T19).
 - [ ] T19 Refactor (sin cambio de comportamiento, sin rojo nuevo): devolver el `<button>` del
   trigger a `whatsapp-button.tsx` dentro de `DropdownMenuTrigger asChild`, tal como estaba en
   `910caa8` (`git show 910caa8:src/components/landing/whatsapp-button.tsx`: mismo marcado, clases,

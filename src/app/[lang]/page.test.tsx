@@ -2,7 +2,7 @@ import { act, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { hydrateRoot } from 'react-dom/client'
 import { renderToString } from 'react-dom/server'
-import { beforeAll, describe, expect, it, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import {
   buildWhatsAppUrl,
@@ -19,10 +19,6 @@ const gmailUrl =
 function renderPage(lang: string) {
   return Home({ params: Promise.resolve({ lang }) })
 }
-
-beforeAll(async () => {
-  await import('@/components/landing/whatsapp-button')
-})
 
 describe.each(['es', 'en'])('Home (%s)', (lang) => {
   const content = getLandingContent(lang)
@@ -91,9 +87,8 @@ describe.each(['es', 'en'])('Home (%s)', (lang) => {
   it('el botón flotante abre WhatsApp con el mensaje de cada opción del idioma', async () => {
     render(await renderPage(lang))
 
-    // El menú se carga en diferido: se espera al botón real (con aria-expanded).
     await userEvent.click(
-      await screen.findByRole('button', {
+      screen.getByRole('button', {
         name: content.whatsapp.label,
         expanded: false,
       }),
