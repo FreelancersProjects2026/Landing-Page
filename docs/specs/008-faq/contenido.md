@@ -1,6 +1,7 @@
 # Contenido: Preguntas frecuentes
 
 Estado: aprobado por el negocio (2026-10-07). Redacción a partir de sus respuestas.
+Enmienda aprobada 2026-10-20 (Spec 021): sin «24/7» en la respuesta sobre clientes fuera de Costa Rica.
 Sección: «Preguntas frecuentes» / «Frequently asked questions». Menú: «Preguntas» / «FAQ».
 
 ## es
@@ -13,7 +14,7 @@ Sección: «Preguntas frecuentes» / «Frequently asked questions». Menú: «Pr
 4. ¿Qué pasa después de la entrega?
    Te entregamos el sistema con garantía y le damos mantenimiento.
 5. ¿Trabajan con clientes fuera de Costa Rica?
-   Sí. Atendemos clientes de todos los países y nuestro equipo de desarrollo trabaja 24/7.
+   Sí. Atendemos clientes de todos los países.
 6. ¿Cómo se paga?
    Como mejor te venga: al contado, a pagos o con una suscripción mensual, por SINPE o transferencia bancaria.
 7. ¿Necesito saber de tecnología?
@@ -29,7 +30,7 @@ Sección: «Preguntas frecuentes» / «Frequently asked questions». Menú: «Pr
 4. What happens after delivery?
    We deliver your system with a warranty and provide maintenance.
 5. Do you work with clients outside Costa Rica?
-   Yes. We serve clients in every country, and our development team works 24/7.
+   Yes. We serve clients in every country.
 6. How do I pay?
    Whatever works best for you: upfront, in installments or with a monthly subscription, via SINPE or bank transfer.
 7. Do I need to know about technology?

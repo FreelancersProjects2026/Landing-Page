@@ -54,4 +54,17 @@ describe('privacyPolicySource', () => {
       expect(missing).toEqual([])
     },
   )
+
+  it.each([es, en])(
+    'en $locale el contacto es el correo del sitio y el proveedor es Zoho',
+    (policy) => {
+      const texts = collectTexts(policy, '')
+        .map(([, text]) => text)
+        .join(' ')
+
+      expect(texts).toContain('info@solutionspjm.com')
+      expect(texts).toContain('Zoho')
+      expect(texts).not.toMatch(/gmail/i)
+    },
+  )
 })

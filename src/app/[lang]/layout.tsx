@@ -10,6 +10,7 @@ import {
 } from '@modules/company-profile'
 import { fontVariables } from '../fonts'
 import { siteIcons } from '../icons'
+import { ContactClickTracker } from './contact-click-tracker'
 import { openGraphLocale } from './open-graph'
 import '../globals.css'
 
@@ -62,6 +63,7 @@ export default async function RootLayout({
       >
         {children}
         <Analytics />
+        <ContactClickTracker />
       </body>
     </html>
   )

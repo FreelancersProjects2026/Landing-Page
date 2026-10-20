@@ -10,6 +10,9 @@ import { validateSiteUrl } from '../domain/siteUrl.ts'
 // Textos copiados literalmente de docs/specs/003-generarContenido/contenido.md (aprobado).
 // Preguntas frecuentes: docs/specs/008-faq/contenido.md (aprobado).
 
+// Único correo del sitio (spec 021): lo usan el contenido y la política de privacidad.
+export const contactEmail = validateEmail('info@solutionspjm.com')
+
 const company: Contact = {
   name: 'solutionsPJM',
   alternateName: 'solutions PJM',
@@ -17,25 +20,17 @@ const company: Contact = {
   address: { locality: 'Paraíso', region: 'Cartago', country: 'CR' },
   areaServed: 'Worldwide',
   phone: '+506 6440-0832',
-  email: validateEmail('solutionspjm@gmail.com'),
+  email: contactEmail,
   logo: '/logo/icono/LOGOsolutionsPJM.jpeg',
   // URL canónica del perfil, sin los parámetros de seguimiento que envió el cliente (spec 016).
   socialProfiles: [
     { label: 'Instagram', url: 'https://www.instagram.com/solutionspjm' },
   ],
-  // Atención 24/7 confirmada por el cliente. Si cambia, cambiar también footer.hours.
+  // Horario confirmado por el cliente (spec 021). Si cambia, cambiar también footer.hours.
   openingHours: {
-    days: [
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-      'Sunday',
-    ],
-    opens: '00:00',
-    closes: '23:59',
+    days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    opens: '07:00',
+    closes: '21:00',
   },
 }
 
@@ -243,8 +238,7 @@ const es = validateLandingContent({
       },
       {
         question: '¿Trabajan con clientes fuera de Costa Rica?',
-        answer:
-          'Sí. Atendemos clientes de todos los países y nuestro equipo de desarrollo trabaja 24/7.',
+        answer: 'Sí. Atendemos clientes de todos los países.',
       },
       {
         question: '¿Cómo se paga?',
@@ -266,7 +260,7 @@ const es = validateLandingContent({
   },
   footer: {
     text: 'solutionsPJM — desarrollo de software en Cartago para negocios de Costa Rica y del mundo.',
-    hours: 'Atención 24/7',
+    hours: 'Lunes a sábado, 7:00 a. m. a 9:00 p. m. Domingos cerrado.',
     rights,
   },
   notFound: {
@@ -443,8 +437,7 @@ const en = validateLandingContent({
       },
       {
         question: 'Do you work with clients outside Costa Rica?',
-        answer:
-          'Yes. We serve clients in every country, and our development team works 24/7.',
+        answer: 'Yes. We serve clients in every country.',
       },
       {
         question: 'How do I pay?',
@@ -466,7 +459,7 @@ const en = validateLandingContent({
   },
   footer: {
     text: 'solutionsPJM — software development in Cartago for businesses in Costa Rica and around the world.',
-    hours: 'Available 24/7',
+    hours: 'Monday to Saturday, 7:00 a.m. to 9:00 p.m. Closed on Sundays.',
     rights,
   },
   notFound: {

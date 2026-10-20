@@ -7,13 +7,15 @@ Enmienda aprobada 2026-10-06 (Spec 005): opciones y mensajes del botón flotante
 Enmienda aprobada 2026-10-06 (Spec 005): alcance internacional (subtítulo del hero, texto del footer y área atendida).
 Enmienda aprobada 2026-10-06 (Spec 005): descripción SEO con alcance internacional.
 Enmienda aprobada 2026-10-15 (Spec 016): horario de atención 24/7 en el footer.
+Enmienda aprobada 2026-10-20 (Spec 021): correo info@solutionspjm.com.
+Enmienda aprobada 2026-10-20 (Spec 021): horario lunes a sábado 07:00–21:00, domingos cerrado (reemplaza el 24/7).
 
 Datos comunes a ambos idiomas:
 
 - Nombre: solutionsPJM
 - Ubicación: Paraíso de Cartago, Costa Rica
 - WhatsApp: +506 6440-0832 → `https://wa.me/50664400832?text=<mensaje del idioma>`
-- Correo: solutionspjm@gmail.com → `mailto:solutionspjm@gmail.com`
+- Correo: info@solutionspjm.com → Gmail web (`buildEmailComposeUrl`, spec 018)
 - Área atendida (JSON-LD): Worldwide
 - Dominio y redes: [PENDIENTE]
 
@@ -116,7 +118,7 @@ Servicios · Cómo trabajamos · Proyectos · Equipo · Contacto
 - **Texto:** solutionsPJM — desarrollo de software en Cartago para negocios de Costa Rica y del mundo.
 - **Ubicación:** Paraíso de Cartago, Costa Rica
 - **Contacto:** WhatsApp +506 6440-0832
-- **Horario:** Atención 24/7
+- **Horario:** Lunes a sábado, 7:00 a. m. a 9:00 p. m. Domingos cerrado.
 - **Derechos:** © 2026 solutionsPJM
 
 ---
@@ -219,7 +221,7 @@ Services · How we work · Projects · Team · Contact
   the world.
 - **Location:** Paraíso de Cartago, Costa Rica
 - **Contact:** WhatsApp +506 6440-0832
-- **Hours:** Available 24/7
+- **Hours:** Monday to Saturday, 7:00 a.m. to 9:00 p.m. Closed on Sundays.
 - **Rights:** © 2026 solutionsPJM
 
 ---

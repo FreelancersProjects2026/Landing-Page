@@ -410,9 +410,9 @@ describe('HowItWorksSection: accesibilidad', () => {
 })
 
 describe('CtaSection', () => {
-  const email = 'solutionspjm@gmail.com'
+  const email = 'info@solutionspjm.com'
   const emailUrl =
-    'https://mail.google.com/mail/?view=cm&fs=1&to=solutionspjm%40gmail.com'
+    'https://mail.google.com/mail/?view=cm&fs=1&to=info%40solutionspjm.com'
 
   function renderCta() {
     render(
@@ -462,7 +462,7 @@ describe('FooterSection', () => {
         menu={content.menu}
         footer={content.footer}
         whatsappUrl={whatsappUrl}
-        emailUrl="https://mail.google.com/mail/?view=cm&fs=1&to=solutionspjm%40gmail.com"
+        emailUrl="https://mail.google.com/mail/?view=cm&fs=1&to=info%40solutionspjm.com"
         privacy={{ label: 'Privacidad', href: '/es/privacidad' }}
       />,
     )
@@ -492,11 +492,11 @@ describe('FooterSection', () => {
       within(footer).getByRole('link', { name: 'WhatsApp +506 6440-0832' }),
     )
     const email = within(footer).getByRole('link', {
-      name: 'solutionspjm@gmail.com',
+      name: 'info@solutionspjm.com',
     })
     expect(email).toHaveAttribute(
       'href',
-      'https://mail.google.com/mail/?view=cm&fs=1&to=solutionspjm%40gmail.com',
+      'https://mail.google.com/mail/?view=cm&fs=1&to=info%40solutionspjm.com',
     )
     expect(email).toHaveAttribute('target', '_blank')
     expect(email).toHaveAttribute('rel', 'noopener noreferrer')
@@ -522,7 +522,9 @@ describe('FooterSection', () => {
   it('muestra el horario como texto en la lista de contacto, sin enlace', () => {
     const footer = renderFooter()
 
-    const hours = within(footer).getByText('Atención 24/7')
+    const hours = within(footer).getByText(
+      'Lunes a sábado, 7:00 a. m. a 9:00 p. m. Domingos cerrado.',
+    )
     expect(hours).toBeVisible()
     expect(hours.closest('a')).toBeNull()
     expect(hours.closest('ul')).toBe(
@@ -532,7 +534,7 @@ describe('FooterSection', () => {
 
   it.each([
     ['WhatsApp +506 6440-0832', 'lucide-message-circle', '#25D366'],
-    ['solutionspjm@gmail.com', 'lucide-mail', '#EA4335'],
+    ['info@solutionspjm.com', 'lucide-mail', '#EA4335'],
     ['Instagram', 'lucide-instagram', '#E1306C'],
   ])(
     'muestra en %s su ícono oculto a lectores y su acento',
@@ -553,7 +555,7 @@ describe('FooterSection', () => {
 
     const rows = [
       'WhatsApp +506 6440-0832',
-      'solutionspjm@gmail.com',
+      'info@solutionspjm.com',
       'Instagram',
     ].map((name) => within(footer).getByRole('link', { name }).closest('li'))
     expect(new Set(rows).size).toBe(1)
@@ -719,7 +721,7 @@ describe('Imágenes WebP de la landing', () => {
         menu={content.menu}
         footer={content.footer}
         whatsappUrl={whatsappUrl}
-        emailUrl="https://mail.google.com/mail/?view=cm&fs=1&to=solutionspjm%40gmail.com"
+        emailUrl="https://mail.google.com/mail/?view=cm&fs=1&to=info%40solutionspjm.com"
         privacy={{ label: 'Privacidad', href: '/es/privacidad' }}
       />,
       '/footer/footer.webp',

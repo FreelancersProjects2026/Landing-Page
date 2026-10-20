@@ -11,7 +11,7 @@ import { TeamSection } from './team-section'
 
 const content = getLandingContent('es')
 const emailUrl =
-  'https://mail.google.com/mail/?view=cm&fs=1&to=solutionspjm%40gmail.com'
+  'https://mail.google.com/mail/?view=cm&fs=1&to=info%40solutionspjm.com'
 
 let notify: (entries: Partial<IntersectionObserverEntry>[]) => void
 let options: IntersectionObserverInit | undefined
@@ -47,7 +47,7 @@ const cases: [string, ReactElement, number, Reveal[]][] = [
       key="cta"
       {...content.contact}
       whatsappUrl="https://wa.me/1"
-      email="solutionspjm@gmail.com"
+      email="info@solutionspjm.com"
       emailUrl={emailUrl}
     />,
     0.2,

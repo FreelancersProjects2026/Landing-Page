@@ -14,17 +14,30 @@ const privacyLanguages = {
   'x-default': 'https://solutionspjm.com/es/privacidad',
 }
 
+// Fecha del build: la ruta es estática.
+const lastModified = expect.any(Date)
+
 describe('sitemap', () => {
-  it('lista la landing y la política por idioma con sus alternativas, sin la raíz', () => {
+  it('lista la landing y la política por idioma con fecha y alternativas, sin la raíz', () => {
     expect(sitemap()).toEqual([
-      { url: 'https://solutionspjm.com/es', alternates: { languages } },
-      { url: 'https://solutionspjm.com/en', alternates: { languages } },
+      {
+        url: 'https://solutionspjm.com/es',
+        lastModified,
+        alternates: { languages },
+      },
+      {
+        url: 'https://solutionspjm.com/en',
+        lastModified,
+        alternates: { languages },
+      },
       {
         url: 'https://solutionspjm.com/es/privacidad',
+        lastModified,
         alternates: { languages: privacyLanguages },
       },
       {
         url: 'https://solutionspjm.com/en/privacy',
+        lastModified,
         alternates: { languages: privacyLanguages },
       },
     ])
