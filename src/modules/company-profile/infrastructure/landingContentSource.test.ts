@@ -43,7 +43,7 @@ describe('landingContentSource', () => {
       address: { locality: 'Paraíso', region: 'Cartago', country: 'CR' },
       areaServed: 'Worldwide',
       phone: '+506 6440-0832',
-      email: 'solutionspjm@gmail.com',
+      email: 'info@solutionspjm.com',
       logo: '/logo/icono/LOGOsolutionsPJM.jpeg',
       socialProfiles: [
         { label: 'Instagram', url: 'https://www.instagram.com/solutionspjm' },

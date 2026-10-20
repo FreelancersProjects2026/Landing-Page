@@ -10,6 +10,9 @@ import { validateSiteUrl } from '../domain/siteUrl.ts'
 // Textos copiados literalmente de docs/specs/003-generarContenido/contenido.md (aprobado).
 // Preguntas frecuentes: docs/specs/008-faq/contenido.md (aprobado).
 
+// Único correo del sitio (spec 021): lo usan el contenido y la política de privacidad.
+export const contactEmail = validateEmail('info@solutionspjm.com')
+
 const company: Contact = {
   name: 'solutionsPJM',
   alternateName: 'solutions PJM',
@@ -17,7 +20,7 @@ const company: Contact = {
   address: { locality: 'Paraíso', region: 'Cartago', country: 'CR' },
   areaServed: 'Worldwide',
   phone: '+506 6440-0832',
-  email: validateEmail('solutionspjm@gmail.com'),
+  email: contactEmail,
   logo: '/logo/icono/LOGOsolutionsPJM.jpeg',
   // URL canónica del perfil, sin los parámetros de seguimiento que envió el cliente (spec 016).
   socialProfiles: [

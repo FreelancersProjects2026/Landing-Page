@@ -1,5 +1,6 @@
 import type { PrivacyPolicySource } from '../application/privacyPolicy.ts'
 import { validatePrivacyPolicy } from '../domain/privacyPolicy.ts'
+import { contactEmail } from './landingContentSource.ts'
 
 // Textos copiados literalmente de docs/specs/007-privacidad/contenido.md (borrador, aprobación en T11).
 
@@ -12,14 +13,14 @@ const es = validatePrivacyPolicy({
   },
   footerLink: 'Privacidad',
   title: 'Política de privacidad',
-  updated: 'Última actualización: 7 de octubre de 2026',
+  updated: 'Última actualización: 20 de octubre de 2026',
   intro:
     'Esta política explica qué datos personales tratamos cuando visitas este sitio o nos contactas, para qué los usamos y cómo puedes ejercer tus derechos. Se rige por la Ley 8968 de Costa Rica y, para visitantes de la Unión Europea, por el Reglamento General de Protección de Datos (RGPD).',
   sections: [
     {
       heading: '1. Responsable',
       paragraphs: [
-        'El responsable del tratamiento es solutionsPJM, con domicilio en Paraíso de Cartago, Costa Rica. Contacto: solutionspjm@gmail.com.',
+        `El responsable del tratamiento es solutionsPJM, con domicilio en Paraíso de Cartago, Costa Rica. Contacto: ${contactEmail}.`,
       ],
     },
     {
@@ -46,7 +47,7 @@ const es = validatePrivacyPolicy({
     {
       heading: '5. Terceros y transferencias internacionales',
       paragraphs: [
-        'Usamos servicios que pueden tratar datos fuera de Costa Rica: WhatsApp (Meta), Gmail (Google) y Vercel (alojamiento y analítica). Cada uno trata los datos según su propia política de privacidad.',
+        'Usamos servicios que pueden tratar datos fuera de Costa Rica: WhatsApp (Meta), Zoho Mail (Zoho) y Vercel (alojamiento y analítica). Cada uno trata los datos según su propia política de privacidad.',
       ],
     },
     {
@@ -58,7 +59,7 @@ const es = validatePrivacyPolicy({
     {
       heading: '7. Tus derechos',
       paragraphs: [
-        'Puedes pedir acceso, rectificación, supresión u oposición al tratamiento de tus datos y, bajo el RGPD, también su limitación y portabilidad, escribiendo a solutionspjm@gmail.com. Respondemos en un máximo de 5 días hábiles. Si consideras que no atendimos tu solicitud, puedes acudir a la Agencia de Protección de Datos de los Habitantes (PRODHAB) o, en la Unión Europea, a la autoridad de protección de datos de tu país.',
+        `Puedes pedir acceso, rectificación, supresión u oposición al tratamiento de tus datos y, bajo el RGPD, también su limitación y portabilidad, escribiendo a ${contactEmail}. Respondemos en un máximo de 5 días hábiles. Si consideras que no atendimos tu solicitud, puedes acudir a la Agencia de Protección de Datos de los Habitantes (PRODHAB) o, en la Unión Europea, a la autoridad de protección de datos de tu país.`,
       ],
     },
     {
@@ -85,14 +86,14 @@ const en = validatePrivacyPolicy({
   },
   footerLink: 'Privacy',
   title: 'Privacy Policy',
-  updated: 'Last updated: October 7, 2026',
+  updated: 'Last updated: October 20, 2026',
   intro:
     "This policy explains what personal data we process when you visit this site or contact us, why we use it and how you can exercise your rights. It is governed by Costa Rica's Law 8968 and, for visitors from the European Union, by the General Data Protection Regulation (GDPR).",
   sections: [
     {
       heading: '1. Data controller',
       paragraphs: [
-        'The data controller is solutionsPJM, based in Paraíso de Cartago, Costa Rica. Contact: solutionspjm@gmail.com.',
+        `The data controller is solutionsPJM, based in Paraíso de Cartago, Costa Rica. Contact: ${contactEmail}.`,
       ],
     },
     {
@@ -119,7 +120,7 @@ const en = validatePrivacyPolicy({
     {
       heading: '5. Third parties and international transfers',
       paragraphs: [
-        'We use services that may process data outside Costa Rica: WhatsApp (Meta), Gmail (Google) and Vercel (hosting and analytics). Each one processes data under its own privacy policy.',
+        'We use services that may process data outside Costa Rica: WhatsApp (Meta), Zoho Mail (Zoho) and Vercel (hosting and analytics). Each one processes data under its own privacy policy.',
       ],
     },
     {
@@ -131,7 +132,7 @@ const en = validatePrivacyPolicy({
     {
       heading: '7. Your rights',
       paragraphs: [
-        "You can request access, rectification, erasure or objection to the processing of your data and, under the GDPR, also restriction and portability, by writing to solutionspjm@gmail.com. We reply within 5 business days at most. If you believe we did not handle your request, you can contact Costa Rica's Data Protection Agency (PRODHAB) or, in the European Union, the data protection authority of your country.",
+        `You can request access, rectification, erasure or objection to the processing of your data and, under the GDPR, also restriction and portability, by writing to ${contactEmail}. We reply within 5 business days at most. If you believe we did not handle your request, you can contact Costa Rica's Data Protection Agency (PRODHAB) or, in the European Union, the data protection authority of your country.`,
       ],
     },
     {

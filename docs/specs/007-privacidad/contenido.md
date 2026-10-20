@@ -2,6 +2,7 @@
 
 Borrador 2026-10-07, pendiente de aprobación. Fuente literal: el módulo `company-profile` copia
 estos textos sin cambios.
+Enmienda aprobada 2026-10-20 (Spec 021): correo info@solutionspjm.com, proveedor Zoho Mail y fecha.
 
 ---
 
@@ -17,14 +18,14 @@ estos textos sin cambios.
 
 ### Página
 - **Título:** Política de privacidad
-- **Actualización:** Última actualización: 7 de octubre de 2026
+- **Actualización:** Última actualización: 20 de octubre de 2026
 - **Introducción:** Esta política explica qué datos personales tratamos cuando visitas este sitio
   o nos contactas, para qué los usamos y cómo puedes ejercer tus derechos. Se rige por la Ley 8968
   de Costa Rica y, para visitantes de la Unión Europea, por el Reglamento General de Protección de
   Datos (RGPD).
 
 #### 1. Responsable
-El responsable del tratamiento es solutionsPJM, con domicilio en Paraíso de Cartago, Costa Rica. Contacto: solutionspjm@gmail.com.
+El responsable del tratamiento es solutionsPJM, con domicilio en Paraíso de Cartago, Costa Rica. Contacto: info@solutionspjm.com.
 
 #### 2. Qué datos tratamos
 - Los que nos envías al escribirnos por WhatsApp o correo: nombre, teléfono, correo y el contenido
@@ -46,7 +47,7 @@ Tu consentimiento, que das al escribirnos, y, si nos contratas, la ejecución de
 retirar tu consentimiento en cualquier momento.
 
 #### 5. Terceros y transferencias internacionales
-Usamos servicios que pueden tratar datos fuera de Costa Rica: WhatsApp (Meta), Gmail (Google) y
+Usamos servicios que pueden tratar datos fuera de Costa Rica: WhatsApp (Meta), Zoho Mail (Zoho) y
 Vercel (alojamiento y analítica). Cada uno trata los datos según su propia política de privacidad.
 
 #### 6. Cuánto tiempo los conservamos
@@ -56,7 +57,7 @@ tiempo que exijan las obligaciones legales y fiscales.
 
 #### 7. Tus derechos
 Puedes pedir acceso, rectificación, supresión u oposición al tratamiento de tus datos y, bajo el
-RGPD, también su limitación y portabilidad, escribiendo a solutionspjm@gmail.com. Respondemos en un
+RGPD, también su limitación y portabilidad, escribiendo a info@solutionspjm.com. Respondemos en un
 máximo de 5 días hábiles. Si consideras que no atendimos tu solicitud, puedes acudir a la Agencia
 de Protección de Datos de los Habitantes (PRODHAB) o, en la Unión Europea, a la autoridad de
 protección de datos de tu país.
@@ -81,14 +82,14 @@ Podemos actualizar esta política. Publicaremos aquí la versión vigente con su
 
 ### Page
 - **Title:** Privacy Policy
-- **Updated:** Last updated: October 7, 2026
+- **Updated:** Last updated: October 20, 2026
 - **Introduction:** This policy explains what personal data we process when you visit this site or
   contact us, why we use it and how you can exercise your rights. It is governed by Costa Rica's
   Law 8968 and, for visitors from the European Union, by the General Data Protection Regulation
   (GDPR).
 
 #### 1. Data controller
-The data controller is solutionsPJM, based in Paraíso de Cartago, Costa Rica. Contact: solutionspjm@gmail.com.
+The data controller is solutionsPJM, based in Paraíso de Cartago, Costa Rica. Contact: info@solutionspjm.com.
 
 #### 2. What data we process
 - What you send us when you write to us by WhatsApp or email: name, phone number, email address
@@ -109,7 +110,7 @@ Your consent, which you give by writing to us, and, if you hire us, the performa
 agreement. You can withdraw your consent at any time.
 
 #### 5. Third parties and international transfers
-We use services that may process data outside Costa Rica: WhatsApp (Meta), Gmail (Google) and
+We use services that may process data outside Costa Rica: WhatsApp (Meta), Zoho Mail (Zoho) and
 Vercel (hosting and analytics). Each one processes data under its own privacy policy.
 
 #### 6. How long we keep it
@@ -119,7 +120,7 @@ and for as long as legal and tax obligations require.
 
 #### 7. Your rights
 You can request access, rectification, erasure or objection to the processing of your data and,
-under the GDPR, also restriction and portability, by writing to solutionspjm@gmail.com. We reply
+under the GDPR, also restriction and portability, by writing to info@solutionspjm.com. We reply
 within 5 business days at most. If you believe we did not handle your request, you can contact
 Costa Rica's Data Protection Agency (PRODHAB) or, in the European Union, the data protection
 authority of your country.

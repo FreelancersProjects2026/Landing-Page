@@ -22,7 +22,7 @@ describe('buildStructuredData', () => {
         url: `https://solutionspjm.com/${lang}`,
         description: content.seo.description,
         telephone: '+506 6440-0832',
-        email: 'solutionspjm@gmail.com',
+        email: 'info@solutionspjm.com',
         logo: 'https://solutionspjm.com/logo/icono/LOGOsolutionsPJM.jpeg',
         image: 'https://solutionspjm.com/logo/icono/LOGOsolutionsPJM.jpeg',
         sameAs: ['https://www.instagram.com/solutionspjm'],

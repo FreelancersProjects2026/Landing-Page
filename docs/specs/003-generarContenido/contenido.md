@@ -7,13 +7,14 @@ Enmienda aprobada 2026-10-06 (Spec 005): opciones y mensajes del botón flotante
 Enmienda aprobada 2026-10-06 (Spec 005): alcance internacional (subtítulo del hero, texto del footer y área atendida).
 Enmienda aprobada 2026-10-06 (Spec 005): descripción SEO con alcance internacional.
 Enmienda aprobada 2026-10-15 (Spec 016): horario de atención 24/7 en el footer.
+Enmienda aprobada 2026-10-20 (Spec 021): correo info@solutionspjm.com.
 
 Datos comunes a ambos idiomas:
 
 - Nombre: solutionsPJM
 - Ubicación: Paraíso de Cartago, Costa Rica
 - WhatsApp: +506 6440-0832 → `https://wa.me/50664400832?text=<mensaje del idioma>`
-- Correo: solutionspjm@gmail.com → `mailto:solutionspjm@gmail.com`
+- Correo: info@solutionspjm.com → Gmail web (`buildEmailComposeUrl`, spec 018)
 - Área atendida (JSON-LD): Worldwide
 - Dominio y redes: [PENDIENTE]
 

@@ -14,7 +14,7 @@ import Home from './page'
 import { buildFaqStructuredData, buildStructuredData } from './structured-data'
 
 const gmailUrl =
-  'https://mail.google.com/mail/?view=cm&fs=1&to=solutionspjm%40gmail.com'
+  'https://mail.google.com/mail/?view=cm&fs=1&to=info%40solutionspjm.com'
 
 function renderPage(lang: string) {
   return Home({ params: Promise.resolve({ lang }) })
@@ -118,7 +118,7 @@ describe.each(['es', 'en'])('Home (%s)', (lang) => {
 
     expect(email).toHaveLength(1)
     expect(email[0]).toHaveAttribute('target', '_blank')
-    expect(email[0]).toHaveTextContent('solutionspjm@gmail.com')
+    expect(email[0]).toHaveTextContent('info@solutionspjm.com')
   })
 
   it('el footer abre el correo en Gmail web', async () => {
