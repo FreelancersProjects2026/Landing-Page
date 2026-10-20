@@ -29,6 +29,8 @@ que dependen del código y quedan dentro del alcance acordado.
 - C6. Un clic en cualquier enlace de WhatsApp (`https://wa.me/`) o de correo (Gmail compose) envía a Vercel
   Analytics el evento `Contacto` con `{ canal: 'whatsapp' | 'correo' }`. Sin datos personales.
 - C7. Cada URL del sitemap lleva `lastModified`.
+- C8. La política de privacidad (ES/EN) incluye los clics en los botones de contacto entre las métricas
+  anónimas de Vercel Analytics (consecuencia de C6).
 
 ## Dudas
 - Los eventos personalizados de Vercel Analytics requieren plan Pro. En Hobby `track` no falla, pero el

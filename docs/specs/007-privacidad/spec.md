@@ -39,9 +39,9 @@ y que el sitio cumpla lo básico de la Ley 8968.
 - **Sin formularios ni cuentas:** el sitio no recibe datos por sí mismo.
 - **WhatsApp:** los botones abren `wa.me` con un mensaje predefinido; lo que el visitante envíe
   lo procesa WhatsApp (Meta) y llega al número `+506 6440-0832`.
-- **Correo:** enlace `mailto:` a `solutionspjm@gmail.com` (Gmail, Google).
+- **Correo:** `info@solutionspjm.com`, buzón en Zoho Mail (spec 021); el botón abre Gmail web (spec 018).
 - **Vercel Analytics** (`@vercel/analytics` en `[lang]/layout.tsx`): métricas de visitas
-  agregadas, sin cookies.
+  agregadas y clics en los botones de contacto (spec 021), sin cookies.
 - **Alojamiento:** Vercel; sus servidores registran datos técnicos de la petición (IP, navegador)
   y pueden estar fuera de Costa Rica.
 - **Responsable publicado:** solutionsPJM, Paraíso de Cartago, Costa Rica.
@@ -67,7 +67,7 @@ Confirmadas por el negocio (2026-10-07):
 - **Responsable:** se publica solo el nombre comercial solutionsPJM, Paraíso de Cartago, Costa
   Rica. Sin nombre de persona ni cédula (cambio del negocio, 2026-10-07).
 - **Conservación:** 12 meses desde el último contacto para quien no contrata; luego se borran.
-- **Solicitudes de derechos:** al correo `solutionspjm@gmail.com`; respuesta en un máximo de
+- **Solicitudes de derechos:** al correo `info@solutionspjm.com`; respuesta en un máximo de
   5 días hábiles (compromiso propio).
 - **RGPD:** se menciona expresamente para visitantes de la UE.
 - **URL con slug por idioma:** `/es/privacidad` y `/en/privacy`. `/en/privacidad` y

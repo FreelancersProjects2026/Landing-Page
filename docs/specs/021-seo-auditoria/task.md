@@ -15,6 +15,6 @@
 
 - [x] T06 La prueba del tracker usa las URLs de `buildWhatsAppUrl` y `buildEmailComposeUrl`: si un builder
   cambia de dominio, la prueba falla. Un commit.
-- [ ] T07 Sincronizar `docs/specs/007-privacidad/spec.md` (correo, Zoho, clics de contacto) y añadir C8 a
+- [x] T07 Sincronizar `docs/specs/007-privacidad/spec.md` (correo, Zoho, clics de contacto) y añadir C8 a
   la spec 021. Un commit.
 - Descartado: `privacyPolicySource.ts` con 151 líneas (ya estaba en 150; partirlo excede esta spec).
