@@ -8,4 +8,5 @@
   - Evidencia: rojo (módulo inexistente); verde 262/262. La política de privacidad lista los clics de contacto.
 - [x] T04 `lastModified` en el sitemap (C7). Un commit.
   - Evidencia: rojo 1 prueba; verde 262/262.
-- [ ] T05 `pnpm validate` en verde y sincronizar docs. Un commit.
+- [x] T05 `pnpm validate` en verde y sincronizar docs. Un commit.
+  - Evidencia: Prettier en 3 archivos; `pnpm validate` OK (262/262, sin violaciones de capas, build estático). `docs/contexto/` no menciona correo ni horario: sin cambios.

@@ -28,14 +28,7 @@ const company: Contact = {
   ],
   // Horario confirmado por el cliente (spec 021). Si cambia, cambiar también footer.hours.
   openingHours: {
-    days: [
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-    ],
+    days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
     opens: '07:00',
     closes: '21:00',
   },
@@ -245,8 +238,7 @@ const es = validateLandingContent({
       },
       {
         question: '¿Trabajan con clientes fuera de Costa Rica?',
-        answer:
-          'Sí. Atendemos clientes de todos los países.',
+        answer: 'Sí. Atendemos clientes de todos los países.',
       },
       {
         question: '¿Cómo se paga?',
@@ -445,8 +437,7 @@ const en = validateLandingContent({
       },
       {
         question: 'Do you work with clients outside Costa Rica?',
-        answer:
-          'Yes. We serve clients in every country.',
+        answer: 'Yes. We serve clients in every country.',
       },
       {
         question: 'How do I pay?',
