@@ -27,7 +27,7 @@ const es = validatePrivacyPolicy({
       heading: '2. Qué datos tratamos',
       items: [
         'Los que nos envías al escribirnos por WhatsApp o correo: nombre, teléfono, correo y el contenido de tu mensaje.',
-        'Métricas de visitas anónimas y agregadas (páginas vistas, país y tipo de dispositivo), mediante Vercel Analytics, que no usa cookies ni te identifica.',
+        'Métricas de visitas anónimas y agregadas (páginas vistas, clics en los botones de contacto, país y tipo de dispositivo), mediante Vercel Analytics, que no usa cookies ni te identifica.',
         'Datos técnicos de cada visita (dirección IP y navegador), que registra nuestro proveedor de alojamiento por seguridad y funcionamiento.',
       ],
       paragraphs: ['Este sitio no tiene formularios ni cuentas de usuario.'],
@@ -100,7 +100,7 @@ const en = validatePrivacyPolicy({
       heading: '2. What data we process',
       items: [
         'What you send us when you write to us by WhatsApp or email: name, phone number, email address and the content of your message.',
-        'Anonymous, aggregated visit metrics (page views, country and device type) through Vercel Analytics, which uses no cookies and does not identify you.',
+        'Anonymous, aggregated visit metrics (page views, clicks on contact buttons, country and device type) through Vercel Analytics, which uses no cookies and does not identify you.',
         'Technical data from each visit (IP address and browser), logged by our hosting provider for security and operation.',
       ],
       paragraphs: ['This site has no forms or user accounts.'],

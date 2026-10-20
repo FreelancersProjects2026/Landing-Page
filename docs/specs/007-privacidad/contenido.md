@@ -2,7 +2,7 @@
 
 Borrador 2026-10-07, pendiente de aprobación. Fuente literal: el módulo `company-profile` copia
 estos textos sin cambios.
-Enmienda aprobada 2026-10-20 (Spec 021): correo info@solutionspjm.com, proveedor Zoho Mail y fecha.
+Enmienda aprobada 2026-10-20 (Spec 021): correo info@solutionspjm.com, proveedor Zoho Mail, clics de contacto en las métricas y fecha.
 
 ---
 
@@ -30,7 +30,7 @@ El responsable del tratamiento es solutionsPJM, con domicilio en Paraíso de Car
 #### 2. Qué datos tratamos
 - Los que nos envías al escribirnos por WhatsApp o correo: nombre, teléfono, correo y el contenido
   de tu mensaje.
-- Métricas de visitas anónimas y agregadas (páginas vistas, país y tipo de dispositivo), mediante
+- Métricas de visitas anónimas y agregadas (páginas vistas, clics en los botones de contacto, país y tipo de dispositivo), mediante
   Vercel Analytics, que no usa cookies ni te identifica.
 - Datos técnicos de cada visita (dirección IP y navegador), que registra nuestro proveedor de
   alojamiento por seguridad y funcionamiento.
@@ -94,7 +94,7 @@ The data controller is solutionsPJM, based in Paraíso de Cartago, Costa Rica. C
 #### 2. What data we process
 - What you send us when you write to us by WhatsApp or email: name, phone number, email address
   and the content of your message.
-- Anonymous, aggregated visit metrics (page views, country and device type) through Vercel
+- Anonymous, aggregated visit metrics (page views, clicks on contact buttons, country and device type) through Vercel
   Analytics, which uses no cookies and does not identify you.
 - Technical data from each visit (IP address and browser), logged by our hosting provider for
   security and operation.
