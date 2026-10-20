@@ -6,5 +6,6 @@
   - Evidencia: rojo 8 pruebas; verde 258/258.
 - [x] T03 Evento `Contacto` en clics de WhatsApp y correo (C6). Un commit.
   - Evidencia: rojo (módulo inexistente); verde 262/262. La política de privacidad lista los clics de contacto.
-- [ ] T04 `lastModified` en el sitemap (C7). Un commit.
+- [x] T04 `lastModified` en el sitemap (C7). Un commit.
+  - Evidencia: rojo 1 prueba; verde 262/262.
 - [ ] T05 `pnpm validate` en verde y sincronizar docs. Un commit.
