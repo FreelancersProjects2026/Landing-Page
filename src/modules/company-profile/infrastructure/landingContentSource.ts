@@ -26,7 +26,7 @@ const company: Contact = {
   socialProfiles: [
     { label: 'Instagram', url: 'https://www.instagram.com/solutionspjm' },
   ],
-  // Atención 24/7 confirmada por el cliente. Si cambia, cambiar también footer.hours.
+  // Horario confirmado por el cliente (spec 021). Si cambia, cambiar también footer.hours.
   openingHours: {
     days: [
       'Monday',
@@ -35,10 +35,9 @@ const company: Contact = {
       'Thursday',
       'Friday',
       'Saturday',
-      'Sunday',
     ],
-    opens: '00:00',
-    closes: '23:59',
+    opens: '07:00',
+    closes: '21:00',
   },
 }
 
@@ -247,7 +246,7 @@ const es = validateLandingContent({
       {
         question: '¿Trabajan con clientes fuera de Costa Rica?',
         answer:
-          'Sí. Atendemos clientes de todos los países y nuestro equipo de desarrollo trabaja 24/7.',
+          'Sí. Atendemos clientes de todos los países.',
       },
       {
         question: '¿Cómo se paga?',
@@ -269,7 +268,7 @@ const es = validateLandingContent({
   },
   footer: {
     text: 'solutionsPJM — desarrollo de software en Cartago para negocios de Costa Rica y del mundo.',
-    hours: 'Atención 24/7',
+    hours: 'Lunes a sábado, 7:00 a. m. a 9:00 p. m. Domingos cerrado.',
     rights,
   },
   notFound: {
@@ -447,7 +446,7 @@ const en = validateLandingContent({
       {
         question: 'Do you work with clients outside Costa Rica?',
         answer:
-          'Yes. We serve clients in every country, and our development team works 24/7.',
+          'Yes. We serve clients in every country.',
       },
       {
         question: 'How do I pay?',
@@ -469,7 +468,7 @@ const en = validateLandingContent({
   },
   footer: {
     text: 'solutionsPJM — software development in Cartago for businesses in Costa Rica and around the world.',
-    hours: 'Available 24/7',
+    hours: 'Monday to Saturday, 7:00 a.m. to 9:00 p.m. Closed on Sundays.',
     rights,
   },
   notFound: {

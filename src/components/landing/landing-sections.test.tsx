@@ -522,7 +522,7 @@ describe('FooterSection', () => {
   it('muestra el horario como texto en la lista de contacto, sin enlace', () => {
     const footer = renderFooter()
 
-    const hours = within(footer).getByText('Atención 24/7')
+    const hours = within(footer).getByText('Lunes a sábado, 7:00 a. m. a 9:00 p. m. Domingos cerrado.')
     expect(hours).toBeVisible()
     expect(hours.closest('a')).toBeNull()
     expect(hours.closest('ul')).toBe(
