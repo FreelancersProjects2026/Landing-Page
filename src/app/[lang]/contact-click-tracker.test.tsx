@@ -1,21 +1,27 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { track } from '@vercel/analytics'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+import {
+  buildEmailComposeUrl,
+  buildWhatsAppUrl,
+} from '@modules/company-profile'
 
 import { ContactClickTracker } from './contact-click-tracker'
 
 vi.mock('@vercel/analytics', () => ({ track: vi.fn() }))
 
+// URLs reales de los builders: si cambian de dominio, el tracker deja de reconocerlas y esto falla.
+const whatsappUrl = buildWhatsAppUrl('+506 6440-0832', 'Hola')
+const emailUrl = buildEmailComposeUrl('info@solutionspjm.com')
+
 function renderWithLinks() {
   render(
     <>
       <ContactClickTracker />
-      <a href="https://wa.me/50664400832?text=Hola">
+      <a href={whatsappUrl}>
         <span>WhatsApp</span>
       </a>
-      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=info%40solutionspjm.com">
-        Correo
-      </a>
+      <a href={emailUrl}>Correo</a>
       <a href="https://www.instagram.com/solutionspjm">Instagram</a>
     </>,
   )
@@ -55,7 +61,7 @@ describe('ContactClickTracker', () => {
   it('deja de escuchar al desmontarse', () => {
     const { unmount } = render(<ContactClickTracker />)
     unmount()
-    render(<a href="https://wa.me/50664400832">WhatsApp</a>)
+    render(<a href={whatsappUrl}>WhatsApp</a>)
 
     fireEvent.click(screen.getByRole('link', { name: 'WhatsApp' }))
 

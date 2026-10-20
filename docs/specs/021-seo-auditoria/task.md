@@ -10,3 +10,11 @@
   - Evidencia: rojo 1 prueba; verde 262/262.
 - [x] T05 `pnpm validate` en verde y sincronizar docs. Un commit.
   - Evidencia: Prettier en 3 archivos; `pnpm validate` OK (262/262, sin violaciones de capas, build estático). `docs/contexto/` no menciona correo ni horario: sin cambios.
+
+## Correcciones de la revisión (reviwer, 2026-10-20)
+
+- [x] T06 La prueba del tracker usa las URLs de `buildWhatsAppUrl` y `buildEmailComposeUrl`: si un builder
+  cambia de dominio, la prueba falla. Un commit.
+- [ ] T07 Sincronizar `docs/specs/007-privacidad/spec.md` (correo, Zoho, clics de contacto) y añadir C8 a
+  la spec 021. Un commit.
+- Descartado: `privacyPolicySource.ts` con 151 líneas (ya estaba en 150; partirlo excede esta spec).
